@@ -1,16 +1,24 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
-import { site } from '../data/site';
-import { sections } from '../data/impressum';
+import Icon from '../components/Icon.astro';
+import { intro, blocks, datenschutzHinweis } from '../data/impressum';
 
-/** Zerlegt eine Zeile an der Vereins-E-Mail, damit daraus ein Link wird. */
-function splitAtEmail(line: string) {
-  const index = line.indexOf(site.email);
-  if (index === -1) return null;
+/**
+ * Telefonnummern anklickbar machen. Erwartet das Format des Impressums
+ * („Telefon: +49 (0) 50 69 / 74 15“) und lässt alles andere unangetastet.
+ */
+function linkifyPhone(line: string) {
+  const match = line.match(/(\+[\d\s()/-]{8,})/);
+  if (!match) return null;
+  const raw = match[1].trim();
   return {
-    before: line.slice(0, index),
-    after: line.slice(index + site.email.length),
+    before: line.slice(0, match.index),
+    display: raw,
+    // Die Null aus "(0)" ist die nationale Verkehrsausscheidungsziffer und
+    // gehört nicht in die internationale Wählnummer.
+    href: `tel:${raw.replace(/\(0\)/, '').replace(/[^\d+]/g, '')}`,
+    after: line.slice((match.index ?? 0) + match[1].length),
   };
 }
 ---
@@ -20,21 +28,28 @@ function splitAtEmail(line: string) {
 
   <section class="section legal">
     <div class="container">
+      <p class="intro">{intro}</p>
+
       {
-        sections.map((section) => (
-          <>
-            <h2>{section.heading}</h2>
+        blocks.map((block) => {
+          if (block.type === 'heading') {
+            return block.level === 2 ? <h2>{block.text}</h2> : <h3>{block.text}</h3>;
+          }
+          if (block.type === 'text') {
+            return <p>{block.text}</p>;
+          }
+          return (
             <p>
-              {section.body.map((line, index) => {
-                const parts = splitAtEmail(line);
+              {block.lines.map((line, index) => {
+                const phone = linkifyPhone(line);
                 return (
                   <>
                     {index > 0 && <br />}
-                    {parts ? (
+                    {phone ? (
                       <>
-                        {parts.before}
-                        <a href={`mailto:${site.email}`}>{site.email}</a>
-                        {parts.after}
+                        {phone.before}
+                        <a href={phone.href}>{phone.display}</a>
+                        {phone.after}
                       </>
                     ) : (
                       line
@@ -43,9 +58,17 @@ function splitAtEmail(line: string) {
                 );
               })}
             </p>
-          </>
-        ))
+          );
+        })
       }
+
+      <h2>{datenschutzHinweis.heading}</h2>
+      <p>
+        <a class="datenschutz-link" href={datenschutzHinweis.href}>
+          {datenschutzHinweis.linkLabel}
+          <Icon name="arrowRight" size={16} />
+        </a>
+      </p>
     </div>
   </section>
 </BaseLayout>
@@ -58,10 +81,24 @@ function splitAtEmail(line: string) {
     font-size: var(--step-1);
     margin-top: var(--sp-6);
   }
-  .legal h2:first-child {
-    margin-top: 0;
+  .legal h3 {
+    font-size: 1.02rem;
+    margin-top: var(--sp-5);
+    margin-bottom: var(--sp-2);
   }
   .legal p {
     color: var(--c-text-muted);
+    font-size: 0.96rem;
+  }
+  .intro {
+    font-weight: 600;
+    color: var(--c-text) !important;
+  }
+  .datenschutz-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-weight: 600;
+    color: var(--c-accent-ink);
   }
 </style>
