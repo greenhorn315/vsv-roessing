@@ -172,3 +172,19 @@ export const blocks: LegalBlock[] = [
     "text": "Besucher-Kommentare könnten von einem automatisierten Dienst zur Spam-Erkennung untersucht werden."
   }
 ];
+
+/**
+ * Fehler im Originaltext, die beim Aktualisieren von vsv-roessing.de
+ * behoben werden sollten. Der Text oben bleibt unverändert, damit der
+ * Abgleich mit der Originalseite möglich bleibt.
+ */
+export const korrekturenFuersOriginal = [
+  {
+    abschnitt: 'Links zu anderen Websites',
+    falsch: 'Für fremde Hinweise ist der LSB nur dann verantwortlich, wenn er von ihnen, …, positive Kenntnis hat, …',
+    richtig: 'Für fremde Hinweise sind wir nur dann verantwortlich, wenn wir von ihnen, …, positive Kenntnis haben, …',
+    grund:
+      'LSB steht für Landessportbund und ist ein Rest aus der Mustervorlage. ' +
+      'Derselbe Satz steht auch im Impressum und ist dort bereits korrigiert.',
+  },
+];

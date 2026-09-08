@@ -10,6 +10,13 @@
  *                         für eigene Inhalte folgt aus den allgemeinen Gesetzen
  *   §§ 8 bis 10 TMG    -> Art. 4 bis 6 DSA i.V.m. § 7 DDG; die alten
  *                         Paragraphen sind ersatzlos entfallen
+ *
+ * Außerdem korrigiert: Im Absatz "Haftung für Links" stand "ist der LSB nur
+ * dann verantwortlich". LSB steht für Landessportbund und ist ein Rest aus
+ * der Mustervorlage, aus der der Text stammt – der Verein ist nicht der
+ * Landessportbund. Ersetzt durch "sind wir", passend zum "Wir" der übrigen
+ * Sätze des Absatzes.
+ *
  * Diese Änderungen gehören auch ins Original übernommen.
  *
  * Aufbau der Blöcke: siehe LegalBlock in legal.ts.
@@ -92,7 +99,7 @@ export const blocks: LegalBlock[] = [
   { type: 'heading', level: 3, text: 'Haftung für Links' },
   {
     type: 'text',
-    text: 'Unser Online-Angebot enthält Links zu anderen Websites. Wir haben keinen Einfluss darauf, dass deren Betreiber die Datenschutzbestimmungen einhalten. Wir sind als Anbieter für eigene Inhalte nach den allgemeinen Gesetzen verantwortlich. Von diesen eigenen Inhalten sind unter Umständen Links auf die von anderen Anbietern bereitgehaltenen Inhalte zu unterscheiden. Für fremde Inhalte, die über Links zur Nutzung bereitgestellt werden, übernehmen wir keine Verantwortung und machen uns deren Inhalt nicht zu Eigen. Für illegale, fehlerhafte oder unvollständige Inhalte sowie für Schäden, die durch die Nutzung oder Nichtnutzung der Informationen entstehen, haftet allein der Anbieter der Website, auf die verwiesen wurde. Für fremde Hinweise ist der LSB nur dann verantwortlich, wenn er von ihnen, das heißt auch von einem eventuellen rechtswidrigen bzw. strafbaren Inhalt, positive Kenntnis hat, und es technisch möglich und zumutbar ist, deren Nutzung zu verhindern.',
+    text: 'Unser Online-Angebot enthält Links zu anderen Websites. Wir haben keinen Einfluss darauf, dass deren Betreiber die Datenschutzbestimmungen einhalten. Wir sind als Anbieter für eigene Inhalte nach den allgemeinen Gesetzen verantwortlich. Von diesen eigenen Inhalten sind unter Umständen Links auf die von anderen Anbietern bereitgehaltenen Inhalte zu unterscheiden. Für fremde Inhalte, die über Links zur Nutzung bereitgestellt werden, übernehmen wir keine Verantwortung und machen uns deren Inhalt nicht zu Eigen. Für illegale, fehlerhafte oder unvollständige Inhalte sowie für Schäden, die durch die Nutzung oder Nichtnutzung der Informationen entstehen, haftet allein der Anbieter der Website, auf die verwiesen wurde. Für fremde Hinweise sind wir nur dann verantwortlich, wenn wir von ihnen, das heißt auch von einem eventuellen rechtswidrigen bzw. strafbaren Inhalt, positive Kenntnis haben, und es technisch möglich und zumutbar ist, deren Nutzung zu verhindern.',
   },
 
   { type: 'heading', level: 3, text: 'Urheberrecht' },
