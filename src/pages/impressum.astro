@@ -1,48 +1,104 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
-import { site } from '../data/site';
+import Icon from '../components/Icon.astro';
+import { intro, blocks, datenschutzHinweis } from '../data/impressum';
+
+/**
+ * Telefonnummern anklickbar machen. Erwartet das Format des Impressums
+ * („Telefon: +49 (0) 50 69 / 74 15“) und lässt alles andere unangetastet.
+ */
+function linkifyPhone(line: string) {
+  const match = line.match(/(\+[\d\s()/-]{8,})/);
+  if (!match) return null;
+  const raw = match[1].trim();
+  return {
+    before: line.slice(0, match.index),
+    display: raw,
+    // Die Null aus "(0)" ist die nationale Verkehrsausscheidungsziffer und
+    // gehört nicht in die internationale Wählnummer.
+    href: `tel:${raw.replace(/\(0\)/, '').replace(/[^\d+]/g, '')}`,
+    after: line.slice((match.index ?? 0) + match[1].length),
+  };
+}
 ---
 
 <BaseLayout title="Impressum" description="Impressum des VSV Rössing von 1897 e.V.">
   <PageHeader title="Impressum" />
+
   <section class="section legal">
     <div class="container">
-      <p class="todo">
-        <strong>Noch zu übernehmen:</strong> Das Impressum der bestehenden
-        Website vsv-roessing.de wird hier unverändert eingepflegt
-        (Pflichtangaben nach § 5 DDG / § 18 MStV).
-      </p>
+      <p class="intro">{intro}</p>
 
-      <h2>Angaben gemäß § 5 DDG</h2>
+      {
+        blocks.map((block) => {
+          if (block.type === 'heading') {
+            return block.level === 2 ? <h2>{block.text}</h2> : <h3>{block.text}</h3>;
+          }
+          if (block.type === 'text') {
+            return <p>{block.text}</p>;
+          }
+          return (
+            <p>
+              {block.lines.map((line, index) => {
+                const phone = linkifyPhone(line);
+                return (
+                  <>
+                    {index > 0 && <br />}
+                    {phone ? (
+                      <>
+                        {phone.before}
+                        <a href={phone.href}>{phone.display}</a>
+                        {phone.after}
+                      </>
+                    ) : (
+                      line
+                    )}
+                  </>
+                );
+              })}
+            </p>
+          );
+        })
+      }
+
+      <h2>{datenschutzHinweis.heading}</h2>
       <p>
-        {site.name}<br />
-        {site.address.postalCode} {site.address.city}
+        <a class="datenschutz-link" href={datenschutzHinweis.href}>
+          {datenschutzHinweis.linkLabel}
+          <Icon name="arrowRight" size={16} />
+        </a>
       </p>
-
-      <h2>Vertreten durch</h2>
-      <p>Der Vorstand im Sinne des § 26 BGB – Namen werden ergänzt.</p>
-
-      <h2>Kontakt</h2>
-      <p>E-Mail: <a href={`mailto:${site.email}`}>{site.email}</a></p>
-
-      <h2>Registereintrag</h2>
-      <p>Vereinsregister und Registernummer werden ergänzt.</p>
-
-      <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
-      <p>Wird ergänzt.</p>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .legal .container { max-width: 720px; }
-  .legal h2 { font-size: var(--step-1); margin-top: var(--sp-6); }
-  .todo {
-    background: var(--c-sun-soft);
-    border: 1px dashed #D8B44A;
-    color: #5E4A0C;
-    padding: 0.9rem 1.1rem;
-    border-radius: var(--radius-sm);
+  .legal .container {
+    max-width: 720px;
+  }
+  .legal h2 {
+    font-size: var(--step-1);
+    margin-top: var(--sp-6);
+  }
+  .legal h3 {
+    font-size: 1.02rem;
+    margin-top: var(--sp-5);
+    margin-bottom: var(--sp-2);
+  }
+  .legal p {
+    color: var(--c-text-muted);
+    font-size: 0.96rem;
+  }
+  .intro {
+    font-weight: 600;
+    color: var(--c-text) !important;
+  }
+  .datenschutz-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-weight: 600;
+    color: var(--c-accent-ink);
   }
 </style>

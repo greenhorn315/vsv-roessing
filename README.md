@@ -20,6 +20,7 @@ src/
 ├── components/    Wiederverwendbare Bausteine, CSS jeweils scoped im <style>
 ├── layouts/       BaseLayout: <head>, SEO, Schema.org, Header/Footer
 └── pages/         Eine Datei = eine URL
+    └── sportangebote/[slug].astro  erzeugt je Sparte eine Detailseite
 public/
 ├── images/        Fotos (siehe images/README.md)
 └── favicon.svg
@@ -49,6 +50,8 @@ Alle Farben, Schriftgrößen und Abstände sind Tokens in `src/styles/global.css
   Verbindung zu Google Fonts, damit DSGVO-konform.
 * Zielniveau Barrierefreiheit: WCAG 2.1 AA (Kontraste, Tastaturbedienung,
   sichtbarer Fokus, `prefers-reduced-motion`).
+* Das Vorschaubild `public/og-default.png` (1200 × 630) wird beim Teilen in
+  WhatsApp, Facebook & Co. angezeigt.
 
 ## Deployment (Cloudflare)
 
@@ -57,8 +60,11 @@ Statischer Build, kein Server nötig.
 * **Pages/Workers via Git:** Build-Befehl `npm run build`, Output-Verzeichnis `dist`.
 * **Manuell:** `npm run deploy` (nutzt `wrangler.jsonc`).
 
-Der Build erzeugt `kontakt.html` statt `kontakt/index.html`, damit dieselben
-Dateien auch auf einem einfachen Webserver (z. B. Synology Web Station) laufen.
+Der Build nutzt `format: 'directory'` (`kontakt/index.html`). Das ist nötig,
+weil es sowohl die Übersicht `/sportangebote` als auch die Detailseiten
+`/sportangebote/<sparte>` gibt – als flache Dateien würden Datei und
+Verzeichnis kollidieren. Verzeichnis-Indizes liefern Cloudflare und die
+Synology Web Station gleichermaßen aus.
 
 ## Offene Punkte vor dem Livegang
 
@@ -66,6 +72,13 @@ Dateien auch auf einem einfachen Webserver (z. B. Synology Web Station) laufen.
 - [ ] Beiträge in `src/data/membership.ts` gegen die Beitragsordnung prüfen
 - [ ] Vorstandsnamen und Vereinschronik in `src/pages/verein.astro`
 - [ ] Impressum und Datenschutzerklärung aus der Altseite übernehmen
-- [ ] Kontaktformular an einen Versand-Endpunkt anbinden (aktuell `mailto:`)
+- [ ] Kontaktformular an einen Versand-Endpunkt anbinden. Aktuell baut das
+      Formular nach clientseitiger Prüfung eine fertige `mailto:`-Nachricht.
+      Für echten Versand genügt es, im `submit`-Handler in
+      `src/pages/kontakt.astro` statt `window.location.href` ein
+      `fetch(endpoint, { method: 'POST', body: data })` zu setzen – etwa gegen
+      eine Cloudflare Pages Function.
 - [ ] PDF-Formulare hinterlegen
 - [ ] `site` in `astro.config.mjs` auf die finale Domain setzen
+- [ ] Sparten-Detailtexte in `src/data/sports.ts` fachlich prüfen
+      (Trainingszeiten, Ansprechpartner je Sparte)

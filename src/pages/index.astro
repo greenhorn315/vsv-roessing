@@ -11,10 +11,12 @@ import Testimonials from '../components/Testimonials.astro';
 import SocialStrip from '../components/SocialStrip.astro';
 import CallToAction from '../components/CallToAction.astro';
 import Icon from '../components/Icon.astro';
-import { site } from '../data/site';
+import PrototypeNotice from '../components/PrototypeNotice.astro';
+import { site, isPrototype } from '../data/site';
 ---
 
 <BaseLayout title={`${site.shortName} – Dein Verein, dein Sport`} bareTitle>
+  {isPrototype && <PrototypeNotice />}
   <Hero />
   <Facts />
 

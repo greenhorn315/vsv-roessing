@@ -4,7 +4,7 @@ import '@fontsource-variable/source-sans-3/wght.css';
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { site } from '../data/site';
+import { site, isPrototype } from '../data/site';
 
 interface Props {
   title: string;
@@ -30,13 +30,16 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'SportsClub',
   name: site.name,
+  legalName: site.legalName,
   alternateName: site.shortName,
   foundingDate: String(site.founded),
   description: site.description,
   url: canonical.origin,
   email: site.email,
+  telephone: site.phone,
   address: {
     '@type': 'PostalAddress',
+    streetAddress: site.address.street,
     addressLocality: site.address.city,
     postalCode: site.address.postalCode,
     addressCountry: site.address.country,
@@ -62,8 +65,15 @@ const jsonLd = {
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical.href} />
+    {
+      /* Solange dies ein Entwurf ist, darf er nicht neben der echten
+         Vereinsseite in den Suchergebnissen auftauchen. */
+      isPrototype && <meta name="robots" content="noindex, nofollow" />
+    }
 
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="theme-color" content="#14453D" />
 
     <meta property="og:type" content="website" />

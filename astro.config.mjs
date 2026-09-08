@@ -12,9 +12,12 @@ export default defineConfig({
   trailingSlash: 'ignore',
   integrations: [sitemap()],
   build: {
-    // Erzeugt /kontakt.html statt /kontakt/index.html – passt zu
-    // Cloudflare Workers Static Assets und zu einfachen Webservern (Synology).
-    format: 'file',
+    // 'directory' erzeugt /kontakt/index.html. Nötig, weil es sowohl die
+    // Seite /sportangebote als auch die Detailseiten /sportangebote/<sparte>
+    // gibt – im 'file'-Format kollidieren Datei und Verzeichnis.
+    // Verzeichnis-Indizes liefern Cloudflare und die Synology Web Station
+    // gleichermaßen aus.
+    format: 'directory',
   },
   vite: {
     build: {

@@ -38,7 +38,7 @@ const groups = Object.keys(ageGroupLabels) as AgeGroup[];
   {
     sports.map((sport) => (
       <li data-age-groups={sport.ageGroups.join(' ')}>
-        <a class="sport-card" href={`/sportangebote#${sport.slug}`} style={`--sport-color:${sport.color}`}>
+        <a class="sport-card" href={`/sportangebote/${sport.slug}`} style={`--sport-color:${sport.color}`}>
           <Icon name={sport.icon} size={32} class="sport-card__icon" />
           <h3>{sport.name}</h3>
           <p>{detailed ? sport.description : sport.teaser}</p>
