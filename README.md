@@ -71,22 +71,25 @@ Synology Web Station gleichermaßen aus.
 - [ ] Fotos in `public/images/` einsetzen (Platzhalter greifen bis dahin automatisch)
 - [ ] Beiträge in `src/data/membership.ts` gegen die Beitragsordnung prüfen
 - [ ] Vorstandsnamen und Vereinschronik in `src/pages/verein.astro`
-- [x] Impressum und Datenschutzerklärung aus der Altseite übernommen
-      (`src/data/impressum.ts`, `src/data/datenschutz.ts`)
-- [ ] **Datenschutzerklärung inhaltlich überarbeiten.** Der übernommene Text
-      beschreibt die bisherige WordPress-Seite: Kommentarfunktion, Gravatar,
-      Benutzerkonten, Medien-Uploads, Anmelde-Cookies. Nichts davon existiert
-      auf dieser statischen Seite. Umgekehrt fehlen die Punkte, die hier
-      zutreffen: Auslieferung über Cloudflare, lokal eingebundene Schriften,
-      keinerlei Cookies, Kontaktanfragen per E-Mail.
-- [ ] Impressum: Verweise auf TMG und RStV prüfen – seit 2024 gilt das DDG,
-      seit 2020 der MStV. Zuerst im Original anpassen, dann hier nachziehen.
+- [x] Impressum aus der Altseite übernommen (`src/data/impressum.ts`)
+- [x] Datenschutzerklärung neu verfasst (`src/data/datenschutz.ts`): beschreibt
+      die Verarbeitung dieser Seite statt der bisherigen WordPress-Funktionen.
+      Der übernommene Originaltext liegt als Referenz in
+      `src/data/datenschutz-uebernommen.ts` und wird nicht ausgeliefert.
+- [ ] **Datenschutzerklärung rechtlich prüfen lassen** und Abschnitt 4 um den
+      Hosting-Anbieter, die Speicherdauer der Logfiles und den Vertrag zur
+      Auftragsverarbeitung nach Art. 28 DSGVO ergänzen. Bewusst
+      anbieterneutral formuliert, weil der Umzug in die Originalumgebung
+      noch aussteht.
+- [x] Gesetzesverweise im Impressum aktualisiert (DDG, MStV, DSA). Die
+      Änderungen gehören auch ins Original übernommen.
 - [ ] Kontaktformular an einen Versand-Endpunkt anbinden. Aktuell baut das
       Formular nach clientseitiger Prüfung eine fertige `mailto:`-Nachricht.
       Für echten Versand genügt es, im `submit`-Handler in
       `src/pages/kontakt.astro` statt `window.location.href` ein
-      `fetch(endpoint, { method: 'POST', body: data })` zu setzen – etwa gegen
-      eine Cloudflare Pages Function.
+      `fetch(endpoint, { method: 'POST', body: data })` zu setzen. Achtung:
+      Danach muss Abschnitt 8 der Datenschutzerklärung neu geschrieben werden,
+      denn dann werden die Eingaben tatsächlich an einen Server übertragen.
 - [ ] PDF-Formulare hinterlegen
 - [ ] `site` in `astro.config.mjs` auf die finale Domain setzen
 - [ ] Sparten-Detailtexte in `src/data/sports.ts` fachlich prüfen
