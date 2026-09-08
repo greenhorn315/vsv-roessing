@@ -1,100 +1,46 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
+import LegalContent from '../components/LegalContent.astro';
 import Icon from '../components/Icon.astro';
 import { intro, blocks, datenschutzHinweis } from '../data/impressum';
-
-/**
- * Telefonnummern anklickbar machen. Erwartet das Format des Impressums
- * („Telefon: +49 (0) 50 69 / 74 15“) und lässt alles andere unangetastet.
- */
-function linkifyPhone(line: string) {
-  const match = line.match(/(\+[\d\s()/-]{8,})/);
-  if (!match) return null;
-  const raw = match[1].trim();
-  return {
-    before: line.slice(0, match.index),
-    display: raw,
-    // Die Null aus "(0)" ist die nationale Verkehrsausscheidungsziffer und
-    // gehört nicht in die internationale Wählnummer.
-    href: `tel:${raw.replace(/\(0\)/, '').replace(/[^\d+]/g, '')}`,
-    after: line.slice((match.index ?? 0) + match[1].length),
-  };
-}
 ---
 
 <BaseLayout title="Impressum" description="Impressum des VSV Rössing von 1897 e.V.">
   <PageHeader title="Impressum" />
 
-  <section class="section legal">
+  <section class="section">
     <div class="container">
       <p class="intro">{intro}</p>
 
-      {
-        blocks.map((block) => {
-          if (block.type === 'heading') {
-            return block.level === 2 ? <h2>{block.text}</h2> : <h3>{block.text}</h3>;
-          }
-          if (block.type === 'text') {
-            return <p>{block.text}</p>;
-          }
-          return (
-            <p>
-              {block.lines.map((line, index) => {
-                const phone = linkifyPhone(line);
-                return (
-                  <>
-                    {index > 0 && <br />}
-                    {phone ? (
-                      <>
-                        {phone.before}
-                        <a href={phone.href}>{phone.display}</a>
-                        {phone.after}
-                      </>
-                    ) : (
-                      line
-                    )}
-                  </>
-                );
-              })}
-            </p>
-          );
-        })
-      }
+      <LegalContent blocks={blocks} />
 
-      <h2>{datenschutzHinweis.heading}</h2>
-      <p>
-        <a class="datenschutz-link" href={datenschutzHinweis.href}>
-          {datenschutzHinweis.linkLabel}
-          <Icon name="arrowRight" size={16} />
-        </a>
-      </p>
+      <div class="datenschutz">
+        <h2>{datenschutzHinweis.heading}</h2>
+        <p>
+          <a class="datenschutz__link" href={datenschutzHinweis.href}>
+            {datenschutzHinweis.linkLabel}
+            <Icon name="arrowRight" size={16} />
+          </a>
+        </p>
+      </div>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .legal .container {
+  .intro {
+    max-width: 720px;
+    font-weight: 600;
+  }
+  .datenschutz {
     max-width: 720px;
   }
-  .legal h2 {
+  .datenschutz h2 {
     font-size: var(--step-1);
     margin-top: var(--sp-6);
   }
-  .legal h3 {
-    font-size: 1.02rem;
-    margin-top: var(--sp-5);
-    margin-bottom: var(--sp-2);
-  }
-  .legal p {
-    color: var(--c-text-muted);
-    font-size: 0.96rem;
-  }
-  .intro {
-    font-weight: 600;
-    color: var(--c-text) !important;
-  }
-  .datenschutz-link {
+  .datenschutz__link {
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;

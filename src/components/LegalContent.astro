@@ -1,0 +1,94 @@
+---
+import type { LegalBlock } from '../data/legal';
+
+interface Props {
+  blocks: LegalBlock[];
+}
+
+const { blocks } = Astro.props;
+
+/**
+ * Zerlegt eine Zeile in Text und anklickbare Teile (E-Mail, Web-Adresse,
+ * Telefonnummer). Der sichtbare Wortlaut bleibt dabei unverändert.
+ */
+const PATTERN =
+  /([\w.+-]+@[\w-]+\.[\w.-]+[\w])|(https?:\/\/[^\s]+[^\s.,;:)])|(www\.[^\s]+[^\s.,;:)])|(\+\d[\d\s()/-]{7,}\d)/g;
+
+type Token = { text: string; href?: string };
+
+function tokenize(line: string): Token[] {
+  const tokens: Token[] = [];
+  let last = 0;
+
+  for (const match of line.matchAll(PATTERN)) {
+    const [value, email, url, www, phone] = match;
+    const start = match.index ?? 0;
+    if (start > last) tokens.push({ text: line.slice(last, start) });
+
+    let href: string;
+    if (email) href = `mailto:${email}`;
+    else if (url) href = url;
+    else if (www) href = `https://${www}`;
+    // Die Null aus "(0)" ist die nationale Verkehrsausscheidungsziffer und
+    // gehört nicht in die internationale Wählnummer.
+    else href = `tel:${phone.replace(/\(0\)/, '').replace(/[^\d+]/g, '')}`;
+
+    tokens.push({ text: value, href });
+    last = start + value.length;
+  }
+
+  if (last < line.length) tokens.push({ text: line.slice(last) });
+  return tokens;
+}
+---
+
+<div class="legal-content">
+  {
+    blocks.map((block) => {
+      if (block.type === 'heading') {
+        return block.level === 2 ? <h2>{block.text}</h2> : <h3>{block.text}</h3>;
+      }
+
+      const lines = block.type === 'text' ? [block.text] : block.lines;
+      return (
+        <p>
+          {lines.map((line, index) => (
+            <>
+              {index > 0 && <br />}
+              {tokenize(line).map((token) =>
+                token.href ? <a href={token.href}>{token.text}</a> : token.text
+              )}
+            </>
+          ))}
+        </p>
+      );
+    })
+  }
+</div>
+
+<style>
+  .legal-content {
+    max-width: 720px;
+  }
+  .legal-content h2 {
+    font-size: var(--step-1);
+    margin-top: var(--sp-6);
+  }
+  .legal-content h2:first-child {
+    margin-top: 0;
+  }
+  .legal-content h3 {
+    font-size: 1.02rem;
+    margin-top: var(--sp-5);
+    margin-bottom: var(--sp-2);
+  }
+  .legal-content p {
+    color: var(--c-text-muted);
+    font-size: 0.96rem;
+  }
+  .legal-content a {
+    color: var(--c-accent-ink);
+    /* Lange URLs dürfen den Textfluss nicht sprengen. */
+    overflow-wrap: anywhere;
+  }
+</style>
