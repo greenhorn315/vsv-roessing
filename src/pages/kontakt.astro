@@ -22,24 +22,35 @@ import { sports } from '../data/sports';
         <h2>Probetraining anfragen</h2>
         <p class="form-note">
           <Icon name="info" size={17} />
-          Das Formular ist noch nicht angebunden – bis dahin führt „Absenden"
-          direkt in euer E-Mail-Programm.
+          Noch kein Versand-Endpunkt angebunden: „Absenden" öffnet euer
+          E-Mail-Programm mit fertig ausgefüllter Nachricht.
         </p>
 
-        <form
-          class="contact-form"
-          action={`mailto:${site.email}`}
-          method="post"
-          enctype="text/plain"
-        >
+        <form class="contact-form" data-contact-form data-recipient={site.email} novalidate>
           <div class="field">
             <label for="name">Name <span aria-hidden="true">*</span></label>
-            <input type="text" id="name" name="name" autocomplete="name" required />
+            <input
+              type="text"
+              id="name"
+              name="name"
+              autocomplete="name"
+              required
+              aria-describedby="name-error"
+            />
+            <p class="field__error" id="name-error" hidden></p>
           </div>
 
           <div class="field">
             <label for="email">E-Mail <span aria-hidden="true">*</span></label>
-            <input type="email" id="email" name="email" autocomplete="email" required />
+            <input
+              type="email"
+              id="email"
+              name="email"
+              autocomplete="email"
+              required
+              aria-describedby="email-error"
+            />
+            <p class="field__error" id="email-error" hidden></p>
           </div>
 
           <div class="field">
@@ -66,7 +77,17 @@ import { sports } from '../data/sports';
             <Icon name="mail" />
             Anfrage senden
           </button>
+
+          <p class="form-fallback" role="status" data-form-status></p>
         </form>
+
+        <noscript>
+          <p class="form-note">
+            Ohne JavaScript funktioniert das Formular nicht. Schreibt uns
+            stattdessen direkt an
+            <a href={`mailto:${site.email}`}>{site.email}</a>.
+          </p>
+        </noscript>
       </div>
 
       <aside class="contact-aside">
@@ -166,6 +187,27 @@ import { sports } from '../data/sports';
     outline: none;
   }
 
+  .field__error {
+    margin: 0.35rem 0 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #B3261E;
+  }
+  .field input[aria-invalid='true'],
+  .field select[aria-invalid='true'],
+  .field textarea[aria-invalid='true'] {
+    border-color: #B3261E;
+  }
+
+  .form-fallback:empty {
+    display: none;
+  }
+  .form-fallback {
+    margin: var(--sp-4) 0 0;
+    font-size: 0.88rem;
+    color: var(--c-text-muted);
+  }
+
   .privacy {
     font-size: 0.82rem;
     color: var(--c-text-muted);
@@ -199,3 +241,94 @@ import { sports } from '../data/sports';
     font-size: 0.85rem !important;
   }
 </style>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+  const status = document.querySelector<HTMLElement>('[data-form-status]');
+
+  if (form) {
+    const showError = (field: HTMLInputElement, message: string) => {
+      const error = document.getElementById(`${field.id}-error`);
+      field.setAttribute('aria-invalid', 'true');
+      if (error) {
+        error.textContent = message;
+        error.hidden = false;
+      }
+    };
+
+    const clearError = (field: HTMLInputElement) => {
+      const error = document.getElementById(`${field.id}-error`);
+      field.removeAttribute('aria-invalid');
+      if (error) {
+        error.textContent = '';
+        error.hidden = true;
+      }
+    };
+
+    const validate = (field: HTMLInputElement) => {
+      if (!field.value.trim()) {
+        showError(field, 'Bitte ausfüllen.');
+        return false;
+      }
+      if (field.type === 'email' && !field.checkValidity()) {
+        showError(field, 'Bitte eine gültige E-Mail-Adresse angeben.');
+        return false;
+      }
+      clearError(field);
+      return true;
+    };
+
+    const required = Array.from(
+      form.querySelectorAll<HTMLInputElement>('input[required]')
+    );
+
+    required.forEach((field) => {
+      field.addEventListener('blur', () => validate(field));
+      field.addEventListener('input', () => {
+        if (field.getAttribute('aria-invalid') === 'true') validate(field);
+      });
+    });
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      // Alle Pflichtfelder prüfen, damit der Fokus im ersten Fehler landet.
+      const invalid = required.filter((field) => !validate(field));
+      if (invalid.length > 0) {
+        invalid[0].focus();
+        return;
+      }
+
+      const data = new FormData(form);
+      const name = String(data.get('name') ?? '');
+      const sportart = String(data.get('sportart') ?? '');
+      const nachricht = String(data.get('nachricht') ?? '');
+
+      const subject = sportart
+        ? `Anfrage Probetraining: ${sportart}`
+        : 'Anfrage über die Website';
+
+      const body = [
+        `Name: ${name}`,
+        `E-Mail: ${String(data.get('email') ?? '')}`,
+        sportart ? `Sportart: ${sportart}` : '',
+        '',
+        nachricht,
+      ]
+        .filter((line) => line !== null)
+        .join('\n');
+
+      const recipient = form.dataset.recipient ?? '';
+      window.location.href = `mailto:${recipient}?subject=${encodeURIComponent(
+        subject
+      )}&body=${encodeURIComponent(body)}`;
+
+      if (status) {
+        status.textContent =
+          'Euer E-Mail-Programm sollte sich jetzt mit der fertigen Nachricht öffnen. Falls nicht, schreibt uns direkt an ' +
+          recipient +
+          '.';
+      }
+    });
+  }
+</script>

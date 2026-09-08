@@ -1,0 +1,376 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/Icon.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CallToAction from '../../components/CallToAction.astro';
+import { sports, ageGroupLabels } from '../../data/sports';
+import { trainings } from '../../data/trainings';
+import { site } from '../../data/site';
+
+export function getStaticPaths() {
+  return sports.map((sport) => ({
+    params: { slug: sport.slug },
+    props: { sport },
+  }));
+}
+
+const { sport } = Astro.props;
+const sessions = trainings.filter((t) => t.sport === sport.slug);
+
+// Für die Weiter-Navigation am Seitenende.
+const index = sports.findIndex((s) => s.slug === sport.slug);
+const next = sports[(index + 1) % sports.length];
+const previous = sports[(index - 1 + sports.length) % sports.length];
+---
+
+<BaseLayout
+  title={sport.name}
+  description={`${sport.name} beim ${site.shortName}: ${sport.description}`}
+>
+  <div class="container">
+    <Breadcrumbs
+      items={[
+        { label: 'Start', href: '/' },
+        { label: 'Sportangebote', href: '/sportangebote' },
+        { label: sport.name },
+      ]}
+    />
+  </div>
+
+  <section class="sport-hero" style={`--sport-color:${sport.color}`}>
+    <div class="container sport-hero__inner">
+      <span class="sport-hero__icon" aria-hidden="true">
+        <Icon name={sport.icon} size={38} />
+      </span>
+      <div>
+        <h1>{sport.name}</h1>
+        <p class="lead">{sport.description}</p>
+        <ul class="tags">
+          {
+            sport.ageGroups.map((group) => (
+              <li class="tag">{ageGroupLabels[group]}</li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container detail-grid">
+      <div>
+        {sport.longText?.map((paragraph) => <p>{paragraph}</p>)}
+
+        {
+          sport.highlights && (
+            <>
+              <h2>Das erwartet dich</h2>
+              <ul class="highlights">
+                {sport.highlights.map((item) => (
+                  <li>
+                    <Icon name="check" size={18} class="highlights__check" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )
+        }
+
+        <div class="cta-inline">
+          <a class="btn btn--primary" href="/kontakt#probetraining">
+            <Icon name="sport" />
+            Probetraining bei {sport.name} anfragen
+          </a>
+        </div>
+      </div>
+
+      <aside class="facts-card">
+        <h2>Auf einen Blick</h2>
+
+        <div class="facts-card__row">
+          <Icon name="clock" size={19} class="facts-card__icon" />
+          <div>
+            <h3>Trainingszeiten</h3>
+            {
+              sessions.length > 0 ? (
+                <ul class="times">
+                  {sessions.map((session) => (
+                    <li>
+                      <strong>
+                        {session.day} {session.time}
+                      </strong>
+                      {session.place && <span>{session.place}</span>}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>
+                  Termine erfragt ihr am besten kurz per E-Mail – wir melden uns
+                  mit der passenden Gruppe.
+                </p>
+              )
+            }
+          </div>
+        </div>
+
+        {
+          sport.venue && (
+            <div class="facts-card__row">
+              <Icon name="pin" size={19} class="facts-card__icon" />
+              <div>
+                <h3>Wo</h3>
+                <p>{sport.venue}</p>
+              </div>
+            </div>
+          )
+        }
+
+        {
+          sport.bring && (
+            <div class="facts-card__row">
+              <Icon name="join" size={19} class="facts-card__icon" />
+              <div>
+                <h3>Mitbringen</h3>
+                <p>{sport.bring}</p>
+              </div>
+            </div>
+          )
+        }
+
+        <div class="facts-card__row">
+          <Icon name="mail" size={19} class="facts-card__icon" />
+          <div>
+            <h3>Ansprechpartner</h3>
+            <p>
+              <a href={`mailto:${site.email}`}>{site.email}</a>
+            </p>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <nav class="sport-nav" aria-label="Weitere Sportarten">
+    <div class="container sport-nav__inner">
+      <a href={`/sportangebote/${previous.slug}`} class="sport-nav__link">
+        <Icon name="arrowRight" size={16} class="sport-nav__back" />
+        <span>
+          <small>Vorherige Sportart</small>
+          {previous.name}
+        </span>
+      </a>
+      <a href="/sportangebote" class="btn btn--ghost">Alle Sportarten</a>
+      <a href={`/sportangebote/${next.slug}`} class="sport-nav__link sport-nav__link--next">
+        <span>
+          <small>Nächste Sportart</small>
+          {next.name}
+        </span>
+        <Icon name="arrowRight" size={16} />
+      </a>
+    </div>
+  </nav>
+
+  <CallToAction />
+</BaseLayout>
+
+<style>
+  .sport-hero {
+    background: var(--c-tint-green);
+    padding-block: clamp(2rem, 4vw, 3rem);
+    border-top: 4px solid var(--sport-color, var(--c-primary));
+  }
+  .sport-hero__inner {
+    display: flex;
+    align-items: start;
+    gap: var(--sp-5);
+  }
+  .sport-hero__icon {
+    display: grid;
+    place-items: center;
+    width: 72px;
+    height: 72px;
+    flex-shrink: 0;
+    border-radius: var(--radius);
+    background: var(--c-surface);
+    color: var(--sport-color, var(--c-primary));
+    box-shadow: var(--shadow-sm);
+  }
+  .sport-hero h1 {
+    margin-bottom: var(--sp-2);
+  }
+  .sport-hero .lead {
+    max-width: 60ch;
+    margin-bottom: var(--sp-4);
+  }
+
+  .tags {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding: 0;
+    margin: 0;
+  }
+  .tag {
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-pill);
+    background: var(--c-surface);
+    color: var(--c-primary);
+  }
+
+  .detail-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: start;
+  }
+  .detail-grid p {
+    color: var(--c-text-muted);
+  }
+  .detail-grid h2 {
+    font-size: var(--step-2);
+    margin-top: var(--sp-6);
+  }
+
+  .highlights {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .highlights li {
+    display: flex;
+    align-items: start;
+    gap: 0.6rem;
+  }
+  .highlights :global(.highlights__check) {
+    color: var(--c-primary-light);
+    stroke-width: 2.6;
+    margin-top: 0.2rem;
+  }
+
+  .cta-inline {
+    margin-top: var(--sp-7);
+  }
+
+  /* ---- Infokarte ---- */
+  .facts-card {
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-5);
+    position: sticky;
+    top: calc(var(--header-height) + var(--sp-4));
+  }
+  .facts-card > h2 {
+    font-size: var(--step-1);
+    margin: 0 0 var(--sp-5);
+  }
+  .facts-card__row {
+    display: flex;
+    gap: var(--sp-3);
+    padding-block: var(--sp-4);
+    border-top: 1px solid var(--c-border);
+  }
+  .facts-card__row:first-of-type {
+    border-top: none;
+    padding-top: 0;
+  }
+  .facts-card :global(.facts-card__icon) {
+    color: var(--c-primary-light);
+    margin-top: 0.15rem;
+    flex-shrink: 0;
+  }
+  .facts-card h3 {
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--c-text-muted);
+    margin: 0 0 0.3rem;
+    font-family: var(--font-body);
+    font-weight: 700;
+  }
+  .facts-card p {
+    margin: 0;
+    font-size: 0.94rem;
+  }
+
+  .times {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .times li {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.94rem;
+  }
+  .times strong {
+    color: var(--c-primary);
+  }
+  .times span {
+    font-size: 0.84rem;
+    color: var(--c-text-muted);
+  }
+
+  /* ---- Weiter-Navigation ---- */
+  .sport-nav {
+    border-top: 1px solid var(--c-border);
+    padding-block: var(--sp-5);
+  }
+  .sport-nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-4);
+    flex-wrap: wrap;
+  }
+  .sport-nav__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    color: var(--c-primary);
+    font-weight: 600;
+  }
+  .sport-nav__link small {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--c-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .sport-nav__link :global(.sport-nav__back) {
+    transform: rotate(180deg);
+  }
+  .sport-nav__link--next {
+    text-align: right;
+  }
+
+  @media (max-width: 900px) {
+    .detail-grid {
+      grid-template-columns: 1fr;
+    }
+    .facts-card {
+      position: static;
+    }
+  }
+  @media (max-width: 620px) {
+    .sport-hero__inner {
+      flex-direction: column;
+    }
+    .sport-nav__inner {
+      justify-content: center;
+      text-align: center;
+    }
+  }
+</style>
