@@ -1,0 +1,101 @@
+---
+import Icon from './Icon.astro';
+import type { IconName } from './icons';
+
+interface Props {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  /** Erstes Bild im Viewport eifrig laden, alle anderen lazy. */
+  eager?: boolean;
+  /** Icon des Platzhalters, solange das Foto noch fehlt. */
+  placeholderIcon?: IconName;
+  placeholderText?: string;
+  class?: string;
+}
+
+const {
+  src,
+  alt,
+  width,
+  height,
+  eager = false,
+  placeholderIcon = 'sparkle',
+  placeholderText,
+  class: className,
+} = Astro.props;
+---
+
+<!--
+  Fotos liegen unter public/images/ und sind noch Platzhalter. Fehlt eine
+  Datei, entfernt sich das <img> selbst und der gestaltete Platzhalter
+  bleibt stehen – statt eines kaputten Bild-Icons.
+-->
+<div
+  class:list={['photo', className]}
+  style={`--photo-ratio:${width} / ${height}`}
+  data-photo
+>
+  <div class="photo__placeholder" aria-hidden="true">
+    <Icon name={placeholderIcon} size={30} />
+    {placeholderText && <span>{placeholderText}</span>}
+  </div>
+  <img
+    src={src}
+    alt={alt}
+    width={width}
+    height={height}
+    loading={eager ? 'eager' : 'lazy'}
+    decoding="async"
+    fetchpriority={eager ? 'high' : undefined}
+  />
+</div>
+
+<style>
+  .photo {
+    position: relative;
+    aspect-ratio: var(--photo-ratio);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--c-tint-green);
+    isolation: isolate;
+  }
+
+  .photo__placeholder {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: var(--sp-2);
+    padding: var(--sp-4);
+    text-align: center;
+    color: var(--c-primary-light);
+    background: linear-gradient(135deg, var(--c-tint-green), var(--c-surface-sunken));
+  }
+  .photo__placeholder span {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    opacity: 0.75;
+  }
+
+  .photo img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+</style>
+
+<script>
+  // Fehlende Bilddateien ausblenden, damit der Platzhalter greift.
+  document.querySelectorAll<HTMLImageElement>('[data-photo] img').forEach((img) => {
+    const hide = () => img.remove();
+    if (img.complete && img.naturalWidth === 0) hide();
+    img.addEventListener('error', hide, { once: true });
+  });
+</script>

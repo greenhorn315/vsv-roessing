@@ -1,0 +1,212 @@
+---
+import Icon from './Icon.astro';
+import Photo from './Photo.astro';
+import { site, slogan, clubAge } from '../data/site';
+import { sports } from '../data/sports';
+
+const sportNames = sports.map((s) => s.name).join(', ');
+---
+
+<section class="hero">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <p class="hero-badge">
+        <span class="hero-badge__dot" aria-hidden="true"></span>
+        {clubAge} Jahre {site.shortName}
+      </p>
+      <h1>{slogan}</h1>
+      <p class="lead">
+        {sportNames} – für Kinder, Jugendliche, Familien und Erwachsene.
+        Schon ab <strong>4&nbsp;€ im Monat</strong> dabei.
+      </p>
+      <div class="hero-ctas">
+        <a class="btn btn--primary" href="/mitglied-werden">
+          <Icon name="join" />
+          Jetzt Mitglied werden
+        </a>
+        <a class="btn btn--secondary" href="/kontakt#probetraining">
+          <Icon name="sport" />
+          Probetraining vereinbaren
+        </a>
+      </div>
+      <p class="hero-note">
+        <Icon name="check" size={16} />
+        Probetraining kostenlos &amp; unverbindlich – einfach vorbeikommen.
+      </p>
+    </div>
+
+    <div class="hero-media">
+      <Photo
+        src="/images/hero.jpg"
+        alt="Mitglieder der VSV Rössing beim gemeinsamen Training"
+        width={800}
+        height={1000}
+        eager
+        placeholderIcon="sport"
+        placeholderText="Vereinsfoto folgt"
+        class="hero-photo"
+      />
+      <svg class="hero-swoosh" viewBox="0 0 200 200" aria-hidden="true">
+        <path
+          d="M10 190 C 10 100, 100 100, 100 10"
+          fill="none"
+          stroke="var(--c-accent)"
+          stroke-width="12"
+          stroke-linecap="round"
+        />
+      </svg>
+      <p class="hero-stamp">
+        <strong>seit</strong>
+        <span>{site.founded}</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: clamp(2.5rem, 1rem + 5vw, 4.5rem) 0;
+    overflow-x: clip;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: center;
+  }
+
+  .hero-copy > :global(*) {
+    animation: rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  }
+  .hero-copy > :global(*:nth-child(2)) { animation-delay: 0.08s; }
+  .hero-copy > :global(*:nth-child(3)) { animation-delay: 0.16s; }
+  .hero-copy > :global(*:nth-child(4)) { animation-delay: 0.24s; }
+  .hero-copy > :global(*:nth-child(5)) { animation-delay: 0.32s; }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(14px); }
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--c-primary);
+    color: #fff;
+    padding: 0.35rem 0.9rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin: 0 0 var(--sp-4);
+  }
+  .hero-badge__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--c-sun);
+  }
+
+  .hero h1 {
+    max-width: 15ch;
+    margin-bottom: var(--sp-4);
+  }
+
+  .hero .lead strong {
+    color: var(--c-text);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: var(--sp-3);
+    flex-wrap: wrap;
+    margin-top: var(--sp-6);
+  }
+
+  .hero-note {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin: var(--sp-4) 0 0;
+    font-size: 0.9rem;
+    color: var(--c-text-muted);
+  }
+  .hero-note :global(.icon) {
+    color: var(--c-primary-light);
+    stroke-width: 2.5;
+  }
+
+  .hero-media {
+    position: relative;
+  }
+
+  .hero-media :global(.hero-photo) {
+    /* Bogenform als wiedererkennbares Gestaltungselement. */
+    border-radius: clamp(80px, 18vw, 180px) var(--radius-lg) var(--radius-lg)
+      var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .hero-swoosh {
+    position: absolute;
+    left: -38px;
+    bottom: -28px;
+    width: 190px;
+    height: 190px;
+    z-index: -1;
+    opacity: 0.9;
+  }
+
+  .hero-stamp {
+    position: absolute;
+    right: -12px;
+    bottom: 26px;
+    margin: 0;
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    background: var(--c-sun);
+    color: #3F2E00;
+    display: grid;
+    place-content: center;
+    text-align: center;
+    line-height: 1.1;
+    box-shadow: var(--shadow-md);
+    font-family: var(--font-display);
+  }
+  .hero-stamp strong {
+    display: block;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+  }
+  .hero-stamp span {
+    font-size: 1.35rem;
+    font-weight: 700;
+  }
+
+  @media (max-width: 940px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+    }
+    .hero-media {
+      order: -1;
+      max-width: 520px;
+    }
+    .hero-media :global(.hero-photo) {
+      aspect-ratio: 16 / 10 !important;
+      border-radius: var(--radius-lg);
+    }
+    .hero-swoosh { display: none; }
+    .hero-stamp {
+      right: -8px;
+      bottom: -18px;
+      width: 72px;
+      height: 72px;
+    }
+    .hero h1 { max-width: 20ch; }
+  }
+</style>

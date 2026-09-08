@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout title="Impressum" description="Impressum des VSV Rössing von 1897 e.V.">
+  <PageHeader title="Impressum" />
+  <section class="section legal">
+    <div class="container">
+      <p class="todo">
+        <strong>Noch zu übernehmen:</strong> Das Impressum der bestehenden
+        Website vsv-roessing.de wird hier unverändert eingepflegt
+        (Pflichtangaben nach § 5 DDG / § 18 MStV).
+      </p>
+
+      <h2>Angaben gemäß § 5 DDG</h2>
+      <p>
+        {site.name}<br />
+        {site.address.postalCode} {site.address.city}
+      </p>
+
+      <h2>Vertreten durch</h2>
+      <p>Der Vorstand im Sinne des § 26 BGB – Namen werden ergänzt.</p>
+
+      <h2>Kontakt</h2>
+      <p>E-Mail: <a href={`mailto:${site.email}`}>{site.email}</a></p>
+
+      <h2>Registereintrag</h2>
+      <p>Vereinsregister und Registernummer werden ergänzt.</p>
+
+      <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+      <p>Wird ergänzt.</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal .container { max-width: 720px; }
+  .legal h2 { font-size: var(--step-1); margin-top: var(--sp-6); }
+  .todo {
+    background: var(--c-sun-soft);
+    border: 1px dashed #D8B44A;
+    color: #5E4A0C;
+    padding: 0.9rem 1.1rem;
+    border-radius: var(--radius-sm);
+  }
+</style>

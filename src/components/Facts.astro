@@ -1,0 +1,69 @@
+---
+import { facts } from '../data/site';
+---
+
+<section class="facts" aria-label="Der Verein in Zahlen">
+  <div class="container">
+    <dl class="facts-row">
+      {
+        facts.map((fact) => (
+          <div class="fact">
+            <dt>{fact.label}</dt>
+            <dd>{fact.value}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>
+
+<style>
+  .facts {
+    background: var(--c-primary);
+    color: #fff;
+    margin-top: var(--section-y);
+    padding-block: var(--sp-6);
+  }
+
+  .facts-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--sp-5);
+    margin: 0;
+  }
+
+  .fact {
+    padding-right: var(--sp-5);
+    border-right: 1px solid rgba(255, 255, 255, 0.18);
+    /* Zahl optisch zuerst, semantisch bleibt dt (Label) vorn. */
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 0.15rem;
+  }
+  .fact:last-child {
+    border-right: none;
+  }
+
+  .fact dt {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  .fact dd {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.2rem);
+    font-weight: 600;
+    line-height: 1.05;
+  }
+
+  @media (max-width: 720px) {
+    .facts-row {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--sp-4) var(--sp-3);
+    }
+    .fact:nth-child(2n) {
+      border-right: none;
+    }
+  }
+</style>

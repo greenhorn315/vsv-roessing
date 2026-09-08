@@ -1,0 +1,64 @@
+---
+import Icon from './Icon.astro';
+import Photo from './Photo.astro';
+import { site } from '../data/site';
+
+const shots = [1, 2, 3, 4];
+---
+
+<div class="social">
+  <div class="social__grid">
+    {
+      shots.map((n) => (
+        <a
+          class="social__item"
+          href={site.social.instagram.url}
+          rel="noopener"
+          aria-label={`Beitrag ${n} auf Instagram ansehen`}
+        >
+          <Photo
+            src={`/images/social-${n}.jpg`}
+            alt=""
+            width={400}
+            height={400}
+            placeholderIcon="camera"
+          />
+        </a>
+      ))
+    }
+  </div>
+  <a class="btn btn--secondary social__cta" href={site.social.instagram.url} rel="noopener">
+    <Icon name="instagram" />
+    {site.social.instagram.handle} folgen
+  </a>
+</div>
+
+<style>
+  .social__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--sp-3);
+  }
+
+  .social__item {
+    display: block;
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .social__item:hover,
+  .social__item:focus-visible {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .social__cta {
+    margin-top: var(--sp-5);
+  }
+
+  @media (max-width: 700px) {
+    .social__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

@@ -1,0 +1,112 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Facts from '../components/Facts.astro';
+import SportGrid from '../components/SportGrid.astro';
+import Audiences from '../components/Audiences.astro';
+import Membership from '../components/Membership.astro';
+import NewsList from '../components/NewsList.astro';
+import TrainingList from '../components/TrainingList.astro';
+import Testimonials from '../components/Testimonials.astro';
+import SocialStrip from '../components/SocialStrip.astro';
+import CallToAction from '../components/CallToAction.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout title={`${site.shortName} – Dein Verein, dein Sport`} bareTitle>
+  <Hero />
+  <Facts />
+
+  <section class="section" id="sportangebote">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Sportangebote</p>
+        <h2>Für jede und jeden das passende Angebot</h2>
+        <p>
+          Acht Sportarten, ein Verein. Klick dich direkt zu dem, was dich
+          interessiert – Trainingszeiten und Ansprechpartner findest du auf
+          jeder Sparten-Seite.
+        </p>
+      </div>
+      <div class="reveal">
+        <SportGrid />
+      </div>
+    </div>
+  </section>
+
+  <section class="section--tight">
+    <div class="container">
+      <Audiences />
+    </div>
+  </section>
+
+  <section class="section" id="mitgliedschaft">
+    <div class="container">
+      <Membership compact />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container split">
+      <div class="reveal">
+        <div class="section-head" style="margin-bottom:var(--sp-5)">
+          <h2>Aktuelles aus dem Verein</h2>
+        </div>
+        <NewsList limit={3} />
+      </div>
+      <div class="reveal">
+        <div class="section-head" style="margin-bottom:var(--sp-5)">
+          <h2>Nächste Trainingszeiten</h2>
+        </div>
+        <TrainingList />
+        <a class="btn btn--ghost" href="/sportangebote" style="margin-top:var(--sp-4)">
+          Alle Trainingszeiten
+          <Icon name="arrowRight" size={16} />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Stimmen aus dem Verein</p>
+        <h2>Warum unsere Mitglieder bleiben</h2>
+      </div>
+      <Testimonials />
+    </div>
+  </section>
+
+  <CallToAction />
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Social</p>
+        <h2>Folg uns auf Instagram</h2>
+        <p>
+          Trainingsausschnitte, Turnierergebnisse und Vereinsleben –
+          {site.social.instagram.handle}
+        </p>
+      </div>
+      <div class="reveal">
+        <SocialStrip />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .split {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

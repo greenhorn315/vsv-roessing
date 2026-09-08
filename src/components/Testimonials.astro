@@ -1,0 +1,68 @@
+---
+import Icon from './Icon.astro';
+import { testimonials } from '../data/testimonials';
+---
+
+<div class="quotes">
+  {
+    testimonials.map((item) => (
+      <figure class="quote reveal">
+        <Icon name="quote" size={34} class="quote__mark" strokeWidth={0} />
+        <blockquote>
+          <p>{item.text}</p>
+        </blockquote>
+        <figcaption>
+          {item.author}
+          <span>{item.role}</span>
+        </figcaption>
+      </figure>
+    ))
+  }
+</div>
+
+<style>
+  .quotes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: clamp(2rem, 4vw, 3rem);
+  }
+
+  .quote {
+    margin: 0;
+  }
+  /* Versetzte Anordnung gibt der Sektion Rhythmus. */
+  @media (min-width: 760px) {
+    .quote:nth-child(even) {
+      padding-top: 3rem;
+    }
+  }
+
+  .quote :global(.quote__mark) {
+    color: var(--c-accent);
+    margin-bottom: var(--sp-3);
+  }
+
+  .quote blockquote {
+    margin: 0;
+  }
+  .quote blockquote p {
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-weight: 500;
+    color: var(--c-text);
+    line-height: 1.4;
+    margin: 0 0 var(--sp-3);
+    text-wrap: pretty;
+  }
+
+  .quote figcaption {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--c-primary);
+  }
+  .quote figcaption span {
+    display: block;
+    font-weight: 400;
+    color: var(--c-text-muted);
+  }
+</style>

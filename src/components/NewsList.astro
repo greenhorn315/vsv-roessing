@@ -1,0 +1,82 @@
+---
+import { news } from '../data/news';
+
+interface Props {
+  limit?: number;
+}
+
+const { limit = news.length } = Astro.props;
+const items = news.slice(0, limit);
+
+const dayFormat = new Intl.DateTimeFormat('de-DE', { day: '2-digit' });
+const monthFormat = new Intl.DateTimeFormat('de-DE', { month: 'short' });
+const fullFormat = new Intl.DateTimeFormat('de-DE', { dateStyle: 'long' });
+---
+
+<ul class="news">
+  {
+    items.map((item) => {
+      const date = new Date(item.date);
+      return (
+        <li class="news-item">
+          <time class="news-date" datetime={item.date}>
+            <span class="visually-hidden">{fullFormat.format(date)}</span>
+            <strong aria-hidden="true">{dayFormat.format(date)}</strong>
+            <span aria-hidden="true">{monthFormat.format(date)}</span>
+          </time>
+          <div>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </div>
+        </li>
+      );
+    })
+  }
+</ul>
+
+<style>
+  .news {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .news-item {
+    display: flex;
+    gap: var(--sp-4);
+    padding-block: var(--sp-4);
+    border-top: 1px solid var(--c-border);
+  }
+  .news-item:last-child {
+    border-bottom: 1px solid var(--c-border);
+  }
+
+  .news-date {
+    flex-shrink: 0;
+    width: 58px;
+    text-align: center;
+    font-family: var(--font-display);
+    color: var(--c-primary);
+    line-height: 1.1;
+  }
+  .news-date strong {
+    display: block;
+    font-size: 1.45rem;
+  }
+  .news-date > span[aria-hidden] {
+    font-size: 0.74rem;
+    color: var(--c-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .news-item h3 {
+    margin: 0 0 0.25rem;
+    font-size: 1.05rem;
+    color: var(--c-text);
+  }
+  .news-item p {
+    margin: 0;
+    font-size: 0.94rem;
+    color: var(--c-text-muted);
+  }
+</style>

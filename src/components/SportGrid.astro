@@ -1,0 +1,205 @@
+---
+import Icon from './Icon.astro';
+import { sports, ageGroupLabels, type AgeGroup } from '../data/sports';
+
+interface Props {
+  /** Filterleiste nach Altersgruppen anzeigen (Sportangebote-Seite). */
+  withFilter?: boolean;
+  /** Beschreibungstext auf den Karten anzeigen. */
+  detailed?: boolean;
+}
+
+const { withFilter = false, detailed = false } = Astro.props;
+const groups = Object.keys(ageGroupLabels) as AgeGroup[];
+---
+
+{
+  withFilter && (
+    <div class="filter" data-sport-filter>
+      <span class="filter__label" id="filterLabel">
+        Passend für
+      </span>
+      <div class="filter__options" role="group" aria-labelledby="filterLabel">
+        <button type="button" class="chip is-active" data-filter="alle" aria-pressed="true">
+          Alle
+        </button>
+        {groups.map((group) => (
+          <button type="button" class="chip" data-filter={group} aria-pressed="false">
+            {ageGroupLabels[group]}
+          </button>
+        ))}
+      </div>
+      <p class="filter__status" role="status" data-filter-status />
+    </div>
+  )
+}
+
+<ul class="sport-grid" data-sport-list>
+  {
+    sports.map((sport) => (
+      <li data-age-groups={sport.ageGroups.join(' ')}>
+        <a class="sport-card" href={`/sportangebote#${sport.slug}`} style={`--sport-color:${sport.color}`}>
+          <Icon name={sport.icon} size={32} class="sport-card__icon" />
+          <h3>{sport.name}</h3>
+          <p>{detailed ? sport.description : sport.teaser}</p>
+          <span class="sport-card__more">
+            Mehr erfahren
+            <Icon name="arrowRight" size={16} />
+          </span>
+        </a>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .sport-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--sp-4);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .sport-card {
+    height: 100%;
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-left: 5px solid var(--sport-color, var(--c-primary));
+    border-radius: var(--radius);
+    padding: var(--sp-5) var(--sp-4);
+    text-decoration: none;
+    color: var(--c-text);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  }
+  .sport-card:hover,
+  .sport-card:focus-visible {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--sport-color, var(--c-primary));
+  }
+
+  .sport-card :global(.sport-card__icon) {
+    color: var(--sport-color, var(--c-primary));
+    margin-bottom: 0.25rem;
+  }
+
+  .sport-card h3 {
+    font-size: 1.1rem;
+    margin: 0;
+  }
+
+  .sport-card p {
+    font-size: 0.92rem;
+    color: var(--c-text-muted);
+    margin: 0;
+    flex-grow: 1;
+  }
+
+  .sport-card__more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: var(--sp-2);
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--c-accent-ink);
+  }
+  .sport-card:hover .sport-card__more :global(.icon) {
+    transform: translateX(3px);
+  }
+  .sport-card__more :global(.icon) {
+    transition: transform 0.18s ease;
+  }
+
+  /* ---- Filter ---- */
+  .filter {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--sp-3);
+    margin-bottom: var(--sp-5);
+  }
+  .filter__label {
+    font-weight: 600;
+    color: var(--c-text-muted);
+    font-size: 0.9rem;
+  }
+  .filter__options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .chip {
+    min-height: 40px;
+    padding: 0.4rem 1rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--c-border-strong);
+    background: var(--c-surface);
+    color: var(--c-text);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.16s ease, color 0.16s ease, border-color 0.16s ease;
+  }
+  .chip:hover {
+    border-color: var(--c-primary);
+  }
+  .chip.is-active {
+    background: var(--c-primary);
+    border-color: var(--c-primary);
+    color: #fff;
+  }
+  .filter__status {
+    flex-basis: 100%;
+    margin: 0;
+    font-size: 0.86rem;
+    color: var(--c-text-muted);
+  }
+
+  li[hidden] {
+    display: none;
+  }
+</style>
+
+<script>
+  const filter = document.querySelector<HTMLElement>('[data-sport-filter]');
+  const list = document.querySelector<HTMLUListElement>('[data-sport-list]');
+  const status = document.querySelector<HTMLElement>('[data-filter-status]');
+
+  if (filter && list) {
+    const chips = filter.querySelectorAll<HTMLButtonElement>('.chip');
+    const items = list.querySelectorAll<HTMLLIElement>('li');
+
+    filter.addEventListener('click', (event) => {
+      const chip = (event.target as HTMLElement).closest<HTMLButtonElement>('.chip');
+      if (!chip) return;
+
+      const value = chip.dataset.filter ?? 'alle';
+      chips.forEach((c) => {
+        const active = c === chip;
+        c.classList.toggle('is-active', active);
+        c.setAttribute('aria-pressed', String(active));
+      });
+
+      let visible = 0;
+      items.forEach((item) => {
+        const groups = (item.dataset.ageGroups ?? '').split(' ');
+        const show = value === 'alle' || groups.includes(value);
+        item.hidden = !show;
+        if (show) visible++;
+      });
+
+      if (status) {
+        status.textContent =
+          value === 'alle'
+            ? `${visible} Sportarten – alle Altersgruppen`
+            : `${visible} von ${items.length} Sportarten passen zu dieser Auswahl`;
+      }
+    });
+  }
+</script>

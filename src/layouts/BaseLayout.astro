@@ -1,0 +1,120 @@
+---
+import '@fontsource-variable/fraunces/wght.css';
+import '@fontsource-variable/source-sans-3/wght.css';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site';
+
+interface Props {
+  title: string;
+  description?: string;
+  /** Seitentitel ohne Vereinsname anhängen (z. B. für die Startseite). */
+  bareTitle?: boolean;
+  ogImage?: string;
+}
+
+const {
+  title,
+  description = site.description,
+  bareTitle = false,
+  ogImage = '/og-default.png',
+} = Astro.props;
+
+const fullTitle = bareTitle ? title : `${title} – ${site.shortName}`;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://vsv-roessing.de');
+const ogImageUrl = new URL(ogImage, Astro.site ?? 'https://vsv-roessing.de');
+
+/** Strukturierte Daten für Suchmaschinen und Google-Vereinsprofil. */
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SportsClub',
+  name: site.name,
+  alternateName: site.shortName,
+  foundingDate: String(site.founded),
+  description: site.description,
+  url: canonical.origin,
+  email: site.email,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: site.address.city,
+    postalCode: site.address.postalCode,
+    addressCountry: site.address.country,
+  },
+  sport: [
+    'Fußball',
+    'Volleyball',
+    'Leichtathletik',
+    'Turnen',
+    'Basketball',
+    'Tanzen',
+    'Wandern',
+    'Dart',
+  ],
+};
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical.href} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#14453D" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical.href} />
+    <meta property="og:image" content={ogImageUrl.href} />
+    <meta property="og:locale" content="de_DE" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <script is:inline>
+      // Markiert früh, dass JavaScript läuft – nur dann werden
+      // Scroll-Animationen überhaupt aktiv (kein Flash ohne JS).
+      document.documentElement.classList.add('js');
+    </script>
+
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Zum Inhalt springen</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      // Sanftes Einblenden von Sektionen beim Scrollen.
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const targets = document.querySelectorAll<HTMLElement>('.reveal');
+
+      if (prefersReduced || !('IntersectionObserver' in window)) {
+        targets.forEach((el) => el.classList.add('is-visible'));
+      } else {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+              }
+            }
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.05 }
+        );
+        targets.forEach((el) => observer.observe(el));
+      }
+    </script>
+  </body>
+</html>

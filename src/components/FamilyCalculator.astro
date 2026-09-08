@@ -1,0 +1,171 @@
+---
+import { calculator } from '../data/membership';
+---
+
+<div class="calc" id="familienrechner">
+  <h3 class="calc__title">Familienrechner</h3>
+  <p class="calc__intro">
+    Wie viele Personen aus eurem Haushalt sollen Mitglied werden?
+  </p>
+
+  <label class="calc__label" for="famSize">Anzahl Personen</label>
+  <input
+    type="range"
+    id="famSize"
+    name="famSize"
+    min="1"
+    max="5"
+    value="2"
+    step="1"
+    list="famTicks"
+    aria-describedby="famSizeLabel"
+    data-single-rate={calculator.singleRate}
+    data-family-base={calculator.familyBase}
+    data-family-step={calculator.familyStep}
+    data-family-cap={calculator.familyCap}
+  />
+  <datalist id="famTicks">
+    <option value="1" label="1"></option>
+    <option value="2" label="2"></option>
+    <option value="3" label="3"></option>
+    <option value="4" label="4"></option>
+    <option value="5" label="5+"></option>
+  </datalist>
+  <p class="calc__hint" id="famSizeLabel">2 Personen (z.&nbsp;B. 1 Erwachsener + 1 Kind)</p>
+
+  <!-- aria-live: Screenreader bekommen das neue Ergebnis mit. -->
+  <output class="calc__result" for="famSize" aria-live="polite">
+    <strong id="famResult">10 € / Monat</strong>
+    <span id="famNote">statt 12 € einzeln gerechnet</span>
+  </output>
+
+  <p class="calc__disclaimer">
+    Richtwerte auf Basis der Beitragsordnung – verbindlich ist der Beitrag
+    laut Aufnahmeantrag.
+  </p>
+</div>
+
+<style>
+  .calc {
+    background: var(--c-bg);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+    padding: clamp(1.5rem, 3vw, 2rem);
+  }
+
+  .calc__title {
+    font-size: var(--step-1);
+    margin-bottom: 0.25rem;
+  }
+
+  .calc__intro {
+    font-size: 0.94rem;
+    color: var(--c-text-muted);
+    margin-bottom: var(--sp-5);
+  }
+
+  .calc__label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.86rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--c-text-muted);
+    margin-bottom: var(--sp-2);
+  }
+
+  input[type='range'] {
+    width: 100%;
+    accent-color: var(--c-accent-ink);
+    height: 32px;
+    cursor: pointer;
+  }
+
+  datalist {
+    display: flex;
+    justify-content: space-between;
+    padding-inline: 2px;
+    font-size: 0.75rem;
+    color: var(--c-text-muted);
+    writing-mode: horizontal-tb;
+  }
+
+  .calc__hint {
+    margin: var(--sp-2) 0 0;
+    font-size: 0.9rem;
+    color: var(--c-text-muted);
+  }
+
+  .calc__result {
+    display: block;
+    margin-top: var(--sp-4);
+    padding: var(--sp-4);
+    background: var(--c-primary);
+    color: #fff;
+    border-radius: var(--radius);
+  }
+  .calc__result strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    line-height: 1.1;
+  }
+  .calc__result span {
+    font-size: 0.86rem;
+    color: rgba(255, 255, 255, 0.82);
+  }
+
+  .calc__disclaimer {
+    margin: var(--sp-4) 0 0;
+    font-size: 0.8rem;
+    color: var(--c-text-muted);
+  }
+</style>
+
+<script>
+  const slider = document.getElementById('famSize') as HTMLInputElement | null;
+  const hint = document.getElementById('famSizeLabel');
+  const result = document.getElementById('famResult');
+  const note = document.getElementById('famNote');
+
+  if (slider && hint && result && note) {
+    const singleRate = Number(slider.dataset.singleRate);
+    const familyBase = Number(slider.dataset.familyBase);
+    const familyStep = Number(slider.dataset.familyStep);
+    const familyCap = Number(slider.dataset.familyCap);
+
+    const euro = new Intl.NumberFormat('de-DE', {
+      style: 'currency',
+      currency: 'EUR',
+      maximumFractionDigits: 0,
+    });
+
+    const labels: Record<number, string> = {
+      1: '1 Person',
+      2: '2 Personen (z. B. 1 Erwachsener + 1 Kind)',
+      3: '3 Personen',
+      4: '4 Personen',
+      5: '5 Personen oder mehr',
+    };
+
+    const update = () => {
+      const n = Number(slider.value);
+      hint.textContent = labels[n];
+
+      const familyTotal =
+        n === 1 ? singleRate : Math.min(familyBase + (n - 2) * familyStep, familyCap);
+      const singleTotal = n * singleRate;
+
+      result.textContent = `${euro.format(familyTotal)} / Monat`;
+      note.textContent =
+        n === 1
+          ? 'Einzelbeitrag'
+          : `statt ${euro.format(singleTotal)} einzeln gerechnet – ihr spart ${euro.format(
+              singleTotal - familyTotal
+            )} pro Monat`;
+    };
+
+    slider.addEventListener('input', update);
+    update();
+  }
+</script>

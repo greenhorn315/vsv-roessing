@@ -1,0 +1,118 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Membership from '../components/Membership.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../data/site';
+
+const forms = [
+  { title: 'Aufnahmeantrag', text: 'Für neue Mitglieder – bitte ausgefüllt und unterschrieben zurück.' },
+  { title: 'SEPA-Lastschriftmandat', text: 'Für den jährlichen Beitragseinzug.' },
+  { title: 'Änderung der Bankverbindung', text: 'Wenn sich eure IBAN geändert hat.' },
+  { title: 'Austrittserklärung', text: 'Kündigung zum Ende des Kalenderjahres.' },
+];
+---
+
+<BaseLayout
+  title="Mitglied werden"
+  description="Mitglied beim VSV Rössing werden: Beiträge ab 4 € im Monat, gedeckelter Familienbeitrag, Formulare zum Download und kostenloses Probetraining."
+>
+  <PageHeader
+    eyebrow="Mitglied werden"
+    title="Dabei sein kostet weniger, als du denkst"
+    lead="Kinder ab 4 € im Monat, Familien gedeckelt – und vorher könnt ihr jede Sportart kostenlos ausprobieren."
+  />
+
+  <section class="section">
+    <div class="container">
+      <Membership />
+    </div>
+  </section>
+
+  <section class="section--tight" id="formulare">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Formulare &amp; Downloads</p>
+        <h2>Alle Unterlagen an einem Ort</h2>
+        <p>
+          Die PDFs werden beim Livegang hinterlegt. Bis dahin schickt der
+          Vorstand sie auf Anfrage per E-Mail.
+        </p>
+      </div>
+
+      <ul class="forms">
+        {
+          forms.map((form) => (
+            <li class="form-card">
+              <Icon name="download" size={22} class="form-card__icon" />
+              <div>
+                <h3>{form.title}</h3>
+                <p>{form.text}</p>
+              </div>
+              <span class="form-card__badge">PDF folgt</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="forms__hint">
+        <Icon name="mail" size={17} />
+        Unterlagen anfordern: <a href={`mailto:${site.email}`}>{site.email}</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .forms {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--sp-4);
+  }
+  .form-card {
+    display: flex;
+    align-items: start;
+    gap: var(--sp-4);
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius);
+    padding: var(--sp-5);
+  }
+  .form-card :global(.form-card__icon) {
+    color: var(--c-primary-light);
+    margin-top: 0.15rem;
+  }
+  .form-card h3 {
+    font-size: 1.02rem;
+    margin: 0 0 0.2rem;
+    color: var(--c-text);
+  }
+  .form-card p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--c-text-muted);
+  }
+  .form-card__badge {
+    margin-left: auto;
+    align-self: center;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--radius-pill);
+    background: var(--c-sun-soft);
+    color: #6B5400;
+    white-space: nowrap;
+  }
+  .forms__hint {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: var(--sp-5);
+    color: var(--c-text-muted);
+  }
+</style>

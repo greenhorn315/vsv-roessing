@@ -1,0 +1,201 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../data/site';
+import { sports } from '../data/sports';
+---
+
+<BaseLayout
+  title="Kontakt"
+  description="Kontakt zum VSV Rössing von 1897: Probetraining anfragen, Anfahrt zur Alfred-Stubenrauch-Sporthalle und zum VSV-Sportplatz."
+>
+  <PageHeader
+    eyebrow="Kontakt"
+    title="Schreib uns einfach"
+    lead="Egal ob Probetraining, Mitgliedschaft oder eine Frage zum Verein – wir melden uns in der Regel innerhalb weniger Tage."
+  />
+
+  <section class="section">
+    <div class="container contact-grid">
+      <div class="form-wrap" id="probetraining">
+        <h2>Probetraining anfragen</h2>
+        <p class="form-note">
+          <Icon name="info" size={17} />
+          Das Formular ist noch nicht angebunden – bis dahin führt „Absenden"
+          direkt in euer E-Mail-Programm.
+        </p>
+
+        <form
+          class="contact-form"
+          action={`mailto:${site.email}`}
+          method="post"
+          enctype="text/plain"
+        >
+          <div class="field">
+            <label for="name">Name <span aria-hidden="true">*</span></label>
+            <input type="text" id="name" name="name" autocomplete="name" required />
+          </div>
+
+          <div class="field">
+            <label for="email">E-Mail <span aria-hidden="true">*</span></label>
+            <input type="email" id="email" name="email" autocomplete="email" required />
+          </div>
+
+          <div class="field">
+            <label for="sportart">Welche Sportart interessiert dich?</label>
+            <select id="sportart" name="sportart">
+              <option value="">Bitte auswählen</option>
+              {sports.map((sport) => <option value={sport.name}>{sport.name}</option>)}
+              <option value="Noch unsicher">Noch unsicher</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="nachricht">Nachricht</label>
+            <textarea id="nachricht" name="nachricht" rows="5"></textarea>
+          </div>
+
+          <p class="privacy">
+            Mit dem Absenden stimmst du zu, dass wir deine Angaben zur
+            Bearbeitung der Anfrage verwenden. Details in der
+            <a href="/datenschutz">Datenschutzerklärung</a>.
+          </p>
+
+          <button class="btn btn--primary" type="submit">
+            <Icon name="mail" />
+            Anfrage senden
+          </button>
+        </form>
+      </div>
+
+      <aside class="contact-aside">
+        <h2 class="visually-hidden">Kontaktdaten</h2>
+
+        <div class="info-card">
+          <Icon name="mail" size={20} class="info-card__icon" />
+          <h3>E-Mail</h3>
+          <p><a href={`mailto:${site.email}`}>{site.email}</a></p>
+        </div>
+
+        <div class="info-card">
+          <Icon name="pin" size={20} class="info-card__icon" />
+          <h3>Sportstätten</h3>
+          <p>
+            {site.address.venue}<br />
+            {site.address.postalCode} {site.address.city}
+          </p>
+          <p class="info-card__hint">Parkplätze direkt an Halle und Platz.</p>
+        </div>
+
+        <div class="info-card">
+          <Icon name="instagram" size={20} class="info-card__icon" />
+          <h3>Social Media</h3>
+          <p>
+            <a href={site.social.instagram.url} rel="noopener">
+              {site.social.instagram.handle} auf Instagram
+            </a>
+          </p>
+        </div>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1.25fr 0.75fr;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .contact-grid { grid-template-columns: 1fr; }
+  }
+
+  .form-wrap {
+    background: var(--c-surface);
+    border-radius: var(--radius-lg);
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .form-note {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.88rem;
+    color: #5E4A0C;
+    background: var(--c-sun-soft);
+    border-radius: var(--radius-sm);
+    padding: 0.7rem 1rem;
+    margin-bottom: var(--sp-5);
+  }
+
+  .field {
+    margin-bottom: var(--sp-4);
+  }
+  .field label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.92rem;
+    margin-bottom: 0.35rem;
+  }
+  .field label span {
+    color: var(--c-accent-ink);
+  }
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid var(--c-border-strong);
+    border-radius: var(--radius-sm);
+    background: var(--c-bg);
+    transition: border-color 0.16s ease, box-shadow 0.16s ease;
+  }
+  .field textarea {
+    resize: vertical;
+  }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    border-color: var(--c-primary);
+    box-shadow: 0 0 0 3px rgba(47, 122, 100, 0.18);
+    outline: none;
+  }
+
+  .privacy {
+    font-size: 0.82rem;
+    color: var(--c-text-muted);
+  }
+
+  .contact-aside {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+  }
+  .info-card {
+    background: var(--c-tint-green);
+    border-radius: var(--radius);
+    padding: var(--sp-5);
+  }
+  .info-card :global(.info-card__icon) {
+    color: var(--c-primary);
+    margin-bottom: var(--sp-2);
+  }
+  .info-card h3 {
+    font-size: 1rem;
+    margin: 0 0 0.3rem;
+  }
+  .info-card p {
+    margin: 0;
+    font-size: 0.94rem;
+    color: var(--c-text-muted);
+  }
+  .info-card__hint {
+    margin-top: 0.5rem !important;
+    font-size: 0.85rem !important;
+  }
+</style>

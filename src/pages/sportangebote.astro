@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SportGrid from '../components/SportGrid.astro';
+import TrainingList from '../components/TrainingList.astro';
+import CallToAction from '../components/CallToAction.astro';
+---
+
+<BaseLayout
+  title="Sportangebote"
+  description="Acht Sportarten beim VSV Rössing von 1897: Fußball, Volleyball, Leichtathletik, Turnen, Basketball, Tanzen, Outdoor und Dart – für Kinder, Jugendliche und Erwachsene."
+>
+  <PageHeader
+    eyebrow="Sportangebote"
+    title="Acht Sportarten, ein Verein"
+    lead="Filtere nach Altersgruppe und finde in wenigen Sekunden das passende Angebot. Bei jeder Sparte gilt: Das erste Training ist kostenlos und unverbindlich."
+  />
+
+  <section class="section">
+    <div class="container">
+      <SportGrid withFilter detailed />
+    </div>
+  </section>
+
+  <section class="section--tight">
+    <div class="container narrow">
+      <div class="section-head">
+        <h2>Trainingszeiten im Überblick</h2>
+        <p>Änderungen in den Ferien geben wir über Instagram und die Gruppen bekannt.</p>
+      </div>
+      <TrainingList />
+    </div>
+  </section>
+
+  <CallToAction />
+</BaseLayout>
+
+<style>
+  .narrow {
+    max-width: 720px;
+  }
+</style>

@@ -1,0 +1,12 @@
+{
+  // Deployment als Cloudflare Worker mit statischen Assets.
+  // Alternativ kann das Repo direkt in Cloudflare Pages verknüpft werden
+  // (Build-Befehl: "npm run build", Output-Verzeichnis: "dist").
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "vsv-roessing",
+  "compatibility_date": "2026-09-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
+}

@@ -1,0 +1,121 @@
+---
+import Icon from './Icon.astro';
+
+const panels = [
+  {
+    variant: 'families',
+    icon: 'users' as const,
+    title: 'Für Familien',
+    lead: 'Mehrere Kinder, ein fairer Beitrag. Und ihr wisst immer, was diese Woche ansteht.',
+    points: [
+      'Gedeckelter Familienbeitrag, egal wie viele Kinder mitmachen',
+      'Kompakte Trainingsübersicht statt vollem Eventkalender',
+      'Parkplätze direkt an Sporthalle & Sportplatz',
+    ],
+    cta: { label: 'Familienbeitrag ansehen', href: '/mitglied-werden#familienrechner' },
+  },
+  {
+    variant: 'youth',
+    icon: 'sparkle' as const,
+    title: 'Für Jugendliche & junge Erwachsene',
+    lead: 'Unverbindlich reinschnuppern, deine Crew treffen, dabei bleiben.',
+    points: [
+      'Kostenloses, unverbindliches Probetraining',
+      'Community-Austausch über WhatsApp',
+      'Aktuelle Einblicke auf Instagram',
+    ],
+    cta: { label: 'Probetraining anfragen', href: '/kontakt#probetraining' },
+  },
+];
+---
+
+<div class="audience-grid">
+  {
+    panels.map((panel) => (
+      <article class:list={['audience', `audience--${panel.variant}`, 'reveal']}>
+        <span class="audience__icon" aria-hidden="true">
+          <Icon name={panel.icon} size={22} />
+        </span>
+        <h3>{panel.title}</h3>
+        <p>{panel.lead}</p>
+        <ul>
+          {panel.points.map((point) => (
+            <li>
+              <Icon name="check" size={17} class="audience__check" />
+              <span>{point}</span>
+            </li>
+          ))}
+        </ul>
+        <a class="btn btn--secondary" href={panel.cta.href}>
+          {panel.cta.label}
+        </a>
+      </article>
+    ))
+  }
+</div>
+
+<style>
+  .audience-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--sp-4);
+  }
+
+  .audience {
+    border-radius: var(--radius-lg);
+    padding: clamp(1.75rem, 3vw, 2.5rem);
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+  }
+  .audience--families { background: var(--c-tint-green); }
+  .audience--youth { background: var(--c-tint-coral); }
+
+  .audience__icon {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--c-surface);
+    color: var(--c-primary);
+    margin-bottom: var(--sp-4);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .audience h3 {
+    font-size: var(--step-2);
+    margin-bottom: var(--sp-2);
+  }
+
+  .audience p {
+    color: var(--c-text-muted);
+    margin-bottom: var(--sp-4);
+  }
+
+  .audience ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--sp-6);
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .audience li {
+    display: flex;
+    align-items: start;
+    gap: 0.6rem;
+    line-height: 1.45;
+  }
+  .audience :global(.audience__check) {
+    color: var(--c-primary-light);
+    stroke-width: 2.6;
+    margin-top: 0.2rem;
+  }
+
+  .audience .btn--secondary {
+    margin-top: auto;
+    background: var(--c-surface);
+    border-color: transparent;
+  }
+</style>
