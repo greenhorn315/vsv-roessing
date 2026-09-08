@@ -5,21 +5,14 @@
  * verweist (seit 2024 DDG bzw. seit 2020 MStV). Wird das Original
  * aktualisiert, gehört die Änderung auch hierher.
  *
- * Die Seite rendert die Blöcke der Reihe nach:
- *   heading  – Überschrift (level 2 = Abschnitt, 3 = Unterabschnitt)
- *   lines    – ein Absatz, dessen Einträge durch Zeilenumbrüche getrennt sind
- *   text     – ein Fließtextabsatz
- * E-Mail-Adressen und Telefonnummern werden automatisch verlinkt.
+ * Aufbau der Blöcke: siehe LegalBlock in legal.ts.
  */
 
-export type ImpressumBlock =
-  | { type: 'heading'; level: 2 | 3; text: string }
-  | { type: 'lines'; lines: string[] }
-  | { type: 'text'; text: string };
+import type { LegalBlock } from './legal';
 
 export const intro = 'Verantwortlich für den Inhalt dieser Seite:';
 
-export const blocks: ImpressumBlock[] = [
+export const blocks: LegalBlock[] = [
   { type: 'heading', level: 2, text: 'Angaben gemäß § 5 TMG:' },
   {
     type: 'lines',

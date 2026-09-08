@@ -71,7 +71,16 @@ Synology Web Station gleichermaßen aus.
 - [ ] Fotos in `public/images/` einsetzen (Platzhalter greifen bis dahin automatisch)
 - [ ] Beiträge in `src/data/membership.ts` gegen die Beitragsordnung prüfen
 - [ ] Vorstandsnamen und Vereinschronik in `src/pages/verein.astro`
-- [ ] Impressum und Datenschutzerklärung aus der Altseite übernehmen
+- [x] Impressum und Datenschutzerklärung aus der Altseite übernommen
+      (`src/data/impressum.ts`, `src/data/datenschutz.ts`)
+- [ ] **Datenschutzerklärung inhaltlich überarbeiten.** Der übernommene Text
+      beschreibt die bisherige WordPress-Seite: Kommentarfunktion, Gravatar,
+      Benutzerkonten, Medien-Uploads, Anmelde-Cookies. Nichts davon existiert
+      auf dieser statischen Seite. Umgekehrt fehlen die Punkte, die hier
+      zutreffen: Auslieferung über Cloudflare, lokal eingebundene Schriften,
+      keinerlei Cookies, Kontaktanfragen per E-Mail.
+- [ ] Impressum: Verweise auf TMG und RStV prüfen – seit 2024 gilt das DDG,
+      seit 2020 der MStV. Zuerst im Original anpassen, dann hier nachziehen.
 - [ ] Kontaktformular an einen Versand-Endpunkt anbinden. Aktuell baut das
       Formular nach clientseitiger Prüfung eine fertige `mailto:`-Nachricht.
       Für echten Versand genügt es, im `submit`-Handler in

@@ -1,7 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
-import { site } from '../data/site';
+import LegalContent from '../components/LegalContent.astro';
+import { blocks } from '../data/datenschutz';
 ---
 
 <BaseLayout
@@ -9,65 +10,9 @@ import { site } from '../data/site';
   description="Datenschutzerklärung des VSV Rössing von 1897 e.V."
 >
   <PageHeader title="Datenschutzerklärung" />
-  <section class="section legal">
+  <section class="section">
     <div class="container">
-      <p class="todo">
-        <strong>Noch zu übernehmen:</strong> Die bestehende
-        Datenschutzerklärung wird hier eingepflegt und um die Punkte dieser
-        neuen Website ergänzt.
-      </p>
-
-      <h2>Verantwortliche Stelle</h2>
-      <p>
-        {site.name}<br />
-        {site.address.postalCode} {site.address.city}<br />
-        E-Mail: <a href={`mailto:${site.email}`}>{site.email}</a>
-      </p>
-
-      <h2>Hosting</h2>
-      <p>
-        Diese Website wird als rein statische Seite über Cloudflare
-        ausgeliefert. Beim Abruf werden technisch notwendige Daten
-        (u.&nbsp;a. IP-Adresse, Zeitpunkt, abgerufene Datei) verarbeitet.
-      </p>
-
-      <h2>Schriftarten</h2>
-      <p>
-        Die verwendeten Schriften (Fraunces, Source Sans 3) werden lokal vom
-        eigenen Server geladen. Es besteht <strong>keine Verbindung zu Google
-        Fonts</strong>, es werden dafür keine Daten an Dritte übertragen.
-      </p>
-
-      <h2>Cookies und Tracking</h2>
-      <p>
-        Die Website setzt keine Cookies und bindet kein Analyse- oder
-        Tracking-Werkzeug ein.
-      </p>
-
-      <h2>Kontaktanfragen</h2>
-      <p>
-        Angaben aus dem Kontaktformular werden ausschließlich zur Bearbeitung
-        der Anfrage verwendet.
-      </p>
-
-      <h2>Externe Links</h2>
-      <p>
-        Links zu Instagram und Facebook sind einfache Verweise. Erst beim
-        Klick werden Daten an den jeweiligen Anbieter übertragen; es sind
-        keine Social-Media-Plugins eingebunden.
-      </p>
+      <LegalContent blocks={blocks} />
     </div>
   </section>
 </BaseLayout>
-
-<style>
-  .legal .container { max-width: 720px; }
-  .legal h2 { font-size: var(--step-1); margin-top: var(--sp-6); }
-  .todo {
-    background: var(--c-sun-soft);
-    border: 1px dashed #D8B44A;
-    color: #5E4A0C;
-    padding: 0.9rem 1.1rem;
-    border-radius: var(--radius-sm);
-  }
-</style>
