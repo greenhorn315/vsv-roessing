@@ -1,9 +1,18 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
-import Icon from '../components/Icon.astro';
-import { site, originalSiteUrl } from '../data/site';
-import { uebernommen, sections } from '../data/impressum';
+import { site } from '../data/site';
+import { sections } from '../data/impressum';
+
+/** Zerlegt eine Zeile an der Vereins-E-Mail, damit daraus ein Link wird. */
+function splitAtEmail(line: string) {
+  const index = line.indexOf(site.email);
+  if (index === -1) return null;
+  return {
+    before: line.slice(0, index),
+    after: line.slice(index + site.email.length),
+  };
+}
 ---
 
 <BaseLayout title="Impressum" description="Impressum des VSV Rössing von 1897 e.V.">
@@ -12,46 +21,30 @@ import { uebernommen, sections } from '../data/impressum';
   <section class="section legal">
     <div class="container">
       {
-        !uebernommen && (
-          <div class="notice">
-            <p class="notice__title">
-              <Icon name="info" size={18} />
-              Impressum noch nicht übernommen
-            </p>
-            <p>
-              Der verbindliche Text steht im Impressum der bestehenden
-              Vereinsseite und wird von dort unverändert übernommen. Bis dahin
-              bleibt diese Seite bewusst leer – erfundene Pflichtangaben wären
-              schlechter als gar keine.
-            </p>
-            <p class="notice__link">
-              <a href={`${originalSiteUrl}impressum`} rel="noopener">
-                Impressum auf {originalSiteUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')} ansehen
-                <Icon name="arrowRight" size={16} />
-              </a>
-            </p>
-          </div>
-        )
-      }
-
-      {
         sections.map((section) => (
           <>
             <h2>{section.heading}</h2>
-            {section.body.map((line) => (
-              <p>{line}</p>
-            ))}
+            <p>
+              {section.body.map((line, index) => {
+                const parts = splitAtEmail(line);
+                return (
+                  <>
+                    {index > 0 && <br />}
+                    {parts ? (
+                      <>
+                        {parts.before}
+                        <a href={`mailto:${site.email}`}>{site.email}</a>
+                        {parts.after}
+                      </>
+                    ) : (
+                      line
+                    )}
+                  </>
+                );
+              })}
+            </p>
           </>
         ))
-      }
-
-      {
-        !uebernommen && (
-          <p class="fallback">
-            Fragen zum Verein beantwortet bis dahin der Vorstand unter{' '}
-            <a href={`mailto:${site.email}`}>{site.email}</a>.
-          </p>
-        )
       }
     </div>
   </section>
@@ -65,41 +58,10 @@ import { uebernommen, sections } from '../data/impressum';
     font-size: var(--step-1);
     margin-top: var(--sp-6);
   }
+  .legal h2:first-child {
+    margin-top: 0;
+  }
   .legal p {
     color: var(--c-text-muted);
-  }
-
-  .notice {
-    background: var(--c-sun-soft);
-    border: 1px solid #E8CE8A;
-    border-left: 5px solid var(--c-sun);
-    border-radius: var(--radius);
-    padding: var(--sp-5);
-  }
-  .notice__title {
-    display: flex;
-    align-items: center;
-    gap: 0.45rem;
-    margin: 0 0 var(--sp-3);
-    font-weight: 700;
-    color: #5E4A0C !important;
-  }
-  .notice p {
-    color: #4A3D14 !important;
-    margin-bottom: 0;
-  }
-  .notice__link {
-    margin-top: var(--sp-4) !important;
-  }
-  .notice__link a {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    font-weight: 600;
-    color: #6B4A00;
-  }
-
-  .fallback {
-    margin-top: var(--sp-6);
   }
 </style>

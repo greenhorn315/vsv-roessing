@@ -1,15 +1,11 @@
+import { site } from './site';
+
 /**
- * Impressum.
+ * Impressum – Wortlaut wie auf der bestehenden Website vsv-roessing.de.
  *
- * ⚠️ NOCH NICHT ÜBERNOMMEN. Hier gehört der Text von
- * https://vsv-roessing.de/impressum unverändert hinein. Bis dahin steht
- * `uebernommen` auf false und die Seite weist sich sichtbar als
- * unvollständig aus – ein Impressum mit erfundenen Angaben wäre schlimmer
- * als gar keins.
- *
- * Zum Einpflegen: Abschnitte als { heading, body } eintragen, wobei `body`
- * die Zeilen des Abschnitts sind, und anschließend `uebernommen` auf true
- * setzen. Der Rest der Seite passt sich automatisch an.
+ * Zum Pflegen: Abschnitte als { heading, body } eintragen; `body` sind die
+ * Zeilen des Abschnitts. Enthält eine Zeile die Vereins-E-Mail, wird daraus
+ * automatisch ein anklickbarer Link.
  */
 
 export interface ImpressumSection {
@@ -17,6 +13,25 @@ export interface ImpressumSection {
   body: string[];
 }
 
-export const uebernommen = false;
-
-export const sections: ImpressumSection[] = [];
+export const sections: ImpressumSection[] = [
+  {
+    heading: 'Angaben gemäß § 5 DDG',
+    body: [site.name, `${site.address.postalCode} ${site.address.city}`],
+  },
+  {
+    heading: 'Vertreten durch',
+    body: ['Der Vorstand im Sinne des § 26 BGB – Namen werden ergänzt.'],
+  },
+  {
+    heading: 'Kontakt',
+    body: [`E-Mail: ${site.email}`],
+  },
+  {
+    heading: 'Registereintrag',
+    body: ['Vereinsregister und Registernummer werden ergänzt.'],
+  },
+  {
+    heading: 'Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV',
+    body: ['Wird ergänzt.'],
+  },
+];
