@@ -1,48 +1,105 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
-import { site } from '../data/site';
+import Icon from '../components/Icon.astro';
+import { site, originalSiteUrl } from '../data/site';
+import { uebernommen, sections } from '../data/impressum';
 ---
 
 <BaseLayout title="Impressum" description="Impressum des VSV Rössing von 1897 e.V.">
   <PageHeader title="Impressum" />
+
   <section class="section legal">
     <div class="container">
-      <p class="todo">
-        <strong>Noch zu übernehmen:</strong> Das Impressum der bestehenden
-        Website vsv-roessing.de wird hier unverändert eingepflegt
-        (Pflichtangaben nach § 5 DDG / § 18 MStV).
-      </p>
+      {
+        !uebernommen && (
+          <div class="notice">
+            <p class="notice__title">
+              <Icon name="info" size={18} />
+              Impressum noch nicht übernommen
+            </p>
+            <p>
+              Der verbindliche Text steht im Impressum der bestehenden
+              Vereinsseite und wird von dort unverändert übernommen. Bis dahin
+              bleibt diese Seite bewusst leer – erfundene Pflichtangaben wären
+              schlechter als gar keine.
+            </p>
+            <p class="notice__link">
+              <a href={`${originalSiteUrl}impressum`} rel="noopener">
+                Impressum auf {originalSiteUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')} ansehen
+                <Icon name="arrowRight" size={16} />
+              </a>
+            </p>
+          </div>
+        )
+      }
 
-      <h2>Angaben gemäß § 5 DDG</h2>
-      <p>
-        {site.name}<br />
-        {site.address.postalCode} {site.address.city}
-      </p>
+      {
+        sections.map((section) => (
+          <>
+            <h2>{section.heading}</h2>
+            {section.body.map((line) => (
+              <p>{line}</p>
+            ))}
+          </>
+        ))
+      }
 
-      <h2>Vertreten durch</h2>
-      <p>Der Vorstand im Sinne des § 26 BGB – Namen werden ergänzt.</p>
-
-      <h2>Kontakt</h2>
-      <p>E-Mail: <a href={`mailto:${site.email}`}>{site.email}</a></p>
-
-      <h2>Registereintrag</h2>
-      <p>Vereinsregister und Registernummer werden ergänzt.</p>
-
-      <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
-      <p>Wird ergänzt.</p>
+      {
+        !uebernommen && (
+          <p class="fallback">
+            Fragen zum Verein beantwortet bis dahin der Vorstand unter{' '}
+            <a href={`mailto:${site.email}`}>{site.email}</a>.
+          </p>
+        )
+      }
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .legal .container { max-width: 720px; }
-  .legal h2 { font-size: var(--step-1); margin-top: var(--sp-6); }
-  .todo {
+  .legal .container {
+    max-width: 720px;
+  }
+  .legal h2 {
+    font-size: var(--step-1);
+    margin-top: var(--sp-6);
+  }
+  .legal p {
+    color: var(--c-text-muted);
+  }
+
+  .notice {
     background: var(--c-sun-soft);
-    border: 1px dashed #D8B44A;
-    color: #5E4A0C;
-    padding: 0.9rem 1.1rem;
-    border-radius: var(--radius-sm);
+    border: 1px solid #E8CE8A;
+    border-left: 5px solid var(--c-sun);
+    border-radius: var(--radius);
+    padding: var(--sp-5);
+  }
+  .notice__title {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 0 0 var(--sp-3);
+    font-weight: 700;
+    color: #5E4A0C !important;
+  }
+  .notice p {
+    color: #4A3D14 !important;
+    margin-bottom: 0;
+  }
+  .notice__link {
+    margin-top: var(--sp-4) !important;
+  }
+  .notice__link a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-weight: 600;
+    color: #6B4A00;
+  }
+
+  .fallback {
+    margin-top: var(--sp-6);
   }
 </style>

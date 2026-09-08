@@ -1,0 +1,107 @@
+---
+import Icon from './Icon.astro';
+import { originalSiteUrl } from '../data/site';
+---
+
+<aside class="prototype" aria-labelledby="prototype-title">
+  <div class="container prototype__inner">
+    <span class="prototype__icon" aria-hidden="true">
+      <Icon name="info" size={24} />
+    </span>
+    <div class="prototype__body">
+      <p class="prototype__title" id="prototype-title">
+        Entwurf – nicht die offizielle Vereinsseite
+      </p>
+      <p class="prototype__text">
+        Diese Seite ist ein Prototyp und ein möglicher Nachfolger der
+        bestehenden Website. Inhalte, Zahlen und Termine sind teilweise
+        Platzhalter und noch nicht vom Verein freigegeben.
+      </p>
+    </div>
+    <a class="prototype__link" href={originalSiteUrl} rel="noopener">
+      Zur offiziellen Seite
+      <Icon name="arrowRight" size={16} />
+    </a>
+  </div>
+</aside>
+
+<style>
+  .prototype {
+    /* Warnfarbe des Design-Systems, dunkler Text: 9,2:1 Kontrast. */
+    background: var(--c-sun);
+    color: #3F2E00;
+    border-bottom: 3px solid #E0A800;
+  }
+
+  .prototype__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-4);
+    padding-block: var(--sp-4);
+  }
+
+  .prototype__icon {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.55);
+  }
+
+  .prototype__body {
+    flex: 1 1 auto;
+  }
+
+  .prototype__title {
+    margin: 0 0 0.15rem;
+    font-weight: 700;
+    font-size: 1.02rem;
+    color: #3F2E00;
+  }
+
+  .prototype__text {
+    margin: 0;
+    font-size: 0.92rem;
+    color: #4A3800;
+    max-width: 70ch;
+  }
+
+  .prototype__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-shrink: 0;
+    min-height: 44px;
+    padding: 0.5rem 1.1rem;
+    border-radius: var(--radius-pill);
+    background: #3F2E00;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.92rem;
+    text-decoration: none;
+    transition: background-color 0.16s ease;
+  }
+  .prototype__link:hover {
+    background: #241A00;
+  }
+
+  @media (max-width: 780px) {
+    .prototype__inner {
+      flex-wrap: wrap;
+      gap: var(--sp-3);
+    }
+    .prototype__icon {
+      width: 36px;
+      height: 36px;
+    }
+    .prototype__body {
+      flex: 1 1 240px;
+    }
+    .prototype__link {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

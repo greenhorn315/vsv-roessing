@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://vsv-roessing.de/sitemap-index.xml

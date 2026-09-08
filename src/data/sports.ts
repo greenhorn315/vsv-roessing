@@ -16,6 +16,15 @@ export interface Sport {
   venue?: string;
   /** Was sollte man zum ersten Training mitbringen? */
   bring?: string;
+  /**
+   * Hinweis für Sparten, die sich gerade im Aufbau befinden.
+   * Wird auf der Detailseite hervorgehoben dargestellt.
+   */
+  status?: {
+    label: string;
+    text: string;
+    next?: string[];
+  };
   icon: IconName;
   /** Akzentfarbe der Karte (Design-System-Token oder Hex). */
   color: string;
@@ -172,6 +181,14 @@ export const sports: Sport[] = [
     ],
     venue: 'Treffpunkt am VSV-Sportplatz',
     bring: 'Festes Schuhwerk, wetterfeste Jacke, Getränk.',
+    status: {
+      label: 'Sparte im Aufbau',
+      text: 'Die Outdoor-Sparte versteht sich als Nachfolgerin der bisherigen Wander-Sparte und befindet sich derzeit in der Phase der Formierung. Wer mitgestalten möchte, ist ausdrücklich eingeladen – gerade jetzt lässt sich noch viel mitbestimmen.',
+      next: [
+        'Informations- und Kennenlerntreffen Anfang Oktober',
+        'Teilnahme am „Tag des Wanderns“, organisiert und durchgeführt vom Kreissportbund Hildesheim',
+      ],
+    },
     icon: 'hiking',
     color: 'var(--c-primary)',
     ageGroups: ['erwachsene'],

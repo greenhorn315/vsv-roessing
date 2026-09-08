@@ -38,6 +38,16 @@ export interface NavItem {
   cta?: boolean;
 }
 
+/**
+ * Solange true, weist die Startseite sichtbar als Prototyp aus und alle
+ * Seiten werden für Suchmaschinen auf noindex gesetzt. Beim Livegang auf
+ * false stellen – das entfernt Banner und Sperre in einem Schritt.
+ */
+export const isPrototype = true;
+
+/** Adresse der bestehenden Website, die dieser Entwurf ablösen soll. */
+export const originalSiteUrl = 'https://vsv-roessing.de/';
+
 /** Vereinsalter in vollen Jahren. */
 export const clubAge = new Date().getFullYear() - site.founded;
 
