@@ -1,9 +1,16 @@
 /**
  * Impressum – Wortlaut wortgleich von https://vsv-roessing.de/ übernommen.
  *
- * Bewusst unverändert gelassen, auch wo das Original noch auf TMG und RStV
- * verweist (seit 2024 DDG bzw. seit 2020 MStV). Wird das Original
- * aktualisiert, gehört die Änderung auch hierher.
+ * Abweichung vom Original: Die Gesetzesverweise sind auf den aktuellen Stand
+ * gebracht, der Rest ist wortgleich.
+ *   § 5 TMG            -> § 5 DDG            (DDG seit 14.05.2024)
+ *   § 55 Abs. 2 RStV   -> § 18 Abs. 2 MStV   (MStV seit 07.11.2020)
+ *   § 7 Abs. 1 TMG     -> Verweis entfällt; die Vorschrift hat im DDG keine
+ *                         wortgleiche Entsprechung, die Verantwortlichkeit
+ *                         für eigene Inhalte folgt aus den allgemeinen Gesetzen
+ *   §§ 8 bis 10 TMG    -> Art. 4 bis 6 DSA i.V.m. § 7 DDG; die alten
+ *                         Paragraphen sind ersatzlos entfallen
+ * Diese Änderungen gehören auch ins Original übernommen.
  *
  * Aufbau der Blöcke: siehe LegalBlock in legal.ts.
  */
@@ -13,7 +20,7 @@ import type { LegalBlock } from './legal';
 export const intro = 'Verantwortlich für den Inhalt dieser Seite:';
 
 export const blocks: LegalBlock[] = [
-  { type: 'heading', level: 2, text: 'Angaben gemäß § 5 TMG:' },
+  { type: 'heading', level: 2, text: 'Angaben gemäß § 5 DDG:' },
   {
     type: 'lines',
     lines: [
@@ -61,7 +68,7 @@ export const blocks: LegalBlock[] = [
   {
     type: 'heading',
     level: 2,
-    text: 'Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:',
+    text: 'Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV:',
   },
   {
     type: 'lines',
@@ -75,11 +82,11 @@ export const blocks: LegalBlock[] = [
   { type: 'heading', level: 3, text: 'Haftung für Inhalte' },
   {
     type: 'text',
-    text: 'Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich.',
+    text: 'Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich.',
   },
   {
     type: 'text',
-    text: 'Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.',
+    text: 'Nach den Artikeln 4 bis 6 der Verordnung (EU) 2022/2065 (Digital Services Act) in Verbindung mit § 7 DDG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.',
   },
 
   { type: 'heading', level: 3, text: 'Haftung für Links' },

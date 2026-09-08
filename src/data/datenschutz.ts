@@ -1,42 +1,36 @@
 import type { LegalBlock } from './legal';
 
 /**
- * Datenschutzerklärung – Wortlaut wortgleich von https://vsv-roessing.de/
- * übernommen.
+ * Datenschutzerklärung – ENTWURF.
  *
- * ⚠️ Der Text beschreibt die bestehende WordPress-Seite: Kommentarfunktion,
- * Gravatar, Benutzerkonten, Medien-Uploads und Anmelde-Cookies. Nichts davon
- * gibt es auf dieser statischen Seite. Umgekehrt fehlen die Punkte, die hier
- * tatsächlich zutreffen (Auslieferung über Cloudflare, lokal eingebundene
- * Schriften, keinerlei Cookies). Vor dem Livegang gehört der Text deshalb
- * überarbeitet – siehe README.
+ * Beschreibt die Verarbeitung, die auf dieser Website tatsächlich
+ * stattfindet, und ersetzt damit den von der bisherigen WordPress-Seite
+ * übernommenen Text (liegt als Referenz in datenschutz-uebernommen.ts).
+ *
+ * ⚠️ Noch nicht rechtlich geprüft. Vor dem Livegang zu klären:
+ *   - Abschnitt 4: Name des Hosting-Anbieters, Speicherdauer der Logfiles
+ *     und der Auftragsverarbeitungsvertrag nach Art. 28 DSGVO. Bewusst
+ *     anbieterneutral formuliert, weil der Umzug in die Originalumgebung
+ *     noch aussteht.
+ *   - Abschnitt 8 gilt für das Kontaktformular in seinem jetzigen Zustand
+ *     (öffnet das E-Mail-Programm). Sobald ein echter Versand-Endpunkt
+ *     angebunden ist, muss dieser Abschnitt neu geschrieben werden.
+ *   - Eigene E-Mail-Adresse für den Datenschutzbeauftragten erwägen.
  */
 
 export const blocks: LegalBlock[] = [
   {
     "type": "text",
-    "text": "Datenschutzerklärung von Volkssportvereinigung von 1897 Rössing e.V."
-  },
-  {
-    "type": "text",
-    "text": "Wir freuen uns sehr über Ihr Interesse an unserem Verein. Datenschutz hat einen besonders hohen Stellenwert für den Vorstand der Volkssportvereinigung von 1897 Rössing e.V.. Eine Nutzung der Internetseiten der Volkssportvereinigung von 1897 Rössing e.V. ist grundsätzlich ohne jede Angabe personenbezogener Daten möglich. Sofern eine betroffene Person besondere Services unseres Vereins über unsere Internetseite in Anspruch nehmen möchte, könnte jedoch eine Verarbeitung personenbezogener Daten erforderlich werden. Ist die Verarbeitung personenbezogener Daten erforderlich und besteht für eine solche Verarbeitung keine gesetzliche Grundlage, holen wir generell eine Einwilligung der betroffenen Person ein."
-  },
-  {
-    "type": "text",
-    "text": "Die Verarbeitung personenbezogener Daten, beispielsweise des Namens, der Anschrift, E-Mail-Adresse oder Telefonnummer einer betroffenen Person, erfolgt stets im Einklang mit der Datenschutz-Grundverordnung und in Übereinstimmung mit den für den Verein geltenden landesspezifischen Datenschutzbestimmungen. Mittels dieser Datenschutzerklärung möchte unser Unternehmen die Öffentlichkeit über Art, Umfang und Zweck der von uns erhobenen, genutzten und verarbeiteten personenbezogenen Daten informieren. Ferner werden betroffene Personen mittels dieser Datenschutzerklärung über die ihnen zustehenden Rechte aufgeklärt."
-  },
-  {
-    "type": "text",
-    "text": "Grundsätzlich können Internetbasierte Datenübertragungen Sicherheitslücken aufweisen, sodass ein absoluter Schutz nicht gewährleistet werden kann. Aus diesem Grund steht es jeder betroffenen Person frei, personenbezogene Daten auch auf alternativen Wegen, beispielsweise telefonisch, an uns zu übermitteln."
+    "text": "Diese Erklärung beschreibt, welche personenbezogenen Daten beim Besuch dieser Website verarbeitet werden, zu welchem Zweck das geschieht und welche Rechte Ihnen dabei zustehen."
   },
   {
     "type": "heading",
     "level": 2,
-    "text": "Name und Anschrift des für die Verarbeitung Verantwortlichen"
+    "text": "1. Verantwortlicher"
   },
   {
     "type": "text",
-    "text": "Verantwortlicher im Sinne der Datenschutz-Grundverordnung, sonstiger in den Mitgliedstaaten der Europäischen Union geltenden Datenschutzgesetze und anderer Bestimmungen mit datenschutzrechtlichem Charakter ist die:"
+    "text": "Verantwortlicher im Sinne der Datenschutz-Grundverordnung (DSGVO) ist:"
   },
   {
     "type": "lines",
@@ -46,18 +40,18 @@ export const blocks: LegalBlock[] = [
       "Pfarrstr. 6",
       "31171 Nordstemmen",
       "Deutschland",
-      "E-Mail: vorstand@vsv-roessing.de",
-      "Website: www.vsv-roessing.de"
+      "Telefon: +49 (0) 50 69 / 74 15",
+      "E-Mail: vorstand@vsv-roessing.de"
     ]
   },
   {
     "type": "heading",
     "level": 2,
-    "text": "Name und Anschrift des Datenschutzbeauftragten"
+    "text": "2. Datenschutzbeauftragter"
   },
   {
     "type": "text",
-    "text": "Der Datenschutzbeauftragte des für die Verarbeitung Verantwortlichen ist:"
+    "text": "Der Datenschutzbeauftragte des Verantwortlichen ist:"
   },
   {
     "type": "lines",
@@ -67,104 +61,162 @@ export const blocks: LegalBlock[] = [
       "Pfarrstr. 6",
       "31171 Nordstemmen",
       "Deutschland",
-      "E-Mail: vorstand@vsv-roessing.de",
-      "Website: www.vsv-roessing.de"
+      "E-Mail: vorstand@vsv-roessing.de"
     ]
   },
   {
     "type": "text",
-    "text": "Jede betroffene Person kann sich jederzeit bei allen Fragen und Anregungen zum Datenschutz direkt an unseren Datenschutzbeauftragten wenden."
+    "text": "Bei allen Fragen und Anregungen zum Datenschutz können Sie sich jederzeit direkt an unseren Datenschutzbeauftragten wenden."
   },
   {
     "type": "heading",
     "level": 2,
-    "text": "Kommentare"
+    "text": "3. Grundsätzliches"
   },
   {
     "type": "text",
-    "text": "Wenn Besucher Kommentare auf der Website schreiben, sammeln wir die Daten, die im Kommentar-Formular angezeigt werden, außerdem die IP-Adresse des Besuchers und den User-Agent-String (damit wird der Browser identifiziert), um die Erkennung von Spam zu unterstützen."
-  },
-  {
-    "type": "text",
-    "text": "Aus deiner E-Mail-Adresse kann eine anonymisierte Zeichenfolge erstellt (auch Hash genannt) und dem Gravatar-Dienst übergeben werden, um zu prüfen, ob du diesen benutzt. Die Datenschutzerklärung des Gravatar-Dienstes findest du hier: https://automattic.com/privacy/. Nachdem dein Kommentar freigegeben wurde, ist dein Profilbild öffentlich im Kontext deines Kommentars sichtbar."
+    "text": "Sie können diese Website nutzen, ohne personenbezogene Daten anzugeben. Es gibt keine Registrierung, keine Benutzerkonten und keine Kommentarfunktion. Personenbezogene Daten verarbeiten wir nur, wenn Sie uns von sich aus kontaktieren, sowie in dem technisch unvermeidbaren Umfang, den der Abruf einer Website mit sich bringt."
   },
   {
     "type": "heading",
     "level": 2,
-    "text": "Medien"
+    "text": "4. Aufruf der Website und Server-Logfiles"
   },
   {
     "type": "text",
-    "text": "Wenn du ein registrierter Benutzer bist und Fotos auf diese Website lädst, solltest du vermeiden, Fotos mit einem EXIF-GPS-Standort hochzuladen. Besucher dieser Website könnten Fotos, die auf dieser Website gespeichert sind, herunterladen und deren Standort-Informationen extrahieren."
+    "text": "Beim Aufruf dieser Website übermittelt Ihr Browser automatisch Daten an den Server, auf dem die Website liegt. Diese Übermittlung ist technisch notwendig, damit die Seite überhaupt an Sie ausgeliefert werden kann."
+  },
+  {
+    "type": "text",
+    "text": "Dabei werden üblicherweise folgende Daten verarbeitet: Ihre IP-Adresse, Datum und Uhrzeit des Abrufs, der Name und die Größe der abgerufenen Datei, die Meldung über den erfolgreichen Abruf, die zuvor besuchte Seite (Referrer) sowie Browsertyp und Betriebssystem."
+  },
+  {
+    "type": "text",
+    "text": "Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO. Unser berechtigtes Interesse liegt darin, die Website technisch bereitzustellen, ihre Stabilität zu sichern und Angriffe abzuwehren. Eine Zusammenführung dieser Daten mit anderen Datenquellen findet nicht statt, und wir werten sie nicht aus, um Rückschlüsse auf einzelne Personen zu ziehen."
+  },
+  {
+    "type": "text",
+    "text": "Die Website wird bei einem Dienstleister gehostet, mit dem ein Vertrag über die Verarbeitung im Auftrag nach Art. 28 DSGVO besteht. Angaben zum Anbieter und zur Speicherdauer der Logfiles ergänzen wir hier."
   },
   {
     "type": "heading",
     "level": 2,
-    "text": "Cookies"
+    "text": "5. Verschlüsselte Übertragung"
   },
   {
     "type": "text",
-    "text": "Wenn du einen Kommentar auf unserer Website schreibst, kann das eine Einwilligung sein, deinen Namen, E-Mail-Adresse und Website in Cookies zu speichern. Dies ist eine Komfortfunktion, damit du nicht, wenn du einen weiteren Kommentar schreibst, all diese Daten erneut eingeben musst. Diese Cookies werden ein Jahr lang gespeichert."
-  },
-  {
-    "type": "text",
-    "text": "Falls du ein Konto hast und dich auf dieser Website anmeldest, werden wir ein temporäres Cookie setzen, um festzustellen, ob dein Browser Cookies akzeptiert. Dieses Cookie enthält keine personenbezogenen Daten und wird verworfen, wenn du deinen Browser schließt."
-  },
-  {
-    "type": "text",
-    "text": "Wenn du dich anmeldest, werden wir einige Cookies einrichten, um deine Anmeldeinformationen und Anzeigeoptionen zu speichern. Anmelde-Cookies verfallen nach zwei Tagen und Cookies für die Anzeigeoptionen nach einem Jahr. Falls du bei der Anmeldung „Angemeldet bleiben“ auswählst, wird deine Anmeldung zwei Wochen lang aufrechterhalten. Mit der Abmeldung aus deinem Konto werden die Anmelde-Cookies gelöscht."
-  },
-  {
-    "type": "text",
-    "text": "Wenn du einen Artikel bearbeitest oder veröffentlichst, wird ein zusätzlicher Cookie in deinem Browser gespeichert. Dieser Cookie enthält keine personenbezogenen Daten und verweist nur auf die Beitrags-ID des Artikels, den du gerade bearbeitet hast. Der Cookie verfällt nach einem Tag."
+    "text": "Diese Website wird über eine verschlüsselte Verbindung (TLS) ausgeliefert. Sie erkennen das an dem „https://“ in der Adresszeile Ihres Browsers. Die Daten, die Sie an uns übermitteln, können dadurch nicht ohne Weiteres von Dritten mitgelesen werden."
   },
   {
     "type": "heading",
     "level": 2,
-    "text": "Links zu anderen Websites"
+    "text": "6. Cookies, Analyse und Tracking"
   },
   {
     "type": "text",
-    "text": "Unser Online-Angebot enthält Links zu anderen Websites. Wir haben keinen Einfluss darauf, dass deren Betreiber die Datenschutzbestimmungen einhalten. Wir sind als Anbieter für eigene Inhalte nach den allgemeinen Gesetzen verantwortlich. Von diesen eigenen Inhalten sind unter Umständen Links auf die von anderen Anbietern bereitgehaltenen Inhalte zu unterscheiden. Für fremde Inhalte, die über Links zur Nutzung bereitgestellt werden, übernehmen wir keine Verantwortung und machen uns deren Inhalt nicht zu Eigen. Für illegale, fehlerhafte oder unvollständige Inhalte sowie für Schäden, die durch die Nutzung oder Nichtnutzung der Informationen entstehen, haftet allein der Anbieter der Website, auf die verwiesen wurde. Für fremde Hinweise ist der LSB nur dann verantwortlich, wenn er von ihnen, das heißt auch von einem eventuellen rechtswidrigen bzw. strafbaren Inhalt, positive Kenntnis hat, und es technisch möglich und zumutbar ist, deren Nutzung zu verhindern."
+    "text": "Diese Website setzt keine Cookies. Es werden keine Analyse- oder Statistikwerkzeuge eingesetzt, kein Tracking betrieben, keine Werbenetzwerke eingebunden und keine Profile gebildet. Ein Einwilligungsbanner ist deshalb nicht erforderlich."
+  },
+  {
+    "type": "text",
+    "text": "Der Familienbeitragsrechner auf der Seite „Mitglied werden“ rechnet ausschließlich in Ihrem Browser. Ihre Eingaben werden weder gespeichert noch an uns übermittelt."
   },
   {
     "type": "heading",
     "level": 2,
-    "text": "Mit wem wir deine Daten teilen"
+    "text": "7. Schriftarten"
   },
   {
     "type": "text",
-    "text": "Wenn du eine Zurücksetzung des Passworts beantragst, wird deine IP-Adresse in der E-Mail zur Zurücksetzung enthalten sein."
+    "text": "Die verwendeten Schriftarten (Fraunces und Source Sans 3) werden zusammen mit der Website ausgeliefert. Es besteht keine Verbindung zu Google Fonts oder einem anderen externen Schriftendienst, es werden dafür also keine Daten an Dritte übertragen."
   },
   {
     "type": "heading",
     "level": 2,
-    "text": "Wie lange wir deine Daten speichern"
+    "text": "8. Kontaktaufnahme"
   },
   {
     "type": "text",
-    "text": "Wenn du einen Kommentar schreibst, wird dieser inklusive Metadaten zeitlich unbegrenzt gespeichert. Auf diese Art können wir Folgekommentare automatisch erkennen und freigeben, anstatt sie in einer Moderations-Warteschlange festzuhalten."
+    "text": "Wenn Sie uns per E-Mail schreiben, verarbeiten wir Ihre Angaben ausschließlich, um Ihre Anfrage zu bearbeiten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO, soweit es um die Anbahnung oder Durchführung einer Mitgliedschaft geht, im Übrigen Art. 6 Abs. 1 lit. f DSGVO aufgrund unseres berechtigten Interesses an der Beantwortung von Anfragen."
   },
   {
     "type": "text",
-    "text": "Für Benutzer, die sich auf unserer Website registrieren, speichern wir zusätzlich die persönlichen Informationen, die sie in ihren Benutzerprofilen angeben. Alle Benutzer können jederzeit ihre persönlichen Informationen einsehen, verändern oder löschen (der Benutzername kann nicht verändert werden). Administratoren der Website können diese Informationen ebenfalls einsehen und verändern."
+    "text": "Das Kontaktformular auf dieser Website überträgt Ihre Eingaben nicht an einen Server. Es öffnet Ihr eigenes E-Mail-Programm mit einer vorbereiteten Nachricht, die Sie selbst absenden. Wir erhalten Ihre Angaben also erst, wenn Sie diese E-Mail tatsächlich verschicken."
+  },
+  {
+    "type": "text",
+    "text": "Wir bewahren Anfragen so lange auf, wie es zur Bearbeitung erforderlich ist, und löschen sie anschließend, sofern keine gesetzlichen Aufbewahrungsfristen entgegenstehen."
   },
   {
     "type": "heading",
     "level": 2,
-    "text": "Welche Rechte du an deinen Daten hast"
+    "text": "9. Links zu anderen Websites"
   },
   {
     "type": "text",
-    "text": "Wenn du ein Konto auf dieser Website besitzt oder Kommentare geschrieben hast, kannst du einen Export deiner personenbezogenen Daten bei uns anfordern, inklusive aller Daten, die du uns mitgeteilt hast. Darüber hinaus kannst du die Löschung aller personenbezogenen Daten, die wir von dir gespeichert haben, anfordern. Dies umfasst nicht die Daten, die wir aufgrund administrativer, rechtlicher oder sicherheitsrelevanter Notwendigkeiten aufbewahren müssen."
+    "text": "Diese Website verlinkt auf externe Angebote, unter anderem auf unsere Profile bei Instagram und Facebook. Dabei handelt es sich um einfache Verweise, nicht um eingebettete Inhalte oder Social-Media-Plugins. Erst wenn Sie einen solchen Link anklicken, werden Daten an den jeweiligen Anbieter übertragen. Auf dessen Datenverarbeitung haben wir keinen Einfluss; es gelten dann die Datenschutzbestimmungen des Anbieters."
   },
   {
     "type": "heading",
     "level": 2,
-    "text": "Wohin wir deine Daten senden"
+    "text": "10. Empfänger der Daten"
   },
   {
     "type": "text",
-    "text": "Besucher-Kommentare könnten von einem automatisierten Dienst zur Spam-Erkennung untersucht werden."
+    "text": "Eine Weitergabe Ihrer Daten an Dritte findet nicht statt, ausgenommen an den Hosting-Dienstleister im Rahmen der Auftragsverarbeitung sowie in Fällen, in denen wir gesetzlich zur Weitergabe verpflichtet sind. Eine Übermittlung in Länder außerhalb der Europäischen Union ist nicht beabsichtigt."
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "11. Ihre Rechte"
+  },
+  {
+    "type": "text",
+    "text": "Ihnen stehen gegenüber dem Verantwortlichen folgende Rechte zu: Auskunft über die zu Ihrer Person gespeicherten Daten (Art. 15 DSGVO), Berichtigung unrichtiger Daten (Art. 16 DSGVO), Löschung (Art. 17 DSGVO), Einschränkung der Verarbeitung (Art. 18 DSGVO), Datenübertragbarkeit (Art. 20 DSGVO) sowie Widerspruch gegen eine Verarbeitung, die auf einem berechtigten Interesse beruht (Art. 21 DSGVO)."
+  },
+  {
+    "type": "text",
+    "text": "Haben Sie in eine Verarbeitung eingewilligt, können Sie diese Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen. Die Rechtmäßigkeit der bis dahin erfolgten Verarbeitung bleibt davon unberührt."
+  },
+  {
+    "type": "text",
+    "text": "Zur Ausübung Ihrer Rechte genügt eine formlose Nachricht an die oben genannten Kontaktdaten."
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "12. Beschwerderecht bei der Aufsichtsbehörde"
+  },
+  {
+    "type": "text",
+    "text": "Sie haben das Recht, sich bei einer Datenschutz-Aufsichtsbehörde über die Verarbeitung Ihrer personenbezogenen Daten zu beschweren (Art. 77 DSGVO). Die für uns zuständige Behörde ist:"
+  },
+  {
+    "type": "lines",
+    "lines": [
+      "Die Landesbeauftragte für den Datenschutz Niedersachsen",
+      "Prinzenstraße 5",
+      "30159 Hannover",
+      "Telefon: +49 (0) 511 120 4500",
+      "E-Mail: poststelle@lfd.niedersachsen.de",
+      "Website: www.lfd.niedersachsen.de"
+    ]
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "13. Keine automatisierte Entscheidungsfindung"
+  },
+  {
+    "type": "text",
+    "text": "Eine automatisierte Entscheidungsfindung einschließlich Profiling nach Art. 22 DSGVO findet nicht statt."
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "14. Änderungen dieser Datenschutzerklärung"
+  },
+  {
+    "type": "text",
+    "text": "Wir passen diese Datenschutzerklärung an, wenn sich die Rechtslage oder die Verarbeitung auf dieser Website ändert – etwa wenn Funktionen hinzukommen oder der Hosting-Anbieter wechselt. Es gilt jeweils die hier abrufbare Fassung."
   }
 ];

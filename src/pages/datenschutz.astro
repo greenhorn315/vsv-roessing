@@ -2,7 +2,9 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import LegalContent from '../components/LegalContent.astro';
+import Icon from '../components/Icon.astro';
 import { blocks } from '../data/datenschutz';
+import { isPrototype } from '../data/site';
 ---
 
 <BaseLayout
@@ -12,7 +14,48 @@ import { blocks } from '../data/datenschutz';
   <PageHeader title="Datenschutzerklärung" />
   <section class="section">
     <div class="container">
+      {
+        isPrototype && (
+          <aside class="draft">
+            <p class="draft__title">
+              <Icon name="info" size={18} />
+              Entwurf, noch nicht rechtlich geprüft
+            </p>
+            <p>
+              Dieser Text beschreibt die Verarbeitung auf dieser Entwurfsseite.
+              Vor dem Livegang gehört er geprüft und um die Angaben zum
+              Hosting-Anbieter ergänzt.
+            </p>
+          </aside>
+        )
+      }
+
       <LegalContent blocks={blocks} />
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .draft {
+    max-width: 720px;
+    background: var(--c-sun-soft);
+    border: 1px solid #E8CE8A;
+    border-left: 5px solid var(--c-sun);
+    border-radius: var(--radius);
+    padding: var(--sp-5);
+    margin-bottom: var(--sp-6);
+  }
+  .draft__title {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 0 0 var(--sp-2);
+    font-weight: 700;
+    color: #5E4A0C;
+  }
+  .draft p:last-child {
+    margin: 0;
+    color: #4A3D14;
+    font-size: 0.94rem;
+  }
+</style>
