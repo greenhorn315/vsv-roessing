@@ -19,6 +19,17 @@ const { sport } = Astro.props;
 const sessions = trainings.filter((t) => t.sport === sport.slug);
 
 // Für die Weiter-Navigation am Seitenende.
+/**
+ * Deutsche Rufnummer in die internationale Schreibweise für tel:-Links.
+ * Die führende Null ist die nationale Verkehrsausscheidungsziffer und
+ * entfällt dabei.
+ */
+function telHref(nummer: string) {
+  const ziffern = nummer.replace(/[^\d+]/g, '');
+  if (ziffern.startsWith('+')) return `tel:${ziffern}`;
+  return `tel:+49${ziffern.replace(/^0/, '')}`;
+}
+
 const index = sports.findIndex((s) => s.slug === sport.slug);
 const next = sports[(index + 1) % sports.length];
 const previous = sports[(index - 1 + sports.length) % sports.length];
@@ -187,9 +198,28 @@ const previous = sports[(index - 1 + sports.length) % sports.length];
           <Icon name="mail" size={19} class="facts-card__icon" />
           <div>
             <h3>Ansprechpartner</h3>
-            <p>
-              <a href={`mailto:${site.email}`}>{site.email}</a>
-            </p>
+            {
+              sport.contact ? (
+                <>
+                  <p class="kontakt__name">{sport.contact.name}</p>
+                  {sport.contact.role && <p class="kontakt__rolle">{sport.contact.role}</p>}
+                  {sport.contact.email && (
+                    <p>
+                      <a href={`mailto:${sport.contact.email}`}>{sport.contact.email}</a>
+                    </p>
+                  )}
+                  {sport.contact.phone && (
+                    <p>
+                      <a href={telHref(sport.contact.phone)}>{sport.contact.phone}</a>
+                    </p>
+                  )}
+                </>
+              ) : (
+                <p>
+                  <a href={`mailto:${site.email}`}>{site.email}</a>
+                </p>
+              )
+            }
           </div>
         </div>
       </aside>
@@ -420,6 +450,15 @@ const previous = sports[(index - 1 + sports.length) % sports.length];
   .facts-card p {
     margin: 0;
     font-size: 0.94rem;
+  }
+
+  .kontakt__name {
+    font-weight: 600;
+    color: var(--c-text) !important;
+  }
+  .kontakt__rolle {
+    font-size: 0.86rem !important;
+    margin-bottom: 0.35rem !important;
   }
 
   .times {
