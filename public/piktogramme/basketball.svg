@@ -4,7 +4,7 @@
     <circle cx="74" cy="20" r="9.5" stroke="none"/>
     <path d="M53 45 L60 34 L66 27" fill="none" stroke-width="8.5"/>
     <path d="M39 47 L28 42 L23 33" fill="none" stroke-width="7.5"/>
-    <circle cx="43" cy="30" r="8.2" stroke="none"/>
+    <ellipse cx="43" cy="30" rx="7" ry="8.8" transform="rotate(20 43 30)" stroke="none"/>
     <path d="M36 42 L53 40 L51 63 L39 65 Z" stroke="none"/>
     <path d="M48 63 L60 69 L57 81" fill="none" stroke-width="9.5"/>
     <path d="M41 64 L35 77 L28 87" fill="none" stroke-width="9.5"/>

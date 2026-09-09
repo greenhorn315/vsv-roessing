@@ -23,8 +23,9 @@ aus Piktogrammen und den bisherigen Strich-Icons sähe uneinheitlich aus.
 * quadratisch, `viewBox="0 0 100 100"`
 * Rahmen: `x/y = 2.5`, `95 × 95`, Eckenradius 13, weiß gefüllt,
   schwarze Kontur 2,5
-* Figur als schwarze Vollfläche, Gliedmaßen mit runden Enden,
-  Kopf als abgesetzter Kreis
+* Figur als schwarze Vollfläche, Gliedmaßen mit runden Enden
+* Kopf als abgesetztes Oval (rx 7, ry 8.8), leicht in Bewegungsrichtung
+  gekippt – nicht kreisrund, so wie in den DOSB-Vorlagen
 
 ## Herkunft
 
