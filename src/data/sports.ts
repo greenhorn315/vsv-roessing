@@ -12,6 +12,15 @@ export interface Activity {
   note?: string;
 }
 
+export interface SpartenKontakt {
+  name: string;
+  /** Funktion, z. B. „Spartenleitung Outdoor“. */
+  role?: string;
+  email?: string;
+  /** In der Schreibweise, wie sie angezeigt werden soll. */
+  phone?: string;
+}
+
 export interface Sport {
   slug: string;
   name: string;
@@ -42,7 +51,11 @@ export interface Sport {
   /** Akzentfarbe der Karte (Design-System-Token oder Hex). */
   color: string;
   ageGroups: AgeGroup[];
-  contact?: string;
+  /**
+   * Ansprechpartner der Sparte. Ohne Eintrag verweist die Seite auf die
+   * Sammeladresse des Vorstands.
+   */
+  contact?: SpartenKontakt;
 }
 
 export const ageGroupLabels: Record<AgeGroup, string> = {
@@ -194,6 +207,12 @@ export const sports: Sport[] = [
     ],
     venue: 'Treffpunkt am VSV-Sportplatz',
     bring: 'Festes Schuhwerk, wetterfeste Jacke, Getränk.',
+    contact: {
+      name: 'Michael Horn',
+      role: 'Spartenleitung Outdoor',
+      email: 'wandern@vsv-roessing.de',
+      phone: '0173 6232019',
+    },
     activities: [
       { name: 'Wandern', pictogram: 'wandern' },
       { name: 'Nordic Walking', pictogram: 'nordic-walking' },
