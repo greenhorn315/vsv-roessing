@@ -1,5 +1,3 @@
-import type { IconName } from '../components/icons';
-
 export type AgeGroup = 'kinder' | 'jugend' | 'erwachsene';
 
 export interface Sport {
@@ -25,7 +23,6 @@ export interface Sport {
     text: string;
     next?: string[];
   };
-  icon: IconName;
   /** Akzentfarbe der Karte (Design-System-Token oder Hex). */
   color: string;
   ageGroups: AgeGroup[];
@@ -56,7 +53,6 @@ export const sports: Sport[] = [
     ],
     venue: 'VSV-Sportplatz',
     bring: 'Sportsachen, Hallen- oder Fußballschuhe und etwas zu trinken.',
-    icon: 'football',
     color: 'var(--c-primary-light)',
     ageGroups: ['kinder', 'jugend', 'erwachsene'],
   },
@@ -77,7 +73,6 @@ export const sports: Sport[] = [
     ],
     venue: 'Alfred-Stubenrauch-Sporthalle',
     bring: 'Hallenschuhe mit heller Sohle und Sportkleidung.',
-    icon: 'volleyball',
     color: 'var(--c-accent)',
     ageGroups: ['jugend', 'erwachsene'],
   },
@@ -98,7 +93,6 @@ export const sports: Sport[] = [
     ],
     venue: 'VSV-Sportplatz und Sporthalle',
     bring: 'Laufschuhe, wetterfeste Kleidung.',
-    icon: 'athletics',
     color: 'var(--c-primary)',
     ageGroups: ['kinder', 'jugend', 'erwachsene'],
   },
@@ -119,7 +113,6 @@ export const sports: Sport[] = [
     ],
     venue: 'Alfred-Stubenrauch-Sporthalle',
     bring: 'Bequeme Kleidung, Turnschläppchen oder barfuß.',
-    icon: 'gym',
     color: 'var(--c-sun-dark)',
     ageGroups: ['kinder', 'erwachsene'],
   },
@@ -139,7 +132,6 @@ export const sports: Sport[] = [
     ],
     venue: 'Alfred-Stubenrauch-Sporthalle',
     bring: 'Hallenschuhe mit heller Sohle.',
-    icon: 'basketball',
     color: 'var(--c-primary-light)',
     ageGroups: ['jugend', 'erwachsene'],
   },
@@ -160,7 +152,6 @@ export const sports: Sport[] = [
     ],
     venue: 'Alfred-Stubenrauch-Sporthalle',
     bring: 'Bequeme Kleidung und Hallenschuhe.',
-    icon: 'dance',
     color: 'var(--c-accent)',
     ageGroups: ['kinder', 'jugend', 'erwachsene'],
   },
@@ -189,7 +180,6 @@ export const sports: Sport[] = [
         'Teilnahme am „Tag des Wanderns“, organisiert und durchgeführt vom Kreissportbund Hildesheim',
       ],
     },
-    icon: 'hiking',
     color: 'var(--c-primary)',
     ageGroups: ['erwachsene'],
   },
@@ -209,7 +199,6 @@ export const sports: Sport[] = [
     ],
     venue: 'Vereinsheim',
     bring: 'Nichts – Pfeile können für den Anfang geliehen werden.',
-    icon: 'dart',
     color: 'var(--c-sun-dark)',
     ageGroups: ['jugend', 'erwachsene'],
   },

@@ -1,34 +1,44 @@
 # Sparten-Piktogramme
 
 Ein Piktogramm je Sparte, benannt nach dem `slug` aus `src/data/sports.ts`.
+Eingebunden über `src/components/Pictogram.astro` in den Sportkarten und auf
+den Spartenseiten.
 
-| Datei | Sparte | Status |
+| Datei | Sparte | Quelle |
 |---|---|---|
-| `fussball.svg` | Fußball | fehlt |
-| `volleyball.svg` | Volleyball | fehlt |
-| `leichtathletik.svg` | Leichtathletik | fehlt |
-| `turnen.svg` | Turnen | fehlt |
-| `basketball.svg` | Basketball | vorhanden |
-| `tanzen.svg` | Tanzen | vorhanden |
-| `outdoor.svg` | Outdoor | fehlt |
-| `dart.svg` | Dart | fehlt |
+| `fussball.png` | Fußball | DOSB `icon_fussball` |
+| `volleyball.png` | Volleyball | DOSB `icon_volleyball` |
+| `leichtathletik.png` | Leichtathletik | DOSB `icon_leichtathletik` |
+| `turnen.png` | Turnen | DOSB `icon_Geraeteturnen_Sprung` |
+| `basketball.png` | Basketball | **Eigenzeichnung, Platzhalter** |
+| `tanzen.png` | Tanzen | DOSB `icon_modern_dance` |
+| `outdoor.png` | Outdoor | DOSB `icon_wandern` |
+| `dart.png` | Dart | DOSB `icon_darts` |
 
-Die sechs fehlenden liegen beim Verein als Bilddateien vor und müssen noch
-auf dieselbe Vorlage gebracht werden. Erst wenn alle acht da sind, werden sie
-in den Sportkarten und auf den Spartenseiten eingebaut – ein gemischter Satz
-aus Piktogrammen und den bisherigen Strich-Icons sähe uneinheitlich aus.
+## Format
 
-## Vorlage
+Alle Dateien: PNG, 256 × 256, transparent außerhalb des Rahmens, schwarz auf
+weiß. Aus den DOSB-Vorlagen (500 px) erzeugt, indem auf den tatsächlichen
+Rahmen zugeschnitten und ohne Verzerrung auf ein quadratisches Feld zentriert
+wurde – die Vorlagen sind teils 504 px breit.
 
-* quadratisch, `viewBox="0 0 100 100"`
-* Rahmen: `x/y = 2.5`, `95 × 95`, Eckenradius 13, weiß gefüllt,
-  schwarze Kontur 2,5
-* Figur als schwarze Vollfläche, Gliedmaßen mit runden Enden
-* Kopf als abgesetztes Oval (rx 7, ry 8.8), leicht in Bewegungsrichtung
-  gekippt – nicht kreisrund, so wie in den DOSB-Vorlagen
+Dargestellt werden sie mit 64 px in den Sportkarten und 88 px auf den
+Spartenseiten. 256 px deckt damit auch Bildschirme mit dreifacher Auflösung ab.
 
-## Herkunft
+## Basketball ersetzen
 
-Die vorhandenen Piktogramme stammen laut Impressum von DOSB/Sportdeutschland.
-`basketball.svg` und `tanzen.svg` sind Nachempfindungen im gleichen Stil,
-keine Kopien.
+`basketball.png` ist als einziges keine DOSB-Vorlage, sondern von Hand
+gezeichnet (Quelle: `basketball.svg`). Rahmenstärke und Eckenradius sind an
+die DOSB-Geometrie angeglichen, die Gliedmaßen sind aber runder als im
+Original-Stil.
+
+Sobald das DOSB-Piktogramm für Basketball vorliegt: aus dem ZIP die Datei
+`Piktogramme_schwarz_auf_weiss/icon_basketball_schwarz_auf_weiss_500px.png`
+auf 256 × 256 bringen (zuschneiden auf den Rahmen, zentrieren) und hier als
+`basketball.png` ablegen. `basketball.svg` kann dann weg.
+
+## Herkunft und Nennung
+
+Die DOSB-Piktogramme sind kostenlos und lizenzfrei für nicht-kommerzielle
+Nutzung durch Vereine. Bedingung ist die Nennung `©DOSB/Sportdeutschland` –
+sie steht im Impressum unter „Copyright".

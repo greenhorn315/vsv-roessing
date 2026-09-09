@@ -1,4 +1,5 @@
 ---
+import Pictogram from './Pictogram.astro';
 import Icon from './Icon.astro';
 import { sports, ageGroupLabels, type AgeGroup } from '../data/sports';
 
@@ -39,7 +40,7 @@ const groups = Object.keys(ageGroupLabels) as AgeGroup[];
     sports.map((sport) => (
       <li data-age-groups={sport.ageGroups.join(' ')}>
         <a class="sport-card" href={`/sportangebote/${sport.slug}`} style={`--sport-color:${sport.color}`}>
-          <Icon name={sport.icon} size={32} class="sport-card__icon" />
+          <Pictogram sport={sport} size={64} class="sport-card__icon" />
           <h3>{sport.name}</h3>
           <p>{detailed ? sport.description : sport.teaser}</p>
           <span class="sport-card__more">
@@ -84,8 +85,8 @@ const groups = Object.keys(ageGroupLabels) as AgeGroup[];
   }
 
   .sport-card :global(.sport-card__icon) {
-    color: var(--sport-color, var(--c-primary));
-    margin-bottom: 0.25rem;
+    width: 64px;
+    margin-bottom: 0.35rem;
   }
 
   .sport-card h3 {
