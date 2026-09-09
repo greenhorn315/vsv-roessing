@@ -184,6 +184,25 @@ export const sports: Sport[] = [
     ageGroups: ['erwachsene'],
   },
   {
+    slug: 'yoga',
+    name: 'Yoga',
+    teaser: 'Beweglichkeit, Kraft und Ruhe',
+    description:
+      'Ruhige Einheiten für Beweglichkeit, Kraft und Entspannung – als Ausgleich zum Alltag und zu den anderen Sparten.',
+    longText: [
+      'Das Yoga-Angebot besteht bereits im Verein, stand bisher aber nicht auf der Website.',
+    ],
+    // ⚠️ Angenommen, nicht bestätigt: Altersgruppe, Ort und was mitzubringen
+    // ist. Sobald die Angaben vorliegen, hier ergänzen und den Status unten
+    // entfernen.
+    color: 'var(--c-primary-light)',
+    ageGroups: ['erwachsene'],
+    status: {
+      label: 'Angaben werden ergänzt',
+      text: 'Das Angebot gibt es, die Einzelheiten zu Gruppen, Trainingszeiten und Ansprechpartner tragen wir gerade zusammen. Bis dahin gibt der Vorstand gerne Auskunft.',
+    },
+  },
+  {
     slug: 'dart',
     name: 'Dart',
     teaser: 'Geselligkeit & Zielgenauigkeit',
@@ -203,3 +222,21 @@ export const sports: Sport[] = [
     ageGroups: ['jugend', 'erwachsene'],
   },
 ];
+
+/** Anzahl der Sparten – überall verwenden, statt die Zahl auszuschreiben. */
+export const sportCount = sports.length;
+
+const ZAHLWOERTER = [
+  'null', 'eine', 'zwei', 'drei', 'vier', 'fünf', 'sechs',
+  'sieben', 'acht', 'neun', 'zehn', 'elf', 'zwölf',
+];
+
+/** Anzahl als Wort, z. B. "neun". Fällt bei großen Zahlen auf die Ziffer zurück. */
+export const sportCountWord = ZAHLWOERTER[sportCount] ?? String(sportCount);
+
+/** Dasselbe großgeschrieben, für den Satzanfang. */
+export const SportCountWord =
+  sportCountWord.charAt(0).toUpperCase() + sportCountWord.slice(1);
+
+/** Namen aller Sparten, z. B. für strukturierte Daten. */
+export const sportNames = sports.map((sport) => sport.name);
