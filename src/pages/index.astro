@@ -13,6 +13,7 @@ import CallToAction from '../components/CallToAction.astro';
 import Icon from '../components/Icon.astro';
 import PrototypeNotice from '../components/PrototypeNotice.astro';
 import { site, isPrototype } from '../data/site';
+import { SportCountWord } from '../data/sports';
 ---
 
 <BaseLayout title={`${site.shortName} – Dein Verein, dein Sport`} bareTitle>
@@ -26,7 +27,7 @@ import { site, isPrototype } from '../data/site';
         <p class="eyebrow">Sportangebote</p>
         <h2>Für jede und jeden das passende Angebot</h2>
         <p>
-          Acht Sportarten, ein Verein. Klick dich direkt zu dem, was dich
+          {SportCountWord} Sportarten, ein Verein. Klick dich direkt zu dem, was dich
           interessiert – Trainingszeiten und Ansprechpartner findest du auf
           jeder Sparten-Seite.
         </p>

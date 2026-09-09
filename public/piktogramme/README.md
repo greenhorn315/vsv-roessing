@@ -13,6 +13,7 @@ den Spartenseiten.
 | `basketball.png` | Basketball | **Eigenzeichnung, Platzhalter** |
 | `tanzen.png` | Tanzen | DOSB `icon_modern_dance` |
 | `outdoor.png` | Outdoor | DOSB `icon_wandern` |
+| `yoga.png` | Yoga | DOSB `icon_yoga` |
 | `dart.png` | Dart | DOSB `icon_darts` |
 
 ## Format

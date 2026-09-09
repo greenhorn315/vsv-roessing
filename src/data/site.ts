@@ -1,4 +1,5 @@
 import type { IconName } from '../components/icons';
+import { sportCount, sportCountWord } from './sports';
 
 /**
  * Zentrale Vereins- und Seitendaten.
@@ -14,8 +15,7 @@ export const site = {
   founded: 1897,
   /** {age} wird durch das aktuelle Vereinsalter ersetzt. */
   sloganTemplate: '{age} Jahre Bewegung. Und richtig gut drauf.',
-  description:
-    'Volkssportvereinigung Rössing von 1897 e.V. – acht Sportarten für Kinder, Jugendliche, Familien und Erwachsene. Schon ab 4 € im Monat dabei.',
+  description: `Volkssportvereinigung Rössing von 1897 e.V. – ${sportCountWord} Sportarten für Kinder, Jugendliche, Familien und Erwachsene. Schon ab 4 € im Monat dabei.`,
   email: 'vorstand@vsv-roessing.de',
   phone: '+49 (0) 50 69 / 74 15',
   address: {
@@ -71,6 +71,6 @@ export const navigation: NavItem[] = [
 export const facts = [
   { value: '1897', label: 'gegründet' },
   { value: '~660', label: 'Mitglieder' },
-  { value: '8', label: 'Sportarten' },
+  { value: String(sportCount), label: 'Sportarten' },
   { value: 'ab 4 €', label: 'im Monat dabei' },
 ] as const;
