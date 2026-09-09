@@ -41,7 +41,7 @@ const previous = sports[(index - 1 + sports.length) % sports.length];
   <section class="sport-hero" style={`--sport-color:${sport.color}`}>
     <div class="container sport-hero__inner">
       <span class="sport-hero__icon" aria-hidden="true">
-        <Pictogram sport={sport} size={88} />
+        <Pictogram name={sport.pictogram} size={88} />
       </span>
       <div>
         <h1>{sport.name}</h1>
@@ -96,6 +96,25 @@ const previous = sports[(index - 1 + sports.length) % sports.length];
                   <li>
                     <Icon name="check" size={18} class="highlights__check" />
                     <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )
+        }
+
+        {
+          sport.activities && sport.activities.length > 0 && (
+            <>
+              <h2>Sportarten in dieser Sparte</h2>
+              <ul class="activities">
+                {sport.activities.map((activity) => (
+                  <li class="activity">
+                    <Pictogram name={activity.pictogram} size={64} />
+                    <span class="activity__name">
+                      {activity.name}
+                      {activity.note && <small>{activity.note}</small>}
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -276,6 +295,35 @@ const previous = sports[(index - 1 + sports.length) % sports.length];
 
   .cta-inline {
     margin-top: var(--sp-7);
+  }
+
+  /* ---- Sportarten der Sparte ---- */
+  .activities {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: var(--sp-4);
+  }
+  .activity {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: center;
+  }
+  .activity__name {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--c-text);
+    line-height: 1.25;
+  }
+  .activity__name small {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--c-text-muted);
   }
 
   /* ---- Hinweis für Sparten im Aufbau ---- */
