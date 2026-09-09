@@ -1,31 +1,49 @@
 ---
-import type { Sport } from '../data/sports';
-
 interface Props {
-  sport: Sport;
-  /** Kantenlänge in px. Die Datei liegt in 256 px vor. */
+  /**
+   * Dateiname in public/piktogramme/ ohne Endung. Ohne Wert wird ein leerer
+   * Rahmen gezeichnet – so bleibt eine Sportart sichtbar, für die noch kein
+   * Piktogramm vorliegt.
+   */
+  name?: string;
+  /** Kantenlänge in px. Die Dateien liegen in 256 px vor. */
   size?: number;
   class?: string;
 }
 
-const { sport, size = 64, class: className } = Astro.props;
+const { name, size = 64, class: className } = Astro.props;
 ---
 
-<img
-  class:list={['pictogram', className]}
-  src={`/piktogramme/${sport.slug}.png`}
-  alt=""
-  width={size}
-  height={size}
-  loading="lazy"
-  decoding="async"
-/>
+{
+  name ? (
+    <img
+      class:list={['pictogram', className]}
+      src={`/piktogramme/${name}.png`}
+      alt=""
+      width={size}
+      height={size}
+      loading="lazy"
+      decoding="async"
+    />
+  ) : (
+    <span
+      class:list={['pictogram', 'pictogram--leer', className]}
+      style={`width:${size}px;height:${size}px`}
+      aria-hidden="true"
+    />
+  )
+}
 
 <style>
-  /* Die Piktogramme sind quadratisch und rahmenbündig abgelegt. */
   .pictogram {
     display: block;
     aspect-ratio: 1;
     height: auto;
+  }
+
+  /* Gleiche Kontur wie die Piktogramme, nur ohne Figur. */
+  .pictogram--leer {
+    border: 1px dashed var(--c-border-strong);
+    border-radius: 17%;
   }
 </style>

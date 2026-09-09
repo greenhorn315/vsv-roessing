@@ -1,5 +1,17 @@
 export type AgeGroup = 'kinder' | 'jugend' | 'erwachsene';
 
+/** Eine Sportart innerhalb einer Sparte. */
+export interface Activity {
+  name: string;
+  /**
+   * Dateiname in public/piktogramme/ ohne Endung. Fehlt der Wert, zeigt die
+   * Seite einen leeren Rahmen – besser als die Aktivität zu verschweigen.
+   */
+  pictogram?: string;
+  /** Kurzer Zusatz, z. B. „14-tägig“. */
+  note?: string;
+}
+
 export interface Sport {
   slug: string;
   name: string;
@@ -23,6 +35,10 @@ export interface Sport {
     text: string;
     next?: string[];
   };
+  /** Dateiname des Piktogramms in public/piktogramme/ ohne Endung. */
+  pictogram: string;
+  /** Sportarten, die zu dieser Sparte gehören. */
+  activities?: Activity[];
   /** Akzentfarbe der Karte (Design-System-Token oder Hex). */
   color: string;
   ageGroups: AgeGroup[];
@@ -53,6 +69,7 @@ export const sports: Sport[] = [
     ],
     venue: 'VSV-Sportplatz',
     bring: 'Sportsachen, Hallen- oder Fußballschuhe und etwas zu trinken.',
+    pictogram: 'fussball',
     color: 'var(--c-primary-light)',
     ageGroups: ['kinder', 'jugend', 'erwachsene'],
   },
@@ -73,6 +90,7 @@ export const sports: Sport[] = [
     ],
     venue: 'Alfred-Stubenrauch-Sporthalle',
     bring: 'Hallenschuhe mit heller Sohle und Sportkleidung.',
+    pictogram: 'volleyball',
     color: 'var(--c-accent)',
     ageGroups: ['jugend', 'erwachsene'],
   },
@@ -93,6 +111,7 @@ export const sports: Sport[] = [
     ],
     venue: 'VSV-Sportplatz und Sporthalle',
     bring: 'Laufschuhe, wetterfeste Kleidung.',
+    pictogram: 'leichtathletik',
     color: 'var(--c-primary)',
     ageGroups: ['kinder', 'jugend', 'erwachsene'],
   },
@@ -113,6 +132,7 @@ export const sports: Sport[] = [
     ],
     venue: 'Alfred-Stubenrauch-Sporthalle',
     bring: 'Bequeme Kleidung, Turnschläppchen oder barfuß.',
+    pictogram: 'geraeteturnen-sprung',
     color: 'var(--c-sun-dark)',
     ageGroups: ['kinder', 'erwachsene'],
   },
@@ -132,6 +152,7 @@ export const sports: Sport[] = [
     ],
     venue: 'Alfred-Stubenrauch-Sporthalle',
     bring: 'Hallenschuhe mit heller Sohle.',
+    pictogram: 'basketball',
     color: 'var(--c-primary-light)',
     ageGroups: ['jugend', 'erwachsene'],
   },
@@ -152,6 +173,7 @@ export const sports: Sport[] = [
     ],
     venue: 'Alfred-Stubenrauch-Sporthalle',
     bring: 'Bequeme Kleidung und Hallenschuhe.',
+    pictogram: 'modern-dance',
     color: 'var(--c-accent)',
     ageGroups: ['kinder', 'jugend', 'erwachsene'],
   },
@@ -172,6 +194,13 @@ export const sports: Sport[] = [
     ],
     venue: 'Treffpunkt am VSV-Sportplatz',
     bring: 'Festes Schuhwerk, wetterfeste Jacke, Getränk.',
+    activities: [
+      { name: 'Wandern', pictogram: 'wandern' },
+      { name: 'Nordic Walking', pictogram: 'nordic-walking' },
+      { name: 'Radwandern', pictogram: 'radfahren' },
+      // Für Boßeln liegt noch kein Piktogramm vor.
+      { name: 'Boßeln' },
+    ],
     status: {
       label: 'Sparte im Aufbau',
       text: 'Die Outdoor-Sparte versteht sich als Nachfolgerin der bisherigen Wander-Sparte und befindet sich derzeit in der Phase der Formierung. Wer mitgestalten möchte, ist ausdrücklich eingeladen – gerade jetzt lässt sich noch viel mitbestimmen.',
@@ -180,6 +209,7 @@ export const sports: Sport[] = [
         'Teilnahme am „Tag des Wanderns“, organisiert und durchgeführt vom Kreissportbund Hildesheim',
       ],
     },
+    pictogram: 'wandern',
     color: 'var(--c-primary)',
     ageGroups: ['erwachsene'],
   },
@@ -195,6 +225,7 @@ export const sports: Sport[] = [
     // ⚠️ Angenommen, nicht bestätigt: Altersgruppe, Ort und was mitzubringen
     // ist. Sobald die Angaben vorliegen, hier ergänzen und den Status unten
     // entfernen.
+    pictogram: 'yoga',
     color: 'var(--c-primary-light)',
     ageGroups: ['erwachsene'],
     status: {
@@ -218,6 +249,7 @@ export const sports: Sport[] = [
     ],
     venue: 'Vereinsheim',
     bring: 'Nichts – Pfeile können für den Anfang geliehen werden.',
+    pictogram: 'darts',
     color: 'var(--c-sun-dark)',
     ageGroups: ['jugend', 'erwachsene'],
   },
