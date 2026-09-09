@@ -18,13 +18,16 @@ Zugeordnet wird in `src/data/sports.ts`:
     { name: 'Wandern',        pictogram: 'wandern' },
     { name: 'Nordic Walking', pictogram: 'nordic-walking' },
     { name: 'Radwandern',     pictogram: 'radfahren' },
-    { name: 'Boßeln' },        // ohne Piktogramm: leerer Rahmen
+    { name: 'Boßeln',        pictogram: 'boccia' },
   ],
 }
 ```
 
 Eine Sportart ohne `pictogram` bekommt einen gestrichelten leeren Rahmen.
 Sie bleibt dadurch sichtbar, statt unter den Tisch zu fallen.
+
+Für Boßeln gibt es kein eigenes DOSB-Piktogramm. Verwendet wird deshalb das
+von Boccia – unverändert, das Motiv passt inhaltlich.
 
 ## Vorrat
 
@@ -46,7 +49,7 @@ Sie bleibt dadurch sichtbar, statt unter den Tisch zu fallen.
 | `radfahren` | Radfahren | Sportart Radwandern |
 | `yoga` | Yoga | Sparte Yoga |
 | `darts` | Darts | Sparte Dart |
-| `boccia` | Boccia/Boule | – |
+| `boccia` | Boccia/Boule | Sportart Boßeln |
 
 Die nicht zugeordneten liegen als Vorrat bereit, falls beim Klären der
 Spartenstruktur weitere Sportarten dazukommen.
