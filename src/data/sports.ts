@@ -198,8 +198,10 @@ export const sports: Sport[] = [
       { name: 'Wandern', pictogram: 'wandern' },
       { name: 'Nordic Walking', pictogram: 'nordic-walking' },
       { name: 'Radwandern', pictogram: 'radfahren' },
-      // Für Boßeln liegt noch kein Piktogramm vor.
-      { name: 'Boßeln' },
+      // Für Boßeln gibt es kein eigenes DOSB-Piktogramm. Verwendet wird das
+      // von Boccia – unverändert, das Motiv passt inhaltlich: werfende Figur
+      // mit Kugeln am Boden.
+      { name: 'Boßeln', pictogram: 'boccia' },
     ],
     status: {
       label: 'Sparte im Aufbau',

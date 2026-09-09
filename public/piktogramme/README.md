@@ -18,13 +18,16 @@ Zugeordnet wird in `src/data/sports.ts`:
     { name: 'Wandern',        pictogram: 'wandern' },
     { name: 'Nordic Walking', pictogram: 'nordic-walking' },
     { name: 'Radwandern',     pictogram: 'radfahren' },
-    { name: 'Boßeln' },        // ohne Piktogramm: leerer Rahmen
+    { name: 'Boßeln',        pictogram: 'boccia' },
   ],
 }
 ```
 
 Eine Sportart ohne `pictogram` bekommt einen gestrichelten leeren Rahmen.
 Sie bleibt dadurch sichtbar, statt unter den Tisch zu fallen.
+
+Für Boßeln gibt es kein eigenes DOSB-Piktogramm. Verwendet wird deshalb das
+von Boccia – unverändert, das Motiv passt inhaltlich.
 
 ## Vorrat
 
@@ -46,6 +49,7 @@ Sie bleibt dadurch sichtbar, statt unter den Tisch zu fallen.
 | `radfahren` | Radfahren | Sportart Radwandern |
 | `yoga` | Yoga | Sparte Yoga |
 | `darts` | Darts | Sparte Dart |
+| `boccia` | Boccia/Boule | Sportart Boßeln |
 
 Die nicht zugeordneten liegen als Vorrat bereit, falls beim Klären der
 Spartenstruktur weitere Sportarten dazukommen.
@@ -67,6 +71,21 @@ Spartenseiten. 256 px deckt damit auch dreifache Bildschirmauflösung ab.
 2. Aus dem ZIP `Piktogramme_schwarz_auf_weiss/…_500px.png` nehmen, auf den
    Rahmen zuschneiden und auf 256 × 256 zentrieren.
 3. Nach Motiv benannt hier ablegen und in `sports.ts` eintragen.
+
+## Verändern ist nicht erlaubt
+
+Die Nutzungshinweise des DOSB untersagen das Einfügen oder Verändern von
+Bestandteilen: keine zusätzlichen Grafiken, keine Logos, kein Text im
+Piktogramm, keine Einbindung in ein Logo. Erlaubt ist nur die unveränderte
+Verwendung, dazu die Farbvarianten aus dem Download.
+
+Erlaubt bleibt, was wir tun: gleichmäßig skalieren und den transparenten Rand
+beschneiden. Das ändert nichts am Motiv.
+
+Fehlt eine Sportart im DOSB-Satz, sind die Wege: dort noch einmal suchen (über
+200 Sportarten), eine vollständig eigene Zeichnung anfertigen, oder den
+leeren Rahmen stehen lassen. Ein DOSB-Piktogramm als Vorlage zu ergänzen ist
+keiner davon.
 
 ## Nennung
 
