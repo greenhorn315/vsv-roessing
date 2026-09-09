@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Icon from '../../components/Icon.astro';
+import Pictogram from '../../components/Pictogram.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import CallToAction from '../../components/CallToAction.astro';
 import { sports, ageGroupLabels } from '../../data/sports';
@@ -40,7 +41,7 @@ const previous = sports[(index - 1 + sports.length) % sports.length];
   <section class="sport-hero" style={`--sport-color:${sport.color}`}>
     <div class="container sport-hero__inner">
       <span class="sport-hero__icon" aria-hidden="true">
-        <Icon name={sport.icon} size={38} />
+        <Pictogram sport={sport} size={88} />
       </span>
       <div>
         <h1>{sport.name}</h1>
@@ -211,15 +212,9 @@ const previous = sports[(index - 1 + sports.length) % sports.length];
     gap: var(--sp-5);
   }
   .sport-hero__icon {
-    display: grid;
-    place-items: center;
-    width: 72px;
-    height: 72px;
+    display: block;
+    width: 88px;
     flex-shrink: 0;
-    border-radius: var(--radius);
-    background: var(--c-surface);
-    color: var(--sport-color, var(--c-primary));
-    box-shadow: var(--shadow-sm);
   }
   .sport-hero h1 {
     margin-bottom: var(--sp-2);

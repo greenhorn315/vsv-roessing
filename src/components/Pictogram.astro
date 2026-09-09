@@ -1,0 +1,31 @@
+---
+import type { Sport } from '../data/sports';
+
+interface Props {
+  sport: Sport;
+  /** Kantenlänge in px. Die Datei liegt in 256 px vor. */
+  size?: number;
+  class?: string;
+}
+
+const { sport, size = 64, class: className } = Astro.props;
+---
+
+<img
+  class:list={['pictogram', className]}
+  src={`/piktogramme/${sport.slug}.png`}
+  alt=""
+  width={size}
+  height={size}
+  loading="lazy"
+  decoding="async"
+/>
+
+<style>
+  /* Die Piktogramme sind quadratisch und rahmenbündig abgelegt. */
+  .pictogram {
+    display: block;
+    aspect-ratio: 1;
+    height: auto;
+  }
+</style>

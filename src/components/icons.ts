@@ -11,21 +11,6 @@ export const icons = {
   info: '<circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5"/><circle cx="12" cy="8" r="0.9" fill="currentColor" stroke="none"/>',
   mail: '<rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="M4 6.5 12 13l8-6.5"/>',
 
-  // --- Sportarten ---
-  football:
-    '<circle cx="12" cy="12" r="8.5"/><path d="M12 8l3 2.2-1.1 3.5H10.1L9 10.2 12 8z"/><path d="M12 8V4.7M15 10.2l3.2-1M9 10.2 5.8 9.2M13.9 13.7l1.9 3M10.1 13.7l-1.9 3"/>',
-  volleyball:
-    '<circle cx="12" cy="12" r="8.5"/><path d="M6 7c3 2 3 8 0 10M12 3.5c-1.8 3-1.8 14 0 17M18 7c-3 2-3 8 0 10"/>',
-  athletics:
-    '<circle cx="12" cy="8.5" r="4"/><path d="M10.3 5.3l-1-1.6M13.7 5.3l1-1.6M9 8.5H7.3"/><path d="M12 12.5v3l-3.5 4.5M12 15.5l3.5 4.5"/>',
-  hiking: '<path d="M3 18 9 7l3 5.5L14.5 9 21 18z"/><circle cx="9" cy="4" r="1.4"/>',
-  dart: '<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/>',
-  gym: '<path d="M8 4v3.2a3.5 3.5 0 1 0 0 6.6V20M16 4v3.2a3.5 3.5 0 1 1 0 6.6V20"/>',
-  basketball:
-    '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5v17M6 5.5c2.8 3.5 2.8 11.5 0 15M18 5.5c-2.8 3.5-2.8 11.5 0 15"/>',
-  dance:
-    '<circle cx="13.5" cy="4.5" r="1.6"/><path d="M13 7.5 9 10l1 4-3.5 4M13 7.5l4 1.5-1 4 3 3.5M10 14l4 0.5"/>',
-
   // --- UI ---
   phone:
     '<path d="M5.5 4.5h3l1.3 4-2 1.5a11 11 0 0 0 5.2 5.2l1.5-2 4 1.3v3a1.5 1.5 0 0 1-1.6 1.5A15.5 15.5 0 0 1 4 5.6a1.5 1.5 0 0 1 1.5-1.1z"/>',
