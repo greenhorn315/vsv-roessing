@@ -5,7 +5,7 @@ import Pictogram from '../../components/Pictogram.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import CallToAction from '../../components/CallToAction.astro';
 import { sports, ageGroupLabels } from '../../data/sports';
-import { trainings } from '../../data/trainings';
+import { trainingsOfSport } from '../../data/trainings';
 import { site } from '../../data/site';
 
 export function getStaticPaths() {
@@ -16,7 +16,7 @@ export function getStaticPaths() {
 }
 
 const { sport } = Astro.props;
-const sessions = trainings.filter((t) => t.sport === sport.slug);
+const sessions = trainingsOfSport(sport.slug);
 
 // Für die Weiter-Navigation am Seitenende.
 /**
@@ -156,6 +156,12 @@ const previous = sports[(index - 1 + sports.length) % sports.length];
                       <strong>
                         {session.day} {session.time}
                       </strong>
+                      <span>{session.title}</span>
+                      {session.audience && <span>{session.audience}</span>}
+                      {session.trainers && session.trainers.length > 0 && (
+                        <span>Übungsleitung: {session.trainers.join(', ')}</span>
+                      )}
+                      {session.note && <span>{session.note}</span>}
                       {session.place && <span>{session.place}</span>}
                     </li>
                   ))}

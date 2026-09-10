@@ -4,6 +4,7 @@ import PageHeader from '../components/PageHeader.astro';
 import SportGrid from '../components/SportGrid.astro';
 import { SportCountWord, sportNames } from '../data/sports';
 import TrainingList from '../components/TrainingList.astro';
+import { trainingsStand } from '../data/trainings';
 import CallToAction from '../components/CallToAction.astro';
 ---
 
@@ -28,8 +29,9 @@ import CallToAction from '../components/CallToAction.astro';
       <div class="section-head">
         <h2>Trainingszeiten im Überblick</h2>
         <p>Änderungen in den Ferien geben wir über Instagram und die Gruppen bekannt.</p>
+        <p>{trainingsStand}</p>
       </div>
-      <TrainingList />
+      <TrainingList grouped />
     </div>
   </section>
 

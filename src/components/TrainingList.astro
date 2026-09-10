@@ -1,27 +1,85 @@
 ---
 import Icon from './Icon.astro';
-import { trainings } from '../data/trainings';
+import {
+  trainings,
+  trainingsByDay,
+  trainingsOfSport,
+  type Training,
+  type Weekday,
+} from '../data/trainings';
+
+interface Props {
+  /** Nur die Trainings dieser Sparte (slug aus sports.ts). */
+  sport?: string;
+  /** Höchstens so viele Einträge zeigen. */
+  limit?: number;
+  /** Nach Wochentagen gruppieren statt einer durchgehenden Liste. */
+  grouped?: boolean;
+}
+
+const { sport, limit, grouped = false } = Astro.props;
+
+const wochentagNamen: Record<Weekday, string> = {
+  Mo: 'Montag',
+  Di: 'Dienstag',
+  Mi: 'Mittwoch',
+  Do: 'Donnerstag',
+  Fr: 'Freitag',
+  Sa: 'Samstag',
+  So: 'Sonntag',
+};
+
+const auswahl = sport ? trainingsOfSport(sport) : trainings;
+const sichtbar = limit ? auswahl.slice(0, limit) : auswahl;
+
+// Gruppiert wird nur ohne Sparten- und Anzahl-Filter, sonst zeigt die Liste
+// Tagesüberschriften über einem Ausschnitt.
+const gruppen: { day: Weekday | null; entries: Training[] }[] =
+  grouped && !sport && !limit
+    ? trainingsByDay()
+    : [{ day: null, entries: sichtbar }];
 ---
 
-<ul class="trainings">
+<div class="trainings">
   {
-    trainings.map((training) => (
-      <li>
-        <span class="trainings__name">
-          {training.title}
-          {training.place && <small>{training.place}</small>}
-        </span>
-        <span class="trainings__time">
-          <Icon name="clock" size={14} />
-          {training.day} {training.time}
-        </span>
-      </li>
+    gruppen.map((gruppe) => (
+      <section class="trainings__group">
+        {gruppe.day && <h3 class="trainings__day">{wochentagNamen[gruppe.day]}</h3>}
+        <ul class="trainings__list">
+          {gruppe.entries.map((training) => (
+            <li>
+              <span class="trainings__name">
+                {training.title}
+                {training.audience && <small>{training.audience}</small>}
+                {training.trainers && training.trainers.length > 0 && (
+                  <small>Übungsleitung: {training.trainers.join(', ')}</small>
+                )}
+                {training.note && <small class="trainings__note">{training.note}</small>}
+                {training.place && <small>{training.place}</small>}
+              </span>
+              <span class="trainings__time">
+                <Icon name="clock" size={14} />
+                {gruppe.day ? training.time : `${training.day} ${training.time}`}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
     ))
   }
-</ul>
+</div>
 
 <style>
   .trainings {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-5);
+  }
+  .trainings__day {
+    font-size: 1rem;
+    margin: 0 0 0.6rem;
+  }
+  .trainings__list {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -29,7 +87,7 @@ import { trainings } from '../data/trainings';
     flex-direction: column;
     gap: 0.6rem;
   }
-  .trainings li {
+  .trainings__list li {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -49,6 +107,9 @@ import { trainings } from '../data/trainings';
     font-size: 0.8rem;
     color: var(--c-text-muted);
     font-weight: 400;
+  }
+  .trainings__note {
+    font-style: italic;
   }
   .trainings__time {
     display: inline-flex;
