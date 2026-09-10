@@ -68,6 +68,9 @@ Synology Web Station gleichermaßen aus.
 
 ## Offene Punkte vor dem Livegang
 
+Dieselbe Liste als PDF zum Ausdrucken lässt sich aus der Projektablage
+nachreichen; Inhalt und Nummerierung stimmen mit diesem Abschnitt überein.
+
 - [ ] Fotos in `public/images/` einsetzen (Platzhalter greifen bis dahin automatisch)
 - [ ] Beiträge in `src/data/membership.ts` gegen die Beitragsordnung prüfen
 - [ ] Vorstandsnamen und Vereinschronik in `src/pages/verein.astro`
@@ -93,4 +96,28 @@ Synology Web Station gleichermaßen aus.
 - [ ] PDF-Formulare hinterlegen
 - [ ] `site` in `astro.config.mjs` auf die finale Domain setzen
 - [ ] Sparten-Detailtexte in `src/data/sports.ts` fachlich prüfen
-      (Trainingszeiten, Ansprechpartner je Sparte)
+- [ ] Spartenstruktur klären: welche Sportarten gehören zu welcher Sparte?
+      Bisher ist nur Outdoor über `activities` befüllt.
+- [ ] Yoga inhaltlich füllen: Zielgruppe, Trainingszeiten, Ansprechpartner.
+      Die Altersgruppe „Erwachsene" ist eine Annahme, die Seite weist die
+      fehlenden Angaben sichtbar aus.
+- [ ] Ansprechpartner je Sparte ergänzen (`contact` in `src/data/sports.ts`).
+      Bisher nur Outdoor; die übrigen fallen auf die Vorstandsadresse zurück.
+
+### Trainingszeiten
+
+Die 35 Gruppen in `src/data/trainings.ts` stammen aus der Übungsleiterliste
+von 2022 und sind nicht bestätigt. Der Hinweis darauf steht als
+`trainingsStand` überall dort, wo Zeiten angezeigt werden.
+
+- [ ] Stimmen die 35 Gruppen noch? Verteilung: Turnen 9 · Leichtathletik 9 ·
+      Fußball 7 · Tanzen 6 · Basketball 1 · Dart 1 · Volleyball 1 · Yoga 1
+- [ ] Zwei Gruppen ohne Übungsleitung: Fußball „Ü32" und „Yoga"
+- [ ] Zwei Gruppen ohne Zielgruppe: Turnen „Montagsturner" und „Basketball"
+- [ ] Eine Zeit steht als „nach Absprache": Leichtathletik,
+      Lauf- und Sprungtraining
+- [ ] Trainingsorte fehlen bei 33 von 35 Gruppen. Bewusst nicht erfunden.
+- [ ] Outdoor hat keine Trainingszeiten. Die Sparte ist in Gründung, Zeiten
+      und Turnus werden auf der Versammlung am 10. Oktober 2026 festgelegt.
+- [ ] Einwilligung der Übungsleitungen zur Namensnennung einholen, bevor die
+      Seite öffentlich wird.

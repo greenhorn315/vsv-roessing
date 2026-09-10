@@ -223,10 +223,10 @@ export const sports: Sport[] = [
       { name: 'Boßeln', pictogram: 'boccia' },
     ],
     status: {
-      label: 'Sparte im Aufbau',
-      text: 'Die Outdoor-Sparte versteht sich als Nachfolgerin der bisherigen Wander-Sparte und befindet sich derzeit in der Phase der Formierung. Wer mitgestalten möchte, ist ausdrücklich eingeladen – gerade jetzt lässt sich noch viel mitbestimmen.',
+      label: 'Sparte in Gründung',
+      text: 'Die Outdoor-Sparte versteht sich als Nachfolgerin der bisherigen Wander-Sparte und befindet sich in der Gründung. Trainingszeiten und Turnus gibt es deshalb noch nicht – sie werden auf der ersten Versammlung gemeinsam mit den Interessierten festgelegt. Wer mitgestalten möchte, ist ausdrücklich eingeladen: gerade jetzt lässt sich noch alles mitbestimmen.',
       next: [
-        'Informations- und Kennenlerntreffen Anfang Oktober',
+        'Erste Outdoor-Versammlung am Samstag, 10. Oktober 2026 um 15:00 Uhr – dort werden Zeiten und Turnus festgelegt',
         'Teilnahme am „Tag des Wanderns“, organisiert und durchgeführt vom Kreissportbund Hildesheim',
       ],
     },
