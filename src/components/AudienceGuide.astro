@@ -1,0 +1,99 @@
+---
+import { audienceLabels, trainingsFuer, type AudienceKey } from '../data/trainings';
+import { sports } from '../data/sports';
+
+const reihenfolge: AudienceKey[] = ['kinder', 'jugend', 'frauen', 'maenner', 'alle'];
+
+/** Sparte zu einer Gruppe finden, für die Farbmarkierung. */
+const farbe = (slug?: string) =>
+  sports.find((s) => s.slug === slug)?.color ?? 'var(--c-primary)';
+
+const spalten = reihenfolge.map((key) => ({
+  key,
+  titel: audienceLabels[key],
+  gruppen: trainingsFuer(key),
+}));
+---
+
+<div class="zielgruppen">
+  {
+    spalten.map((spalte) => (
+      <section class="zg">
+        <h3>{spalte.titel}</h3>
+        <p class="zg__anzahl">
+          {spalte.gruppen.length} {spalte.gruppen.length === 1 ? 'Angebot' : 'Angebote'}
+        </p>
+        <ul>
+          {spalte.gruppen.map((g) => (
+            <li style={`--sport-color:${farbe(g.sport)}`}>
+              <a href={g.sport ? `/sportangebote/${g.sport}` : '/sportangebote'}>
+                {g.title}
+              </a>
+              <span class="zg__wann">
+                {g.day} {g.time}
+                {g.trainers && g.trainers.length > 0 && <> · {g.trainers.join(', ')}</>}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+</div>
+
+<style>
+  .zielgruppen {
+    display: grid;
+    /* Fünf Einstiege nebeneinander, solange die Breite reicht. */
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: var(--sp-6) var(--sp-4);
+    align-items: start;
+  }
+
+  .zg h3 {
+    font-size: var(--step-1);
+    margin: 0;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid var(--c-primary);
+  }
+
+  .zg__anzahl {
+    margin: 0.5rem 0 var(--sp-3);
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--c-text-muted);
+  }
+
+  .zg ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .zg li {
+    padding-left: 0.7rem;
+    border-left: 3px solid var(--sport-color, var(--c-primary));
+    line-height: 1.35;
+  }
+
+  .zg li a {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--c-text);
+    text-decoration: none;
+  }
+  .zg li a:hover {
+    color: var(--c-accent-ink);
+    text-decoration: underline;
+  }
+
+  .zg__wann {
+    display: block;
+    font-size: 0.84rem;
+    color: var(--c-text-muted);
+  }
+</style>

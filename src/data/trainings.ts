@@ -13,6 +13,17 @@ export const weekdays = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'] as const;
 
 export type Weekday = (typeof weekdays)[number];
 
+/** Zielgruppen-Einstieg: „Für wen ist was?“ */
+export type AudienceKey = 'kinder' | 'jugend' | 'frauen' | 'maenner' | 'alle';
+
+export const audienceLabels: Record<AudienceKey, string> = {
+  kinder: 'Kinder',
+  jugend: 'Jugendliche',
+  frauen: 'Frauen',
+  maenner: 'Männer',
+  alle: 'Offen für alle',
+};
+
 export interface Training {
   title: string;
   day: Weekday;
@@ -28,6 +39,11 @@ export interface Training {
   /** Übungsleitung; leere Liste heißt: die Gruppe sucht jemanden. */
   trainers?: string[];
   ageGroups?: AgeGroup[];
+  /**
+   * Für welchen Einstieg die Gruppe gelistet wird. Eine Gruppe kann in
+   * mehreren stehen – „Damen“ etwa bei Frauen und bei Jugendlichen.
+   */
+  audienceGroups?: AudienceKey[];
 }
 
 /** Hinweis, der überall dort steht, wo Trainingszeiten angezeigt werden. */
@@ -45,6 +61,7 @@ const alleTrainings: Training[] = [
     note: 'Im Winter donnerstags 20:00 in der Sporthalle',
     trainers: ['Johanna Kasten'],
     ageGroups: ['jugend', 'erwachsene'],
+    audienceGroups: ['frauen', 'jugend'],
   },
   {
     title: 'I. Herren',
@@ -55,6 +72,7 @@ const alleTrainings: Training[] = [
     note: 'Im Winter montags 20:00 in der Sporthalle',
     trainers: ['Dustin Schiewe'],
     ageGroups: ['erwachsene'],
+    audienceGroups: ['maenner'],
   },
   {
     title: 'Ü32',
@@ -65,6 +83,7 @@ const alleTrainings: Training[] = [
     note: 'Übungsleitung offen',
     trainers: [],
     ageGroups: ['erwachsene'],
+    audienceGroups: ['maenner'],
   },
   {
     title: 'G-Jugend',
@@ -74,6 +93,7 @@ const alleTrainings: Training[] = [
     audience: 'Kinder, etwa 5 bis 6 Jahre',
     trainers: ['Johanna Kasten', 'Marlene Ahrens'],
     ageGroups: ['kinder'],
+    audienceGroups: ['kinder'],
   },
   {
     title: 'F-Jugend II',
@@ -83,6 +103,7 @@ const alleTrainings: Training[] = [
     audience: 'Kinder, etwa 7 bis 8 Jahre',
     trainers: ['Roman Vesely'],
     ageGroups: ['kinder'],
+    audienceGroups: ['kinder'],
   },
   {
     title: 'F-Jugend I',
@@ -92,6 +113,7 @@ const alleTrainings: Training[] = [
     audience: 'Kinder, etwa 7 bis 8 Jahre',
     trainers: ['Luca Busche', 'Felix Satow'],
     ageGroups: ['kinder'],
+    audienceGroups: ['kinder'],
   },
   {
     title: 'E-Jugend',
@@ -101,6 +123,7 @@ const alleTrainings: Training[] = [
     audience: 'Kinder, etwa 9 bis 10 Jahre',
     trainers: ['Thomas Bajgier', 'Felix Satow'],
     ageGroups: ['kinder'],
+    audienceGroups: ['kinder'],
   },
 
   // Volleyball
@@ -112,6 +135,7 @@ const alleTrainings: Training[] = [
     audience: 'Erwachsene, gemischt',
     trainers: ['Gunnar Wolpert'],
     ageGroups: ['erwachsene'],
+    audienceGroups: ['alle'],
   },
 
   // Turnen
@@ -123,6 +147,7 @@ const alleTrainings: Training[] = [
     note: 'Zielgruppe noch zu klären',
     trainers: ['Monika Koch'],
     ageGroups: ['erwachsene'],
+    audienceGroups: ['alle'],
   },
   {
     title: 'move your body',
@@ -132,6 +157,7 @@ const alleTrainings: Training[] = [
     audience: 'Erwachsene',
     trainers: ['Denise Hoffmann'],
     ageGroups: ['erwachsene'],
+    audienceGroups: ['alle'],
   },
   {
     title: 'Frauengymnastik',
@@ -141,6 +167,7 @@ const alleTrainings: Training[] = [
     audience: 'Frauen, vormittags',
     trainers: ['Monika Koch'],
     ageGroups: ['erwachsene'],
+    audienceGroups: ['frauen'],
   },
   {
     title: 'Eltern-Kind-Turnen',
@@ -150,6 +177,7 @@ const alleTrainings: Training[] = [
     audience: 'Kleinkinder mit einem Elternteil',
     trainers: ['Elke Winkler'],
     ageGroups: ['kinder'],
+    audienceGroups: ['kinder'],
   },
   {
     title: 'Kinderturnen ab 3',
@@ -159,6 +187,7 @@ const alleTrainings: Training[] = [
     audience: 'Kinder ab 3 Jahren',
     trainers: ['Elke Winkler'],
     ageGroups: ['kinder'],
+    audienceGroups: ['kinder'],
   },
   {
     title: 'Jugendturnen ab 6',
@@ -168,6 +197,7 @@ const alleTrainings: Training[] = [
     audience: 'Kinder ab 6 Jahren',
     trainers: ['Elke Winkler'],
     ageGroups: ['kinder'],
+    audienceGroups: ['kinder'],
   },
   {
     title: 'Kinderturnen ab 9',
@@ -178,6 +208,7 @@ const alleTrainings: Training[] = [
     note: '14-tägig',
     trainers: ['Elke Winkler'],
     ageGroups: ['kinder'],
+    audienceGroups: ['kinder'],
   },
   {
     title: 'Fit for fun',
@@ -187,6 +218,7 @@ const alleTrainings: Training[] = [
     audience: 'Erwachsene',
     trainers: ['Monika Koch'],
     ageGroups: ['erwachsene'],
+    audienceGroups: ['alle'],
   },
   {
     title: 'Männergymnastik',
@@ -196,6 +228,7 @@ const alleTrainings: Training[] = [
     audience: 'Männer',
     trainers: ['Olaf Elbeshausen'],
     ageGroups: ['erwachsene'],
+    audienceGroups: ['maenner'],
   },
 
   // Tanzen
@@ -207,6 +240,7 @@ const alleTrainings: Training[] = [
     audience: 'Frauen',
     trainers: ['Britta Ahrens'],
     ageGroups: ['erwachsene'],
+    audienceGroups: ['frauen'],
   },
   {
     title: 'Jazz Dance Jugend',
@@ -216,6 +250,7 @@ const alleTrainings: Training[] = [
     audience: 'Jugendliche',
     trainers: ['Britta Ahrens'],
     ageGroups: ['jugend'],
+    audienceGroups: ['jugend'],
   },
   {
     title: 'Jazzdance Sweeties',
@@ -225,6 +260,7 @@ const alleTrainings: Training[] = [
     audience: 'Kinder ab 3 Jahren bis zur 1. Klasse',
     trainers: ['Louisa Maiwald'],
     ageGroups: ['kinder'],
+    audienceGroups: ['kinder'],
   },
   {
     title: 'Jazzdance Butterflies',
@@ -234,6 +270,7 @@ const alleTrainings: Training[] = [
     audience: 'Kinder der 2. bis 5. Klasse',
     trainers: ['Louisa Maiwald'],
     ageGroups: ['kinder'],
+    audienceGroups: ['kinder'],
   },
   {
     title: 'Jazzdance Nameless',
@@ -243,6 +280,7 @@ const alleTrainings: Training[] = [
     audience: 'Jugendliche ab der 6. Klasse',
     trainers: ['Louisa Maiwald'],
     ageGroups: ['jugend'],
+    audienceGroups: ['jugend'],
   },
   {
     title: 'Jazzdance JAM-Touch',
@@ -252,6 +290,7 @@ const alleTrainings: Training[] = [
     audience: 'ab 15 Jahren',
     trainers: ['Britta Ahrens'],
     ageGroups: ['jugend', 'erwachsene'],
+    audienceGroups: ['jugend', 'alle'],
   },
 
   // Basketball
@@ -263,6 +302,7 @@ const alleTrainings: Training[] = [
     note: 'Altersgruppe noch zu klären',
     trainers: ['Lennart Ahrens'],
     ageGroups: ['jugend', 'erwachsene'],
+    audienceGroups: ['jugend', 'alle'],
   },
 
   // Leichtathletik
@@ -274,6 +314,7 @@ const alleTrainings: Training[] = [
     audience: 'Kinder von 4 bis 7 Jahren',
     trainers: ['Alexandra Stichnoth'],
     ageGroups: ['kinder'],
+    audienceGroups: ['kinder'],
   },
   {
     title: 'Hochsprung',
@@ -283,6 +324,7 @@ const alleTrainings: Training[] = [
     audience: 'Leistungsgruppe',
     trainers: ['Claudia Losch'],
     ageGroups: ['jugend', 'erwachsene'],
+    audienceGroups: ['alle'],
   },
   {
     title: 'fit for school',
@@ -292,6 +334,7 @@ const alleTrainings: Training[] = [
     audience: 'Kinder von 8 bis 11 Jahren',
     trainers: ['Olga Schmidt'],
     ageGroups: ['kinder'],
+    audienceGroups: ['kinder'],
   },
   {
     title: 'Jugend-Leistungsgruppe',
@@ -301,6 +344,7 @@ const alleTrainings: Training[] = [
     audience: 'Jugendliche',
     trainers: ['Olga Schmidt'],
     ageGroups: ['jugend'],
+    audienceGroups: ['jugend'],
   },
   {
     title: 'Erwachsene',
@@ -310,6 +354,7 @@ const alleTrainings: Training[] = [
     audience: 'Erwachsene',
     trainers: ['Svenja Ebeling'],
     ageGroups: ['erwachsene'],
+    audienceGroups: ['alle'],
   },
   {
     title: 'Wurfgruppe',
@@ -319,6 +364,7 @@ const alleTrainings: Training[] = [
     audience: 'Leistungsgruppe',
     trainers: ['Vivien Sekul'],
     ageGroups: ['jugend', 'erwachsene'],
+    audienceGroups: ['alle'],
   },
   {
     title: 'Sprint- und Sprunggruppe',
@@ -329,6 +375,7 @@ const alleTrainings: Training[] = [
     audience: 'Leistungsgruppe',
     trainers: ['Britta Härke'],
     ageGroups: ['jugend', 'erwachsene'],
+    audienceGroups: ['alle'],
   },
   {
     title: 'Lauf- und Sprungtraining',
@@ -339,6 +386,7 @@ const alleTrainings: Training[] = [
     audience: 'Leistungsgruppe',
     trainers: ['Britta Härke'],
     ageGroups: ['jugend', 'erwachsene'],
+    audienceGroups: ['alle'],
   },
   {
     title: 'Krafttraining',
@@ -348,6 +396,7 @@ const alleTrainings: Training[] = [
     audience: 'Leistungsgruppe',
     trainers: ['Claudia Losch'],
     ageGroups: ['jugend', 'erwachsene'],
+    audienceGroups: ['alle'],
   },
 
   // Yoga
@@ -360,6 +409,7 @@ const alleTrainings: Training[] = [
     note: 'Übungsleitung offen',
     trainers: [],
     ageGroups: ['erwachsene'],
+    audienceGroups: ['alle'],
   },
 
   // Dart
@@ -371,6 +421,7 @@ const alleTrainings: Training[] = [
     audience: 'von 14 bis 60 Jahren, alle Spielstärken',
     trainers: ['Marina Miska'],
     ageGroups: ['jugend', 'erwachsene'],
+    audienceGroups: ['jugend', 'alle'],
   },
 ];
 
@@ -403,3 +454,28 @@ export const trainingsByDay = (): { day: Weekday; entries: Training[] }[] =>
       entries: trainings.filter((training) => training.day === day),
     }))
     .filter((gruppe) => gruppe.entries.length > 0);
+
+/** Alle Gruppen eines Zielgruppen-Einstiegs, in der Reihenfolge der Woche. */
+export function trainingsFuer(key: AudienceKey): Training[] {
+  return trainings.filter((t) => t.audienceGroups?.includes(key));
+}
+
+/**
+ * Kennzahlen des Vereins, aus den Trainingsdaten abgeleitet – so bleiben sie
+ * richtig, wenn Gruppen dazukommen oder wegfallen.
+ */
+export const vereinsZahlen = (() => {
+  const uebungsleitungen = new Set<string>();
+  let ohneLeitung = 0;
+  for (const t of trainings) {
+    if (!t.trainers || t.trainers.length === 0) ohneLeitung++;
+    t.trainers?.forEach((name) => uebungsleitungen.add(name));
+  }
+  return {
+    gruppen: trainings.length,
+    uebungsleitungen: uebungsleitungen.size,
+    kinderangebote: trainingsFuer('kinder').length,
+    trainingstage: new Set(trainings.map((t) => t.day)).size,
+    ohneLeitung,
+  };
+})();

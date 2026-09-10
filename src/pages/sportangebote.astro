@@ -2,6 +2,9 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import SportGrid from '../components/SportGrid.astro';
+import ClubNumbers from '../components/ClubNumbers.astro';
+import AudienceGuide from '../components/AudienceGuide.astro';
+import Organigramm from '../components/Organigramm.astro';
 import { SportCountWord, sportNames } from '../data/sports';
 import TrainingList from '../components/TrainingList.astro';
 import { trainingsStand } from '../data/trainings';
@@ -20,7 +23,45 @@ import CallToAction from '../components/CallToAction.astro';
 
   <section class="section">
     <div class="container">
+      <ClubNumbers />
+    </div>
+  </section>
+
+  <section class="section--tight">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Für wen ist was?</p>
+        <h2>Finde das Angebot, das zu dir passt</h2>
+        <p>
+          Dieselben Gruppen, nur andersherum sortiert: nicht nach Sparte,
+          sondern nach der Person, die sucht.
+        </p>
+      </div>
+      <AudienceGuide />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Nach Sparte</p>
+        <h2>Alle Sparten im Überblick</h2>
+      </div>
       <SportGrid withFilter detailed />
+    </div>
+  </section>
+
+  <section class="section--tight">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Aufbau</p>
+        <h2>Verein, Sparten, Gruppen</h2>
+        <p>
+          Vom Verein über die neun Sparten bis zu den einzelnen
+          Trainingsgruppen.
+        </p>
+      </div>
+      <Organigramm />
     </div>
   </section>
 
