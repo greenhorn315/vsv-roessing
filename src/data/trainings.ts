@@ -274,6 +274,9 @@ const alleTrainings: Training[] = [
     audience: 'Männer',
     note: 'Touren mit Gravelbike oder E-Bike durch das Rössinger Umland, anschließend Grillen am Feuerplatz beim VSV-Sportplatz. Im Winterhalbjahr turnt dieselbe Gruppe als „Freitagsturner“ in der Halle.',
     season: 'sommer',
+    // Von den Freitagsturnern übernommen, weil es dieselbe Gruppe ist. Ob im
+    // Sommer formal jemand die Übungsleitung hat, ist nicht bestätigt.
+    trainers: ['Olaf Elbeshausen'],
     ageGroups: ['erwachsene'],
     audienceGroups: ['maenner'],
   },
