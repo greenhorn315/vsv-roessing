@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Icon from '../components/Icon.astro';
-import { site } from '../data/site';
+import { site, venues } from '../data/site';
 import { sports } from '../data/sports';
 ---
 
@@ -102,10 +102,22 @@ import { sports } from '../data/sports';
         <div class="info-card">
           <Icon name="pin" size={20} class="info-card__icon" />
           <h3>Sportstätten</h3>
-          <p>
-            {site.address.venue}<br />
-            {site.address.postalCode} {site.address.city}
-          </p>
+          <ul class="orte">
+            {
+              venues.map((ort) => (
+                <li>
+                  <strong>{ort.name}</strong>
+                  {ort.alias && <span class="orte__alias">auch {ort.alias}</span>}
+                  {ort.street && (
+                    <span>
+                      {ort.street}, {ort.postalCode} {ort.city}
+                    </span>
+                  )}
+                  <span class="orte__was">{ort.note}</span>
+                </li>
+              ))
+            }
+          </ul>
           <p class="info-card__hint">Parkplätze direkt an Halle und Platz.</p>
         </div>
 
@@ -236,6 +248,32 @@ import { sports } from '../data/sports';
     font-size: 0.94rem;
     color: var(--c-text-muted);
   }
+  .orte {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--sp-3);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+  }
+  .orte li {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.92rem;
+    line-height: 1.35;
+  }
+  .orte strong {
+    color: var(--c-primary);
+  }
+  .orte__alias,
+  .orte__was {
+    font-size: 0.84rem;
+    color: var(--c-text-muted);
+  }
+  .orte__was {
+    font-style: italic;
+  }
+
   .info-card__hint {
     margin-top: 0.5rem !important;
     font-size: 0.85rem !important;
