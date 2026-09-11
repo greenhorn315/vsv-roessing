@@ -34,7 +34,7 @@ export const site = {
 
 export interface Venue {
   name: string;
-  /** Zweiter gebräuchlicher Name, z. B. auf Karten. */
+  /** Zweiter gebräuchlicher Name, z. B. auf Karten. Wird als „auch …“ gezeigt. */
   alias?: string;
   street?: string;
   postalCode?: string;
@@ -61,11 +61,10 @@ export const venues: Venue[] = [
   },
   {
     name: 'Der Dorfbrunnen',
-    alias: 'im selben Gebäude wie die Sporthalle',
     street: 'Loderwinkel 2A',
     postalCode: '31171',
     city: 'Nordstemmen-Rössing',
-    note: 'Treffpunkt des Vereins sowie Trainings- und Wettkampfstätte der Dart-Gruppe',
+    note: 'Im selben Gebäude wie die Sporthalle. Treffpunkt des Vereins sowie Trainings- und Wettkampfstätte der Dart-Gruppe',
   },
   {
     name: 'VSV-Sportplatz',
