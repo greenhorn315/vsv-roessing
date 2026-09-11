@@ -24,8 +24,6 @@ export const site = {
     postalCode: '31171',
     city: 'Nordstemmen',
     country: 'DE',
-    /** Wo trainiert wird – nicht die Postanschrift. */
-    venue: 'Alfred-Stubenrauch-Sporthalle & VSV-Sportplatz',
   },
   social: {
     instagram: { handle: '@vsv.roessing', url: 'https://www.instagram.com/' },
@@ -33,6 +31,43 @@ export const site = {
     whatsapp: { url: '' },
   },
 } as const;
+
+export interface Venue {
+  name: string;
+  /** Zweiter gebräuchlicher Name, z. B. auf Karten. */
+  alias?: string;
+  street?: string;
+  postalCode?: string;
+  city?: string;
+  /** Was dort stattfindet. */
+  note: string;
+}
+
+/**
+ * Sportstätten des Vereins. Sportplatz und Vereinsheim teilen sich eine
+ * Anschrift; für die Sporthalle liegt noch keine vor.
+ */
+export const venues: Venue[] = [
+  {
+    name: 'VSV-Sportplatz',
+    alias: 'Sportplatz Rössing',
+    street: 'Zum Klay 6',
+    postalCode: '31171',
+    city: 'Nordstemmen',
+    note: 'Fußball und Leichtathletik im Sommerhalbjahr',
+  },
+  {
+    name: 'Vereinsheim VSV Rössing',
+    street: 'Zum Klay 6',
+    postalCode: '31171',
+    city: 'Nordstemmen',
+    note: 'Dart',
+  },
+  {
+    name: 'Alfred-Stubenrauch-Sporthalle',
+    note: 'Turnen, Tanzen, Yoga, Basketball – und im Winterhalbjahr Fußball und Leichtathletik',
+  },
+];
 
 export interface NavItem {
   label: string;
