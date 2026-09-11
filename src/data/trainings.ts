@@ -257,6 +257,7 @@ const alleTrainings: Training[] = [
     place: 'Alfred-Stubenrauch-Sporthalle',
     sport: 'turnen',
     audience: 'Männer',
+    // Zuordnung und Übungsleitung sind vom Verein bestätigt.
     note: 'Gymnastik, gelegentlich auch Yoga. Im Sommerhalbjahr fährt dieselbe Gruppe als „Freitagsradler“.',
     season: 'winter',
     trainers: ['Olaf Elbeshausen'],
@@ -274,8 +275,8 @@ const alleTrainings: Training[] = [
     audience: 'Männer',
     note: 'Touren mit Gravelbike oder E-Bike durch das Rössinger Umland, anschließend Grillen am Feuerplatz beim VSV-Sportplatz. Im Winterhalbjahr turnt dieselbe Gruppe als „Freitagsturner“ in der Halle.',
     season: 'sommer',
-    // Von den Freitagsturnern übernommen, weil es dieselbe Gruppe ist. Ob im
-    // Sommer formal jemand die Übungsleitung hat, ist nicht bestätigt.
+    // Vom Verein bestätigt: Freitagsturner und Freitagsradler sind dieselbe
+    // Gruppe mit derselben Übungsleitung.
     trainers: ['Olaf Elbeshausen'],
     ageGroups: ['erwachsene'],
     audienceGroups: ['maenner'],
