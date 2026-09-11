@@ -490,7 +490,7 @@ const alleTrainings: Training[] = [
     title: 'Dart-Training',
     day: 'Mo',
     time: 'ab 19:00',
-    place: 'Vereinsheim VSV Rössing',
+    place: 'Der Dorfbrunnen, Loderwinkel 2A',
     sport: 'dart',
     audience: 'von 14 bis 60 Jahren, alle Spielstärken',
     trainers: ['Marina Miska'],
