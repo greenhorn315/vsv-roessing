@@ -57,7 +57,7 @@ export const venues: Venue[] = [
     postalCode: '31171',
     city: 'Nordstemmen-Rössing',
     note: 'Turnen, Tanzen, Yoga, Basketball – und im Winterhalbjahr Fußball und Leichtathletik',
-    facilities: 'Umkleiden und Duschen im Haus',
+    facilities: 'Umkleiden und Duschen im Haus, Parkplätze und ein öffentlicher Spielplatz direkt nebenan',
   },
   {
     name: 'Der Dorfbrunnen',
