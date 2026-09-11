@@ -261,7 +261,7 @@ export const sports: Sport[] = [
     description:
       'Wöchentlicher Dart-Abend im Dorfbrunnen – Freizeitrunde, Ligabetrieb und offene Boards für Neugierige.',
     longText: [
-      'Der Dart-Abend im Dorfbrunnen, dem Lokal an der Sporthalle, ist offen für alle: Freizeitrunde, Ligabetrieb und freie Boards für alle, die es einfach mal ausprobieren wollen.',
+      'Der Dart-Abend im Dorfbrunnen, dem Lokal im Gebäude der Sporthalle, ist offen für alle: Freizeitrunde, Ligabetrieb und freie Boards für alle, die es einfach mal ausprobieren wollen.',
     ],
     highlights: [
       'Wöchentlicher Dart-Abend',

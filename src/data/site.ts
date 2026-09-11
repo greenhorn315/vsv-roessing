@@ -34,19 +34,21 @@ export const site = {
 
 export interface Venue {
   name: string;
-  /** Zweiter gebräuchlicher Name, z. B. auf Karten. */
+  /** Zweiter gebräuchlicher Name, z. B. auf Karten. Wird als „auch …“ gezeigt. */
   alias?: string;
   street?: string;
   postalCode?: string;
   city?: string;
   /** Was dort stattfindet. */
   note: string;
+  /** Was vor Ort zur Verfügung steht, z. B. Umkleiden. */
+  facilities?: string;
 }
 
 /**
- * Sportstätten des Vereins an zwei Anschriften:
- * Sporthalle und Dorfbrunnen im Loderwinkel, Sportplatz und Vereinsheim
- * Zum Klay.
+ * Sportstätten des Vereins an zwei Anschriften: Sporthalle und Dorfbrunnen
+ * teilen sich im Loderwinkel sogar ein Gebäude, Sportplatz und Vereinsheim
+ * liegen Zum Klay.
  */
 export const venues: Venue[] = [
   {
@@ -55,14 +57,14 @@ export const venues: Venue[] = [
     postalCode: '31171',
     city: 'Nordstemmen-Rössing',
     note: 'Turnen, Tanzen, Yoga, Basketball – und im Winterhalbjahr Fußball und Leichtathletik',
+    facilities: 'Umkleiden und Duschen im Haus',
   },
   {
     name: 'Der Dorfbrunnen',
-    alias: 'Lokal an der Sporthalle',
     street: 'Loderwinkel 2A',
     postalCode: '31171',
     city: 'Nordstemmen-Rössing',
-    note: 'Treffpunkt des Vereins sowie Trainings- und Wettkampfstätte der Dart-Gruppe',
+    note: 'Im selben Gebäude wie die Sporthalle. Treffpunkt des Vereins sowie Trainings- und Wettkampfstätte der Dart-Gruppe',
   },
   {
     name: 'VSV-Sportplatz',
