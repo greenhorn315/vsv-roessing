@@ -4,6 +4,7 @@ import {
   trainings,
   trainingsByDay,
   trainingsOfSport,
+  seasonLabels,
   type Training,
   type Weekday,
 } from '../data/trainings';
@@ -53,6 +54,9 @@ const gruppen: { day: Weekday | null; entries: Training[] }[] =
                 {training.audience && <small>{training.audience}</small>}
                 {training.trainers && training.trainers.length > 0 && (
                   <small>Übungsleitung: {training.trainers.join(', ')}</small>
+                )}
+                {training.season && (
+                  <small class="trainings__saison">{seasonLabels[training.season]}</small>
                 )}
                 {training.note && <small class="trainings__note">{training.note}</small>}
                 {training.place && <small>{training.place}</small>}
@@ -108,6 +112,20 @@ const gruppen: { day: Weekday | null; entries: Training[] }[] =
     color: var(--c-text-muted);
     font-weight: 400;
   }
+  /* Halbjahres-Hinweis, damit eine Wintergruppe im Sommer nicht
+     unkommentiert im Wochenplan steht. */
+  .trainings__saison {
+    display: inline-block;
+    margin-top: 0.2rem;
+    padding: 0.1rem 0.5rem;
+    border-radius: var(--radius-pill);
+    background: var(--c-surface-sunken);
+    color: var(--c-primary);
+    font-size: 0.74rem !important;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+  }
+
   .trainings__note {
     font-style: italic;
   }

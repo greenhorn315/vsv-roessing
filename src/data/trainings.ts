@@ -24,6 +24,14 @@ export const audienceLabels: Record<AudienceKey, string> = {
   alle: 'Offen für alle',
 };
 
+/** Halbjahr, in dem eine Gruppe stattfindet. Ohne Angabe: ganzjährig. */
+export type Season = 'winter' | 'sommer';
+
+export const seasonLabels: Record<Season, string> = {
+  winter: 'Winterhalbjahr',
+  sommer: 'Sommerhalbjahr',
+};
+
 export interface Training {
   title: string;
   day: Weekday;
@@ -44,11 +52,13 @@ export interface Training {
    * mehreren stehen – „Damen“ etwa bei Frauen und bei Jugendlichen.
    */
   audienceGroups?: AudienceKey[];
+  season?: Season;
 }
 
 /** Hinweis, der überall dort steht, wo Trainingszeiten angezeigt werden. */
 export const trainingsStand =
-  'Zeiten nach der Übungsleiterliste von 2022, noch nicht bestätigt.';
+  'Hallenzeiten nach dem Hallenplan Winter 2025/26, übrige Angaben nach der ' +
+  'Übungsleiterliste von 2022 und noch nicht bestätigt.';
 
 const alleTrainings: Training[] = [
   // Fußball
@@ -143,6 +153,7 @@ const alleTrainings: Training[] = [
     title: 'Montagsturner',
     day: 'Mo',
     time: '15:45–16:45',
+    place: 'Alfred-Stubenrauch-Sporthalle',
     sport: 'turnen',
     note: 'Zielgruppe noch zu klären',
     trainers: ['Monika Koch'],
@@ -153,6 +164,7 @@ const alleTrainings: Training[] = [
     title: 'move your body',
     day: 'Mi',
     time: '18:00–19:00',
+    place: 'Alfred-Stubenrauch-Sporthalle',
     sport: 'turnen',
     audience: 'Erwachsene',
     trainers: ['Denise Hoffmann'],
@@ -163,6 +175,7 @@ const alleTrainings: Training[] = [
     title: 'Frauengymnastik',
     day: 'Do',
     time: '10:30–11:30',
+    place: 'Alfred-Stubenrauch-Sporthalle',
     sport: 'turnen',
     audience: 'Frauen, vormittags',
     trainers: ['Monika Koch'],
@@ -173,6 +186,7 @@ const alleTrainings: Training[] = [
     title: 'Eltern-Kind-Turnen',
     day: 'Do',
     time: '15:00–16:00',
+    place: 'Alfred-Stubenrauch-Sporthalle',
     sport: 'turnen',
     audience: 'Kleinkinder mit einem Elternteil',
     trainers: ['Elke Winkler'],
@@ -183,6 +197,7 @@ const alleTrainings: Training[] = [
     title: 'Kinderturnen ab 3',
     day: 'Do',
     time: '16:00–17:00',
+    place: 'Alfred-Stubenrauch-Sporthalle',
     sport: 'turnen',
     audience: 'Kinder ab 3 Jahren',
     trainers: ['Elke Winkler'],
@@ -193,6 +208,7 @@ const alleTrainings: Training[] = [
     title: 'Jugendturnen ab 6',
     day: 'Do',
     time: '17:00–18:00',
+    place: 'Alfred-Stubenrauch-Sporthalle',
     sport: 'turnen',
     audience: 'Kinder ab 6 Jahren',
     trainers: ['Elke Winkler'],
@@ -214,6 +230,7 @@ const alleTrainings: Training[] = [
     title: 'Fit for fun',
     day: 'Do',
     time: '19:00–20:00',
+    place: 'Alfred-Stubenrauch-Sporthalle',
     sport: 'turnen',
     audience: 'Erwachsene',
     trainers: ['Monika Koch'],
@@ -221,12 +238,27 @@ const alleTrainings: Training[] = [
     audienceGroups: ['alle'],
   },
   {
-    title: 'Männergymnastik',
+    title: 'Freitagsturner',
     day: 'Fr',
     time: '19:30–21:30',
+    place: 'Alfred-Stubenrauch-Sporthalle',
     sport: 'turnen',
     audience: 'Männer',
+    note: 'Gymnastik, gelegentlich auch Yoga. Im Sommerhalbjahr fährt dieselbe Gruppe als „Freitagsradler“.',
+    season: 'winter',
     trainers: ['Olaf Elbeshausen'],
+    ageGroups: ['erwachsene'],
+    audienceGroups: ['maenner']
+  },
+  {
+    title: 'Freitagsradler',
+    day: 'Fr',
+    time: 'nach Absprache',
+    place: 'Treffpunkt am VSV-Sportplatz',
+    sport: 'turnen',
+    audience: 'Männer',
+    note: 'Touren mit Gravelbike oder E-Bike durch das Rössinger Umland, anschließend Grillen am Feuerplatz beim VSV-Sportplatz. Im Winterhalbjahr turnt dieselbe Gruppe als „Freitagsturner“ in der Halle.',
+    season: 'sommer',
     ageGroups: ['erwachsene'],
     audienceGroups: ['maenner'],
   },
@@ -235,7 +267,8 @@ const alleTrainings: Training[] = [
   {
     title: 'Jazz Dance Frauen',
     day: 'Mi',
-    time: '19:30–20:30',
+    time: '19:00–20:00',
+    place: 'Alfred-Stubenrauch-Sporthalle',
     sport: 'tanzen',
     audience: 'Frauen',
     trainers: ['Britta Ahrens'],
@@ -245,7 +278,8 @@ const alleTrainings: Training[] = [
   {
     title: 'Jazz Dance Jugend',
     day: 'Mi',
-    time: '20:30–21:30',
+    time: '20:00–21:00',
+    place: 'Alfred-Stubenrauch-Sporthalle',
     sport: 'tanzen',
     audience: 'Jugendliche',
     trainers: ['Britta Ahrens'],
@@ -256,6 +290,7 @@ const alleTrainings: Training[] = [
     title: 'Jazzdance Sweeties',
     day: 'Sa',
     time: '9:00–9:45',
+    place: 'Alfred-Stubenrauch-Sporthalle',
     sport: 'tanzen',
     audience: 'Kinder ab 3 Jahren bis zur 1. Klasse',
     trainers: ['Louisa Maiwald'],
@@ -266,6 +301,7 @@ const alleTrainings: Training[] = [
     title: 'Jazzdance Butterflies',
     day: 'Sa',
     time: '9:45–10:30',
+    place: 'Alfred-Stubenrauch-Sporthalle',
     sport: 'tanzen',
     audience: 'Kinder der 2. bis 5. Klasse',
     trainers: ['Louisa Maiwald'],
@@ -276,6 +312,7 @@ const alleTrainings: Training[] = [
     title: 'Jazzdance Nameless',
     day: 'Sa',
     time: '10:30–11:00',
+    place: 'Alfred-Stubenrauch-Sporthalle',
     sport: 'tanzen',
     audience: 'Jugendliche ab der 6. Klasse',
     trainers: ['Louisa Maiwald'],
@@ -286,6 +323,7 @@ const alleTrainings: Training[] = [
     title: 'Jazzdance JAM-Touch',
     day: 'Sa',
     time: '11:00–12:00',
+    place: 'Alfred-Stubenrauch-Sporthalle',
     sport: 'tanzen',
     audience: 'ab 15 Jahren',
     trainers: ['Britta Ahrens'],
@@ -297,7 +335,8 @@ const alleTrainings: Training[] = [
   {
     title: 'Basketball',
     day: 'Sa',
-    time: '14:00–15:30',
+    time: '14:00–16:00',
+    place: 'Alfred-Stubenrauch-Sporthalle',
     sport: 'basketball',
     note: 'Altersgruppe noch zu klären',
     trainers: ['Lennart Ahrens'],
@@ -319,7 +358,7 @@ const alleTrainings: Training[] = [
   {
     title: 'Hochsprung',
     day: 'Mo',
-    time: '18:15–19:45',
+    time: '18:00–20:00',
     sport: 'leichtathletik',
     audience: 'Leistungsgruppe',
     trainers: ['Claudia Losch'],
@@ -329,7 +368,7 @@ const alleTrainings: Training[] = [
   {
     title: 'fit for school',
     day: 'Di',
-    time: '16:30–17:45',
+    time: '16:30–18:00',
     sport: 'leichtathletik',
     audience: 'Kinder von 8 bis 11 Jahren',
     trainers: ['Olga Schmidt'],
@@ -339,7 +378,7 @@ const alleTrainings: Training[] = [
   {
     title: 'Jugend-Leistungsgruppe',
     day: 'Di',
-    time: '18:00–19:15',
+    time: '18:00–19:30',
     sport: 'leichtathletik',
     audience: 'Jugendliche',
     trainers: ['Olga Schmidt'],
@@ -349,7 +388,7 @@ const alleTrainings: Training[] = [
   {
     title: 'Erwachsene',
     day: 'Di',
-    time: '19:30–21:00',
+    time: '19:30–21:30',
     sport: 'leichtathletik',
     audience: 'Erwachsene',
     trainers: ['Svenja Ebeling'],
@@ -404,6 +443,7 @@ const alleTrainings: Training[] = [
     title: 'Yoga',
     day: 'Fr',
     time: '18:30–19:30',
+    place: 'Alfred-Stubenrauch-Sporthalle',
     sport: 'yoga',
     audience: 'Erwachsene',
     note: 'Übungsleitung offen',
