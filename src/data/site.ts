@@ -44,10 +44,26 @@ export interface Venue {
 }
 
 /**
- * Sportstätten des Vereins. Sportplatz und Vereinsheim teilen sich eine
- * Anschrift; für die Sporthalle liegt noch keine vor.
+ * Sportstätten des Vereins an zwei Anschriften:
+ * Sporthalle und Dorfbrunnen im Loderwinkel, Sportplatz und Vereinsheim
+ * Zum Klay.
  */
 export const venues: Venue[] = [
+  {
+    name: 'Alfred-Stubenrauch-Sporthalle',
+    street: 'Loderwinkel 2A',
+    postalCode: '31171',
+    city: 'Nordstemmen-Rössing',
+    note: 'Turnen, Tanzen, Yoga, Basketball – und im Winterhalbjahr Fußball und Leichtathletik',
+  },
+  {
+    name: 'Der Dorfbrunnen',
+    alias: 'Lokal an der Sporthalle',
+    street: 'Loderwinkel 2A',
+    postalCode: '31171',
+    city: 'Nordstemmen-Rössing',
+    note: 'Treffpunkt des Vereins sowie Trainings- und Wettkampfstätte der Dart-Gruppe',
+  },
   {
     name: 'VSV-Sportplatz',
     alias: 'Sportplatz Rössing',
@@ -61,11 +77,7 @@ export const venues: Venue[] = [
     street: 'Zum Klay 6',
     postalCode: '31171',
     city: 'Nordstemmen',
-    note: 'Dart',
-  },
-  {
-    name: 'Alfred-Stubenrauch-Sporthalle',
-    note: 'Turnen, Tanzen, Yoga, Basketball – und im Winterhalbjahr Fußball und Leichtathletik',
+    note: 'am Sportplatz',
   },
 ];
 
