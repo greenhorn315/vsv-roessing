@@ -3,10 +3,23 @@ import type { AgeGroup } from './sports';
 /**
  * Trainingszeiten der Sparten.
  *
- * Quelle: Übungsleiterliste des VSV mit Stand 2022. Die Angaben sind noch
- * nicht vom Verein bestätigt – Gruppen können weggefallen, Zeiten verschoben
- * und Übungsleitungen gewechselt sein. Ein Trainingsort steht nur dort, wo
- * ihn die Liste ausdrücklich nennt; die übrigen Orte fehlen noch.
+ * Quellen: Hallenplan Winter 2025/26 für Hallenzeiten und Trainingsorte,
+ * Übungsleiterliste mit Stand 2022 für alles Übrige.
+ *
+ * Im Hallenplan stehen auch Fremdnutzer der Alfred-Stubenrauch-Sporthalle,
+ * die keine VSV-Angebote sind und hier nicht auftauchen dürfen:
+ *   Kiga  örtlicher Kindergarten, Mo bis Mi 08:00–12:30
+ *   DRK   Deutsches Rotes Kreuz, Mo 14:30–15:30
+ *   FFW   Freiwillige Feuerwehr, Do 18:00–19:00
+ *
+ * Die Angaben aus der Übungsleiterliste sind nicht vom Verein bestätigt –
+ * Gruppen können weggefallen, Zeiten verschoben und Übungsleitungen
+ * gewechselt sein.
+ *
+ * Ein Trainingsort steht dort, wo der Hallenplan die Halle belegt oder die
+ * Übungsleiterliste ihn nennt. Bei Fußball und Leichtathletik fehlt er
+ * bewusst: Der Hallenplan gilt fürs Winterhalbjahr, im Sommer wird draußen
+ * trainiert.
  */
 
 export const weekdays = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'] as const;
@@ -251,6 +264,8 @@ const alleTrainings: Training[] = [
     audienceGroups: ['maenner']
   },
   {
+    // Bewusst unter Turnen, nicht unter Outdoor: Vereinsintern ist die
+    // Gruppe der Turnsparte zugeordnet, auch wenn im Sommer Rad gefahren wird.
     title: 'Freitagsradler',
     day: 'Fr',
     time: 'nach Absprache',
