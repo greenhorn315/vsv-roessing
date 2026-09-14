@@ -4,6 +4,20 @@
  * Quelle: der ausgehängte Spielplan des Vereins, abgetippt von den Fotos der
  * drei Blätter für A-, B- und C-Team. Erfasst sind nur die Partien ab dem
  * 14. September 2026; die Spiele davor sind bereits gelaufen.
+ *
+ * Zwei Stellen weichen bewusst vom Aushang ab:
+ *
+ * - Der Gegner des C-Teams am 20.02.2027 steht dort als „FC Ruthe 26ers A“,
+ *   dieselbe Mannschaft also, gegen die am selben Tag zur selben Zeit auch
+ *   das B-Team spielt. Das kann nicht sein. In der Klasse des C-Teams treten
+ *   die übrigen Vereine jeweils mit ihrer nächsten Mannschaft an (Barrels &
+ *   Bier B statt A, Rising Boyz C statt B), deshalb steht hier die
+ *   B-Mannschaft.
+ * - Der Ort heißt einheitlich Himmelsthür; das Blatt des A-Teams schreibt ihn
+ *   ohne s.
+ *
+ * Am 11.12.2026 war der Gegner des A-Teams am Blattrand abgeschnitten. Nach
+ * dem Rückspiel am 22.05.2027 ist es die B-Mannschaft der Dart Akademie.
  */
 
 export type DartTeam = 'A' | 'B' | 'C';
@@ -66,7 +80,7 @@ const spiele: DartSpiel[] = [
   { team: 'C', date: '2026-12-12', time: '19:00', opponent: 'Tus Grün Weiß Himmelsthür D', home: true },
   { team: 'C', date: '2027-01-09', time: '15:00', opponent: 'DC Donkeys Freden e.V. C', home: false },
   { team: 'C', date: '2027-02-06', time: '19:00', opponent: 'Barrels & Bier 24 B', home: true },
-  { team: 'C', date: '2027-02-20', time: '18:00', opponent: 'FC Ruthe 26ers A', home: false },
+  { team: 'C', date: '2027-02-20', time: '18:00', opponent: 'FC Ruthe 26ers B', home: false },
   { team: 'C', date: '2027-03-06', time: '19:00', opponent: 'TSV Söhlde e.V. C', home: false },
   { team: 'C', date: '2027-03-20', time: '19:00', opponent: 'TSG Everode B', home: true },
   { team: 'C', date: '2027-04-10', time: '19:00', opponent: 'Egentown Steelers B', home: false },
