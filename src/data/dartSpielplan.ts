@@ -20,15 +20,13 @@
  * dem Rückspiel am 22.05.2027 ist es die B-Mannschaft der Dart Akademie.
  */
 
+import type { Spiel } from './spielplan';
+import { kommendeSpiele, nachTermin, spielDatum } from './spielplan';
+
 export type DartTeam = 'A' | 'B' | 'C';
 
-export interface DartSpiel {
+export interface DartSpiel extends Spiel {
   team: DartTeam;
-  /** Datum als ISO-Wert, für Sortierung und Vergleich mit dem heutigen Tag. */
-  date: string;
-  time: string;
-  /** Gegner in der Schreibweise des Spielplans. */
-  opponent: string;
   /** true = Heimspiel im Dorfbrunnen. */
   home: boolean;
 }
@@ -90,40 +88,11 @@ const spiele: DartSpiel[] = [
 ];
 
 /** Alle erfassten Partien, sortiert nach Datum, Uhrzeit und Mannschaft. */
-export const dartSpiele: DartSpiel[] = [...spiele].sort(
-  (a, b) =>
-    a.date.localeCompare(b.date) ||
-    a.time.localeCompare(b.time) ||
-    a.team.localeCompare(b.team),
-);
+export const dartSpiele: DartSpiel[] = nachTermin(spiele);
 
-const alsIsoDatum = (tag: Date): string =>
-  [
-    tag.getFullYear(),
-    String(tag.getMonth() + 1).padStart(2, '0'),
-    String(tag.getDate()).padStart(2, '0'),
-  ].join('-');
+/** Die Partien ab dem Stichtag; ein Spiel am heutigen Tag zählt noch dazu. */
+export const kommendeDartSpiele = (stichtag: Date = new Date()): DartSpiel[] =>
+  kommendeSpiele(dartSpiele, stichtag);
 
-/**
- * Die Partien ab dem Stichtag; ein Spiel am heutigen Tag zählt noch dazu.
- * Der Stichtag ist der Tag, an dem die Seite gebaut wird – nach jedem
- * Deployment fallen die gespielten Partien also von selbst heraus.
- */
-export const kommendeDartSpiele = (stichtag: Date = new Date()): DartSpiel[] => {
-  const heute = alsIsoDatum(stichtag);
-  return dartSpiele.filter((spiel) => spiel.date >= heute);
-};
-
-const WOCHENTAGE = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
-
-/** Datum als „Fr, 18.09.2026“. Mittags gelesen, damit keine Zeitzone stört. */
-export const dartDatum = (iso: string): string => {
-  const tag = new Date(`${iso}T12:00:00`);
-  const wochentag = WOCHENTAGE[tag.getDay()] ?? '';
-  const datum = [
-    String(tag.getDate()).padStart(2, '0'),
-    String(tag.getMonth() + 1).padStart(2, '0'),
-    tag.getFullYear(),
-  ].join('.');
-  return `${wochentag}, ${datum}`;
-};
+/** Datum als „Fr, 18.09.2026“. */
+export const dartDatum = spielDatum;
