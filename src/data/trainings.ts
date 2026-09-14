@@ -59,12 +59,6 @@ export interface Training {
   note?: string;
   /** Übungsleitung; leere Liste heißt: die Gruppe sucht jemanden. */
   trainers?: string[];
-  /**
-   * Die Gruppe hat eine Übungsleitung, der Name ist hier nur noch nicht
-   * erfasst. Unterscheidet das von einer wirklich offenen Stelle – sonst
-   * zählt die Gruppe fälschlich als „ohne Übungsleitung“.
-   */
-  trainersUnknown?: boolean;
   ageGroups?: AgeGroup[];
   /**
    * Für welchen Einstieg die Gruppe gelistet wird. Eine Gruppe kann in
@@ -482,8 +476,7 @@ const alleTrainings: Training[] = [
     sport: 'yoga',
     audience: 'Erwachsene, Frauen und Männer',
     note: 'Zurzeit nehmen nur Frauen teil – Männer sind willkommen.',
-    trainers: [],
-    trainersUnknown: true,
+    trainers: ['Sandra Dettmer', 'Heike Hausmann', 'Christoph Nowothnig'],
     ageGroups: ['erwachsene'],
     audienceGroups: ['alle', 'frauen'],
   },
@@ -545,7 +538,7 @@ export const vereinsZahlen = (() => {
   const uebungsleitungen = new Set<string>();
   let ohneLeitung = 0;
   for (const t of trainings) {
-    if (!t.trainersUnknown && (!t.trainers || t.trainers.length === 0)) ohneLeitung++;
+    if (!t.trainers || t.trainers.length === 0) ohneLeitung++;
     t.trainers?.forEach((name) => uebungsleitungen.add(name));
   }
   return {

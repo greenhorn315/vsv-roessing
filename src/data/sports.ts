@@ -244,15 +244,15 @@ export const sports: Sport[] = [
       'Das Yoga-Angebot besteht bereits im Verein, stand bisher aber nicht auf der Website.',
       'Die Gruppe steht Frauen und Männern offen. Zurzeit machen ausschließlich Frauen mit – das ist eine Momentaufnahme und kein Zuschnitt der Gruppe. Männer, die einsteigen möchten, sind willkommen.',
     ],
-    // ⚠️ Angenommen, nicht bestätigt: Altersgruppe, Ort und was mitzubringen
-    // ist. Die Namen der Übungsleitung recherchiert der Verein noch. Sobald
-    // die Angaben vorliegen, hier ergänzen und den Status unten entfernen.
+    // ⚠️ Angenommen, nicht bestätigt: Altersgruppe und was mitzubringen ist.
+    // Sobald die Angaben vorliegen, hier ergänzen und den Status unten
+    // entfernen.
     pictogram: 'yoga',
     color: 'var(--c-primary-light)',
     ageGroups: ['erwachsene'],
     status: {
       label: 'Angaben werden ergänzt',
-      text: 'Das Angebot gibt es, die Einzelheiten zu Gruppen und Ansprechpartner tragen wir gerade zusammen – die Namen der Übungsleitung werden gerade nachgetragen. Bis dahin gibt der Vorstand gerne Auskunft.',
+      text: 'Übungsleitung und Trainingszeit stehen fest. Die Spartenleitung ist noch nicht benannt, deshalb läuft der Kontakt bis auf Weiteres über den Vorstand.',
     },
   },
   {

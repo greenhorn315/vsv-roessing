@@ -160,10 +160,8 @@ const previous = sports[(index - 1 + sports.length) % sports.length];
                       </strong>
                       <span>{session.title}</span>
                       {session.audience && <span>{session.audience}</span>}
-                      {session.trainers && session.trainers.length > 0 ? (
+                      {session.trainers && session.trainers.length > 0 && (
                         <span>Übungsleitung: {session.trainers.join(', ')}</span>
-                      ) : (
-                        session.trainersUnknown && <span>Übungsleitung: Name folgt</span>
                       )}
                       {session.note && <span>{session.note}</span>}
                       {session.place && <span>{session.place}</span>}
