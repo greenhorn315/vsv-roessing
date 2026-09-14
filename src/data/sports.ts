@@ -242,16 +242,17 @@ export const sports: Sport[] = [
       'Ruhige Einheiten für Beweglichkeit, Kraft und Entspannung – als Ausgleich zum Alltag und zu den anderen Sparten.',
     longText: [
       'Das Yoga-Angebot besteht bereits im Verein, stand bisher aber nicht auf der Website.',
+      'Die Gruppe steht Frauen und Männern offen. Zurzeit machen ausschließlich Frauen mit – das ist eine Momentaufnahme und kein Zuschnitt der Gruppe. Männer, die einsteigen möchten, sind willkommen.',
     ],
     // ⚠️ Angenommen, nicht bestätigt: Altersgruppe, Ort und was mitzubringen
-    // ist. Sobald die Angaben vorliegen, hier ergänzen und den Status unten
-    // entfernen.
+    // ist. Die Namen der Übungsleitung recherchiert der Verein noch. Sobald
+    // die Angaben vorliegen, hier ergänzen und den Status unten entfernen.
     pictogram: 'yoga',
     color: 'var(--c-primary-light)',
     ageGroups: ['erwachsene'],
     status: {
       label: 'Angaben werden ergänzt',
-      text: 'Das Angebot gibt es, die Einzelheiten zu Gruppen, Trainingszeiten und Ansprechpartner tragen wir gerade zusammen. Bis dahin gibt der Vorstand gerne Auskunft.',
+      text: 'Das Angebot gibt es, die Einzelheiten zu Gruppen und Ansprechpartner tragen wir gerade zusammen – die Namen der Übungsleitung werden gerade nachgetragen. Bis dahin gibt der Vorstand gerne Auskunft.',
     },
   },
   {
