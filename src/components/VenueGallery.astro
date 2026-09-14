@@ -1,0 +1,176 @@
+---
+import Icon from './Icon.astro';
+import Photo from './Photo.astro';
+import { venues } from '../data/site';
+
+interface Props {
+  id?: string;
+  title?: string;
+  lead?: string;
+}
+
+/** Kleine Zahlen ausschreiben – im Fließtext lesen sie sich besser. */
+const zahlwoerter = ['null', 'einen', 'zwei', 'drei', 'vier', 'fünf', 'sechs', 'sieben', 'acht'];
+const orteWort = zahlwoerter[venues.length] ?? String(venues.length);
+
+const {
+  id = 'sportstaetten',
+  title = 'Unsere Sportstätten',
+  lead = `Zwei Anschriften, ${orteWort} Orte: Sporthalle und Dorfbrunnen liegen im Loderwinkel unter einem Dach, Sportplatz, Feuerplatz und Vereinsheim gemeinsam Zum Klay.`,
+} = Astro.props;
+
+/** Karten-Link auf die Anschrift, damit Navigation direkt startet. */
+const mapsUrl = (ort: (typeof venues)[number]) =>
+  `https://www.openstreetmap.org/search?query=${encodeURIComponent(
+    [ort.street, ort.postalCode, ort.city].filter(Boolean).join(' ')
+  )}`;
+---
+
+<section class="section venues" id={id}>
+  <div class="container">
+    <header class="venues__head">
+      <h2>{title}</h2>
+      <p class="lead">{lead}</p>
+    </header>
+
+    <ul class="venues__grid">
+      {
+        venues.map((ort) => (
+          <li class="venue">
+            <Photo
+              src={ort.photos?.[0]?.src ?? ''}
+              alt={ort.photos?.[0]?.alt ?? ''}
+              width={4}
+              height={3}
+              placeholderIcon="camera"
+              placeholderText="Foto folgt"
+              class="venue__photo"
+            />
+            {ort.photos && ort.photos.length > 1 && (
+              <ul class="venue__weitere">
+                {ort.photos.slice(1).map((bild) => (
+                  <li>
+                    <Photo
+                      src={bild.src}
+                      alt={bild.alt}
+                      width={4}
+                      height={3}
+                      placeholderIcon="camera"
+                      class="venue__klein"
+                    />
+                    {bild.caption && <span>{bild.caption}</span>}
+                  </li>
+                ))}
+              </ul>
+            )}
+            <div class="venue__body">
+              <h3>{ort.name}</h3>
+              {ort.alias && <p class="venue__alias">auch {ort.alias}</p>}
+              {ort.street && (
+                <p class="venue__address">
+                  <Icon name="pin" size={16} />
+                  <a href={mapsUrl(ort)} target="_blank" rel="noopener">
+                    {ort.street}, {ort.postalCode} {ort.city}
+                  </a>
+                </p>
+              )}
+              <p class="venue__note">{ort.note}</p>
+              {ort.facilities && <p class="venue__facilities">{ort.facilities}</p>}
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .venues__head {
+    max-width: 52ch;
+    margin-bottom: var(--sp-6);
+  }
+
+  .venues__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.25rem, 3vw, 2rem);
+    /* Karten so hoch wie ihr Inhalt – sonst reisst die kürzere Karte
+       neben einer mit Zusatzansichten unten eine leere Fläche auf. */
+    align-items: start;
+  }
+  @media (max-width: 700px) {
+    .venues__grid { grid-template-columns: 1fr; }
+  }
+
+  .venue {
+    display: flex;
+    flex-direction: column;
+    background: var(--c-surface);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .venue :global(.venue__photo) {
+    border-radius: 0;
+  }
+
+  .venue__weitere {
+    list-style: none;
+    margin: 0;
+    padding: 0.6rem 0.6rem 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    gap: 0.6rem;
+  }
+  .venue__weitere li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .venue__weitere span {
+    font-size: 0.78rem;
+    color: var(--c-text-muted);
+    text-align: center;
+  }
+  .venue :global(.venue__klein) {
+    border-radius: var(--radius-sm);
+  }
+
+  .venue__body {
+    padding: clamp(1.1rem, 2.5vw, 1.6rem);
+  }
+
+  .venue__body h3 {
+    margin: 0;
+    font-size: 1.15rem;
+  }
+
+  .venue__alias {
+    margin: 0.15rem 0 0;
+    font-size: 0.85rem;
+    color: var(--c-text-muted);
+  }
+
+  .venue__address {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0.6rem 0 0;
+    font-size: 0.92rem;
+  }
+  .venue__address :global(svg) {
+    flex: none;
+    color: var(--c-primary-light);
+  }
+
+  .venue__note,
+  .venue__facilities {
+    margin: 0.6rem 0 0;
+    font-size: 0.92rem;
+    color: var(--c-text-muted);
+  }
+</style>
