@@ -11,7 +11,19 @@ SRC = pathlib.Path('sportstaetten')
 OUT = pathlib.Path('optimiert')
 OUT.mkdir(exist_ok=True)
 
-BREITE, HOEHE = 1280, 960
+# Zielgroessen je Bild: Hauptbilder stehen in einer zweispaltigen Kachel und
+# brauchen fuer hochaufloesende Displays rund 1024 px, die Nebenansichten
+# darunter werden nur als kleine Vorschau gezeigt.
+GROESSEN = {
+    'sporthalle.jpg': (1024, 768),
+    'dorfbrunnen.jpg': (1024, 768),
+    'sportplatz.jpg': (1024, 768),
+    'feuerplatz.jpg': (1024, 768),
+    'dorfbrunnen-hintereingang.jpg': (640, 480),
+    'dorfbrunnen-glasfront.jpg': (640, 480),
+}
+STANDARD = (1024, 768)
+MAX_BYTES = 220 * 1024
 
 
 def tonwertkurve(img, schwarz=0.0, weiss=1.0, gamma=1.0, tiefen=0.0):
@@ -31,17 +43,18 @@ def tonwertkurve(img, schwarz=0.0, weiss=1.0, gamma=1.0, tiefen=0.0):
 
 
 def verarbeite(quelle, ziel, schwarz, weiss, gamma, tiefen, kontrast, saettigung, schaerfe):
+    groesse = GROESSEN.get(ziel.name, STANDARD)
     im = Image.open(quelle)
     im = ImageOps.exif_transpose(im).convert('RGB')
     im = tonwertkurve(im, schwarz, weiss, gamma, tiefen)
     im = ImageEnhance.Contrast(im).enhance(kontrast)
     im = ImageEnhance.Color(im).enhance(saettigung)
-    im = ImageOps.fit(im, (BREITE, HOEHE), Image.LANCZOS, centering=(0.5, 0.5))
+    im = ImageOps.fit(im, groesse, Image.LANCZOS, centering=(0.5, 0.5))
     if schaerfe:
         im = im.filter(ImageFilter.UnsharpMask(radius=1.6, percent=int(schaerfe * 100), threshold=3))
-    for q in (84, 80, 76, 72, 68):
+    for q in (82, 78, 74, 70, 66):
         im.save(ziel, 'JPEG', quality=q, optimize=True, progressive=True)
-        if ziel.stat().st_size <= 300 * 1024:
+        if ziel.stat().st_size <= MAX_BYTES:
             break
     return im, ziel.stat().st_size
 

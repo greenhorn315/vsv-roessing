@@ -16,7 +16,9 @@ gestalteter Platzhalter mit dem Hinweis „Foto folgt“ – kein kaputtes Bild.
 
 **Format**
 
-* Querformat 4 : 3, mindestens 1200 × 900 px, JPG unter ca. 300 KB.
+* Querformat 4 : 3 als JPG. Hauptbild einer Sportstätte 1024 × 768 px,
+  Nebenansichten 640 × 480 px – die stehen nur als kleine Vorschau darunter.
+  Eine Datei bleibt unter 220 KB; `tools/optimize.py` setzt beides selbst.
 * Der Bildausschnitt wird per `object-fit: cover` gefüllt – Motiv mittig halten.
 * Alternativtexte stehen in `src/data/site.ts` bei der jeweiligen Sportstätte
   und sind mit dem Foto abzugleichen.
