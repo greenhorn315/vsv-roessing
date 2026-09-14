@@ -476,7 +476,7 @@ const alleTrainings: Training[] = [
     sport: 'yoga',
     audience: 'Erwachsene, Frauen und Männer',
     note: 'Zurzeit nehmen nur Frauen teil – Männer sind willkommen.',
-    trainers: ['Sandra Dettmer', 'Heike Hausmann', 'Christoph Nowothnig'],
+    trainers: ['Sandra Dettmer', 'Heike Husmann', 'Christoph Nowothnig'],
     ageGroups: ['erwachsene'],
     audienceGroups: ['alle', 'frauen'],
   },
