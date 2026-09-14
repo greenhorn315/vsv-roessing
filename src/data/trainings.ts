@@ -62,7 +62,8 @@ export interface Training {
   ageGroups?: AgeGroup[];
   /**
    * Für welchen Einstieg die Gruppe gelistet wird. Eine Gruppe kann in
-   * mehreren stehen – „Damen“ etwa bei Frauen und bei Jugendlichen.
+   * mehreren stehen – „Jazzdance JAM-Touch“ etwa bei Jugendlichen und bei
+   * allen Altersgruppen.
    */
   audienceGroups?: AudienceKey[];
   season?: Season;
@@ -75,18 +76,10 @@ export const trainingsStand =
 
 const alleTrainings: Training[] = [
   // Fußball
-  {
-    title: 'Damen',
-    day: 'Mo',
-    time: '19:00',
-    place: 'VSV-Sportplatz',
-    sport: 'fussball',
-    audience: 'Frauen ab 16 Jahren',
-    note: 'Im Winter donnerstags 20:00 in der Sporthalle',
-    trainers: ['Johanna Kasten'],
-    ageGroups: ['jugend', 'erwachsene'],
-    audienceGroups: ['frauen', 'jugend'],
-  },
+  // Die Damenmannschaft aus der Liste von 2022 gibt es nicht mehr; der Verein
+  // hat das im September 2026 bestätigt. Ihre Zeiten – montags 19:00 auf dem
+  // Sportplatz, im Winter donnerstags 20:00 in der Halle – stehen deshalb
+  // nicht mehr hier.
   {
     title: 'I. Herren',
     day: 'Di',

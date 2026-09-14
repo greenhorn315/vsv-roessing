@@ -68,7 +68,7 @@ export const sports: Sport[] = [
   {
     slug: 'fussball',
     name: 'Fußball',
-    teaser: 'Von Bambini bis Herren/Damen',
+    teaser: 'Von den Bambini bis zu den Herren',
     description:
       'Unsere größte Sparte: Training auf dem VSV-Sportplatz, von den Bambini ab vier Jahren bis zu den Erwachsenenmannschaften.',
     longText: [
