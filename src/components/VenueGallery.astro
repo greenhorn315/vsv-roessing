@@ -1,0 +1,130 @@
+---
+import Icon from './Icon.astro';
+import Photo from './Photo.astro';
+import { venues } from '../data/site';
+
+interface Props {
+  id?: string;
+  title?: string;
+  lead?: string;
+}
+
+const {
+  id = 'sportstaetten',
+  title = 'Unsere Sportstätten',
+  lead = 'Zwei Anschriften, vier Orte: Sporthalle und Dorfbrunnen liegen im Loderwinkel unter einem Dach, Sportplatz und Vereinsheim gemeinsam Zum Klay.',
+} = Astro.props;
+
+/** Karten-Link auf die Anschrift, damit Navigation direkt startet. */
+const mapsUrl = (ort: (typeof venues)[number]) =>
+  `https://www.openstreetmap.org/search?query=${encodeURIComponent(
+    [ort.street, ort.postalCode, ort.city].filter(Boolean).join(' ')
+  )}`;
+---
+
+<section class="section venues" id={id}>
+  <div class="container">
+    <header class="venues__head">
+      <h2>{title}</h2>
+      <p class="lead">{lead}</p>
+    </header>
+
+    <ul class="venues__grid">
+      {
+        venues.map((ort) => (
+          <li class="venue">
+            <Photo
+              src={ort.photo?.src ?? ''}
+              alt={ort.photo?.alt ?? ''}
+              width={4}
+              height={3}
+              placeholderIcon="camera"
+              placeholderText="Foto folgt"
+              class="venue__photo"
+            />
+            <div class="venue__body">
+              <h3>{ort.name}</h3>
+              {ort.alias && <p class="venue__alias">auch {ort.alias}</p>}
+              {ort.street && (
+                <p class="venue__address">
+                  <Icon name="pin" size={16} />
+                  <a href={mapsUrl(ort)} target="_blank" rel="noopener">
+                    {ort.street}, {ort.postalCode} {ort.city}
+                  </a>
+                </p>
+              )}
+              <p class="venue__note">{ort.note}</p>
+              {ort.facilities && <p class="venue__facilities">{ort.facilities}</p>}
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .venues__head {
+    max-width: 52ch;
+    margin-bottom: var(--sp-6);
+  }
+
+  .venues__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.25rem, 3vw, 2rem);
+  }
+  @media (max-width: 700px) {
+    .venues__grid { grid-template-columns: 1fr; }
+  }
+
+  .venue {
+    display: flex;
+    flex-direction: column;
+    background: var(--c-surface);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .venue :global(.venue__photo) {
+    border-radius: 0;
+  }
+
+  .venue__body {
+    padding: clamp(1.1rem, 2.5vw, 1.6rem);
+  }
+
+  .venue__body h3 {
+    margin: 0;
+    font-size: 1.15rem;
+  }
+
+  .venue__alias {
+    margin: 0.15rem 0 0;
+    font-size: 0.85rem;
+    color: var(--c-text-muted);
+  }
+
+  .venue__address {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0.6rem 0 0;
+    font-size: 0.92rem;
+  }
+  .venue__address :global(svg) {
+    flex: none;
+    color: var(--c-primary-light);
+  }
+
+  .venue__note,
+  .venue__facilities {
+    margin: 0.6rem 0 0;
+    font-size: 0.92rem;
+    color: var(--c-text-muted);
+  }
+</style>

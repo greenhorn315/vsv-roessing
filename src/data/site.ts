@@ -43,6 +43,11 @@ export interface Venue {
   note: string;
   /** Was vor Ort zur Verfügung steht, z. B. Umkleiden. */
   facilities?: string;
+  /**
+   * Foto unter public/images/sportstaetten/. Fehlt die Datei, zeigt die Seite
+   * automatisch einen Platzhalter statt eines kaputten Bildes.
+   */
+  photo?: { src: string; alt: string };
 }
 
 /**
@@ -58,6 +63,10 @@ export const venues: Venue[] = [
     city: 'Nordstemmen-Rössing',
     note: 'Turnen, Tanzen, Yoga, Basketball – und im Winterhalbjahr Fußball und Leichtathletik',
     facilities: 'Umkleiden und Duschen im Haus, Parkplätze und ein öffentlicher Spielplatz direkt nebenan',
+    photo: {
+      src: '/images/sportstaetten/sporthalle.jpg',
+      alt: 'Eingang der Alfred-Stubenrauch-Sporthalle mit Glastür unter dem hölzernen Vordach',
+    },
   },
   {
     name: 'Der Dorfbrunnen',
@@ -65,6 +74,10 @@ export const venues: Venue[] = [
     postalCode: '31171',
     city: 'Nordstemmen-Rössing',
     note: 'Im selben Gebäude wie die Sporthalle. Treffpunkt des Vereins sowie Trainings- und Wettkampfstätte der Dart-Gruppe',
+    photo: {
+      src: '/images/sportstaetten/dorfbrunnen.jpg',
+      alt: 'Gaststätte „Zum Dorfbrunnen“ mit rotem Klinker und Hinweisschild zum Turnhalleneingang',
+    },
   },
   {
     name: 'VSV-Sportplatz',
@@ -73,6 +86,10 @@ export const venues: Venue[] = [
     postalCode: '31171',
     city: 'Nordstemmen',
     note: 'Fußball und Leichtathletik im Sommerhalbjahr',
+    photo: {
+      src: '/images/sportstaetten/sportplatz.jpg',
+      alt: 'Rasenplatz des VSV Rössing mit Toren, Flutlichtmast und überdachtem Unterstand',
+    },
   },
   {
     name: 'Vereinsheim VSV Rössing',
@@ -80,6 +97,10 @@ export const venues: Venue[] = [
     postalCode: '31171',
     city: 'Nordstemmen',
     note: 'am Sportplatz',
+    photo: {
+      src: '/images/sportstaetten/vereinsheim.jpg',
+      alt: 'Vereinsheim des VSV Rössing am Sportplatz Zum Klay',
+    },
   },
 ];
 

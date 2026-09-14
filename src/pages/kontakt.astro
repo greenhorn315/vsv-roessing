@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Icon from '../components/Icon.astro';
+import VenueGallery from '../components/VenueGallery.astro';
 import { site, venues } from '../data/site';
 import { sports } from '../data/sports';
 ---
@@ -107,19 +108,18 @@ import { sports } from '../data/sports';
               venues.map((ort) => (
                 <li>
                   <strong>{ort.name}</strong>
-                  {ort.alias && <span class="orte__alias">auch {ort.alias}</span>}
                   {ort.street && (
                     <span>
                       {ort.street}, {ort.postalCode} {ort.city}
                     </span>
                   )}
-                  <span class="orte__was">{ort.note}</span>
-                  {ort.facilities && <span class="orte__was">{ort.facilities}</span>}
                 </li>
               ))
             }
           </ul>
-          <p class="info-card__hint">Parkplätze direkt an Halle und Platz.</p>
+          <p class="info-card__hint">
+            <a href="#sportstaetten">Alle Sportstätten mit Fotos ansehen</a>
+          </p>
         </div>
 
         <div class="info-card">
@@ -134,6 +134,8 @@ import { sports } from '../data/sports';
       </aside>
     </div>
   </section>
+
+  <VenueGallery />
 </BaseLayout>
 
 <style>
@@ -266,13 +268,9 @@ import { sports } from '../data/sports';
   .orte strong {
     color: var(--c-primary);
   }
-  .orte__alias,
-  .orte__was {
+  .orte li span {
     font-size: 0.84rem;
     color: var(--c-text-muted);
-  }
-  .orte__was {
-    font-style: italic;
   }
 
   .info-card__hint {
