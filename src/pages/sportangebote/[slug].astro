@@ -5,6 +5,7 @@ import Pictogram from '../../components/Pictogram.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import CallToAction from '../../components/CallToAction.astro';
 import DartSpielplan from '../../components/DartSpielplan.astro';
+import FussballSpielplan from '../../components/FussballSpielplan.astro';
 import { sports, ageGroupLabels } from '../../data/sports';
 import { trainingsOfSport } from '../../data/trainings';
 import { site } from '../../data/site';
@@ -234,6 +235,7 @@ const previous = sports[(index - 1 + sports.length) % sports.length];
   </section>
 
   {sport.slug === 'dart' && <DartSpielplan />}
+  {sport.slug === 'fussball' && <FussballSpielplan />}
 
   <nav class="sport-nav" aria-label="Weitere Sportarten">
     <div class="container sport-nav__inner">

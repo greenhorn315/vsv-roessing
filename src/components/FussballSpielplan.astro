@@ -1,0 +1,45 @@
+---
+import Spielplan from './Spielplan.astro';
+import {
+  fussballSpiele,
+  fussballSpielplanStand,
+  fussballSpielstaette,
+  fussballTeam,
+} from '../data/fussballSpielplan';
+import { kommendeSpiele } from '../data/spielplan';
+
+const spiele = kommendeSpiele(fussballSpiele);
+const heimspiele = spiele.filter((spiel) => spiel.home).length;
+
+const zahlwort = ['kein', 'ein', 'zwei', 'drei', 'vier', 'fünf', 'sechs'];
+const alsWort = (n: number) => zahlwort[n] ?? String(n);
+
+const anzahl =
+  spiele.length === 1
+    ? 'Ein Spiel steht noch an'
+    : `${alsWort(spiele.length).replace(/^./, (c) => c.toUpperCase())} Spiele stehen noch an`;
+
+const heim =
+  heimspiele === 0
+    ? 'alle davon auswärts'
+    : heimspiele === spiele.length
+      ? `alle auf dem ${fussballSpielstaette}`
+      : `${alsWort(heimspiele)} davon auf dem ${fussballSpielstaette}`;
+
+/** Eine gemeinsame Anstoßzeit lässt sich in einem Satz sagen. */
+const anstoss = new Set(spiele.map((spiel) => spiel.time));
+const zeitsatz = anstoss.size === 1 ? ` Angestoßen wird jeweils um ${[...anstoss][0]} Uhr.` : '';
+
+const lead =
+  `${anzahl}, ${heim}.${zeitsatz}` +
+  ` Grundlage ist der Aushang am Sportplatz, Stand ${fussballSpielplanStand};` +
+  ' gespielte Begegnungen fallen aus der Liste heraus.';
+---
+
+<Spielplan
+  heading={`Spiele der ${fussballTeam}`}
+  caption={`Kommende Spiele der ${fussballTeam} nach dem Aushang vom ${fussballSpielplanStand}`}
+  spiele={spiele}
+>
+  {lead}
+</Spielplan>
