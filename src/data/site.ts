@@ -44,10 +44,18 @@ export interface Venue {
   /** Was vor Ort zur Verfügung steht, z. B. Umkleiden. */
   facilities?: string;
   /**
-   * Foto unter public/images/sportstaetten/. Fehlt die Datei, zeigt die Seite
-   * automatisch einen Platzhalter statt eines kaputten Bildes.
+   * Fotos unter public/images/sportstaetten/. Das erste ist das Hauptbild,
+   * weitere erscheinen als kleine Ansichten darunter. Fehlt eine Datei, zeigt
+   * die Seite automatisch einen Platzhalter statt eines kaputten Bildes.
    */
-  photo?: { src: string; alt: string };
+  photos?: VenuePhoto[];
+}
+
+export interface VenuePhoto {
+  src: string;
+  alt: string;
+  /** Kurze Bildunterschrift für die kleinen Ansichten. */
+  caption?: string;
 }
 
 /**
@@ -63,10 +71,12 @@ export const venues: Venue[] = [
     city: 'Nordstemmen-Rössing',
     note: 'Turnen, Tanzen, Yoga, Basketball – und im Winterhalbjahr Fußball und Leichtathletik',
     facilities: 'Umkleiden und Duschen im Haus, Parkplätze und ein öffentlicher Spielplatz direkt nebenan',
-    photo: {
-      src: '/images/sportstaetten/sporthalle.jpg',
-      alt: 'Alfred-Stubenrauch-Halle: roter Klinkerbau mit dem Namensschriftzug unter dem Dachrand, rechts der überdachte Eingang',
-    },
+    photos: [
+      {
+        src: '/images/sportstaetten/sporthalle.jpg',
+        alt: 'Alfred-Stubenrauch-Halle: roter Klinkerbau mit dem Namensschriftzug unter dem Dachrand, rechts der überdachte Eingangsbereich',
+      },
+    ],
   },
   {
     name: 'Der Dorfbrunnen',
@@ -74,10 +84,23 @@ export const venues: Venue[] = [
     postalCode: '31171',
     city: 'Nordstemmen-Rössing',
     note: 'Im selben Gebäude wie die Sporthalle. Treffpunkt des Vereins sowie Trainings- und Wettkampfstätte der Dart-Gruppe',
-    photo: {
-      src: '/images/sportstaetten/dorfbrunnen.jpg',
-      alt: 'Gaststätte „Zum Dorfbrunnen“ an der Gebäudeecke, daneben das Schild „Turnhalleneingang um die Ecke“',
-    },
+    photos: [
+      {
+        src: '/images/sportstaetten/dorfbrunnen.jpg',
+        alt: 'Vordereingang des Dorfbrunnens an der Gebäudeecke, daneben das Schild „Turnhalleneingang um die Ecke“',
+        caption: 'Vordereingang',
+      },
+      {
+        src: '/images/sportstaetten/dorfbrunnen-hintereingang.jpg',
+        alt: 'Hintereingang des Dorfbrunnens unter dem hölzernen Vordach, daneben die verglaste Front',
+        caption: 'Hintereingang',
+      },
+      {
+        src: '/images/sportstaetten/dorfbrunnen-glasfront.jpg',
+        alt: 'Verglaste Front des Dorfbrunnens unter dem Vordach mit doppelflügeliger Glastür',
+        caption: 'Glasfront',
+      },
+    ],
   },
   {
     name: 'VSV-Sportplatz',
@@ -86,10 +109,27 @@ export const venues: Venue[] = [
     postalCode: '31171',
     city: 'Nordstemmen',
     note: 'Fußball und Leichtathletik im Sommerhalbjahr',
-    photo: {
-      src: '/images/sportstaetten/sportplatz.jpg',
-      alt: 'Rasenplatz des VSV Rössing mit drei Toren, Flutlichtmast und überdachtem Unterstand unter blauem Himmel',
-    },
+    photos: [
+      {
+        src: '/images/sportstaetten/sportplatz.jpg',
+        alt: 'Rasenplatz des VSV Rössing mit drei Toren, Flutlichtmast und überdachtem Unterstand unter blauem Himmel',
+      },
+    ],
+  },
+  {
+    name: 'Feuerplatz am Sportplatz',
+    street: 'Zum Klay 6',
+    postalCode: '31171',
+    city: 'Nordstemmen',
+    note: 'Treffpunkt der Freitagsradler: Im Sommerhalbjahr wird hier nach der Tour gegrillt',
+    photos: [
+      // Vorläufig: zeigt erkennbare Personen. Vor dem Livegang entweder deren
+      // Einwilligung einholen oder durch ein Bild ohne Personen ersetzen.
+      {
+        src: '/images/sportstaetten/feuerplatz.jpg',
+        alt: 'Runde Feuerstelle am Waldrand, ringsum Bänke, an denen eine Gruppe im Abendlicht sitzt',
+      },
+    ],
   },
   {
     name: 'Vereinsheim VSV Rössing',
