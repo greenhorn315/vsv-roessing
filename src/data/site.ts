@@ -65,7 +65,7 @@ export const venues: Venue[] = [
     facilities: 'Umkleiden und Duschen im Haus, Parkplätze und ein öffentlicher Spielplatz direkt nebenan',
     photo: {
       src: '/images/sportstaetten/sporthalle.jpg',
-      alt: 'Eingang der Alfred-Stubenrauch-Sporthalle mit Glastür unter dem hölzernen Vordach',
+      alt: 'Alfred-Stubenrauch-Halle: roter Klinkerbau mit dem Namensschriftzug unter dem Dachrand, rechts der überdachte Eingang',
     },
   },
   {
@@ -76,7 +76,7 @@ export const venues: Venue[] = [
     note: 'Im selben Gebäude wie die Sporthalle. Treffpunkt des Vereins sowie Trainings- und Wettkampfstätte der Dart-Gruppe',
     photo: {
       src: '/images/sportstaetten/dorfbrunnen.jpg',
-      alt: 'Gaststätte „Zum Dorfbrunnen“ mit rotem Klinker und Hinweisschild zum Turnhalleneingang',
+      alt: 'Gaststätte „Zum Dorfbrunnen“ an der Gebäudeecke, daneben das Schild „Turnhalleneingang um die Ecke“',
     },
   },
   {
@@ -88,7 +88,7 @@ export const venues: Venue[] = [
     note: 'Fußball und Leichtathletik im Sommerhalbjahr',
     photo: {
       src: '/images/sportstaetten/sportplatz.jpg',
-      alt: 'Rasenplatz des VSV Rössing mit Toren, Flutlichtmast und überdachtem Unterstand',
+      alt: 'Rasenplatz des VSV Rössing mit drei Toren, Flutlichtmast und überdachtem Unterstand unter blauem Himmel',
     },
   },
   {
@@ -97,10 +97,6 @@ export const venues: Venue[] = [
     postalCode: '31171',
     city: 'Nordstemmen',
     note: 'am Sportplatz',
-    photo: {
-      src: '/images/sportstaetten/vereinsheim.jpg',
-      alt: 'Vereinsheim des VSV Rössing am Sportplatz Zum Klay',
-    },
   },
 ];
 
