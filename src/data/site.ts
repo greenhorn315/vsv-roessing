@@ -15,7 +15,7 @@ export const site = {
   founded: 1897,
   /** {age} wird durch das aktuelle Vereinsalter ersetzt. */
   sloganTemplate: '{age} Jahre Bewegung. Und richtig gut drauf.',
-  description: `Volkssportvereinigung Rössing von 1897 e.V. – ${sportCountWord} Sportarten für Kinder, Jugendliche, Familien und Erwachsene. Schon ab 4 € im Monat dabei.`,
+  description: `Volkssportvereinigung Rössing von 1897 e.V. – ${sportCountWord} Sportarten für Kinder, Jugendliche, Familien und Erwachsene in jedem Alter. Schon ab 4 € im Monat dabei.`,
   email: 'vorstand@vsv-roessing.de',
   phone: '+49 (0) 50 69 / 74 15',
   address: {
@@ -79,7 +79,12 @@ export const venues: Venue[] = [
     photos: [
       {
         src: '/images/sportstaetten/sporthalle.jpg',
-        alt: 'Alfred-Stubenrauch-Halle: roter Klinkerbau mit dem Namensschriftzug unter dem Dachrand, rechts der überdachte Eingangsbereich',
+        alt: 'Alfred-Stubenrauch-Halle bei Abendsonne: roter Klinkerbau mit dem Namensschriftzug unter dem Dachrand, rechts das Schild „Zum Dorfbrunnen“',
+      },
+      {
+        src: '/images/sportstaetten/sporthalle-eingang.jpg',
+        alt: 'Verglaster Eingang zur Sporthalle mit Doppeltür unter dem hölzernen Vordach',
+        caption: 'Turnhalleneingang',
       },
     ],
   },
@@ -92,18 +97,12 @@ export const venues: Venue[] = [
     photos: [
       {
         src: '/images/sportstaetten/dorfbrunnen.jpg',
-        alt: 'Vordereingang des Dorfbrunnens an der Gebäudeecke, daneben das Schild „Turnhalleneingang um die Ecke“',
-        caption: 'Vordereingang',
+        alt: 'Eingang des Dorfbrunnens unter dem Vordach, darüber der Schriftzug „Zum Dorfbrunnen“',
       },
       {
-        src: '/images/sportstaetten/dorfbrunnen-hintereingang.jpg',
-        alt: 'Hintereingang des Dorfbrunnens unter dem hölzernen Vordach, daneben die verglaste Front',
-        caption: 'Hintereingang',
-      },
-      {
-        src: '/images/sportstaetten/dorfbrunnen-glasfront.jpg',
-        alt: 'Verglaste Front des Dorfbrunnens unter dem Vordach mit doppelflügeliger Glastür',
-        caption: 'Glasfront',
+        src: '/images/sportstaetten/dorfbrunnen-hinten.jpg',
+        alt: 'Rückseite des Dorfbrunnens: verglaste Front unter dem Vordach, davor eine Bank',
+        caption: 'Rückseite',
       },
     ],
   },

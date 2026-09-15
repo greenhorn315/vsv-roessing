@@ -11,16 +11,17 @@ SRC = pathlib.Path('sportstaetten')
 OUT = pathlib.Path('optimiert')
 OUT.mkdir(exist_ok=True)
 
-# Zielgroessen je Bild: Hauptbilder stehen in einer zweispaltigen Kachel und
-# brauchen fuer hochaufloesende Displays rund 1024 px, die Nebenansichten
-# darunter werden nur als kleine Vorschau gezeigt.
+# Zielgroessen je Bild. Die Kacheln stehen zweispaltig und sind rund 550 px
+# breit; 1024 px reichen damit auch auf hochaufloesenden Displays. Das gilt
+# auch fuer die zweite Ansicht einer Sportstaette: Steht dort nur ein Bild,
+# nimmt es die volle Kachelbreite ein, keine halbe.
 GROESSEN = {
     'sporthalle.jpg': (1024, 768),
+    'sporthalle-eingang.jpg': (1024, 768),
     'dorfbrunnen.jpg': (1024, 768),
+    'dorfbrunnen-hinten.jpg': (1024, 768),
     'sportplatz.jpg': (1024, 768),
     'feuerplatz.jpg': (1024, 768),
-    'dorfbrunnen-hintereingang.jpg': (640, 480),
-    'dorfbrunnen-glasfront.jpg': (640, 480),
     # Breiter Streifen statt 4:3 – siehe ZUSCHNITT.
     'vereinsheim.jpg': (1024, 290),
 }
@@ -76,14 +77,18 @@ def verarbeite(quelle, ziel, schwarz, weiss, gamma, tiefen, kontrast, saettigung
 
 # schwarz  weiss  gamma  tiefen  kontrast  saettigung  schaerfe
 REZEPTE = {
-    # Trueber Himmel, flaues Bild: Weisspunkt runter, klar mehr Kontrast.
-    'Alfred-Stubenrauch-Halle (2).JPG': ('sporthalle.jpg',   0.04, 0.96, 1.00, 0.05, 1.22, 1.12, 0.55),
-    # Gegenlicht unter dem Vordach: Tiefen deutlich anheben, dann Kontrast.
-    'Alfred-Stubenrauch-Halle (1).JPG': ('dorfbrunnen-hintereingang.jpg', 0.02, 0.99, 1.10, 0.14, 1.20, 1.10, 0.55),
-    # retuschierte Fassung, siehe retusche.py
-    'retuschiert/ZumDorfbrunnen-1.JPG': ('dorfbrunnen-glasfront.jpg', 0.02, 0.99, 1.08, 0.12, 1.18, 1.08, 0.50),
-    # Bewoelkt, leicht flau: moderat anziehen.
-    'ZumDorfbrunnen-2.JPG':             ('dorfbrunnen.jpg',  0.04, 0.96, 1.00, 0.04, 1.20, 1.12, 0.55),
+    # Abendsonne von vorn, Fassade links im Schatten: Tiefen oeffnen, den
+    # ohnehin kraeftigen Himmel nicht weiter anziehen.
+    'Alfred-Stubenrauch-Halle+ZumDorfbrunnen-Vorn.JPG': (
+        'sporthalle.jpg', 0.02, 0.99, 1.10, 0.10, 1.06, 1.04, 0.45),
+    # Heller Eingangsbereich mit hellen Waenden: Lichter unangetastet lassen.
+    'Eingang-Sporthalle.JPG': (
+        'sporthalle-eingang.jpg', 0.02, 1.00, 1.02, 0.06, 1.04, 1.04, 0.45),
+    'ZumDorfbrunnen-Vorn.JPG': (
+        'dorfbrunnen.jpg', 0.02, 0.99, 1.06, 0.08, 1.06, 1.04, 0.45),
+    # Tiefer Schatten unter dem Vordach; retuschierte Fassung, siehe retusche.py
+    'retuschiert/ZumDorfbrunnen-Hinten.JPG': (
+        'dorfbrunnen-hinten.jpg', 0.02, 0.99, 1.12, 0.12, 1.06, 1.04, 0.45),
     # Schon gut belichtet: nur Dunst nehmen und Gruen etwas kraeftigen.
     'Sportplatz.JPG':                   ('sportplatz.jpg',   0.03, 0.98, 1.00, 0.02, 1.12, 1.10, 0.45),
     # Abendlicht am Feuer: Stimmung erhalten, nur Tiefen oeffnen.
@@ -92,6 +97,7 @@ REZEPTE = {
     '22.07.12_Leichtathletik_Saisonabschluss_3.jpeg': (
         'vereinsheim.jpg', 0.02, 0.99, 1.08, 0.10, 1.06, 1.06, 0.45),
 }
+
 
 for name, (ziel, *werte) in REZEPTE.items():
     quelle = pathlib.Path(name) if '/' in name else SRC / name
