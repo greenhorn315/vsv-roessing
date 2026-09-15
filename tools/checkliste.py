@@ -191,18 +191,20 @@ for t, d in [
     story.append(punkt(t, d))
 
 # ---------- 3 ----------
-story.append(Paragraph('3 · Mitgliedsbeiträge', S['kapitel']))
+story.append(Paragraph('3 · Formulare', S['kapitel']))
 story.append(Paragraph(
-    'Die Beiträge auf der Seite stammen aus dem Altbestand und sind nicht gegen die '
-    'Beitragsordnung geprüft. Sie stehen prominent – „ab 4 € im Monat“ ist ein zentrales '
-    'Argument der Startseite und des Familienrechners.', S['kaphint']))
+    'Die Beiträge sind geklärt und vom Kassenwart bestätigt: 4 € für Kinder und '
+    'Jugendliche, 7,50 € einzeln, 15 € für Familien mit minderjährigen Kindern. '
+    'Alle vier Formulare stehen als PDF auf der Seite. Offen ist nur noch eine '
+    'Stelle in den Formularen selbst.', S['kaphint']))
 for t, d in [
-  ('Beitragsordnung im Wortlaut',
-   'Damit die Sätze in src/data/membership.ts einzeln abgeglichen werden können.'),
-  ('Gibt es Familienermäßigungen?',
-   'Der Familienrechner auf der Seite rechnet mit angenommenen Regeln.'),
-  ('Aufnahmegebühr, Kündigungsfrist, Zahlungsweise',
-   'Erscheint auf der Seite „Mitglied werden“.'),
+  ('Die Eintrittserklärung kennt nur sechs Sparten',
+   'Zum Ankreuzen stehen dort Dart, Fußball, Leichtathletik, Turnen, Volleyball und '
+   'Wandern. Auf der Website sind es neun – Basketball, Tanzen und Yoga fehlen, und '
+   '„Wandern“ heißt inzwischen „Outdoor“.'),
+  ('Gibt es eine Aufnahmegebühr?',
+   'In keinem der Formulare erwähnt. Wenn es keine gibt, gehört das auf die Seite – '
+   'das ist ein Argument.'),
 ]:
     story.append(punkt(t, d))
 
@@ -310,7 +312,6 @@ for t, d in [
   ('Vereinschronik', 'Der Geschichtsabschnitt ist bisher ein Platzhaltertext.'),
   ('Sparten-Detailtexte fachlich prüfen',
    'Die Beschreibungen in src/data/sports.ts sind aus dem Altbestand gebaut.'),
-  ('Formulare als PDF', 'Aufnahmeantrag, SEPA-Mandat, Bankverbindung ändern, Austritt.'),
   ('Social-Media-Adressen', 'Die echten Links zu Instagram und Facebook, ggf. WhatsApp-Gruppe.'),
 ]:
     story.append(punkt(t, d))
@@ -359,7 +360,9 @@ story.append(kasten(
     'Ansprechpartner der Outdoor-Sparte · Damenmannschaft entfernt · Übungsleitung Yoga '
     'eingetragen, Angebot als offen für Frauen und Männer ausgewiesen · Spielplan der Ü40 '
     'und Ligaspiele der drei Dart-Teams · Fotos der fünf Sportstätten, Vereinsheim '
-    'eingeschlossen · Karussell mit zwölf Bildern auf der Startseite.'))
+    'eingeschlossen · Karussell auf der Startseite · Kasten „Für die zweite '
+    'Lebenshälfte“ · Mitgliedsbeiträge nach den Vereinsformularen, Familienrechner '
+    'entsprechend · vier Formulare als PDF im Downloadbereich.'))
 
 doc.build(ohne_verwaiste_ueberschriften(story))
 print('PDF erzeugt:', OUT)

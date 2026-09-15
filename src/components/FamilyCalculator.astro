@@ -1,47 +1,61 @@
 ---
 import { calculator } from '../data/membership';
+
+/**
+ * Der Verein rechnet für eine Familie automatisch den günstigsten Beitrag ab.
+ * Genau das bildet der Rechner nach: Einzelbeiträge zusammenzählen, und wenn
+ * minderjährige Kinder dabei sind, bei 15 € deckeln. Ohne Kinder gibt es
+ * keinen Deckel – zwei Erwachsene zahlen ohnehin dasselbe.
+ */
 ---
 
 <div class="calc" id="familienrechner">
   <h3 class="calc__title">Familienrechner</h3>
   <p class="calc__intro">
-    Wie viele Personen aus eurem Haushalt sollen Mitglied werden?
+    Wer aus eurem Haushalt soll Mitglied werden?
   </p>
 
-  <label class="calc__label" for="famSize">Anzahl Personen</label>
-  <input
-    type="range"
-    id="famSize"
-    name="famSize"
-    min="1"
-    max="5"
-    value="2"
-    step="1"
-    list="famTicks"
-    aria-describedby="famSizeLabel"
-    data-single-rate={calculator.singleRate}
-    data-family-base={calculator.familyBase}
-    data-family-step={calculator.familyStep}
-    data-family-cap={calculator.familyCap}
-  />
-  <datalist id="famTicks">
-    <option value="1" label="1"></option>
-    <option value="2" label="2"></option>
-    <option value="3" label="3"></option>
-    <option value="4" label="4"></option>
-    <option value="5" label="5+"></option>
-  </datalist>
-  <p class="calc__hint" id="famSizeLabel">2 Personen (z.&nbsp;B. 1 Erwachsener + 1 Kind)</p>
+  <div
+    class="calc__felder"
+    data-rechner
+    data-erwachsen={calculator.erwachsen}
+    data-kind={calculator.kind}
+    data-familie={calculator.familie}
+  >
+    <div class="calc__feld">
+      <label class="calc__label" for="erwachsene">Erwachsene: <span data-wert="erwachsene">2</span></label>
+      <input type="range" id="erwachsene" name="erwachsene" min="0" max="4" value="2" step="1" list="ticksErwachsene" />
+      {/* Eigene Skala je Regler – eine gemeinsame erschiene nur einmal. */}
+      <datalist id="ticksErwachsene">
+        <option value="0" label="0"></option>
+        <option value="1" label="1"></option>
+        <option value="2" label="2"></option>
+        <option value="3" label="3"></option>
+        <option value="4" label="4+"></option>
+      </datalist>
+    </div>
+    <div class="calc__feld">
+      <label class="calc__label" for="kinder">Kinder und Jugendliche: <span data-wert="kinder">2</span></label>
+      <input type="range" id="kinder" name="kinder" min="0" max="4" value="2" step="1" list="ticksKinder" />
+      <datalist id="ticksKinder">
+        <option value="0" label="0"></option>
+        <option value="1" label="1"></option>
+        <option value="2" label="2"></option>
+        <option value="3" label="3"></option>
+        <option value="4" label="4+"></option>
+      </datalist>
+    </div>
+  </div>
 
   <!-- aria-live: Screenreader bekommen das neue Ergebnis mit. -->
-  <output class="calc__result" for="famSize" aria-live="polite">
-    <strong id="famResult">10 € / Monat</strong>
-    <span id="famNote">statt 12 € einzeln gerechnet</span>
+  <output class="calc__result" aria-live="polite">
+    <strong data-ergebnis>15,00 € / Monat</strong>
+    <span data-hinweis>Familienbeitrag statt 23,00 € einzeln gerechnet</span>
   </output>
 
   <p class="calc__disclaimer">
-    Richtwerte auf Basis der Beitragsordnung – verbindlich ist der Beitrag
-    laut Aufnahmeantrag.
+    Abgebucht wird einmal im Jahr, jeweils am 1. Juni. Verbindlich sind die
+    Sätze im Aufnahmeantrag.
   </p>
 </div>
 
@@ -62,6 +76,17 @@ import { calculator } from '../data/membership';
     font-size: 0.94rem;
     color: var(--c-text-muted);
     margin-bottom: var(--sp-5);
+  }
+
+  .calc__felder {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: var(--sp-4) var(--sp-5);
+    margin-bottom: var(--sp-4);
+  }
+
+  .calc__label span {
+    color: var(--c-primary);
   }
 
   .calc__label {
@@ -123,49 +148,58 @@ import { calculator } from '../data/membership';
 </style>
 
 <script>
-  const slider = document.getElementById('famSize') as HTMLInputElement | null;
-  const hint = document.getElementById('famSizeLabel');
-  const result = document.getElementById('famResult');
-  const note = document.getElementById('famNote');
+  const feld = document.querySelector<HTMLElement>('[data-rechner]');
+  const erwachsene = document.getElementById('erwachsene') as HTMLInputElement | null;
+  const kinder = document.getElementById('kinder') as HTMLInputElement | null;
+  const ergebnis = document.querySelector<HTMLElement>('[data-ergebnis]');
+  const hinweis = document.querySelector<HTMLElement>('[data-hinweis]');
 
-  if (slider && hint && result && note) {
-    const singleRate = Number(slider.dataset.singleRate);
-    const familyBase = Number(slider.dataset.familyBase);
-    const familyStep = Number(slider.dataset.familyStep);
-    const familyCap = Number(slider.dataset.familyCap);
+  if (feld && erwachsene && kinder && ergebnis && hinweis) {
+    const satzErwachsen = Number(feld.dataset.erwachsen);
+    const satzKind = Number(feld.dataset.kind);
+    const satzFamilie = Number(feld.dataset.familie);
 
     const euro = new Intl.NumberFormat('de-DE', {
       style: 'currency',
       currency: 'EUR',
-      maximumFractionDigits: 0,
+      minimumFractionDigits: 2,
     });
 
-    const labels: Record<number, string> = {
-      1: '1 Person',
-      2: '2 Personen (z. B. 1 Erwachsener + 1 Kind)',
-      3: '3 Personen',
-      4: '4 Personen',
-      5: '5 Personen oder mehr',
+    const zeigeWert = (input: HTMLInputElement) => {
+      const anzeige = document.querySelector<HTMLElement>(`[data-wert="${input.id}"]`);
+      if (anzeige) anzeige.textContent = input.value === '4' ? '4 oder mehr' : input.value;
     };
 
-    const update = () => {
-      const n = Number(slider.value);
-      hint.textContent = labels[n];
+    const rechne = () => {
+      const a = Number(erwachsene.value);
+      const k = Number(kinder.value);
+      zeigeWert(erwachsene);
+      zeigeWert(kinder);
 
-      const familyTotal =
-        n === 1 ? singleRate : Math.min(familyBase + (n - 2) * familyStep, familyCap);
-      const singleTotal = n * singleRate;
+      const einzeln = a * satzErwachsen + k * satzKind;
+      // Der Familienbeitrag gilt für Familien mit minderjährigen Kindern.
+      const gedeckelt = k > 0 ? Math.min(einzeln, satzFamilie) : einzeln;
 
-      result.textContent = `${euro.format(familyTotal)} / Monat`;
-      note.textContent =
-        n === 1
-          ? 'Einzelbeitrag'
-          : `statt ${euro.format(singleTotal)} einzeln gerechnet – ihr spart ${euro.format(
-              singleTotal - familyTotal
-            )} pro Monat`;
+      if (a + k === 0) {
+        ergebnis.textContent = '–';
+        hinweis.textContent = 'Wählt mindestens eine Person aus.';
+        return;
+      }
+
+      ergebnis.textContent = `${euro.format(gedeckelt)} / Monat`;
+      if (gedeckelt < einzeln) {
+        hinweis.textContent =
+          `Familienbeitrag statt ${euro.format(einzeln)} einzeln gerechnet – ` +
+          `${euro.format(einzeln - gedeckelt)} weniger im Monat`;
+      } else if (a + k === 1) {
+        hinweis.textContent = 'Einzelbeitrag';
+      } else {
+        hinweis.textContent = 'Einzelbeiträge zusammengerechnet';
+      }
     };
 
-    slider.addEventListener('input', update);
-    update();
+    erwachsene.addEventListener('input', rechne);
+    kinder.addEventListener('input', rechne);
+    rechne();
   }
 </script>

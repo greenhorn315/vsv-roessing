@@ -77,7 +77,10 @@ Fußbereich steht als `STAND` oben im Skript.
       einsetzen (Platzhalter greifen bis dahin automatisch)
 - [ ] Einwilligung der abgebildeten Personen einholen – betrifft mehrere
       Bilder im Karussell und das Foto vom Feuerplatz
-- [ ] Beiträge in `src/data/membership.ts` gegen die Beitragsordnung prüfen
+- [x] Beiträge in `src/data/membership.ts` gegen die Vereinsformulare
+      abgeglichen und vom Kassenwart bestätigt: 4 € für Kinder und
+      Jugendliche, 7,50 € einzeln, 15 € für Familien mit minderjährigen
+      Kindern; Einzug jährlich am 1. Juni, Kündigung zum Quartalsende
 - [ ] Vorstandsnamen und Vereinschronik in `src/pages/verein.astro`
 - [x] Impressum aus der Altseite übernommen (`src/data/impressum.ts`)
 - [x] Datenschutzerklärung neu verfasst (`src/data/datenschutz.ts`): beschreibt
@@ -98,7 +101,12 @@ Fußbereich steht als `STAND` oben im Skript.
       `fetch(endpoint, { method: 'POST', body: data })` zu setzen. Achtung:
       Danach muss Abschnitt 8 der Datenschutzerklärung neu geschrieben werden,
       denn dann werden die Eingaben tatsächlich an einen Server übertragen.
-- [ ] PDF-Formulare hinterlegen
+- [x] PDF-Formulare unter `public/downloads/` hinterlegt und auf
+      `/mitglied-werden#formulare` verlinkt
+- [ ] Die Eintrittserklärung nennt nur sechs Sparten zum Ankreuzen (Dart,
+      Fußball, Leichtathletik, Turnen, Volleyball, Wandern). Auf der Website
+      stehen neun; Basketball, Tanzen und Yoga fehlen im Formular, und
+      „Wandern" heißt inzwischen „Outdoor". Das Formular gehört aktualisiert.
 - [ ] `site` in `astro.config.mjs` auf die finale Domain setzen
 - [ ] Sparten-Detailtexte in `src/data/sports.ts` fachlich prüfen
 - [ ] Spartenstruktur klären: welche Sportarten gehören zu welcher Sparte?
