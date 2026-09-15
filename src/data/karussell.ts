@@ -27,9 +27,19 @@ export const karussellBilder: KarussellBild[] = [
     caption: 'Leichtathletik – gemeinsam am Start',
   },
   {
+    src: '/images/karussell/freitagsradler.jpg',
+    alt: 'Sieben Radfahrende mit Helmen stehen mit ihren Rädern auf einer Holzbrücke über einem Bach',
+    caption: 'Freitagsradler im Sommerhalbjahr',
+  },
+  {
     src: '/images/karussell/jazzdance.jpg',
     alt: 'Tanzgruppe sitzt im Bühnenlicht auf einem Holzboden vor einer Bühne',
     caption: 'Jazz Dance – Auftritt',
+  },
+  {
+    src: '/images/karussell/freitagsradler-abendlicht.jpg',
+    alt: 'Radfahrende auf einem Feldweg, die tiefstehende Abendsonne blendet von rechts',
+    caption: 'Freitagsradler – Heimweg im Abendlicht',
   },
   {
     src: '/images/karussell/leichtathletik-kinder.jpg',
@@ -37,14 +47,20 @@ export const karussellBilder: KarussellBild[] = [
     caption: 'Leichtathletik – Kindergruppe',
   },
   {
-    src: '/images/karussell/freitagsradler.jpg',
-    alt: 'Radfahrergruppe auf einem Feldweg, im Hintergrund ein Windrad',
-    caption: 'Freitagsradler im Sommerhalbjahr',
+    src: '/images/karussell/freitagsradler-umland.jpg',
+    alt: 'Radfahrergruppe steht mit ihren Rädern am Feldrand, dahinter Felder und eine helle Halde',
+    caption: 'Freitagsradler – unterwegs im Umland',
   },
   {
     src: '/images/karussell/leichtathletik-jugend.jpg',
     alt: 'Jugendliche beim Aufwärmen auf einer Rasenfläche',
     caption: 'Leichtathletik – Jugendtraining',
+  },
+  {
+    // Winteraufnahme – deshalb ohne Bezug aufs Sommerhalbjahr beschriftet.
+    src: '/images/karussell/freitagsradler-schloss.jpg',
+    alt: 'Abgestelltes Fahrrad auf einer Wiese, dahinter ein Schloss mit neugotischen Türmen',
+    caption: 'Radtour ins Umland',
   },
   {
     // E-Dart-Scheibe – die Dart-Gruppe spielt E-Darts, nicht Steel.

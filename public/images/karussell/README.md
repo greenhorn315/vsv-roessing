@@ -4,14 +4,20 @@ Diese Bilder rollieren auf der Startseite an der Stelle, an der später ein
 einzelnes Vereinsfoto stehen soll. Die Reihenfolge, die Bildunterschriften und
 die Alternativtexte stehen in `src/data/karussell.ts`.
 
-| Datei | Motiv | Vorlage |
-|---|---|---|
-| `gruppenfoto.jpg` | Leichtathletik, Gruppe im VSV-Trikot | 2560 × 1707 |
-| `jazzdance.jpg` | Jazz Dance, Auftritt | 4032 × 3024 |
-| `leichtathletik-kinder.jpg` | Kindergruppe beim Sprung | 300 × 200 |
-| `freitagsradler.jpg` | Radgruppe am Feldweg | 300 × 225 |
-| `leichtathletik-jugend.jpg` | Jugendliche beim Aufwärmen | 300 × 200 |
-| `dart.jpg` | Dartpfeil in einer E-Dart-Scheibe, Symbolbild | 1280 × 852 |
+| # | Datei | Motiv | Vorlage |
+|---|---|---|---|
+| 1 | `gruppenfoto.jpg` | Leichtathletik, Gruppe im VSV-Trikot | 2560 × 1707 |
+| 2 | `freitagsradler.jpg` | Radgruppe auf einer Holzbrücke | 1920 × 1080 |
+| 3 | `jazzdance.jpg` | Jazz Dance, Auftritt | 4032 × 3024 |
+| 4 | `freitagsradler-abendlicht.jpg` | Radgruppe im Gegenlicht | 1920 × 1080 |
+| 5 | `leichtathletik-kinder.jpg` | Kindergruppe beim Sprung | 300 × 200 |
+| 6 | `freitagsradler-umland.jpg` | Radgruppe am Feldrand | 1920 × 1080 |
+| 7 | `leichtathletik-jugend.jpg` | Jugendliche beim Aufwärmen | 300 × 200 |
+| 8 | `freitagsradler-schloss.jpg` | Rad vor einem Schloss, Winter | 1920 × 1080 |
+| 9 | `dart.jpg` | Dartpfeil in einer E-Dart-Scheibe, Symbolbild | 1280 × 852 |
+
+Die vier Radbilder stehen bewusst auf den Plätzen 2, 4, 6 und 8, damit sie
+nicht aufeinander folgen.
 
 **Format**
 
@@ -20,11 +26,11 @@ Hochformat 4 : 5, 800 × 1000 px, JPG unter 180 KB. Aufbereitet mit
 Am Desktop steht das Karussell im Hochformat, auf schmalen Geräten im Format
 4 : 3 – der Ausschnitt wird per `object-fit: cover` gefüllt.
 
-**Drei Vorlagen sind zu klein – und die Originale gibt es**
+**Zwei Vorlagen sind zu klein – und die Originale gibt es**
 
-`leichtathletik-kinder`, `leichtathletik-jugend` und `freitagsradler` stammen
-als 300-px-Vorschaubilder von der alten Website. Ihre Dateinamen enden auf
-`-300x200` beziehungsweise `-300x225`; so legt WordPress Vorschaubilder ab.
+`leichtathletik-kinder` und `leichtathletik-jugend` stammen als
+300-px-Vorschaubilder von der alten Website. Ihre Dateinamen enden auf
+`-300x200`; so legt WordPress Vorschaubilder ab.
 **Das Original liegt im selben Verzeichnis unter demselben Namen ohne diesen
 Zusatz** – etwa
 
@@ -47,7 +53,8 @@ lassen.
 
 **Personen auf Fotos**
 
-Auf mehreren Bildern sind Personen erkennbar, auf `leichtathletik-kinder.jpg`
+Auf mehreren Bildern sind Personen erkennbar – auf `freitagsradler.jpg` sieben
+Erwachsene mit deutlich erkennbaren Gesichtern, auf `leichtathletik-kinder.jpg`
 ein Kind. **Vor dem Livegang** ist die Einwilligung der Abgebildeten
 einzuholen, bei Minderjährigen die der Erziehungsberechtigten (Recht am
 eigenen Bild, KUG/DSGVO) – oder das betreffende Bild zu tauschen. Solange die
