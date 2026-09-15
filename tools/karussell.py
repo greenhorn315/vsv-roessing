@@ -4,7 +4,7 @@ Wie tools/optimize.py, aber mit Hochformat 4:5 als Zielformat und einem
 Bildausschnitt je Foto: Bei querformatigen Aufnahmen entscheidet der
 Ausschnitt, ob das Motiv im Bild bleibt.
 
-Drei der Vorlagen sind nur 300 px breite Vorschaubilder von der alten
+Zwei der Vorlagen sind nur 300 px breite Vorschaubilder von der alten
 Website. Fuer sie greift hochskalieren() – scharf wie die grossen werden sie
 dadurch nicht. Ihre Dateinamen enden auf „-300x200“ beziehungsweise
 „-300x225“; das ist das Namensschema, mit dem WordPress Vorschaubilder ablegt.
@@ -90,10 +90,15 @@ def verarbeite(quelle, ziel, ausschnitt, schwarz, weiss, gamma, tiefen,
             im = im.filter(
                 ImageFilter.UnsharpMask(radius=1.4, percent=int(schaerfe * 100), threshold=3)
             )
-    for q in (84, 80, 76, 72, 68):
+    # Leiter bis 58 hinunter: Bei detailreichen Motiven wie Laub reichen die
+    # oberen Stufen nicht, um unter den Deckel zu kommen.
+    for q in (84, 80, 76, 72, 68, 64, 60, 56):
         im.save(ziel, 'JPEG', quality=q, optimize=True, progressive=True)
         if ziel.stat().st_size <= MAX_BYTES:
             break
+    else:
+        print(f'  Hinweis: {ziel.name} bleibt mit {ziel.stat().st_size // 1024} KB'
+              f' über dem Deckel von {MAX_BYTES // 1024} KB.')
     return im, ziel.stat().st_size
 
 
@@ -110,8 +115,21 @@ REZEPTE = {
         'leichtathletik-jugend.jpg', (0.50, 0.50), 0.03, 0.98, 1.00, 0.03, 1.08, 1.06, 0),
     '21.06.07_Leichtathletik_Kindergruppe_Training_2-300x200.jpg': (
         'leichtathletik-kinder.jpg', (0.32, 0.50), 0.02, 0.99, 1.14, 0.10, 1.10, 1.05, 0),
-    '2205_Turnen_Freitagsturner_1-300x225.jpg': (
-        'freitagsradler.jpg', (0.55, 0.55), 0.04, 0.96, 1.00, 0.03, 1.18, 1.10, 0),
+    # Sonniger Tag mit tiefen Schatten unter den Baeumen: Tiefen oeffnen, dann
+    # nur massvoll anziehen. Ausschnitt leicht nach links, damit die ganze
+    # Gruppe samt Brueckenanfang im Hochformat bleibt.
+    '19e7a73d2e2.jpg': (
+        'freitagsradler.jpg', (0.46, 0.55), 0.02, 0.99, 1.06, 0.10, 1.06, 1.06, 0.45),
+    # Abendsonne, goldenes Licht: nur massvoll anziehen, sonst kippt die Stimmung.
+    '19e55eceb65.jpg': (
+        'freitagsradler-umland.jpg', (0.55, 0.55), 0.03, 0.98, 1.02, 0.05, 1.08, 1.06, 0.45),
+    # Gegenlicht direkt in die Sonne: Tiefen oeffnen, damit die Raeder nicht
+    # zu blossen Silhouetten werden, Lichter unangetastet lassen.
+    '19e55eced99.jpg': (
+        'freitagsradler-abendlicht.jpg', (0.40, 0.55), 0.01, 1.00, 1.04, 0.09, 1.08, 1.08, 0.45),
+    # Wintersonne hinter dem Schloss, tiefe Schatten im Vordergrund.
+    '19c61787d53.jpg': (
+        'freitagsradler-schloss.jpg', (0.62, 0.50), 0.02, 0.99, 1.10, 0.12, 1.08, 1.06, 0.45),
     # Bewusst dunkles Motiv: Tiefen leicht oeffnen, Kontrast nur wenig.
     'Pexels-pixabay-262438.jpg': (
         'dart.jpg', (0.45, 0.50), 0.01, 1.00, 1.08, 0.05, 1.05, 1.02, 0.40),
