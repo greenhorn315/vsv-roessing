@@ -4,7 +4,7 @@ import { sports } from '../data/sports';
 
 const reihenfolge: AudienceKey[] = ['kinder', 'jugend', 'frauen', 'maenner', 'alle'];
 
-/** Sparte zu einer Gruppe finden, für die Farbmarkierung. */
+/** Sportart zu einer Gruppe finden, für die Farbmarkierung. */
 const farbe = (slug?: string) =>
   sports.find((s) => s.slug === slug)?.color ?? 'var(--c-primary)';
 

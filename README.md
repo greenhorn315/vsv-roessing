@@ -20,7 +20,7 @@ src/
 ├── components/    Wiederverwendbare Bausteine, CSS jeweils scoped im <style>
 ├── layouts/       BaseLayout: <head>, SEO, Schema.org, Header/Footer
 └── pages/         Eine Datei = eine URL
-    └── sportangebote/[slug].astro  erzeugt je Sparte eine Detailseite
+    └── sportangebote/[slug].astro  erzeugt je Sportart eine Detailseite
 public/
 ├── images/        Fotos (siehe images/README.md)
 └── favicon.svg
@@ -33,7 +33,7 @@ Fast alles steckt in `src/data/` und braucht keine HTML-Kenntnisse:
 | Datei | Inhalt |
 |---|---|
 | `site.ts` | Vereinsname, Adresse, E-Mail, Social, Navigation, Kennzahlen |
-| `sports.ts` | Die acht Sparten inkl. Altersgruppen für den Filter |
+| `sports.ts` | Die neun Sportarten inkl. Altersgruppen für den Filter |
 | `membership.ts` | Beitragstabelle, Rechenwerte des Familienrechners, Beitrittsschritte |
 | `news.ts` | Meldungen (neueste zuerst) |
 | `trainings.ts` | Trainingszeiten |
@@ -62,7 +62,7 @@ Statischer Build, kein Server nötig.
 
 Der Build nutzt `format: 'directory'` (`kontakt/index.html`). Das ist nötig,
 weil es sowohl die Übersicht `/sportangebote` als auch die Detailseiten
-`/sportangebote/<sparte>` gibt – als flache Dateien würden Datei und
+`/sportangebote/<sportart>` gibt – als flache Dateien würden Datei und
 Verzeichnis kollidieren. Verzeichnis-Indizes liefern Cloudflare und die
 Synology Web Station gleichermaßen aus.
 
@@ -107,24 +107,20 @@ Fußbereich steht als `STAND` oben im Skript.
       Fußball, Leichtathletik, Turnen, Volleyball, Wandern). Auf der Website
       stehen neun; Basketball, Tanzen und Yoga fehlen im Formular, und
       „Wandern" heißt inzwischen „Outdoor". Das Formular gehört aktualisiert.
-- [ ] Wortwahl: Auf der Website von **Sportarten** sprechen, nicht von
-      „Sparten". Die Sparte ist die vereinsinterne Gliederung und für jemanden,
-      der eine Sportart sucht, ohne Belang. Betroffen sind rund 40 Stellen in
-      `src/`, darunter sichtbarer Text auf `/sportangebote` („Alle Sparten im
-      Überblick", „Nach Sparte", „Verein, Sparten, Gruppen"), die Kennzahl
-      „Sparten" in `ClubNumbers.astro` und die Überschrift „Sportarten in
-      dieser Sparte" auf den Detailseiten. „Spartenleitung" im Organigramm
-      darf bleiben – dort ist die Struktur tatsächlich das Thema.
+- [x] Wortwahl: Auf der Website ist überall von **Sportarten** die Rede statt
+      von „Sparten". Der Titel „Spartenleitung" bleibt, das ist die Bezeichnung
+      im Verein
 - [ ] `site` in `astro.config.mjs` auf die finale Domain setzen
-- [ ] Sparten-Detailtexte in `src/data/sports.ts` fachlich prüfen
-- [ ] Spartenstruktur klären: welche Sportarten gehören zu welcher Sparte?
-      Bisher ist nur Outdoor über `activities` befüllt.
+- [ ] Detailtexte der Sportarten in `src/data/sports.ts` fachlich prüfen
+- [ ] Zuordnung klären: welche einzelnen Angebote gehören zu welcher
+      Sportart? Bisher ist nur Outdoor über `activities` befüllt.
 - [ ] Yoga: Spartenleitung benennen, Altersgruppe bestätigen, Mitbringsel und
       Kurzbeschreibung ergänzen. Übungsleitung und Trainingszeit stehen seit
       dem 15. September; die Altersgruppe „Erwachsene" ist eine Annahme, die
       Seite weist die fehlenden Angaben sichtbar aus.
-- [ ] Ansprechpartner je Sparte ergänzen (`contact` in `src/data/sports.ts`).
-      Bisher nur Outdoor; die übrigen fallen auf die Vorstandsadresse zurück.
+- [ ] Ansprechpartner je Sportart ergänzen (`contact` in `src/data/sports.ts`).
+      Der Titel im Verein ist „Spartenleitung“ und bleibt so stehen. Bisher nur
+      Outdoor; die übrigen fallen auf die Vorstandsadresse zurück.
 
 ### Trainingszeiten
 
@@ -140,7 +136,7 @@ von 2022 und sind nicht bestätigt. Der Hinweis darauf steht als
       Leichtathletik „Lauf- und Sprungtraining"
 - [ ] Zwei Trainingsorte fehlen: „Volleyball mixed" und „Kinderturnen ab 9".
       Bewusst nicht erfunden.
-- [ ] Outdoor hat keine Trainingszeiten. Die Sparte ist in Gründung, Zeiten
+- [ ] Outdoor hat keine Trainingszeiten. Die Sportart ist im Aufbau, Zeiten
       und Turnus werden auf der Versammlung am 10. Oktober 2026 festgelegt.
 - [ ] Einwilligung der Übungsleitungen zur Namensnennung einholen, bevor die
       Seite öffentlich wird.

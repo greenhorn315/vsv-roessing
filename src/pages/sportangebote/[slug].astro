@@ -119,7 +119,7 @@ const previous = sports[(index - 1 + sports.length) % sports.length];
         {
           sport.activities && sport.activities.length > 0 && (
             <>
-              <h2>Sportarten in dieser Sparte</h2>
+              <h2>Das gehört dazu</h2>
               <ul class="activities">
                 {sport.activities.map((activity) => (
                   <li class="activity">
@@ -338,7 +338,7 @@ const previous = sports[(index - 1 + sports.length) % sports.length];
     margin-top: var(--sp-7);
   }
 
-  /* ---- Sportarten der Sparte ---- */
+  /* ---- Angebote innerhalb der Sportart ---- */
   .activities {
     list-style: none;
     padding: 0;
@@ -367,7 +367,7 @@ const previous = sports[(index - 1 + sports.length) % sports.length];
     color: var(--c-text-muted);
   }
 
-  /* ---- Hinweis für Sparten im Aufbau ---- */
+  /* ---- Hinweis für Sportarten im Aufbau ---- */
   .status {
     background: var(--c-sun-soft);
     border: 1px solid #E8CE8A;

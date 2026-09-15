@@ -18,7 +18,7 @@ die Alternativtexte stehen in `src/data/karussell.ts`.
 | 10 | `freitagsradler-schloss.jpg` | Rad vor Schloss Marienburg, Winter | 1920 × 1080 |
 | 11 | `dart.jpg` | Dartpfeil in einer E-Dart-Scheibe, Symbolbild | 1280 × 852 |
 
-Die Reihenfolge wechselt bewusst zwischen den Sparten, damit nicht zwei
+Die Reihenfolge wechselt bewusst zwischen den Sportarten, damit nicht zwei
 gleiche Motive aufeinander folgen.
 
 **Format**

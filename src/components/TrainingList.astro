@@ -10,7 +10,7 @@ import {
 } from '../data/trainings';
 
 interface Props {
-  /** Nur die Trainings dieser Sparte (slug aus sports.ts). */
+  /** Nur die Trainings dieser Sportart (slug aus sports.ts). */
   sport?: string;
   /** Höchstens so viele Einträge zeigen. */
   limit?: number;
@@ -33,7 +33,7 @@ const wochentagNamen: Record<Weekday, string> = {
 const auswahl = sport ? trainingsOfSport(sport) : trainings;
 const sichtbar = limit ? auswahl.slice(0, limit) : auswahl;
 
-// Gruppiert wird nur ohne Sparten- und Anzahl-Filter, sonst zeigt die Liste
+// Gruppiert wird nur ohne Sportart- und Anzahl-Filter, sonst zeigt die Liste
 // Tagesüberschriften über einem Ausschnitt.
 const gruppen: { day: Weekday | null; entries: Training[] }[] =
   grouped && !sport && !limit

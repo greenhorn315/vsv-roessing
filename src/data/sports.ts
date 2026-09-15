@@ -1,6 +1,6 @@
 export type AgeGroup = 'kinder' | 'jugend' | 'erwachsene';
 
-/** Eine Sportart innerhalb einer Sparte. */
+/** Ein einzelnes Angebot innerhalb einer Sportart, z. B. Boßeln bei Outdoor. */
 export interface Activity {
   name: string;
   /**
@@ -25,18 +25,18 @@ export interface Sport {
   slug: string;
   name: string;
   teaser: string;
-  /** Längerer Text für die Sparten-Übersicht. */
+  /** Längerer Text für die Übersicht der Sportarten. */
   description: string;
-  /** Absätze für die Sparten-Detailseite. */
+  /** Absätze für die Detailseite der Sportart. */
   longText?: string[];
   /** Kurze Stichpunkte („Das erwartet dich"). */
   highlights?: string[];
-  /** Wo trainiert diese Sparte? */
+  /** Wo wird diese Sportart trainiert? */
   venue?: string;
   /** Was sollte man zum ersten Training mitbringen? */
   bring?: string;
   /**
-   * Hinweis für Sparten, die sich gerade im Aufbau befinden.
+   * Hinweis für Sportarten, die sich gerade im Aufbau befinden.
    * Wird auf der Detailseite hervorgehoben dargestellt.
    */
   status?: {
@@ -46,13 +46,14 @@ export interface Sport {
   };
   /** Dateiname des Piktogramms in public/piktogramme/ ohne Endung. */
   pictogram: string;
-  /** Sportarten, die zu dieser Sparte gehören. */
+  /** Einzelne Angebote, die zu dieser Sportart gehören. */
   activities?: Activity[];
   /** Akzentfarbe der Karte (Design-System-Token oder Hex). */
   color: string;
   ageGroups: AgeGroup[];
   /**
-   * Ansprechpartner der Sparte. Ohne Eintrag verweist die Seite auf die
+   * Ansprechpartner der Sportart – im Verein „Spartenleitung“ genannt.
+   * Ohne Eintrag verweist die Seite auf die
    * Sammeladresse des Vorstands.
    */
   contact?: SpartenKontakt;
@@ -70,9 +71,9 @@ export const sports: Sport[] = [
     name: 'Fußball',
     teaser: 'Von den Bambini bis zu den Herren',
     description:
-      'Unsere größte Sparte: Training auf dem VSV-Sportplatz, von den Bambini ab vier Jahren bis zu den Erwachsenenmannschaften.',
+      'Unsere größte Sportart: Training auf dem VSV-Sportplatz, von den Bambini ab vier Jahren bis zu den Erwachsenenmannschaften.',
     longText: [
-      'Der Fußball ist unsere größte Sparte. Trainiert wird auf dem VSV-Sportplatz – von den Bambini ab vier Jahren über alle Jugendjahrgänge bis zu den Erwachsenenmannschaften.',
+      'Der Fußball ist unsere größte Sportart. Trainiert wird auf dem VSV-Sportplatz – von den Bambini ab vier Jahren über alle Jugendjahrgänge bis zu den Erwachsenenmannschaften.',
       'Wer neu dazukommt, wird von den Trainerinnen und Trainern in die passende Altersgruppe eingeteilt. Vorkenntnisse braucht niemand mitzubringen.',
     ],
     highlights: [
@@ -223,8 +224,8 @@ export const sports: Sport[] = [
       { name: 'Boßeln', pictogram: 'boccia' },
     ],
     status: {
-      label: 'Sparte in Gründung',
-      text: 'Die Outdoor-Sparte versteht sich als Nachfolgerin der bisherigen Wander-Sparte und befindet sich in der Gründung. Trainingszeiten und Turnus gibt es deshalb noch nicht – sie werden auf der ersten Versammlung gemeinsam mit den Interessierten festgelegt. Wer mitgestalten möchte, ist ausdrücklich eingeladen: gerade jetzt lässt sich noch alles mitbestimmen.',
+      label: 'Sportart in Gründung',
+      text: 'Outdoor versteht sich als Nachfolge des bisherigen Wander-Angebots und befindet sich noch im Aufbau. Trainingszeiten und Turnus gibt es deshalb noch nicht – sie werden auf der ersten Versammlung gemeinsam mit den Interessierten festgelegt. Wer mitgestalten möchte, ist ausdrücklich eingeladen: gerade jetzt lässt sich noch alles mitbestimmen.',
       next: [
         'Erste Outdoor-Versammlung am Samstag, 10. Oktober 2026 um 15:00 Uhr – dort werden Zeiten und Turnus festgelegt',
         'Teilnahme am „Tag des Wanderns“, organisiert und durchgeführt vom Kreissportbund Hildesheim',
@@ -239,7 +240,7 @@ export const sports: Sport[] = [
     name: 'Yoga',
     teaser: 'Beweglichkeit, Kraft und Ruhe',
     description:
-      'Ruhige Einheiten für Beweglichkeit, Kraft und Entspannung – als Ausgleich zum Alltag und zu den anderen Sparten.',
+      'Ruhige Einheiten für Beweglichkeit, Kraft und Entspannung – als Ausgleich zum Alltag und zu den anderen Sportarten.',
     longText: [
       'Das Yoga-Angebot besteht bereits im Verein, stand bisher aber nicht auf der Website.',
       'Die Gruppe steht Frauen und Männern offen. Zurzeit machen ausschließlich Frauen mit – das ist eine Momentaufnahme und kein Zuschnitt der Gruppe. Männer, die einsteigen möchten, sind willkommen.',
@@ -277,7 +278,7 @@ export const sports: Sport[] = [
   },
 ];
 
-/** Anzahl der Sparten – überall verwenden, statt die Zahl auszuschreiben. */
+/** Anzahl der Sportarten – überall verwenden, statt die Zahl auszuschreiben. */
 export const sportCount = sports.length;
 
 const ZAHLWOERTER = [
@@ -292,5 +293,5 @@ export const sportCountWord = ZAHLWOERTER[sportCount] ?? String(sportCount);
 export const SportCountWord =
   sportCountWord.charAt(0).toUpperCase() + sportCountWord.slice(1);
 
-/** Namen aller Sparten, z. B. für strukturierte Daten. */
+/** Namen aller Sportarten, z. B. für strukturierte Daten. */
 export const sportNames = sports.map((sport) => sport.name);
