@@ -6,7 +6,7 @@ Bild-Symbol.
 
 | Datei | Format | Empfehlung |
 |---|---|---|
-| `hero.jpg` | Hochformat 4:5 | ca. 800 × 1000 px |
+| `karussell/*.jpg` | Hochformat 4:5 | 800 × 1000 px, siehe `karussell/README.md` |
 | `social-1.jpg` … `social-4.jpg` | quadratisch | mind. 400 × 400 px |
 | `og-default.png` (in `public/`) | 1200 × 630 px | Vorschaubild für WhatsApp/Facebook |
 | `sportstaetten/*.jpg` | Querformat 4:3 | siehe `sportstaetten/README.md` |

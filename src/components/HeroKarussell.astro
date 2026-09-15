@@ -1,0 +1,233 @@
+---
+import { karussellBilder } from '../data/karussell';
+
+/**
+ * Rollierendes Bild an der Stelle des künftigen Vereinsfotos.
+ *
+ * Die Bilder liegen übereinander und werden übergeblendet; ohne JavaScript
+ * bleibt das erste stehen und die Bedienelemente sind ausgeblendet. Bei
+ * „Bewegung reduzieren“ wechselt nichts von selbst – dann zählt nur, was
+ * jemand selbst anklickt.
+ */
+const bilder = karussellBilder;
+const dauer = 6000;
+---
+
+<div
+  class="karussell"
+  data-karussell
+  data-dauer={dauer}
+  role="group"
+  aria-roledescription="Karussell"
+  aria-label="Eindrücke aus dem Vereinsleben"
+>
+  <ul class="karussell__bilder">
+    {
+      bilder.map((bild, i) => (
+        <li
+          class="karussell__bild"
+          data-slide={i}
+          aria-hidden={i === 0 ? undefined : 'true'}
+          inert={i === 0 ? undefined : true}
+        >
+          <img
+            src={bild.src}
+            alt={bild.alt}
+            width={800}
+            height={1000}
+            loading={i === 0 ? 'eager' : 'lazy'}
+            decoding="async"
+            fetchpriority={i === 0 ? 'high' : undefined}
+          />
+          <p class="karussell__caption">
+            {bild.caption}
+            {bild.credit && <small>{bild.credit}</small>}
+          </p>
+        </li>
+      ))
+    }
+  </ul>
+
+  <p class="visually-hidden" aria-live="polite" data-karussell-status></p>
+
+  <div class="karussell__punkte" hidden data-karussell-punkte>
+    {
+      bilder.map((bild, i) => (
+        <button
+          type="button"
+          class="karussell__punkt"
+          data-zu={i}
+          aria-current={i === 0 ? 'true' : undefined}
+        >
+          <span class="visually-hidden">{`Bild ${i + 1}: ${bild.caption}`}</span>
+        </button>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .karussell {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--c-tint-green);
+    isolation: isolate;
+  }
+
+  .karussell__bilder {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    inset: 0;
+  }
+
+  .karussell__bild {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 700ms ease;
+  }
+  /* Ohne JavaScript ist nur das erste Bild sichtbar. */
+  .karussell__bild[data-slide='0'],
+  .karussell__bild[data-aktiv] {
+    opacity: 1;
+  }
+
+  .karussell__bild img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .karussell__caption {
+    position: absolute;
+    inset: auto 0 0;
+    margin: 0;
+    /* Unten Platz für die Punkte, damit lange Zeilen nicht darunter laufen. */
+    padding: 2.5rem 1.1rem 2.1rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #fff;
+    /* Verlauf statt Balken: Der Bildrand bleibt sichtbar. */
+    background: linear-gradient(to top, rgba(10, 34, 30, 0.85), rgba(10, 34, 30, 0));
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  }
+  .karussell__caption small {
+    display: block;
+    font-weight: 400;
+    font-size: 0.74rem;
+    opacity: 0.8;
+  }
+
+  .karussell__punkte {
+    position: absolute;
+    inset: auto 0 0.7rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.45rem;
+    z-index: 1;
+  }
+
+  .karussell__punkt {
+    width: 0.65rem;
+    height: 0.65rem;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 0 1px rgba(10, 34, 30, 0.35);
+    cursor: pointer;
+    transition: background 200ms ease, transform 200ms ease;
+  }
+  .karussell__punkt:hover {
+    background: rgba(255, 255, 255, 0.8);
+  }
+  .karussell__punkt[aria-current='true'] {
+    background: #fff;
+    transform: scale(1.3);
+  }
+  .karussell__punkt:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .karussell__bild {
+      transition: none;
+    }
+    .karussell__punkt {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const karussell = document.querySelector<HTMLElement>('[data-karussell]');
+
+  if (karussell) {
+    const bilder = [...karussell.querySelectorAll<HTMLElement>('.karussell__bild')];
+    const punkteLeiste = karussell.querySelector<HTMLElement>('[data-karussell-punkte]');
+    const punkte = [...karussell.querySelectorAll<HTMLButtonElement>('[data-zu]')];
+    const status = karussell.querySelector<HTMLElement>('[data-karussell-status]');
+    const dauer = Number(karussell.dataset.dauer ?? 6000);
+    const ruhig = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    let aktuell = 0;
+    let timer: number | undefined;
+
+    const zeige = (index: number) => {
+      aktuell = (index + bilder.length) % bilder.length;
+      bilder.forEach((bild, i) => {
+        const an = i === aktuell;
+        bild.toggleAttribute('data-aktiv', an);
+        bild.toggleAttribute('inert', !an);
+        if (an) bild.removeAttribute('aria-hidden');
+        else bild.setAttribute('aria-hidden', 'true');
+      });
+      punkte.forEach((punkt, i) => {
+        if (i === aktuell) punkt.setAttribute('aria-current', 'true');
+        else punkt.removeAttribute('aria-current');
+      });
+      if (status) status.textContent = `Bild ${aktuell + 1} von ${bilder.length}`;
+    };
+
+    const stoppen = () => {
+      if (timer !== undefined) window.clearInterval(timer);
+      timer = undefined;
+    };
+
+    const starten = () => {
+      stoppen();
+      // Bei „Bewegung reduzieren“ wechselt nichts von selbst.
+      if (ruhig.matches) return;
+      timer = window.setInterval(() => zeige(aktuell + 1), dauer);
+    };
+
+    // Erst ab hier ist das erste Bild nicht mehr nur per CSS sichtbar.
+    bilder[0]?.setAttribute('data-aktiv', '');
+    punkteLeiste?.removeAttribute('hidden');
+
+    punkte.forEach((punkt) =>
+      punkt.addEventListener('click', () => {
+        zeige(Number(punkt.dataset.zu));
+        starten();
+      }),
+    );
+
+    // Wer hinschaut oder tabbt, soll nicht vom Wechsel überrascht werden.
+    karussell.addEventListener('mouseenter', stoppen);
+    karussell.addEventListener('mouseleave', starten);
+    karussell.addEventListener('focusin', stoppen);
+    karussell.addEventListener('focusout', starten);
+    document.addEventListener('visibilitychange', () =>
+      document.hidden ? stoppen() : starten(),
+    );
+    ruhig.addEventListener('change', starten);
+
+    starten();
+  }
+</script>
