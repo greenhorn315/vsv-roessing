@@ -1,6 +1,6 @@
 ---
 import Icon from './Icon.astro';
-import Photo from './Photo.astro';
+import HeroKarussell from './HeroKarussell.astro';
 import { site, slogan, clubAge } from '../data/site';
 import { sports } from '../data/sports';
 
@@ -36,16 +36,7 @@ const sportNames = sports.map((s) => s.name).join(', ');
     </div>
 
     <div class="hero-media">
-      <Photo
-        src="/images/hero.jpg"
-        alt="Mitglieder der VSV Rössing beim gemeinsamen Training"
-        width={800}
-        height={1000}
-        eager
-        placeholderIcon="sport"
-        placeholderText="Vereinsfoto folgt"
-        class="hero-photo"
-      />
+      <HeroKarussell />
       <svg class="hero-swoosh" viewBox="0 0 200 200" aria-hidden="true">
         <path
           d="M10 190 C 10 100, 100 100, 100 10"
@@ -142,7 +133,7 @@ const sportNames = sports.map((s) => s.name).join(', ');
     position: relative;
   }
 
-  .hero-media :global(.hero-photo) {
+  .hero-media :global(.karussell) {
     /* Bogenform als wiedererkennbares Gestaltungselement. */
     border-radius: clamp(80px, 18vw, 180px) var(--radius-lg) var(--radius-lg)
       var(--radius-lg);
@@ -196,8 +187,11 @@ const sportNames = sports.map((s) => s.name).join(', ');
       order: -1;
       max-width: 520px;
     }
-    .hero-media :global(.hero-photo) {
-      aspect-ratio: 16 / 10 !important;
+    .hero-media :global(.karussell) {
+      /* Flacher als am Desktop, damit der Aufruf zum Handeln in Sichtweite
+         bleibt – aber nicht so flach, dass von den Hochformaten zu wenig
+         übrig bleibt. */
+      aspect-ratio: 4 / 3;
       border-radius: var(--radius-lg);
     }
     .hero-swoosh { display: none; }
