@@ -20,14 +20,30 @@ Hochformat 4 : 5, 800 × 1000 px, JPG unter 180 KB. Aufbereitet mit
 Am Desktop steht das Karussell im Hochformat, auf schmalen Geräten im Format
 4 : 3 – der Ausschnitt wird per `object-fit: cover` gefüllt.
 
-**Drei Vorlagen sind zu klein**
+**Drei Vorlagen sind zu klein – und die Originale gibt es**
 
 `leichtathletik-kinder`, `leichtathletik-jugend` und `freitagsradler` stammen
-als 300-px-Vorschaubilder von der alten Website. Sie sind hochskaliert und
-kräftiger nachgeschärft, bleiben aber weicher als die übrigen. Sobald bessere
-Aufnahmen vorliegen: in `tools/karussell.py` die Quelldatei tauschen und das
-Skript neu laufen lassen – alle Bilder hier sind Platzhalter, bis eigenes
-Material da ist.
+als 300-px-Vorschaubilder von der alten Website. Ihre Dateinamen enden auf
+`-300x200` beziehungsweise `-300x225`; so legt WordPress Vorschaubilder ab.
+**Das Original liegt im selben Verzeichnis unter demselben Namen ohne diesen
+Zusatz** – etwa
+
+```
+…/uploads/2021/06/21.06.07_Leichtathletik_Kindergruppe_Training_2-300x200.jpg
+…/uploads/2021/06/21.06.07_Leichtathletik_Kindergruppe_Training_2.jpg   ← Original
+```
+
+Das ist der wirksamste Hebel: Mit den Originalen wird aus einer fünffachen
+Vergrößerung eine Verkleinerung.
+
+Bis dahin greift `hochskalieren()` in `tools/karussell.py`: erst die
+JPEG-Blockstruktur dämpfen, solange sie klein ist, dann in Schritten
+vergrößern, am Ende nur echte Kanten schärfen und Flächen glatt lassen. Das
+nimmt den krümeligen Eindruck, ersetzt aber keine Auflösung.
+
+Alle Bilder hier sind Platzhalter, bis eigenes Material da ist. Zum Tauschen:
+in `tools/karussell.py` die Quelldatei ersetzen und das Skript neu laufen
+lassen.
 
 **Personen auf Fotos**
 

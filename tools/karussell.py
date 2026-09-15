@@ -5,9 +5,11 @@ Bildausschnitt je Foto: Bei querformatigen Aufnahmen entscheidet der
 Ausschnitt, ob das Motiv im Bild bleibt.
 
 Drei der Vorlagen sind nur 300 px breite Vorschaubilder von der alten
-Website. Sie werden hochskaliert und staerker nachgeschaerft; scharf wie die
-grossen werden sie dadurch nicht. Sobald die Originale vorliegen, hier nur
-die Datei tauschen und neu laufen lassen.
+Website. Fuer sie greift hochskalieren() – scharf wie die grossen werden sie
+dadurch nicht. Ihre Dateinamen enden auf „-300x200“ beziehungsweise
+„-300x225“; das ist das Namensschema, mit dem WordPress Vorschaubilder ablegt.
+Das Original liegt im selben Verzeichnis unter demselben Namen ohne diesen
+Zusatz. Sobald es vorliegt, hier nur die Datei tauschen und neu laufen lassen.
 """
 from PIL import Image, ImageEnhance, ImageOps, ImageFilter
 import pathlib
@@ -35,6 +37,39 @@ def tonwertkurve(img, schwarz=0.0, weiss=1.0, gamma=1.0, tiefen=0.0):
     return img.point(lut * len(img.getbands()))
 
 
+def kantenmaske(bild):
+    """Weiss an Kanten, schwarz in glatten Flaechen."""
+    kanten = bild.convert('L').filter(ImageFilter.FIND_EDGES)
+    kanten = kanten.filter(ImageFilter.GaussianBlur(2.0))
+    # Alles unter der Schwelle gilt als Flaeche, darueber weich ansteigend
+    schwelle, spanne = 6, 26
+    return kanten.point(
+        lambda v: 0 if v < schwelle else min(255, int((v - schwelle) * 255 / spanne))
+    )
+
+
+def hochskalieren(bild, breite, hoehe):
+    """Kleine Vorlagen vergroessern, ohne dass sie kruemelig werden.
+
+    Das Problem der 300-px-Vorlagen ist nicht allein die fehlende Aufloesung,
+    sondern die JPEG-Blockstruktur darin. Wer die einfach hochzieht und dann
+    nachschaerft, schaerft die Bloecke mit. Deshalb: erst die Bloecke daempfen,
+    solange sie klein sind, dann in Schritten vergroessern, und am Ende nur
+    echte Kanten schaerfen – Flaechen wie Himmel, Rasen und Wege bleiben glatt,
+    denn dort faellt das Rauschen als „pixelig“ auf.
+    """
+    entblockt = bild.filter(ImageFilter.MedianFilter(3))
+    bild = Image.blend(bild, entblockt, 0.55).filter(ImageFilter.GaussianBlur(0.4))
+
+    while bild.width * 1.5 < breite:
+        bild = bild.resize((int(bild.width * 1.5), int(bild.height * 1.5)), Image.LANCZOS)
+    bild = bild.resize((breite, hoehe), Image.LANCZOS)
+
+    scharf = bild.filter(ImageFilter.UnsharpMask(radius=1.9, percent=95, threshold=2))
+    glatt = bild.filter(ImageFilter.GaussianBlur(0.7))
+    return Image.composite(scharf, glatt, kantenmaske(bild))
+
+
 def verarbeite(quelle, ziel, ausschnitt, schwarz, weiss, gamma, tiefen,
                kontrast, saettigung, schaerfe):
     im = ImageOps.exif_transpose(Image.open(quelle)).convert('RGB')
@@ -42,13 +77,19 @@ def verarbeite(quelle, ziel, ausschnitt, schwarz, weiss, gamma, tiefen,
     im = tonwertkurve(im, schwarz, weiss, gamma, tiefen)
     im = ImageEnhance.Contrast(im).enhance(kontrast)
     im = ImageEnhance.Color(im).enhance(saettigung)
-    im = ImageOps.fit(im, (BREITE, HOEHE), Image.LANCZOS, centering=ausschnitt)
     if klein:
-        # Hochskaliert: feiner Radius, kraeftiger Betrag – holt Kanten zurueck,
-        # ohne die weichgezeichneten Flaechen aufrauhen zu lassen.
-        im = im.filter(ImageFilter.UnsharpMask(radius=1.1, percent=110, threshold=4))
-    elif schaerfe:
-        im = im.filter(ImageFilter.UnsharpMask(radius=1.4, percent=int(schaerfe * 100), threshold=3))
+        # Erst den Ausschnitt in Originalgroesse nehmen, dann vergroessern –
+        # nicht umgekehrt, sonst wird Material hochskaliert, das wegfaellt.
+        b = min(im.width, round(im.height * BREITE / HOEHE))
+        h = round(b * HOEHE / BREITE)
+        im = ImageOps.fit(im, (b, h), Image.LANCZOS, centering=ausschnitt)
+        im = hochskalieren(im, BREITE, HOEHE)
+    else:
+        im = ImageOps.fit(im, (BREITE, HOEHE), Image.LANCZOS, centering=ausschnitt)
+        if schaerfe:
+            im = im.filter(
+                ImageFilter.UnsharpMask(radius=1.4, percent=int(schaerfe * 100), threshold=3)
+            )
     for q in (84, 80, 76, 72, 68):
         im.save(ziel, 'JPEG', quality=q, optimize=True, progressive=True)
         if ziel.stat().st_size <= MAX_BYTES:
