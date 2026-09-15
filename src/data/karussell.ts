@@ -9,6 +9,11 @@
  * erkennbar, auf einem ein Kind. Dafür braucht es die Einwilligung der
  * Abgebildeten beziehungsweise der Erziehungsberechtigten (Recht am eigenen
  * Bild, KUG/DSGVO). Solange die Seite nicht öffentlich ist, ist das vertretbar.
+ *
+ * Bilder mit erkennbaren Kindergesichtern kommen hier gar nicht erst hinein.
+ * Die Aufnahme vom Saisonabschluss vor dem Vereinsheim ist deshalb wieder
+ * entfernt worden; als Bild der Sportstätte dient nur der personenfreie
+ * Streifen oberhalb der Köpfe.
  */
 
 export interface KarussellBild {
@@ -27,8 +32,10 @@ export const karussellBilder: KarussellBild[] = [
     caption: 'Leichtathletik – gemeinsam am Start',
   },
   {
+    // Ausschnitt bewusst nach rechts gesetzt: Am linken Bildrand stand ein Kind
+    // der gegnerischen Mannschaft im Profil, mit erkennbarem Gesicht.
     src: '/images/karussell/fussball-u7.jpg',
-    alt: 'Kindermannschaft in weißen Trikots steht Arm in Arm im Kreis auf dem Rasen',
+    alt: 'Kindermannschaft in weißen Trikots steht Arm in Arm im Kreis auf dem Rasen, von hinten gesehen',
     caption: 'Fußball – die U7 beim Turnier',
   },
   {
@@ -52,9 +59,9 @@ export const karussellBilder: KarussellBild[] = [
     caption: 'Freitagsradler – Heimweg im Abendlicht',
   },
   {
-    src: '/images/karussell/saisonabschluss.jpg',
-    alt: 'Mitglieder stehen und sitzen an Biertischgarnituren vor dem Vereinsheim, darüber ein Banner mit der Aufschrift „Herzlich Willkommen auf unserer Sportanlage“',
-    caption: 'Saisonabschluss am Sportplatz',
+    src: '/images/karussell/leichtathletik-kinder.jpg',
+    alt: 'Kind springt bei einem Leichtathletik-Training über einen Kasten',
+    caption: 'Leichtathletik – Kindergruppe',
   },
   {
     src: '/images/karussell/freitagsradler-umland.jpg',
@@ -62,20 +69,15 @@ export const karussellBilder: KarussellBild[] = [
     caption: 'Freitagsradler – unterwegs im Umland',
   },
   {
-    src: '/images/karussell/leichtathletik-kinder.jpg',
-    alt: 'Kind springt bei einem Leichtathletik-Training über einen Kasten',
-    caption: 'Leichtathletik – Kindergruppe',
+    src: '/images/karussell/leichtathletik-jugend.jpg',
+    alt: 'Jugendliche beim Aufwärmen auf einer Rasenfläche',
+    caption: 'Leichtathletik – Jugendtraining',
   },
   {
     // Winteraufnahme – deshalb ohne Bezug aufs Sommerhalbjahr beschriftet.
     src: '/images/karussell/freitagsradler-schloss.jpg',
     alt: 'Abgestelltes Fahrrad auf einer Wiese, dahinter Schloss Marienburg mit seinen neugotischen Türmen',
     caption: 'Radtour zur Marienburg',
-  },
-  {
-    src: '/images/karussell/leichtathletik-jugend.jpg',
-    alt: 'Jugendliche beim Aufwärmen auf einer Rasenfläche',
-    caption: 'Leichtathletik – Jugendtraining',
   },
   {
     // E-Dart-Scheibe – die Dart-Gruppe spielt E-Darts, nicht Steel.

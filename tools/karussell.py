@@ -1,5 +1,10 @@
 """Fotos fuer das Karussell im Hero aufbereiten.
 
+Die Aufnahme vom Saisonabschluss vor dem Vereinsheim gehoerte hier einmal
+dazu und ist wieder draussen: Auf ihr sind Kinder erkennbar. Als Bild der
+Sportstaette wird nur der personenfreie Streifen oberhalb der Koepfe
+verwendet, aufbereitet von tools/optimize.py.
+
 Wie tools/optimize.py, aber mit Hochformat 4:5 als Zielformat und einem
 Bildausschnitt je Foto: Bei querformatigen Aufnahmen entscheidet der
 Ausschnitt, ob das Motiv im Bild bleibt.
@@ -131,16 +136,16 @@ REZEPTE = {
     '19c61787d53.jpg': (
         'freitagsradler-schloss.jpg', (0.62, 0.50), 0.02, 0.99, 1.10, 0.12, 1.08, 1.06, 0.45),
     # Sonniger Tag, leicht flau: Tiefen oeffnen, dann massvoll anziehen.
+    # Ausschnitt bewusst nach rechts: Am linken Bildrand stand ein Kind der
+    # gegnerischen Mannschaft im Profil, mit klar erkennbarem Gesicht. So
+    # faellt es aus dem Bild – und der Mannschaftskreis steht vollstaendig drin.
     '22.06.19_Fussball_U7_Turnier_23-2048x1365.jpg': (
-        'fussball-u7.jpg', (0.42, 0.58), 0.03, 0.98, 1.04, 0.06, 1.10, 1.08, 0.45),
+        'fussball-u7.jpg', (0.58, 0.58), 0.03, 0.98, 1.04, 0.06, 1.10, 1.08, 0.45),
     # Halle, Kunstlicht ueber blauem Belag.
     # Der Dateiname der Vorlage nennt einen Vornamen; die Datei auf der Website
     # heisst bewusst neutral.
     '23-02-12-Elise-LM-Huerdenstart-2048x1536.jpg': (
         'leichtathletik-huerden.jpg', (0.33, 0.55), 0.02, 0.99, 1.04, 0.06, 1.08, 1.06, 0.45),
-    # Abendsonne, tiefe Schatten an der Fassade.
-    '22.07.12_Leichtathletik_Saisonabschluss_3.jpeg': (
-        'saisonabschluss.jpg', (0.50, 0.50), 0.02, 0.99, 1.08, 0.10, 1.06, 1.06, 0.45),
     # Bewusst dunkles Motiv: Tiefen leicht oeffnen, Kontrast nur wenig.
     'Pexels-pixabay-262438.jpg': (
         'dart.jpg', (0.45, 0.50), 0.01, 1.00, 1.08, 0.05, 1.05, 1.02, 0.40),
