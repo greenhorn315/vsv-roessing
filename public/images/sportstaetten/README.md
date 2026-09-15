@@ -4,15 +4,15 @@ Diese Dateien zeigt die Kontaktseite im Abschnitt „Unsere Sportstätten“
 (`/kontakt#sportstaetten`). Solange eine Datei fehlt, erscheint automatisch ein
 gestalteter Platzhalter mit dem Hinweis „Foto folgt“ – kein kaputtes Bild.
 
-| Datei | Ort | Status |
+| Datei | Ort | Aufnahme |
 |---|---|---|
-| `sporthalle.jpg` | Alfred-Stubenrauch-Sporthalle, Loderwinkel 2A | vorhanden |
-| `dorfbrunnen.jpg` | Dorfbrunnen, Vordereingang | vorhanden |
-| `dorfbrunnen-hintereingang.jpg` | Dorfbrunnen, Hintereingang | vorhanden |
-| `dorfbrunnen-glasfront.jpg` | Dorfbrunnen, verglaste Front | vorhanden, retuschiert |
-| `sportplatz.jpg` | VSV-Sportplatz, Zum Klay 6 | vorhanden |
-| `feuerplatz.jpg` | Feuerplatz am Sportplatz | vorläufig, siehe unten |
-| `vereinsheim.jpg` | Vereinsheim am Sportplatz | vorhanden, siehe unten |
+| `sporthalle.jpg` | Alfred-Stubenrauch-Sporthalle, Loderwinkel 2A | 15.09.2026 |
+| `sporthalle-eingang.jpg` | Turnhalleneingang | 15.09.2026 |
+| `dorfbrunnen.jpg` | Dorfbrunnen, Eingang | 15.09.2026 |
+| `dorfbrunnen-hinten.jpg` | Dorfbrunnen, Rückseite | 15.09.2026, retuschiert |
+| `sportplatz.jpg` | VSV-Sportplatz, Zum Klay 6 | 14.09.2026 |
+| `feuerplatz.jpg` | Feuerplatz am Sportplatz | siehe unten |
+| `vereinsheim.jpg` | Vereinsheim am Sportplatz | Behelf, siehe unten |
 
 **Format**
 
@@ -31,9 +31,18 @@ und Sättigung moderat verstärkt, auf 1280 × 960 px skaliert und leicht
 nachgeschärft. Die Originale bitte unbearbeitet aufbewahren – bei einer
 Neubearbeitung ist von ihnen auszugehen, nicht von diesen Dateien.
 
-In `dorfbrunnen-glasfront.jpg` war der Fotograf in der Scheibe gespiegelt. Die
-Spiegelung ist herausretuschiert: Der Bereich wurde zeilenweise aus dem
-Streifen daneben rekonstruiert, damit die waagerechten Linien erhalten bleiben.
+In `dorfbrunnen-hinten.jpg` war der Fotograf in der Scheibe gespiegelt. Die
+Spiegelung ist herausretuschiert (`tools/retusche.py`): Der Bereich wurde
+zeilenweise neu aufgebaut – Grundton aus dem Streifen daneben, darauf dessen
+Feinstruktur –, damit die waagerechten Linien der Bretterwand dahinter
+erhalten bleiben.
+
+**Aufnahmen vom 15. September 2026**
+
+Die Bilder von Halle und Dorfbrunnen sind gegen ältere Aufnahmen ausgetauscht:
+klarer Himmel, Abendsonne, beide Schilder lesbar. Der Turnhalleneingang ist neu
+dazugekommen – das ist die Tür, durch die man tatsächlich hineingeht, und sie
+war auf keinem der bisherigen Bilder zu sehen.
 
 **Das Vereinsheim ist ein Sonderfall**
 
