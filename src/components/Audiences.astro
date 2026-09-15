@@ -26,6 +26,21 @@ const panels = [
     ],
     cta: { label: 'Probetraining anfragen', href: '/kontakt#probetraining' },
   },
+  {
+    // Bewusst ohne Altersgrenze in der Überschrift: Eine Zahl dort läse sich
+    // wie eine Zugangsbedingung. Die Zahlen stehen im Fließtext und
+    // beschreiben damit die Mitglieder, nicht die Voraussetzung.
+    variant: 'later',
+    icon: 'sport' as const,
+    title: 'Für die zweite Lebenshälfte',
+    lead: 'Viele unserer Aktiven sind über 70, einige über 90 – und stehen jede Woche in der Halle oder auf dem Rad. Anfangen kann man in jedem Alter.',
+    points: [
+      'Frauengymnastik donnerstags am Vormittag, Yoga am Freitagabend',
+      'Freitagsradler: im Sommerhalbjahr aufs Rad, im Winter in die Halle',
+      'Beim Fußball die Ü32 und die Ü40, dazu der Dart-Abend im Dorfbrunnen',
+    ],
+    cta: { label: 'Trainingszeiten ansehen', href: '/sportangebote' },
+  },
 ];
 ---
 
@@ -70,6 +85,7 @@ const panels = [
   }
   .audience--families { background: var(--c-tint-green); }
   .audience--youth { background: var(--c-tint-coral); }
+  .audience--later { background: var(--c-sun-soft); }
 
   .audience__icon {
     display: grid;
