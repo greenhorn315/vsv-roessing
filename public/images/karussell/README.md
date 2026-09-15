@@ -7,17 +7,20 @@ die Alternativtexte stehen in `src/data/karussell.ts`.
 | # | Datei | Motiv | Vorlage |
 |---|---|---|---|
 | 1 | `gruppenfoto.jpg` | Leichtathletik, Gruppe im VSV-Trikot | 2560 × 1707 |
-| 2 | `freitagsradler.jpg` | Radgruppe auf einer Holzbrücke | 1920 × 1080 |
-| 3 | `jazzdance.jpg` | Jazz Dance, Auftritt | 4032 × 3024 |
-| 4 | `freitagsradler-abendlicht.jpg` | Radgruppe im Gegenlicht | 1920 × 1080 |
-| 5 | `leichtathletik-kinder.jpg` | Kindergruppe beim Sprung | 300 × 200 |
-| 6 | `freitagsradler-umland.jpg` | Radgruppe am Feldrand | 1920 × 1080 |
-| 7 | `leichtathletik-jugend.jpg` | Jugendliche beim Aufwärmen | 300 × 200 |
-| 8 | `freitagsradler-schloss.jpg` | Rad vor Schloss Marienburg, Winter | 1920 × 1080 |
-| 9 | `dart.jpg` | Dartpfeil in einer E-Dart-Scheibe, Symbolbild | 1280 × 852 |
+| 2 | `fussball-u7.jpg` | U7 im Mannschaftskreis | 2048 × 1365 |
+| 3 | `freitagsradler.jpg` | Radgruppe auf einer Holzbrücke | 1920 × 1080 |
+| 4 | `jazzdance.jpg` | Jazz Dance, Auftritt | 4032 × 3024 |
+| 5 | `leichtathletik-huerden.jpg` | Läuferin am Start der Hürdenbahn | 2048 × 1536 |
+| 6 | `freitagsradler-abendlicht.jpg` | Radgruppe im Gegenlicht | 1920 × 1080 |
+| 7 | `saisonabschluss.jpg` | Saisonabschluss vor dem Vereinsheim | 2048 × 1536 |
+| 8 | `freitagsradler-umland.jpg` | Radgruppe am Feldrand | 1920 × 1080 |
+| 9 | `leichtathletik-kinder.jpg` | Kindergruppe beim Sprung | 300 × 200 |
+| 10 | `freitagsradler-schloss.jpg` | Rad vor Schloss Marienburg, Winter | 1920 × 1080 |
+| 11 | `leichtathletik-jugend.jpg` | Jugendliche beim Aufwärmen | 300 × 200 |
+| 12 | `dart.jpg` | Dartpfeil in einer E-Dart-Scheibe, Symbolbild | 1280 × 852 |
 
-Die vier Radbilder stehen bewusst auf den Plätzen 2, 4, 6 und 8, damit sie
-nicht aufeinander folgen.
+Die Reihenfolge wechselt bewusst zwischen den Sparten, damit nicht zwei
+gleiche Motive aufeinander folgen.
 
 **Format**
 
@@ -51,11 +54,16 @@ Alle Bilder hier sind Platzhalter, bis eigenes Material da ist. Zum Tauschen:
 in `tools/karussell.py` die Quelldatei ersetzen und das Skript neu laufen
 lassen.
 
+Die Vorlage von `leichtathletik-huerden.jpg` trug einen Vornamen im
+Dateinamen. Die Datei auf der Website heißt bewusst neutral – Dateinamen
+stehen in der Adresszeile und sind damit öffentlich.
+
 **Personen auf Fotos**
 
-Auf mehreren Bildern sind Personen erkennbar – auf `freitagsradler.jpg` sieben
-Erwachsene mit deutlich erkennbaren Gesichtern, auf `leichtathletik-kinder.jpg`
-ein Kind. **Vor dem Livegang** ist die Einwilligung der Abgebildeten
+Auf mehreren Bildern sind Personen erkennbar – auf `freitagsradler.jpg` und
+`saisonabschluss.jpg` Erwachsene und Kinder mit deutlich erkennbaren
+Gesichtern, auf `leichtathletik-kinder.jpg` ein Kind. `fussball-u7.jpg` und
+`leichtathletik-huerden.jpg` zeigen die Kinder von hinten. **Vor dem Livegang** ist die Einwilligung der Abgebildeten
 einzuholen, bei Minderjährigen die der Erziehungsberechtigten (Recht am
 eigenen Bild, KUG/DSGVO) – oder das betreffende Bild zu tauschen. Solange die
 Seite nicht öffentlich ist, ist die Verwendung vertretbar.

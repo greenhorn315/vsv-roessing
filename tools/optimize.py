@@ -21,6 +21,18 @@ GROESSEN = {
     'feuerplatz.jpg': (1024, 768),
     'dorfbrunnen-hintereingang.jpg': (640, 480),
     'dorfbrunnen-glasfront.jpg': (640, 480),
+    # Breiter Streifen statt 4:3 – siehe ZUSCHNITT.
+    'vereinsheim.jpg': (1024, 290),
+}
+
+# Vorab-Ausschnitt in Pixeln der Vorlage, bevor auf die Zielgroesse skaliert
+# wird. Noetig, wo nicht die Bildmitte das Motiv ist.
+ZUSCHNITT = {
+    # Vom Vereinsheim gibt es nur eine Aufnahme mit Betrieb davor. Personen
+    # herauszuretuschieren ist bei dieser Menge nicht moeglich, ein 4:3-Fenster
+    # ohne Personen zeigt nur Dachziegel. Bleibt der Streifen oberhalb der
+    # Koepfe: Dach, Willkommensbanner und Fassade, dafuer breit statt 4:3.
+    'vereinsheim.jpg': (0, 0, 2048, 580),
 }
 STANDARD = (1024, 768)
 MAX_BYTES = 220 * 1024
@@ -49,6 +61,9 @@ def verarbeite(quelle, ziel, schwarz, weiss, gamma, tiefen, kontrast, saettigung
     im = tonwertkurve(im, schwarz, weiss, gamma, tiefen)
     im = ImageEnhance.Contrast(im).enhance(kontrast)
     im = ImageEnhance.Color(im).enhance(saettigung)
+    box = ZUSCHNITT.get(ziel.name)
+    if box:
+        im = im.crop(box)
     im = ImageOps.fit(im, groesse, Image.LANCZOS, centering=(0.5, 0.5))
     if schaerfe:
         im = im.filter(ImageFilter.UnsharpMask(radius=1.6, percent=int(schaerfe * 100), threshold=3))
@@ -73,6 +88,9 @@ REZEPTE = {
     'Sportplatz.JPG':                   ('sportplatz.jpg',   0.03, 0.98, 1.00, 0.02, 1.12, 1.10, 0.45),
     # Abendlicht am Feuer: Stimmung erhalten, nur Tiefen oeffnen.
     'Feuerstelle.JPG':                  ('feuerplatz.jpg',   0.01, 1.00, 1.14, 0.10, 1.08, 1.02, 0.40),
+    # Abendsonne, tiefe Schatten an der Fassade.
+    '22.07.12_Leichtathletik_Saisonabschluss_3.jpeg': (
+        'vereinsheim.jpg', 0.02, 0.99, 1.08, 0.10, 1.06, 1.06, 0.45),
 }
 
 for name, (ziel, *werte) in REZEPTE.items():
