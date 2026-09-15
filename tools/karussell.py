@@ -71,9 +71,15 @@ REZEPTE = {
         'leichtathletik-kinder.jpg', (0.32, 0.50), 0.02, 0.99, 1.14, 0.10, 1.10, 1.05, 0),
     '2205_Turnen_Freitagsturner_1-300x225.jpg': (
         'freitagsradler.jpg', (0.55, 0.55), 0.04, 0.96, 1.00, 0.03, 1.18, 1.10, 0),
-    # Bewusst dunkles Motiv: nur leicht anfassen.
+    # Bewusst dunkles Motiv: Tiefen leicht oeffnen, Kontrast nur wenig.
+    # Der mittige 4:5-Ausschnitt (x 205 bis 537 von 742) laesst die Ecke unten
+    # rechts mit dem PDC-Schriftzug ausserhalb des Bildes – nicht wegretuschiert,
+    # sondern schlicht nicht im Ausschnitt.
+    'Darts_in_board.png': (
+        'dart.jpg', (0.50, 0.50), 0.01, 1.00, 1.10, 0.07, 1.06, 1.02, 0),
+    # Zweites Symbolbild, ebenfalls von Commons.
     'Pexels-pixabay-262438.jpg': (
-        'dart.jpg', (0.45, 0.50), 0.01, 1.00, 1.08, 0.05, 1.05, 1.02, 0.40),
+        'dartscheibe.jpg', (0.45, 0.50), 0.01, 1.00, 1.08, 0.05, 1.05, 1.02, 0.40),
 }
 
 for name, (ziel, ausschnitt, *werte) in REZEPTE.items():

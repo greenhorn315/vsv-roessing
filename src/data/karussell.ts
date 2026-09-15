@@ -32,6 +32,12 @@ export const karussellBilder: KarussellBild[] = [
     caption: 'Jazz Dance – Auftritt',
   },
   {
+    src: '/images/karussell/dartscheibe.jpg',
+    alt: 'Dartpfeil mit rot-weißem Flight steckt in einer Dartscheibe',
+    caption: 'Dart – jede Woche im Dorfbrunnen',
+    credit: 'Symbolbild: Wikimedia Commons, CC0',
+  },
+  {
     src: '/images/karussell/leichtathletik-kinder.jpg',
     alt: 'Kind springt bei einem Leichtathletik-Training über einen Kasten',
     caption: 'Leichtathletik – Kindergruppe',
@@ -48,8 +54,8 @@ export const karussellBilder: KarussellBild[] = [
   },
   {
     src: '/images/karussell/dart.jpg',
-    alt: 'Dartpfeil steckt in einer Dartscheibe',
+    alt: 'Drei Steeldarts stecken dicht beieinander in einer Bristle-Dartscheibe',
     caption: 'Dart – Liga und Freizeitrunde',
-    credit: 'Symbolbild: Pexels',
+    credit: 'Symbolbild: Wikimedia Commons, CC0',
   },
 ];
