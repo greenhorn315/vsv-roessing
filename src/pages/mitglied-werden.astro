@@ -4,23 +4,20 @@ import PageHeader from '../components/PageHeader.astro';
 import Membership from '../components/Membership.astro';
 import Icon from '../components/Icon.astro';
 import { site } from '../data/site';
+import { downloads } from '../data/membership';
 
-const forms = [
-  { title: 'Aufnahmeantrag', text: 'Für neue Mitglieder – bitte ausgefüllt und unterschrieben zurück.' },
-  { title: 'SEPA-Lastschriftmandat', text: 'Für den jährlichen Beitragseinzug.' },
-  { title: 'Änderung der Bankverbindung', text: 'Wenn sich eure IBAN geändert hat.' },
-  { title: 'Austrittserklärung', text: 'Kündigung zum Ende des Kalenderjahres.' },
-];
+/** „138441“ liest sich schlecht – „135 KB“ schon. */
+const groesse = (bytes: number) => `${Math.round(bytes / 1024)} KB`;
 ---
 
 <BaseLayout
   title="Mitglied werden"
-  description="Mitglied beim VSV Rössing werden: Beiträge ab 4 € im Monat, gedeckelter Familienbeitrag, Formulare zum Download und kostenloses Probetraining."
+  description="Mitglied beim VSV Rössing werden: 4 € im Monat für Kinder und Jugendliche, 7,50 € einzeln, 15 € für Familien. Alle Formulare als PDF und kostenloses Probetraining."
 >
   <PageHeader
     eyebrow="Mitglied werden"
     title="Dabei sein kostet weniger, als du denkst"
-    lead="Kinder ab 4 € im Monat, Familien gedeckelt – und vorher könnt ihr jede Sportart kostenlos ausprobieren."
+    lead="Kinder und Jugendliche 4 € im Monat, Familien 15 € – egal wie viele Kinder. Und vorher könnt ihr jede Sportart kostenlos ausprobieren."
   />
 
   <section class="section">
@@ -35,21 +32,28 @@ const forms = [
         <p class="eyebrow">Formulare &amp; Downloads</p>
         <h2>Alle Unterlagen an einem Ort</h2>
         <p>
-          Die PDFs werden beim Livegang hinterlegt. Bis dahin schickt der
-          Vorstand sie auf Anfrage per E-Mail.
+          Alle Formulare als PDF zum Ausdrucken. Für den Eintritt genügt der
+          Aufnahmeantrag – das SEPA-Mandat ist darin schon enthalten.
         </p>
       </div>
 
       <ul class="forms">
         {
-          forms.map((form) => (
+          downloads.map((form) => (
             <li class="form-card">
               <Icon name="download" size={22} class="form-card__icon" />
               <div>
-                <h3>{form.title}</h3>
+                <h3>
+                  <a href={form.file} download>
+                    {form.title}
+                  </a>
+                </h3>
                 <p>{form.text}</p>
+                <p class="form-card__meta">
+                  PDF · {form.pages === 1 ? '1 Seite' : `${form.pages} Seiten`} ·{' '}
+                  {groesse(form.bytes)}
+                </p>
               </div>
-              <span class="form-card__badge">PDF folgt</span>
             </li>
           ))
         }
@@ -85,6 +89,13 @@ const forms = [
     color: var(--c-primary-light);
     margin-top: 0.15rem;
   }
+  .form-card__meta {
+    margin: 0.35rem 0 0 !important;
+    font-size: 0.8rem;
+    color: var(--c-text-muted);
+    letter-spacing: 0.02em;
+  }
+
   .form-card h3 {
     font-size: 1.02rem;
     margin: 0 0 0.2rem;
@@ -94,19 +105,6 @@ const forms = [
     margin: 0;
     font-size: 0.9rem;
     color: var(--c-text-muted);
-  }
-  .form-card__badge {
-    margin-left: auto;
-    align-self: center;
-    font-size: 0.72rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    padding: 0.25rem 0.6rem;
-    border-radius: var(--radius-pill);
-    background: var(--c-sun-soft);
-    color: #6B5400;
-    white-space: nowrap;
   }
   .forms__hint {
     display: flex;

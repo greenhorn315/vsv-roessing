@@ -1,7 +1,7 @@
 ---
 import Icon from './Icon.astro';
 import FamilyCalculator from './FamilyCalculator.astro';
-import { fees, joinSteps } from '../data/membership';
+import { beitragsregeln, fees, joinSteps } from '../data/membership';
 
 interface Props {
   /** Auf der Startseite als Teaser, auf der Unterseite als volle Sektion. */
@@ -9,10 +9,11 @@ interface Props {
 }
 
 const { compact = false } = Astro.props;
+// Zwei Nachkommastellen: 7,50 € wuerde sonst als 8 € erscheinen.
 const euro = new Intl.NumberFormat('de-DE', {
   style: 'currency',
   currency: 'EUR',
-  maximumFractionDigits: 0,
+  minimumFractionDigits: 2,
 });
 ---
 
@@ -28,11 +29,12 @@ const euro = new Intl.NumberFormat('de-DE', {
   <div class="membership-grid">
     <div>
       <table class="fees">
-        <caption class="visually-hidden">Mitgliedsbeiträge pro Monat</caption>
+        <caption class="visually-hidden">Mitgliedsbeiträge pro Monat und pro Jahr</caption>
         <thead>
           <tr>
             <th scope="col">Beitrag</th>
             <th scope="col">Pro Monat</th>
+            <th scope="col">Pro Jahr</th>
           </tr>
         </thead>
         <tbody>
@@ -44,11 +46,19 @@ const euro = new Intl.NumberFormat('de-DE', {
                   {fee.note && <span class="fees__note">{fee.note}</span>}
                 </th>
                 <td class="fees__price">{euro.format(fee.monthly)}</td>
+                <td class="fees__price fees__price--year">{euro.format(fee.yearly)}</td>
               </tr>
             ))
           }
         </tbody>
       </table>
+
+      <ul class="regeln">
+        <li>{beitragsregeln.einzug}</li>
+        <li>{beitragsregeln.guenstigster}</li>
+        <li>{beitragsregeln.ermaessigung}</li>
+        <li>{beitragsregeln.kuendigung}</li>
+      </ul>
 
       <ol class="steps">
         {
@@ -121,6 +131,27 @@ const euro = new Intl.NumberFormat('de-DE', {
     color: var(--c-text);
     font-size: 0.98rem;
   }
+  .fees__price--year {
+    color: var(--c-text-muted);
+    font-weight: 500;
+  }
+
+  .regeln {
+    list-style: none;
+    padding: 0;
+    margin: var(--sp-4) 0 var(--sp-6);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--c-text-muted);
+  }
+  .regeln li {
+    padding-left: 1rem;
+    border-left: 2px solid var(--c-border);
+  }
+
   .fees__note {
     display: block;
     font-size: 0.8rem;
