@@ -40,8 +40,8 @@ const mapsUrl = (ort: (typeof venues)[number]) =>
             <Photo
               src={ort.photos?.[0]?.src ?? ''}
               alt={ort.photos?.[0]?.alt ?? ''}
-              width={4}
-              height={3}
+              width={ort.photos?.[0]?.ratio?.[0] ?? 4}
+              height={ort.photos?.[0]?.ratio?.[1] ?? 3}
               placeholderIcon="camera"
               placeholderText="Foto folgt"
               class="venue__photo"

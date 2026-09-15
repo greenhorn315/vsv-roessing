@@ -56,6 +56,11 @@ export interface VenuePhoto {
   alt: string;
   /** Kurze Bildunterschrift für die kleinen Ansichten. */
   caption?: string;
+  /**
+   * Seitenverhältnis als [Breite, Höhe]. Ohne Angabe 4:3 wie bei allen
+   * übrigen. Nötig, wo nur ein abweichender Ausschnitt in Frage kommt.
+   */
+  ratio?: [number, number];
 }
 
 /**
@@ -137,6 +142,16 @@ export const venues: Venue[] = [
     postalCode: '31171',
     city: 'Nordstemmen',
     note: 'am Sportplatz',
+    photos: [
+      {
+        // Vom Vereinsheim gibt es nur eine Aufnahme mit Betrieb davor. Gezeigt
+        // wird deshalb der Streifen oberhalb der Köpfe – breiter als 4:3, dafür
+        // ohne erkennbare Personen.
+        src: '/images/sportstaetten/vereinsheim.jpg',
+        alt: 'Vereinsheim des VSV Rössing mit rotem Ziegeldach und einem Banner mit der Aufschrift „Herzlich Willkommen auf unserer Sportanlage“',
+        ratio: [1024, 290],
+      },
+    ],
   },
 ];
 

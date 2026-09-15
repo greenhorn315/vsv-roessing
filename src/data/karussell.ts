@@ -27,6 +27,11 @@ export const karussellBilder: KarussellBild[] = [
     caption: 'Leichtathletik – gemeinsam am Start',
   },
   {
+    src: '/images/karussell/fussball-u7.jpg',
+    alt: 'Kindermannschaft in weißen Trikots steht Arm in Arm im Kreis auf dem Rasen',
+    caption: 'Fußball – die U7 beim Turnier',
+  },
+  {
     src: '/images/karussell/freitagsradler.jpg',
     alt: 'Sieben Radfahrende mit Helmen stehen mit ihren Rädern auf einer Holzbrücke über einem Bach',
     caption: 'Freitagsradler im Sommerhalbjahr',
@@ -37,14 +42,19 @@ export const karussellBilder: KarussellBild[] = [
     caption: 'Jazz Dance – Auftritt',
   },
   {
+    src: '/images/karussell/leichtathletik-huerden.jpg',
+    alt: 'Läuferin im Trikot mit dem Aufdruck „VSV Rössing“ steht am Start einer Hürdenbahn in einer Halle',
+    caption: 'Leichtathletik – am Start der Hürdenbahn',
+  },
+  {
     src: '/images/karussell/freitagsradler-abendlicht.jpg',
     alt: 'Radfahrende auf einem Feldweg, die tiefstehende Abendsonne blendet von rechts',
     caption: 'Freitagsradler – Heimweg im Abendlicht',
   },
   {
-    src: '/images/karussell/leichtathletik-kinder.jpg',
-    alt: 'Kind springt bei einem Leichtathletik-Training über einen Kasten',
-    caption: 'Leichtathletik – Kindergruppe',
+    src: '/images/karussell/saisonabschluss.jpg',
+    alt: 'Mitglieder stehen und sitzen an Biertischgarnituren vor dem Vereinsheim, darüber ein Banner mit der Aufschrift „Herzlich Willkommen auf unserer Sportanlage“',
+    caption: 'Saisonabschluss am Sportplatz',
   },
   {
     src: '/images/karussell/freitagsradler-umland.jpg',
@@ -52,15 +62,20 @@ export const karussellBilder: KarussellBild[] = [
     caption: 'Freitagsradler – unterwegs im Umland',
   },
   {
-    src: '/images/karussell/leichtathletik-jugend.jpg',
-    alt: 'Jugendliche beim Aufwärmen auf einer Rasenfläche',
-    caption: 'Leichtathletik – Jugendtraining',
+    src: '/images/karussell/leichtathletik-kinder.jpg',
+    alt: 'Kind springt bei einem Leichtathletik-Training über einen Kasten',
+    caption: 'Leichtathletik – Kindergruppe',
   },
   {
     // Winteraufnahme – deshalb ohne Bezug aufs Sommerhalbjahr beschriftet.
     src: '/images/karussell/freitagsradler-schloss.jpg',
     alt: 'Abgestelltes Fahrrad auf einer Wiese, dahinter Schloss Marienburg mit seinen neugotischen Türmen',
     caption: 'Radtour zur Marienburg',
+  },
+  {
+    src: '/images/karussell/leichtathletik-jugend.jpg',
+    alt: 'Jugendliche beim Aufwärmen auf einer Rasenfläche',
+    caption: 'Leichtathletik – Jugendtraining',
   },
   {
     // E-Dart-Scheibe – die Dart-Gruppe spielt E-Darts, nicht Steel.

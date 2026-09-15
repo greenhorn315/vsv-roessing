@@ -12,7 +12,7 @@ gestalteter Platzhalter mit dem Hinweis „Foto folgt“ – kein kaputtes Bild.
 | `dorfbrunnen-glasfront.jpg` | Dorfbrunnen, verglaste Front | vorhanden, retuschiert |
 | `sportplatz.jpg` | VSV-Sportplatz, Zum Klay 6 | vorhanden |
 | `feuerplatz.jpg` | Feuerplatz am Sportplatz | vorläufig, siehe unten |
-| `vereinsheim.jpg` | Vereinsheim am Sportplatz | fehlt noch |
+| `vereinsheim.jpg` | Vereinsheim am Sportplatz | vorhanden, siehe unten |
 
 **Format**
 
@@ -34,6 +34,19 @@ Neubearbeitung ist von ihnen auszugehen, nicht von diesen Dateien.
 In `dorfbrunnen-glasfront.jpg` war der Fotograf in der Scheibe gespiegelt. Die
 Spiegelung ist herausretuschiert: Der Bereich wurde zeilenweise aus dem
 Streifen daneben rekonstruiert, damit die waagerechten Linien erhalten bleiben.
+
+**Das Vereinsheim ist ein Sonderfall**
+
+Es gibt nur eine Aufnahme, und davor herrscht Betrieb: rund fünfzehn Personen
+an Biertischen. Die herauszuretuschieren ist bei dieser Menge nicht möglich –
+dahinter liegen Tische, Türen und weitere Personen, es gibt keine Fläche zum
+Rekonstruieren. Ein 4:3-Fenster oberhalb der Köpfe zeigt nur Dachziegel.
+
+Genommen ist deshalb der Streifen oberhalb der Köpfe mit Dach,
+Willkommensbanner und Fassade: 1024 × 290 statt 4:3. Dafür trägt eine
+Sportstätte in `site.ts` optional ein eigenes Seitenverhältnis (`ratio`).
+
+Eine Aufnahme ohne Betrieb würde das ablösen und wäre die bessere Lösung.
 
 **Personen auf Fotos**
 
