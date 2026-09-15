@@ -12,12 +12,11 @@ die Alternativtexte stehen in `src/data/karussell.ts`.
 | 4 | `jazzdance.jpg` | Jazz Dance, Auftritt | 4032 × 3024 |
 | 5 | `leichtathletik-huerden.jpg` | Läuferin am Start der Hürdenbahn | 2048 × 1536 |
 | 6 | `freitagsradler-abendlicht.jpg` | Radgruppe im Gegenlicht | 1920 × 1080 |
-| 7 | `saisonabschluss.jpg` | Saisonabschluss vor dem Vereinsheim | 2048 × 1536 |
+| 7 | `leichtathletik-kinder.jpg` | Kindergruppe beim Sprung | 300 × 200 |
 | 8 | `freitagsradler-umland.jpg` | Radgruppe am Feldrand | 1920 × 1080 |
-| 9 | `leichtathletik-kinder.jpg` | Kindergruppe beim Sprung | 300 × 200 |
+| 9 | `leichtathletik-jugend.jpg` | Jugendliche beim Aufwärmen | 300 × 200 |
 | 10 | `freitagsradler-schloss.jpg` | Rad vor Schloss Marienburg, Winter | 1920 × 1080 |
-| 11 | `leichtathletik-jugend.jpg` | Jugendliche beim Aufwärmen | 300 × 200 |
-| 12 | `dart.jpg` | Dartpfeil in einer E-Dart-Scheibe, Symbolbild | 1280 × 852 |
+| 11 | `dart.jpg` | Dartpfeil in einer E-Dart-Scheibe, Symbolbild | 1280 × 852 |
 
 Die Reihenfolge wechselt bewusst zwischen den Sparten, damit nicht zwei
 gleiche Motive aufeinander folgen.
@@ -60,10 +59,21 @@ stehen in der Adresszeile und sind damit öffentlich.
 
 **Personen auf Fotos**
 
-Auf mehreren Bildern sind Personen erkennbar – auf `freitagsradler.jpg` und
-`saisonabschluss.jpg` Erwachsene und Kinder mit deutlich erkennbaren
-Gesichtern, auf `leichtathletik-kinder.jpg` ein Kind. `fussball-u7.jpg` und
-`leichtathletik-huerden.jpg` zeigen die Kinder von hinten. **Vor dem Livegang** ist die Einwilligung der Abgebildeten
+**Kindergesichter kommen hier nicht hinein.** Die Aufnahme vom Saisonabschluss
+vor dem Vereinsheim war kurzzeitig Folie 7 und ist wieder entfernt worden, weil
+darauf Kinder erkennbar sind. Als Bild der Sportstätte dient nur der
+personenfreie Streifen oberhalb der Köpfe, siehe
+`public/images/sportstaetten/README.md`.
+
+Bei `fussball-u7.jpg` stand am linken Bildrand ein Kind der gegnerischen
+Mannschaft im Profil. Der Ausschnitt ist deshalb nach rechts gesetzt, das Kind
+liegt außerhalb des Bildes. Die eigene Mannschaft ist von hinten zu sehen,
+ebenso die Läuferin auf `leichtathletik-huerden.jpg`.
+
+Erwachsene sind weiter erkennbar – auf `freitagsradler.jpg` und
+`freitagsradler-umland.jpg` mit deutlichen Gesichtern, auf `fussball-u7.jpg`
+der Betreuer im Hintergrund. Auf `leichtathletik-kinder.jpg` ist ein Kind zu
+sehen, allerdings in Bewegung und aus einiger Entfernung. **Vor dem Livegang** ist die Einwilligung der Abgebildeten
 einzuholen, bei Minderjährigen die der Erziehungsberechtigten (Recht am
 eigenen Bild, KUG/DSGVO) – oder das betreffende Bild zu tauschen. Solange die
 Seite nicht öffentlich ist, ist die Verwendung vertretbar.
