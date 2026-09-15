@@ -5,6 +5,7 @@ import NewsList from '../components/NewsList.astro';
 import Facts from '../components/Facts.astro';
 import CallToAction from '../components/CallToAction.astro';
 import { site } from '../data/site';
+import { sportCountWord } from '../data/sports';
 
 const board = [
   { role: '1. Vorsitz', name: 'Name folgt' },
@@ -21,7 +22,7 @@ const board = [
   <PageHeader
     eyebrow="Über uns"
     title="Seit 1897 in Bewegung"
-    lead="Was als kleiner Turnverein begann, ist heute ein Verein mit rund 660 Mitgliedern und acht Sparten – getragen von Ehrenamt und Nachbarschaft."
+    lead={`Was als kleiner Turnverein begann, ist heute ein Verein mit rund 660 Mitgliedern und ${sportCountWord} Sportarten – getragen von Ehrenamt und Nachbarschaft.`}
   />
 
   <Facts />

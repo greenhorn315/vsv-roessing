@@ -198,7 +198,7 @@ story.append(Paragraph(
     'Alle vier Formulare stehen als PDF auf der Seite. Offen ist nur noch eine '
     'Stelle in den Formularen selbst.', S['kaphint']))
 for t, d in [
-  ('Die Eintrittserklärung kennt nur sechs Sparten',
+  ('Die Eintrittserklärung kennt nur sechs Sportarten',
    'Zum Ankreuzen stehen dort Dart, Fußball, Leichtathletik, Turnen, Volleyball und '
    'Wandern. Auf der Website sind es neun – Basketball, Tanzen und Yoga fehlen, und '
    '„Wandern“ heißt inzwischen „Outdoor“.'),
@@ -308,6 +308,11 @@ for t, d in [
 story.append(Paragraph('7 · Inhalte und Material', S['kapitel']))
 story.append(Paragraph('Nicht dringend, aber nötig vor dem Livegang.', S['kaphint']))
 for t, d in [
+  ('Von Sportarten sprechen, nicht von Sparten',
+   'Die Sparte ist die vereinsinterne Gliederung und für jemanden, der eine Sportart '
+   'sucht, ohne Belang. Betroffen sind rund 40 Stellen, darunter „Alle Sparten im '
+   'Überblick“ und „Nach Sparte“ auf der Angebotsseite sowie die Kennzahl „Sparten“. '
+   'Im Organigramm darf „Spartenleitung“ bleiben – dort ist die Struktur das Thema.'),
   ('Vorstand', 'Namen und Ämter für die Vereinsseite.'),
   ('Vereinschronik', 'Der Geschichtsabschnitt ist bisher ein Platzhaltertext.'),
   ('Sparten-Detailtexte fachlich prüfen',
