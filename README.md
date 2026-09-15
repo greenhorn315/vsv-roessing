@@ -103,10 +103,18 @@ Fußbereich steht als `STAND` oben im Skript.
       denn dann werden die Eingaben tatsächlich an einen Server übertragen.
 - [x] PDF-Formulare unter `public/downloads/` hinterlegt und auf
       `/mitglied-werden#formulare` verlinkt
-- [ ] Die Eintrittserklärung nennt nur sechs Sparten zum Ankreuzen (Dart,
+- [ ] Die Eintrittserklärung nennt nur sechs Sportarten zum Ankreuzen (Dart,
       Fußball, Leichtathletik, Turnen, Volleyball, Wandern). Auf der Website
       stehen neun; Basketball, Tanzen und Yoga fehlen im Formular, und
       „Wandern" heißt inzwischen „Outdoor". Das Formular gehört aktualisiert.
+- [ ] Wortwahl: Auf der Website von **Sportarten** sprechen, nicht von
+      „Sparten". Die Sparte ist die vereinsinterne Gliederung und für jemanden,
+      der eine Sportart sucht, ohne Belang. Betroffen sind rund 40 Stellen in
+      `src/`, darunter sichtbarer Text auf `/sportangebote` („Alle Sparten im
+      Überblick", „Nach Sparte", „Verein, Sparten, Gruppen"), die Kennzahl
+      „Sparten" in `ClubNumbers.astro` und die Überschrift „Sportarten in
+      dieser Sparte" auf den Detailseiten. „Spartenleitung" im Organigramm
+      darf bleiben – dort ist die Struktur tatsächlich das Thema.
 - [ ] `site` in `astro.config.mjs` auf die finale Domain setzen
 - [ ] Sparten-Detailtexte in `src/data/sports.ts` fachlich prüfen
 - [ ] Spartenstruktur klären: welche Sportarten gehören zu welcher Sparte?
