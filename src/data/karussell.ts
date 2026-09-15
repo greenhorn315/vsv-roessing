@@ -59,8 +59,8 @@ export const karussellBilder: KarussellBild[] = [
   {
     // Winteraufnahme – deshalb ohne Bezug aufs Sommerhalbjahr beschriftet.
     src: '/images/karussell/freitagsradler-schloss.jpg',
-    alt: 'Abgestelltes Fahrrad auf einer Wiese, dahinter ein Schloss mit neugotischen Türmen',
-    caption: 'Radtour ins Umland',
+    alt: 'Abgestelltes Fahrrad auf einer Wiese, dahinter Schloss Marienburg mit seinen neugotischen Türmen',
+    caption: 'Radtour zur Marienburg',
   },
   {
     // E-Dart-Scheibe – die Dart-Gruppe spielt E-Darts, nicht Steel.

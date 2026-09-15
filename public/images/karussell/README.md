@@ -13,7 +13,7 @@ die Alternativtexte stehen in `src/data/karussell.ts`.
 | 5 | `leichtathletik-kinder.jpg` | Kindergruppe beim Sprung | 300 × 200 |
 | 6 | `freitagsradler-umland.jpg` | Radgruppe am Feldrand | 1920 × 1080 |
 | 7 | `leichtathletik-jugend.jpg` | Jugendliche beim Aufwärmen | 300 × 200 |
-| 8 | `freitagsradler-schloss.jpg` | Rad vor einem Schloss, Winter | 1920 × 1080 |
+| 8 | `freitagsradler-schloss.jpg` | Rad vor Schloss Marienburg, Winter | 1920 × 1080 |
 | 9 | `dart.jpg` | Dartpfeil in einer E-Dart-Scheibe, Symbolbild | 1280 × 852 |
 
 Die vier Radbilder stehen bewusst auf den Plätzen 2, 4, 6 und 8, damit sie
