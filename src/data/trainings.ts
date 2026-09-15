@@ -1,7 +1,7 @@
 import type { AgeGroup } from './sports';
 
 /**
- * Trainingszeiten der Sparten.
+ * Trainingszeiten der Sportarten.
  *
  * Quellen: Hallenplan Winter 2025/26 für Hallenzeiten und Trainingsorte,
  * Übungsleiterliste mit Stand 2022 für alles Übrige.
@@ -51,7 +51,7 @@ export interface Training {
   /** Anzeigetext, entweder eine Uhrzeit, eine Spanne oder „nach Absprache“. */
   time: string;
   place?: string;
-  /** Passende Sparte (slug aus sports.ts). */
+  /** Passende Sportart (slug aus sports.ts). */
   sport?: string;
   /** Für wen die Gruppe gedacht ist, in Worten. */
   audience?: string;
@@ -266,7 +266,7 @@ const alleTrainings: Training[] = [
   },
   {
     // Bewusst unter Turnen, nicht unter Outdoor: Vereinsintern ist die
-    // Gruppe der Turnsparte zugeordnet, auch wenn im Sommer Rad gefahren wird.
+    // Gruppe dem Turnen zugeordnet, auch wenn im Sommer Rad gefahren wird.
     title: 'Freitagsradler',
     day: 'Fr',
     time: 'nach Absprache',
@@ -512,7 +512,7 @@ export const trainings: Training[] = [...alleTrainings].sort(
     beginn(a.time) - beginn(b.time),
 );
 
-/** Die Trainings einer Sparte, in derselben Reihenfolge. */
+/** Die Trainings einer Sportart, in derselben Reihenfolge. */
 export const trainingsOfSport = (slug: string): Training[] =>
   trainings.filter((training) => training.sport === slug);
 

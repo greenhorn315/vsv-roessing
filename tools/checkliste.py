@@ -155,22 +155,24 @@ story.append(kasten(
 story.append(Spacer(1, 8))
 
 # ---------- 1 ----------
-story.append(Paragraph('1 · Spartenstruktur', S['kapitel']))
+story.append(Paragraph('1 · Zuordnung der Angebote', S['kapitel']))
 story.append(Paragraph(
-    'Jede Sparte soll auf ihrer Seite die Sportarten zeigen, die zu ihr gehören – jeweils '
-    'mit Piktogramm. Für Outdoor ist das umgesetzt und dient als Muster: Wandern, '
-    'Nordic Walking, Radwandern, Boßeln. Bei den übrigen acht Sparten fehlt die Zuordnung.',
+    'Jede Sportart soll auf ihrer Seite die einzelnen Angebote zeigen, die zu ihr '
+    'gehören – jeweils mit Piktogramm. Für Outdoor ist das umgesetzt und dient als '
+    'Muster: Wandern, Nordic Walking, Radwandern, Boßeln. Bei den übrigen acht fehlt '
+    'die Zuordnung.',
     S['kaphint']))
 for t, d in [
-  ('Welche Sportarten gehören zu welcher Sparte?',
+  ('Welche Angebote gehören zu welcher Sportart?',
    'Offen für: Fußball, Volleyball, Leichtathletik, Turnen, Basketball, Tanzen, Yoga, Dart.'),
-  ('Gibt es Sportarten, die zu keiner der neun Sparten passen?',
-   'Dann käme entweder eine Sparte dazu oder die Sportart zu einer bestehenden.'),
-  ('Stimmen die neun Sparten so?',
+  ('Gibt es Angebote, die zu keiner der neun Sportarten passen?',
+   'Dann käme entweder eine Sportart dazu oder das Angebot zu einer bestehenden.'),
+  ('Stimmen die neun Sportarten so?',
    'Fußball · Volleyball · Leichtathletik · Turnen · Basketball · Tanzen · Outdoor · Yoga · Dart'),
-  ('Ansprechpartner je Sparte',
-   'Bisher nur Outdoor (Michael Horn). Die übrigen acht fallen auf die Vorstandsadresse '
-   'zurück. Name und Kontaktweg je Sparte wären besser.'),
+  ('Ansprechpartner je Sportart',
+   'Bisher nur Outdoor: Spartenleiter Michael Horn, wandern@vsv-roessing.de. Die '
+   'übrigen acht fallen auf die Vorstandsadresse zurück. Name und Kontaktweg je '
+   'Sportart wären besser.'),
 ]:
     story.append(punkt(t, d))
 
@@ -244,7 +246,7 @@ for t, d in [
   ('Zwei Zeiten stehen als „nach Absprache“',
    'Freitagsradler und Leichtathletik „Lauf- und Sprungtraining“.'),
   ('Outdoor hat keine Trainingszeiten',
-   'Die Sparte ist in Gründung. Zeiten und Turnus werden auf der Versammlung am '
+   'Die Sportart ist im Aufbau. Zeiten und Turnus werden auf der Versammlung am '
    'Samstag, 10. Oktober 2026 um 15:00 Uhr festgelegt. Ein Ort für die Versammlung fehlt noch.'),
   ('Einwilligung der Übungsleitungen zur Namensnennung',
    '25 Namen stehen auf der Seite. Vor dem Livegang einholen.'),
@@ -308,14 +310,9 @@ for t, d in [
 story.append(Paragraph('7 · Inhalte und Material', S['kapitel']))
 story.append(Paragraph('Nicht dringend, aber nötig vor dem Livegang.', S['kaphint']))
 for t, d in [
-  ('Von Sportarten sprechen, nicht von Sparten',
-   'Die Sparte ist die vereinsinterne Gliederung und für jemanden, der eine Sportart '
-   'sucht, ohne Belang. Betroffen sind rund 40 Stellen, darunter „Alle Sparten im '
-   'Überblick“ und „Nach Sparte“ auf der Angebotsseite sowie die Kennzahl „Sparten“. '
-   'Im Organigramm darf „Spartenleitung“ bleiben – dort ist die Struktur das Thema.'),
   ('Vorstand', 'Namen und Ämter für die Vereinsseite.'),
   ('Vereinschronik', 'Der Geschichtsabschnitt ist bisher ein Platzhaltertext.'),
-  ('Sparten-Detailtexte fachlich prüfen',
+  ('Detailtexte der Sportarten fachlich prüfen',
    'Die Beschreibungen in src/data/sports.ts sind aus dem Altbestand gebaut.'),
   ('Social-Media-Adressen', 'Die echten Links zu Instagram und Facebook, ggf. WhatsApp-Gruppe.'),
 ]:
@@ -362,11 +359,12 @@ story.append(Spacer(1, 12))
 story.append(kasten(
     '<b>Seit dem 11. September erledigt:</b> Trainingszeiten aus dem Hallenplan 2025/26 '
     'eingearbeitet · Freitagsturner und Freitagsradler als eine Gruppe abgebildet · '
-    'Ansprechpartner der Outdoor-Sparte · Damenmannschaft entfernt · Übungsleitung Yoga '
+    'Ansprechpartner für Outdoor · Damenmannschaft entfernt · Übungsleitung Yoga '
     'eingetragen, Angebot als offen für Frauen und Männer ausgewiesen · Spielplan der Ü40 '
     'und Ligaspiele der drei Dart-Teams · Fotos der fünf Sportstätten, Vereinsheim '
     'eingeschlossen · Karussell auf der Startseite · Kasten „Für die zweite '
-    'Lebenshälfte“ · Mitgliedsbeiträge nach den Vereinsformularen, Familienrechner '
+    'Lebenshälfte“ · durchgehend von Sportarten statt von Sparten die Rede · '
+    'Mitgliedsbeiträge nach den Vereinsformularen, Familienrechner '
     'entsprechend · vier Formulare als PDF im Downloadbereich.'))
 
 doc.build(ohne_verwaiste_ueberschriften(story))

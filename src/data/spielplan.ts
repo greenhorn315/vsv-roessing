@@ -12,7 +12,7 @@ export interface Spiel {
   opponent: string;
   /** true = Heimspiel an der eigenen Spielstätte. */
   home: boolean;
-  /** Mannschaft, wenn eine Sparte mit mehreren antritt. */
+  /** Mannschaft, wenn eine Sportart mit mehreren antritt. */
   team?: string;
   /** Zusatz aus dem Aushang, etwa „Pokal“. */
   note?: string;
