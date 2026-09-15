@@ -1,9 +1,8 @@
-# Hilfsskripte für die Fotos
+# Hilfsskripte
 
-Zwei kleine Python-Skripte (nur Pillow nötig), mit denen die Fotos der
-Sportstätten aufbereitet wurden. Sie gehören nicht zum Build – sie sind hier
-abgelegt, damit sich die Bearbeitung bei neuen Aufnahmen nachvollziehen und
-wiederholen lässt.
+Kleine Python-Skripte, die nicht zum Build gehören. Sie sind hier abgelegt,
+damit sich nachvollziehen und wiederholen lässt, wie Bilder aufbereitet wurden
+und wie die Checkliste entsteht.
 
 ```
 pip install Pillow
@@ -22,3 +21,21 @@ Die Werte stehen in `REZEPTE`, der Schlüssel ist der Dateiname des Originals.
 `ZumDorfbrunnen-1.JPG`. Der Bereich wird zeilenweise rekonstruiert: Grundton
 als Verlauf zwischen den Rändern der Lücke, darauf die Feinstruktur aus dem
 Streifen daneben. Die Koordinaten oben im Skript gelten nur für dieses Bild.
+
+## Die Checkliste
+
+**`checkliste.py`** setzt die offenen Punkte aus dem README als PDF zum
+Ausdrucken und Abhaken.
+
+```
+pip install reportlab
+python3 checkliste.py ../VSV-Roessing-Offene-Punkte.pdf
+```
+
+Das Datum im Fußbereich steht als `STAND` oben im Skript. Der Inhalt ist eine
+Langfassung des Abschnitts „Offene Punkte vor dem Livegang" im README – beim
+Ändern bitte beides nachziehen.
+
+Kapitelüberschriften bleiben mit ihrem ersten Punkt zusammen; darum kümmert
+sich `ohne_verwaiste_ueberschriften()` am fertigen Ablauf, nicht jede
+Aufrufstelle einzeln.

@@ -68,10 +68,15 @@ Synology Web Station gleichermaßen aus.
 
 ## Offene Punkte vor dem Livegang
 
-Dieselbe Liste als PDF zum Ausdrucken lässt sich aus der Projektablage
-nachreichen; Inhalt und Nummerierung stimmen mit diesem Abschnitt überein.
+Dieselbe Liste gibt es als PDF zum Ausdrucken und Abhaken:
+`python3 tools/checkliste.py [zieldatei.pdf]` (benötigt `reportlab`).
+Inhalt und Nummerierung stimmen mit diesem Abschnitt überein; das Datum im
+Fußbereich steht als `STAND` oben im Skript.
 
-- [ ] Fotos in `public/images/` einsetzen (Platzhalter greifen bis dahin automatisch)
+- [ ] Vier quadratische Bilder für den Social-Bereich und `public/og-default.png`
+      einsetzen (Platzhalter greifen bis dahin automatisch)
+- [ ] Einwilligung der abgebildeten Personen einholen – betrifft mehrere
+      Bilder im Karussell und das Foto vom Feuerplatz
 - [ ] Beiträge in `src/data/membership.ts` gegen die Beitragsordnung prüfen
 - [ ] Vorstandsnamen und Vereinschronik in `src/pages/verein.astro`
 - [x] Impressum aus der Altseite übernommen (`src/data/impressum.ts`)
@@ -98,9 +103,10 @@ nachreichen; Inhalt und Nummerierung stimmen mit diesem Abschnitt überein.
 - [ ] Sparten-Detailtexte in `src/data/sports.ts` fachlich prüfen
 - [ ] Spartenstruktur klären: welche Sportarten gehören zu welcher Sparte?
       Bisher ist nur Outdoor über `activities` befüllt.
-- [ ] Yoga inhaltlich füllen: Zielgruppe, Trainingszeiten, Ansprechpartner.
-      Die Altersgruppe „Erwachsene" ist eine Annahme, die Seite weist die
-      fehlenden Angaben sichtbar aus.
+- [ ] Yoga: Spartenleitung benennen, Altersgruppe bestätigen, Mitbringsel und
+      Kurzbeschreibung ergänzen. Übungsleitung und Trainingszeit stehen seit
+      dem 15. September; die Altersgruppe „Erwachsene" ist eine Annahme, die
+      Seite weist die fehlenden Angaben sichtbar aus.
 - [ ] Ansprechpartner je Sparte ergänzen (`contact` in `src/data/sports.ts`).
       Bisher nur Outdoor; die übrigen fallen auf die Vorstandsadresse zurück.
 
@@ -110,13 +116,14 @@ Die 35 Gruppen in `src/data/trainings.ts` stammen aus der Übungsleiterliste
 von 2022 und sind nicht bestätigt. Der Hinweis darauf steht als
 `trainingsStand` überall dort, wo Zeiten angezeigt werden.
 
-- [ ] Stimmen die 35 Gruppen noch? Verteilung: Turnen 9 · Leichtathletik 9 ·
-      Fußball 7 · Tanzen 6 · Basketball 1 · Dart 1 · Volleyball 1 · Yoga 1
-- [ ] Zwei Gruppen ohne Übungsleitung: Fußball „Ü32" und „Yoga"
+- [ ] Stimmen die 35 Gruppen noch? Verteilung: Turnen 10 · Leichtathletik 9 ·
+      Fußball 6 · Tanzen 6 · Basketball 1 · Dart 1 · Volleyball 1 · Yoga 1
+- [ ] Eine Gruppe ohne Übungsleitung: Fußball „Ü32"
 - [ ] Zwei Gruppen ohne Zielgruppe: Turnen „Montagsturner" und „Basketball"
-- [ ] Eine Zeit steht als „nach Absprache": Leichtathletik,
-      Lauf- und Sprungtraining
-- [ ] Trainingsorte fehlen bei 33 von 35 Gruppen. Bewusst nicht erfunden.
+- [ ] Zwei Zeiten stehen als „nach Absprache": Freitagsradler und
+      Leichtathletik „Lauf- und Sprungtraining"
+- [ ] Zwei Trainingsorte fehlen: „Volleyball mixed" und „Kinderturnen ab 9".
+      Bewusst nicht erfunden.
 - [ ] Outdoor hat keine Trainingszeiten. Die Sparte ist in Gründung, Zeiten
       und Turnus werden auf der Versammlung am 10. Oktober 2026 festgelegt.
 - [ ] Einwilligung der Übungsleitungen zur Namensnennung einholen, bevor die
