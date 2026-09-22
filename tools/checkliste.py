@@ -159,12 +159,12 @@ story.append(Paragraph('1 · Zuordnung der Angebote', S['kapitel']))
 story.append(Paragraph(
     'Jede Sportart soll auf ihrer Seite die einzelnen Angebote zeigen, die zu ihr '
     'gehören – jeweils mit Piktogramm. Für Outdoor ist das umgesetzt und dient als '
-    'Muster: Wandern, Nordic Walking, Radwandern, Boßeln. Bei den übrigen acht fehlt '
-    'die Zuordnung.',
+    'Muster: Wandern, Nordic Walking, Radwandern, Boßeln. Für Leichtathletik sind es '
+    'Laufen, Springen und Werfen. Bei den übrigen sieben fehlt die Zuordnung.',
     S['kaphint']))
 for t, d in [
   ('Welche Angebote gehören zu welcher Sportart?',
-   'Offen für: Fußball, Volleyball, Leichtathletik, Turnen, Basketball, Tanzen, Yoga, Dart.'),
+   'Offen für: Fußball, Volleyball, Turnen, Basketball, Tanzen, Yoga, Dart.'),
   ('Gibt es Angebote, die zu keiner der neun Sportarten passen?',
    'Dann käme entweder eine Sportart dazu oder das Angebot zu einer bestehenden.'),
   ('Stimmen die neun Sportarten so?',
@@ -218,27 +218,29 @@ story.append(Paragraph(
     'Spielplan haben, ist offen.', S['kaphint']))
 for t, d in [
   ('Welche Mannschaften stellt der Fußball?',
-   'Erfasst sind I. Herren, Ü32, Ü40 und vier Jugendgruppen. Die Damenmannschaft ist '
-   'entfallen und wurde entfernt.'),
+   'Erfasst sind I. Herren, Ü40 und fünf Jugendgruppen von den G-Junioren bis zu den '
+   'D-Junioren. Die Damenmannschaft ist entfallen und wurde entfernt.'),
   ('Gibt es weitere Spielpläne?',
    'Als Aushang oder Foto genügt. Die Struktur nimmt sie ohne Änderung auf.'),
-  ('Spielt die Ü32 im Wettbewerb?',
-   'Sie steht ohne Spielplan und ohne Übungsleitung in den Daten.'),
+  ('Einheitliche Namen für die Jugendmannschaften',
+   'Vier heißen „G-Jugend“ bis „E-Jugend“, die neue heißt nach Vereinsangabe '
+   '„D-Junioren“. Beides nebeneinander wirkt uneinheitlich.'),
 ]:
     story.append(punkt(t, d))
 
 # ---------- 5 ----------
 story.append(Paragraph('5 · Trainingszeiten', S['kapitel']))
 story.append(Paragraph(
-    'In den Daten stehen 35 Gruppen mit 25 Übungsleitungen. Hallenzeiten und Trainingsorte '
+    'In den Daten stehen 37 Gruppen mit 26 Übungsleitungen. Hallenzeiten und Trainingsorte '
     'stammen aus dem Hallenplan Winter 2025/26, alles Übrige aus der Übungsleiterliste von '
-    '2022 und ist nicht bestätigt. Verteilung: Turnen 10 · Leichtathletik 9 · Fußball 6 · '
-    'Tanzen 6 · Volleyball 1 · Basketball 1 · Yoga 1 · Dart 1.', S['kaphint']))
+    '2022 und ist nicht bestätigt – bis auf die vier Leichtathletik-Gruppen und zwei '
+    'Fußballgruppen, die der Verein am 22. September bestätigt hat. Verteilung: Turnen 10 · '
+    'Leichtathletik 9 · Fußball 8 · Tanzen 6 · Volleyball 1 · Basketball 1 · Yoga 1 · '
+    'Dart 1.', S['kaphint']))
 for t, d in [
-  ('Stimmen die 35 Gruppen noch?',
-   'Der Abgleich mit der Liste von 2022 ist der größte verbliebene Unsicherheitsfaktor.'),
-  ('Eine Gruppe ohne Übungsleitung: Fußball „Ü32“',
-   'Unklar, ob die Stelle offen ist oder nur der Name in der Liste fehlt.'),
+  ('Stimmen die 37 Gruppen noch?',
+   'Der Abgleich mit der Liste von 2022 ist der größte verbliebene Unsicherheitsfaktor. '
+   'Bestätigt sind bisher Leichtathletik und zwei Fußballgruppen.'),
   ('Zwei Gruppen ohne Zielgruppe: „Montagsturner“ und „Basketball“',
    'Für wen sind die Angebote – Kinder, Jugend, Erwachsene, Frauen, Männer?'),
   ('Zwei Trainingsorte fehlen: „Volleyball mixed“ und „Kinderturnen ab 9“',
@@ -364,8 +366,9 @@ story.append(kasten(
     'und Ligaspiele der drei Dart-Teams · Fotos der fünf Sportstätten, Vereinsheim '
     'eingeschlossen · Karussell auf der Startseite · Kasten „Für die zweite '
     'Lebenshälfte“ · durchgehend von Sportarten statt von Sparten die Rede · '
-    'Mitgliedsbeiträge nach den Vereinsformularen, Familienrechner '
-    'entsprechend · vier Formulare als PDF im Downloadbereich.'))
+    'Mitgliedsbeiträge nach den Vereinsformularen, Familienrechner entsprechend · '
+    'vier Formulare als PDF · Leichtathletik und zwei Fußballgruppen vom Verein '
+    'bestätigt, ihre Angebote zugeordnet.'))
 
 doc.build(ohne_verwaiste_ueberschriften(story))
 print('PDF erzeugt:', OUT)

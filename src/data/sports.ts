@@ -123,6 +123,11 @@ export const sports: Sport[] = [
       'Lauftreff für Erwachsene',
       'Teilnahme an Kreis- und Bezirksmeisterschaften',
     ],
+    activities: [
+      { name: 'Laufen', pictogram: 'leichtathletik' },
+      { name: 'Springen', pictogram: 'weitsprung', note: 'Weit- und Hochsprung' },
+      { name: 'Werfen', pictogram: 'speerwurf' },
+    ],
     venue: 'VSV-Sportplatz und Sporthalle',
     bring: 'Laufschuhe, wetterfeste Kleidung.',
     pictogram: 'leichtathletik',
