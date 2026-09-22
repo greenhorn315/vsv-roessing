@@ -8,12 +8,18 @@ const zahlen = [
   { wert: String(vereinsZahlen.uebungsleitungen), text: 'Übungsleitungen' },
   { wert: String(vereinsZahlen.kinderangebote), text: 'Angebote für Kinder' },
   { wert: String(vereinsZahlen.trainingstage), text: 'Trainingstage pro Woche' },
-  // Sachlich: In der Liste von 2022 fehlt der Name. Ob die Stelle vakant ist
-  // oder nur die Angabe, ist offen – deshalb kein „sucht Verstärkung“.
-  {
-    wert: String(vereinsZahlen.ohneLeitung),
-    text: `${vereinsZahlen.ohneLeitung === 1 ? 'Gruppe' : 'Gruppen'} ohne Übungsleitung`,
-  },
+  // Offene Übungsleitungen nur nennen, solange es welche gibt. „0 Gruppen ohne
+  // Übungsleitung“ wäre zwar eine gute Nachricht, liest sich als Kachel aber
+  // wie ein Mangel. Sachlich formuliert: Ob eine Stelle vakant ist oder nur
+  // der Name fehlt, ist von außen nicht zu unterscheiden.
+  ...(vereinsZahlen.ohneLeitung > 0
+    ? [
+        {
+          wert: String(vereinsZahlen.ohneLeitung),
+          text: `${vereinsZahlen.ohneLeitung === 1 ? 'Gruppe' : 'Gruppen'} ohne Übungsleitung`,
+        },
+      ]
+    : []),
 ];
 ---
 

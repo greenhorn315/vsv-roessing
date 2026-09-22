@@ -113,7 +113,9 @@ Fußbereich steht als `STAND` oben im Skript.
 - [ ] `site` in `astro.config.mjs` auf die finale Domain setzen
 - [ ] Detailtexte der Sportarten in `src/data/sports.ts` fachlich prüfen
 - [ ] Zuordnung klären: welche einzelnen Angebote gehören zu welcher
-      Sportart? Bisher ist nur Outdoor über `activities` befüllt.
+      Sportart? Befüllt sind Outdoor (Wandern, Nordic Walking, Radwandern,
+      Boßeln) und Leichtathletik (Laufen, Springen, Werfen). Es fehlen
+      Fußball, Volleyball, Turnen, Basketball, Tanzen, Yoga und Dart.
 - [ ] Yoga: Spartenleitung benennen, Altersgruppe bestätigen, Mitbringsel und
       Kurzbeschreibung ergänzen. Übungsleitung und Trainingszeit stehen seit
       dem 15. September; die Altersgruppe „Erwachsene" ist eine Annahme, die
@@ -124,13 +126,15 @@ Fußbereich steht als `STAND` oben im Skript.
 
 ### Trainingszeiten
 
-Die 35 Gruppen in `src/data/trainings.ts` stammen aus der Übungsleiterliste
-von 2022 und sind nicht bestätigt. Der Hinweis darauf steht als
+Die 37 Gruppen in `src/data/trainings.ts` stammen überwiegend aus der
+Übungsleiterliste von 2022 und sind nicht bestätigt. Bestätigt sind seit dem
+22. September die vier Leichtathletik-Gruppen und zwei Fußballgruppen. Der Hinweis darauf steht als
 `trainingsStand` überall dort, wo Zeiten angezeigt werden.
 
-- [ ] Stimmen die 35 Gruppen noch? Verteilung: Turnen 10 · Leichtathletik 9 ·
-      Fußball 6 · Tanzen 6 · Basketball 1 · Dart 1 · Volleyball 1 · Yoga 1
-- [ ] Eine Gruppe ohne Übungsleitung: Fußball „Ü32"
+- [ ] Stimmen die 37 Gruppen noch? Verteilung: Turnen 10 · Leichtathletik 9 ·
+      Fußball 8 · Tanzen 6 · Basketball 1 · Dart 1 · Volleyball 1 · Yoga 1
+- [x] Keine Gruppe mehr ohne Übungsleitung: Die als „Ü32" geführte Gruppe ist
+      in Wahrheit die Ü40 und wird von Roman Veselý geleitet
 - [ ] Zwei Gruppen ohne Zielgruppe: Turnen „Montagsturner" und „Basketball"
 - [ ] Zwei Zeiten stehen als „nach Absprache": Freitagsradler und
       Leichtathletik „Lauf- und Sprungtraining"
