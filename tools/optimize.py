@@ -21,19 +21,21 @@ GROESSEN = {
     'dorfbrunnen.jpg': (1024, 768),
     'dorfbrunnen-hinten.jpg': (1024, 768),
     'sportplatz.jpg': (1024, 768),
+    'sportplatz-weitsprunganlage.jpg': (1024, 768),
     'feuerplatz.jpg': (1024, 768),
-    # Breiter Streifen statt 4:3 – siehe ZUSCHNITT.
-    'vereinsheim.jpg': (1024, 290),
+    'vereinsheim.jpg': (1024, 768),
+    # Steht als zweite Ansicht neben einer weiteren, also nur halbe
+    # Kachelbreite – 640 px reichen dafuer auch auf feinen Displays.
+    'vereinsheim-gaststaette.jpg': (640, 480),
 }
 
 # Vorab-Ausschnitt in Pixeln der Vorlage, bevor auf die Zielgroesse skaliert
 # wird. Noetig, wo nicht die Bildmitte das Motiv ist.
 ZUSCHNITT = {
-    # Vom Vereinsheim gibt es nur eine Aufnahme mit Betrieb davor. Personen
-    # herauszuretuschieren ist bei dieser Menge nicht moeglich, ein 4:3-Fenster
-    # ohne Personen zeigt nur Dachziegel. Bleibt der Streifen oberhalb der
-    # Koepfe: Dach, Willkommensbanner und Fassade, dafuer breit statt 4:3.
-    'vereinsheim.jpg': (0, 0, 2048, 580),
+    # Hochformat als Vorlage: Die Bahn laeuft von unten ins Bild. Fuer die
+    # 4:3-Kachel bleibt das obere Drittel mit Anlauf, Absprungbalken und
+    # Sandgrube; der lange Vordergrund faellt weg.
+    'sportplatz-weitsprunganlage.jpg': (0, 441, 3024, 2709),
 }
 STANDARD = (1024, 768)
 MAX_BYTES = 220 * 1024
@@ -93,9 +95,18 @@ REZEPTE = {
     'Sportplatz.JPG':                   ('sportplatz.jpg',   0.03, 0.98, 1.00, 0.02, 1.12, 1.10, 0.45),
     # Abendlicht am Feuer: Stimmung erhalten, nur Tiefen oeffnen.
     'Feuerstelle.JPG':                  ('feuerplatz.jpg',   0.01, 1.00, 1.14, 0.10, 1.08, 1.02, 0.40),
-    # Abendsonne, tiefe Schatten an der Fassade.
-    '22.07.12_Leichtathletik_Saisonabschluss_3.jpeg': (
-        'vereinsheim.jpg', 0.02, 0.99, 1.08, 0.10, 1.06, 1.06, 0.45),
+    # Tartanbahn in der Nachmittagssonne: Das Rot ist ohnehin kraeftig, hier
+    # nur Kontrast und Tiefen, keine zusaetzliche Sattigung.
+    'Weitsprunganlage mit Tartanbahn.JPG': (
+        'sportplatz-weitsprunganlage.jpg', 0.02, 0.99, 1.04, 0.06, 1.08, 1.00, 0.45),
+    # Vereinsheim im Schatten des Vordachs, gleichmaessig aber flau: Kontrast
+    # anziehen, den Klinker etwas kraeftigen, Banner darf nicht ausfressen.
+    'Vereinsheim-Eingang.JPG': (
+        'vereinsheim.jpg', 0.02, 0.99, 1.04, 0.05, 1.10, 1.08, 0.45),
+    # Innenaufnahme mit Kunstlicht: Tiefen oeffnen, Farbe nur leicht anheben,
+    # sonst kippt das warme Holz ins Orange.
+    'Vereinsheim-Gaststaette.JPG': (
+        'vereinsheim-gaststaette.jpg', 0.02, 0.99, 1.08, 0.08, 1.06, 1.02, 0.40),
 }
 
 

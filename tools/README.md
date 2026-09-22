@@ -14,8 +14,23 @@ cp optimiert/*.jpg ../public/images/sportstaetten/
 
 **`optimize.py`** – pro Bild eigene Werte statt einer Pauschaleinstellung:
 Schwarz- und Weißpunkt, Gamma, eine eigene Kurve zum Anheben der Tiefen,
-Kontrast, Sättigung und Nachschärfen. Ausgabe 1280 × 960, JPEG unter 300 KB.
-Die Werte stehen in `REZEPTE`, der Schlüssel ist der Dateiname des Originals.
+Kontrast, Sättigung und Nachschärfen. Ausgabe 1024 × 768, JPEG unter 220 KB;
+abweichende Zielgrößen und Vorab-Ausschnitte stehen in `GROESSEN` und
+`ZUSCHNITT`. Die Werte stehen in `REZEPTE`, der Schlüssel ist der Dateiname
+des Originals.
+
+**`karussell.py`** – dasselbe für die Bilder des Karussells auf der
+Startseite, aber im Hochformat 4 : 5, 800 × 1000 px und unter 210 KB. Hier
+gehört zu jedem Rezept zusätzlich der Bildausschnitt, weil querformatige
+Vorlagen beschnitten werden müssen. Zwei Sonderfälle: `hochskalieren()` für
+zu kleine Vorlagen und `WEICHZEICHNEN` für Aufnahmen mit viel Laub, die sonst
+nicht unter den Deckel kommen.
+
+```
+mkdir karussell              # Originale hier hineinlegen
+python3 karussell.py         # schreibt nach karussell-optimiert/
+cp karussell-optimiert/*.jpg ../public/images/karussell/
+```
 
 **`retusche.py`** – entfernt die Spiegelung des Fotografen aus
 `ZumDorfbrunnen-1.JPG`. Der Bereich wird zeilenweise rekonstruiert: Grundton

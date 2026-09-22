@@ -77,6 +77,20 @@ Fußbereich steht als `STAND` oben im Skript.
       einsetzen (Platzhalter greifen bis dahin automatisch)
 - [ ] Einwilligung der abgebildeten Personen einholen – betrifft mehrere
       Bilder im Karussell und das Foto vom Feuerplatz
+- [ ] Einwilligung auch beim **MTV Elze** einholen: Auf dem Aufwärmbild vom
+      Sportabzeichen-Tag sind dessen Mitglieder zu sehen. Erkennbare Gesichter
+      zeigt das Bild keine, alle stehen mit dem Rücken zur Kamera
+- [x] Vereinsheim mit eigenen Aufnahmen ohne Betrieb: Eingang als Hauptbild,
+      Gaststube als zweite Ansicht, beide im üblichen 4:3. Der Behelfsstreifen
+      oberhalb der Köpfe und das Sonderfeld `ratio` sind entfallen
+- [x] Weitsprunganlage als zweite Ansicht des Sportplatzes – der Rasenplatz
+      allein zeigte nicht, dass dort auch Leichtathletik stattfindet
+- [x] Die beiden unscharfen 300-px-Karussellbilder sind ersetzt: zwei
+      Aufnahmen vom Sportabzeichen-Tag am 22. September, volle Auflösung,
+      dasselbe Motiv
+- [ ] Aufenthaltsraum im Vereinsheim noch einmal fotografieren: Auf der
+      vorhandenen Aufnahme stehen Stühle gestapelt und ein Grill mitten im
+      Raum. Aufgeräumt wäre das eine dritte Ansicht wert
 - [x] Beiträge in `src/data/membership.ts` gegen die Vereinsformulare
       abgeglichen und vom Kassenwart bestätigt: 4 € für Kinder und
       Jugendliche, 7,50 € einzeln, 15 € für Familien mit minderjährigen
