@@ -95,7 +95,12 @@ Fußbereich steht als `STAND` oben im Skript.
       abgeglichen und vom Kassenwart bestätigt: 4 € für Kinder und
       Jugendliche, 7,50 € einzeln, 15 € für Familien mit minderjährigen
       Kindern; Einzug jährlich am 1. Juni, Kündigung zum Quartalsende
-- [ ] Vorstandsnamen und Vereinschronik in `src/pages/verein.astro`
+- [x] Vorstand in `src/data/vorstand.ts`: 1. Vorsitzender Erich Könneke,
+      2. Vorsitzender Uwe Speer, Schriftführerin Monika Koch
+- [ ] Name des Kassenwarts fehlt noch – die Stelle steht mit „Name folgt" in
+      der Liste
+- [ ] Vereinschronik: Der Geschichtsabschnitt in `src/pages/verein.astro` ist
+      weiter ein Platzhaltertext
 - [x] Impressum aus der Altseite übernommen (`src/data/impressum.ts`)
 - [x] Datenschutzerklärung neu verfasst (`src/data/datenschutz.ts`): beschreibt
       die Verarbeitung dieser Seite statt der bisherigen WordPress-Funktionen.

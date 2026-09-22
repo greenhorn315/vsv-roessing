@@ -6,13 +6,7 @@ import Facts from '../components/Facts.astro';
 import CallToAction from '../components/CallToAction.astro';
 import { site } from '../data/site';
 import { sportCountWord } from '../data/sports';
-
-const board = [
-  { role: '1. Vorsitz', name: 'Name folgt' },
-  { role: '2. Vorsitz', name: 'Name folgt' },
-  { role: 'Kassenwart', name: 'Name folgt' },
-  { role: 'Schriftführung', name: 'Name folgt' },
-];
+import { vorstand } from '../data/vorstand';
 ---
 
 <BaseLayout
@@ -57,10 +51,14 @@ const board = [
         </div>
         <ul class="board">
           {
-            board.map((person) => (
+            vorstand.map((person) => (
               <li>
                 <strong>{person.role}</strong>
-                <span>{person.name}</span>
+                {person.name ? (
+                  <span>{person.name}</span>
+                ) : (
+                  <span class="offen">Name folgt</span>
+                )}
               </li>
             ))
           }
@@ -118,6 +116,11 @@ const board = [
   }
   .board span {
     color: var(--c-text-muted);
+  }
+  /* Zurückhaltend wie im Organigramm: Die Stelle ist besetzt, nur der Name
+     fehlt noch – das soll nicht wie ein Mangel schreien. */
+  .board .offen {
+    font-style: italic;
   }
 
   .placeholder-note {

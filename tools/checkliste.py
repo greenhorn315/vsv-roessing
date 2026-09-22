@@ -315,7 +315,10 @@ for t, d in [
 story.append(Paragraph('7 · Inhalte und Material', S['kapitel']))
 story.append(Paragraph('Nicht dringend, aber nötig vor dem Livegang.', S['kaphint']))
 for t, d in [
-  ('Vorstand', 'Namen und Ämter für die Vereinsseite.'),
+  ('Name des Kassenwarts',
+   'Die drei übrigen Ämter stehen seit dem 22. September. Die Stelle des '
+   'Kassenwarts ist besetzt – er hat die Beitragssätze bestätigt –, es fehlt '
+   'nur der Name. Bis dahin steht dort „Name folgt".'),
   ('Vereinschronik', 'Der Geschichtsabschnitt ist bisher ein Platzhaltertext.'),
   ('Detailtexte der Sportarten fachlich prüfen',
    'Die Beschreibungen in src/data/sports.ts sind aus dem Altbestand gebaut.'),
@@ -362,8 +365,9 @@ for t, d in [
 
 story.append(Spacer(1, 12))
 story.append(kasten(
-    '<b>Am 22. September erledigt:</b> Vereinsheim mit eigenen Aufnahmen ohne Betrieb – '
-    'Eingang und Gaststube, beide im üblichen 4:3, der Behelfsstreifen ist weg · '
+    '<b>Am 22. September erledigt:</b> Vorstand benannt, bis auf den Kassenwart · '
+    'Vereinsheim mit eigenen Aufnahmen ohne Betrieb – Eingang und Gaststube, beide im '
+    'üblichen 4:3, der Behelfsstreifen ist weg · '
     'Weitsprunganlage als zweite Ansicht des Sportplatzes · die beiden unscharfen '
     '300-px-Karussellbilder durch Aufnahmen vom Sportabzeichen-Tag ersetzt · erste echte '
     'Meldung unter „Aktuelles“.'))
