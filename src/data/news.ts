@@ -6,8 +6,17 @@ export interface NewsItem {
   href?: string;
 }
 
-/** Neueste zuerst pflegen – die Startseite zeigt die ersten drei Einträge. */
+/**
+ * Die Startseite zeigt die ersten drei Einträge, in genau dieser Reihenfolge.
+ * Oben steht deshalb, was gerade zählt: zuerst die jüngste Meldung, darunter
+ * die nächsten Termine. Alte Einträge wandern heraus, nicht nach unten.
+ */
 export const news: NewsItem[] = [
+  {
+    date: '2026-09-22',
+    title: 'Sportabzeichen 2026 auf dem Sportplatz abgenommen',
+    text: 'Gemeinsam mit dem MTV Elze: aufwärmen, laufen, springen, werfen – Kinder und Erwachsene zusammen auf dem Platz.',
+  },
   {
     date: '2026-09-14',
     title: 'Neue Bambini-Fußballgruppe startet',

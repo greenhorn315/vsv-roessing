@@ -11,8 +11,10 @@ gestalteter Platzhalter mit dem Hinweis „Foto folgt“ – kein kaputtes Bild.
 | `dorfbrunnen.jpg` | Dorfbrunnen, Eingang | 15.09.2026 |
 | `dorfbrunnen-hinten.jpg` | Dorfbrunnen, Rückseite | 15.09.2026, retuschiert |
 | `sportplatz.jpg` | VSV-Sportplatz, Zum Klay 6 | 14.09.2026 |
+| `sportplatz-weitsprunganlage.jpg` | Weitsprunganlage am Sportplatz | 22.09.2026 |
 | `feuerplatz.jpg` | Feuerplatz am Sportplatz | siehe unten |
-| `vereinsheim.jpg` | Vereinsheim am Sportplatz | Behelf, siehe unten |
+| `vereinsheim.jpg` | Vereinsheim, Eingang | 22.09.2026 |
+| `vereinsheim-gaststaette.jpg` | Vereinsheim, Gaststube | 22.09.2026 |
 
 **Format**
 
@@ -44,18 +46,27 @@ klarer Himmel, Abendsonne, beide Schilder lesbar. Der Turnhalleneingang ist neu
 dazugekommen – das ist die Tür, durch die man tatsächlich hineingeht, und sie
 war auf keinem der bisherigen Bilder zu sehen.
 
-**Das Vereinsheim ist ein Sonderfall**
+**Aufnahmen vom 22. September 2026**
 
-Es gibt nur eine Aufnahme, und davor herrscht Betrieb: rund fünfzehn Personen
-an Biertischen. Die herauszuretuschieren ist bei dieser Menge nicht möglich –
-dahinter liegen Tische, Türen und weitere Personen, es gibt keine Fläche zum
-Rekonstruieren. Ein 4:3-Fenster oberhalb der Köpfe zeigt nur Dachziegel.
+Das Vereinsheim war bis dahin ein Behelf: Es gab nur eine Aufnahme mit Betrieb
+davor, rund fünfzehn Personen an Biertischen, und gezeigt wurde allein der
+personenfreie Streifen oberhalb der Köpfe – 1024 × 290 statt 4:3. Dafür trug
+eine Sportstätte in `site.ts` ein eigenes Seitenverhältnis (`ratio`).
 
-Genommen ist deshalb der Streifen oberhalb der Köpfe mit Dach,
-Willkommensbanner und Fassade: 1024 × 290 statt 4:3. Dafür trägt eine
-Sportstätte in `site.ts` optional ein eigenes Seitenverhältnis (`ratio`).
+Das ist erledigt. Der Verein hat Aufnahmen ohne Betrieb geliefert: die
+Eingangsseite mit Willkommensbanner und Aushangkasten als Hauptbild, die
+Gaststube als zweite Ansicht. Beide im üblichen 4:3, das Feld `ratio` ist
+damit ersatzlos entfallen.
 
-Eine Aufnahme ohne Betrieb würde das ablösen und wäre die bessere Lösung.
+Vom selben Tag stammt die Weitsprunganlage als zweite Ansicht des
+Sportplatzes. Sie zeigt das Einzige, was der Rasenplatz nicht zeigt: dass hier
+auch Leichtathletik stattfindet. Die beiden Personen am Ende der Bahn harken
+die Grube und sind nicht erkennbar.
+
+Eine dritte Aufnahme vom Vereinsheim – der Aufenthaltsraum mit Dartscheibe und
+Durchgang zur Terrasse – liegt vor, ist aber nicht übernommen: Darauf stehen
+Stühle gestapelt und ein Grill mitten im Raum. Sobald der Raum hergerichtet
+ist, wäre das eine dritte Ansicht wert.
 
 **Personen auf Fotos**
 

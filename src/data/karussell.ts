@@ -5,6 +5,11 @@
  * soll – bis es das gibt, zeigt der Verein sich lieber in mehreren Bildern
  * als gar nicht. Aufbereitet mit tools/karussell.py, Hochformat 4:5.
  *
+ * Zwei Bilder stammen vom Sportabzeichen-Tag am 22. September 2026 und haben
+ * die beiden unscharfen 300-px-Vorschauen von der alten Website abgelöst.
+ * Auf dem Aufwärmbild sind auch Mitglieder des MTV Elze zu sehen – für deren
+ * Einwilligung ist der VSV nicht zuständig, das ist mit dem MTV zu klären.
+ *
  * ⚠️ Vor dem Livegang zu klären: Auf mehreren Bildern sind Personen
  * erkennbar, auf einem ein Kind. Dafür braucht es die Einwilligung der
  * Abgebildeten beziehungsweise der Erziehungsberechtigten (Recht am eigenen
@@ -12,8 +17,8 @@
  *
  * Bilder mit erkennbaren Kindergesichtern kommen hier gar nicht erst hinein.
  * Die Aufnahme vom Saisonabschluss vor dem Vereinsheim ist deshalb wieder
- * entfernt worden; als Bild der Sportstätte dient nur der personenfreie
- * Streifen oberhalb der Köpfe.
+ * entfernt worden; das Vereinsheim zeigt inzwischen eine eigene Aufnahme
+ * ohne Personen.
  */
 
 export interface KarussellBild {
@@ -59,9 +64,9 @@ export const karussellBilder: KarussellBild[] = [
     caption: 'Freitagsradler – Heimweg im Abendlicht',
   },
   {
-    src: '/images/karussell/leichtathletik-kinder.jpg',
-    alt: 'Kind springt bei einem Leichtathletik-Training über einen Kasten',
-    caption: 'Leichtathletik – Kindergruppe',
+    src: '/images/karussell/leichtathletik-weitsprung.jpg',
+    alt: 'Kind landet von hinten gesehen in der Sandgrube einer Weitsprunganlage, davor die rote Anlaufbahn',
+    caption: 'Weitsprung beim Sportabzeichen',
   },
   {
     src: '/images/karussell/freitagsradler-umland.jpg',
@@ -69,9 +74,10 @@ export const karussellBilder: KarussellBild[] = [
     caption: 'Freitagsradler – unterwegs im Umland',
   },
   {
-    src: '/images/karussell/leichtathletik-jugend.jpg',
-    alt: 'Jugendliche beim Aufwärmen auf einer Rasenfläche',
-    caption: 'Leichtathletik – Jugendtraining',
+    // Ausschnitt ganz rechts: Dort steht die Gruppe mit dem Rücken zur Kamera.
+    src: '/images/karussell/sportabzeichen-aufwaermen.jpg',
+    alt: 'Gruppe aus Kindern und Erwachsenen wärmt sich mit ausgebreiteten Armen auf einer Rasenfläche auf, von hinten gesehen',
+    caption: 'Aufwärmen vor der Abnahme des Sportabzeichens',
   },
   {
     // Winteraufnahme – deshalb ohne Bezug aufs Sommerhalbjahr beschriftet.

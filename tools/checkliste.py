@@ -10,7 +10,7 @@ from reportlab.platypus import (BaseDocTemplate, PageTemplate, Frame, Paragraph,
 import sys
 
 OUT = sys.argv[1] if len(sys.argv) > 1 else 'VSV-Roessing-Offene-Punkte.pdf'
-STAND = '15. September 2026'
+STAND = '22. September 2026'
 GRUEN = colors.HexColor('#14453D')
 HELL  = colors.HexColor('#2F7A64')
 GRAU  = colors.HexColor('#4B5D56')
@@ -283,8 +283,9 @@ for t, d in [
 # ---------- 6 ----------
 story.append(Paragraph('6 · Fotos und Einwilligungen', S['kapitel']))
 story.append(Paragraph(
-    'Im Karussell auf der Startseite laufen zwölf Bilder, die Übersicht der Sportstätten '
-    'zeigt fünf Orte. Alle Bilder sind ausdrücklich Platzhalter, bis eigenes Material da ist.',
+    'Im Karussell auf der Startseite laufen elf Bilder, die Übersicht der Sportstätten '
+    'zeigt fünf Orte. Die Aufnahmen der Sportstätten sind inzwischen echt; im Karussell '
+    'stehen die übrigen Bilder weiter als Platzhalter, bis eigenes Material da ist.',
     S['kaphint']))
 for t, d in [
   ('Einwilligung für die Personen auf den Bildern',
@@ -292,13 +293,15 @@ for t, d in [
    'Erziehungsberechtigten. Betroffen sind mehrere Karussellbilder und das Foto vom '
    'Feuerplatz. Sinnvoll gemeinsam mit der Namensfreigabe abfragen: Name ja/nein, '
    'Foto ja/nein.'),
-  ('Zwei Karussellbilder sind zu klein',
-   'Die beiden Leichtathletik-Aufnahmen liegen nur als 300-px-Vorschaubilder der alten '
-   'Website vor. Das Original liegt bei WordPress im selben Verzeichnis unter demselben '
-   'Namen ohne den Zusatz „-300x200“.'),
-  ('Vereinsheim ohne Betrieb fotografieren',
-   'Die vorhandene Aufnahme zeigt rund fünfzehn Personen davor. Verwendet wird derzeit '
-   'nur der Streifen oberhalb der Köpfe mit Dach und Willkommensbanner.'),
+  ('Einwilligung auch beim MTV Elze einholen',
+   'Auf dem Aufwärmbild vom Sportabzeichen-Tag sind Mitglieder des MTV Elze zu sehen, '
+   'der die Abnahme gemeinsam mit dem VSV durchgeführt hat. Für deren Einwilligung ist '
+   'der VSV nicht zuständig – das ist mit dem MTV zu klären. Erkennbare Gesichter zeigt '
+   'das Bild keine, alle stehen mit dem Rücken zur Kamera.'),
+  ('Aufenthaltsraum im Vereinsheim noch einmal fotografieren',
+   'Die vorhandene Aufnahme des zweiten Raums – mit Dartscheibe und Durchgang zur '
+   'Terrasse – ist nicht übernommen: Darauf stehen Stühle gestapelt und ein Grill mitten '
+   'im Raum. Aufgeräumt wäre das eine dritte Ansicht des Vereinsheims wert.'),
   ('Vier quadratische Bilder für den Social-Bereich',
    'Mindestens 400 × 400 px. Bis dahin zeigt die Seite gestaltete Platzhalter.'),
   ('Vorschaubild fürs Teilen',
@@ -359,12 +362,19 @@ for t, d in [
 
 story.append(Spacer(1, 12))
 story.append(kasten(
+    '<b>Am 22. September erledigt:</b> Vereinsheim mit eigenen Aufnahmen ohne Betrieb – '
+    'Eingang und Gaststube, beide im üblichen 4:3, der Behelfsstreifen ist weg · '
+    'Weitsprunganlage als zweite Ansicht des Sportplatzes · die beiden unscharfen '
+    '300-px-Karussellbilder durch Aufnahmen vom Sportabzeichen-Tag ersetzt · erste echte '
+    'Meldung unter „Aktuelles“.'))
+story.append(Spacer(1, 8))
+story.append(kasten(
     '<b>Seit dem 11. September erledigt:</b> Trainingszeiten aus dem Hallenplan 2025/26 '
     'eingearbeitet · Freitagsturner und Freitagsradler als eine Gruppe abgebildet · '
     'Ansprechpartner für Outdoor · Damenmannschaft entfernt · Übungsleitung Yoga '
     'eingetragen, Angebot als offen für Frauen und Männer ausgewiesen · Spielplan der Ü40 '
-    'und Ligaspiele der drei Dart-Teams · Fotos der fünf Sportstätten, Vereinsheim '
-    'eingeschlossen · Karussell auf der Startseite · Kasten „Für die zweite '
+    'und Ligaspiele der drei Dart-Teams · Fotos der fünf Sportstätten · '
+    'Karussell auf der Startseite · Kasten „Für die zweite '
     'Lebenshälfte“ · durchgehend von Sportarten statt von Sparten die Rede · '
     'Mitgliedsbeiträge nach den Vereinsformularen, Familienrechner entsprechend · '
     'vier Formulare als PDF · Leichtathletik und zwei Fußballgruppen vom Verein '

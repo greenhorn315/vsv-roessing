@@ -1,20 +1,23 @@
 """Fotos fuer das Karussell im Hero aufbereiten.
 
 Die Aufnahme vom Saisonabschluss vor dem Vereinsheim gehoerte hier einmal
-dazu und ist wieder draussen: Auf ihr sind Kinder erkennbar. Als Bild der
-Sportstaette wird nur der personenfreie Streifen oberhalb der Koepfe
-verwendet, aufbereitet von tools/optimize.py.
+dazu und ist wieder draussen: Auf ihr sind Kinder erkennbar. Das Vereinsheim
+zeigt seit dem 22. September eine eigene Aufnahme ohne Personen,
+aufbereitet von tools/optimize.py.
 
 Wie tools/optimize.py, aber mit Hochformat 4:5 als Zielformat und einem
 Bildausschnitt je Foto: Bei querformatigen Aufnahmen entscheidet der
 Ausschnitt, ob das Motiv im Bild bleibt.
 
-Zwei der Vorlagen sind nur 300 px breite Vorschaubilder von der alten
-Website. Fuer sie greift hochskalieren() – scharf wie die grossen werden sie
-dadurch nicht. Ihre Dateinamen enden auf „-300x200“ beziehungsweise
-„-300x225“; das ist das Namensschema, mit dem WordPress Vorschaubilder ablegt.
-Das Original liegt im selben Verzeichnis unter demselben Namen ohne diesen
-Zusatz. Sobald es vorliegt, hier nur die Datei tauschen und neu laufen lassen.
+Die beiden 300 px breiten Vorschaubilder von der alten Website sind seit dem
+22. September draussen: An ihre Stelle sind zwei Aufnahmen vom Sportabzeichen-
+Tag getreten, in voller Aufloesung und mit demselben Motiv. hochskalieren()
+bleibt trotzdem stehen – fuer den naechsten Fall dieser Art.
+
+Falls doch wieder eine Vorschau von der alten Website gebraucht wird: Deren
+Dateinamen enden auf „-300x200“ oder „-300x225“, das Namensschema von
+WordPress. Das Original liegt im selben Verzeichnis unter demselben Namen
+ohne diesen Zusatz.
 """
 from PIL import Image, ImageEnhance, ImageOps, ImageFilter
 import pathlib
@@ -24,7 +27,21 @@ OUT = pathlib.Path('karussell-optimiert')
 OUT.mkdir(exist_ok=True)
 
 BREITE, HOEHE = 800, 1000
-MAX_BYTES = 180 * 1024
+# Die aelteren Vorlagen kamen schon webfertig von der alten Website und liegen
+# deshalb bei 120 bis 180 KB. Aufnahmen direkt aus dem Telefon tragen ueber das
+# ganze Bild feine Struktur – belaubte Baeume vor allem –, und die kostet im
+# JPEG richtig Platz. 210 KB statt 180 KB ist der Preis dafuer, dass diese
+# Bilder scharf bleiben, statt sie in der Qualitaetsleiter kaputtzudruecken.
+MAX_BYTES = 210 * 1024
+
+# Leichter Weichzeichner vor dem Nachschaerfen, in Pixeln. Nimmt genau die
+# Blattstruktur heraus, die im JPEG teuer und fuers Motiv ohne Belang ist;
+# was danach nachgeschaerft wird, sind wieder die tragenden Kanten.
+WEICHZEICHNEN = {
+    'leichtathletik-weitsprung.jpg': 0.5,
+    # Dichtes Laub ueber die ganze obere Bildhaelfte, deshalb etwas mehr.
+    'sportabzeichen-aufwaermen.jpg': 0.7,
+}
 
 
 def tonwertkurve(img, schwarz=0.0, weiss=1.0, gamma=1.0, tiefen=0.0):
@@ -91,6 +108,9 @@ def verarbeite(quelle, ziel, ausschnitt, schwarz, weiss, gamma, tiefen,
         im = hochskalieren(im, BREITE, HOEHE)
     else:
         im = ImageOps.fit(im, (BREITE, HOEHE), Image.LANCZOS, centering=ausschnitt)
+        weich = WEICHZEICHNEN.get(ziel.name)
+        if weich:
+            im = im.filter(ImageFilter.GaussianBlur(weich))
         if schaerfe:
             im = im.filter(
                 ImageFilter.UnsharpMask(radius=1.4, percent=int(schaerfe * 100), threshold=3)
@@ -115,11 +135,14 @@ REZEPTE = {
     # Buehnenlicht: aufhellen, aber die Farbstimmung nicht wegziehen.
     '20260905-JAZZ-Dance Auftritt.JPG': (
         'jazzdance.jpg', (0.50, 0.60), 0.01, 1.00, 1.26, 0.10, 1.06, 0.98, 0.40),
-    # Kleine Vorlagen von der alten Website.
-    '21.04.20_Leichtathletik_Training_Di-Jugend_2-300x200.jpg': (
-        'leichtathletik-jugend.jpg', (0.50, 0.50), 0.03, 0.98, 1.00, 0.03, 1.08, 1.06, 0),
-    '21.06.07_Leichtathletik_Kindergruppe_Training_2-300x200.jpg': (
-        'leichtathletik-kinder.jpg', (0.32, 0.50), 0.02, 0.99, 1.14, 0.10, 1.10, 1.05, 0),
+    # Nachmittagssonne von der Seite, tiefe Schatten im Gruen: Tiefen oeffnen,
+    # Kontrast nur massvoll. Hochformat, also kein Ausschnitt noetig.
+    '20260922-Sportabzeichen-Weitsprung.JPG': (
+        'leichtathletik-weitsprung.jpg', (0.50, 0.50), 0.02, 0.99, 1.08, 0.09, 1.06, 1.04, 0.45),
+    # Ausschnitt ganz nach rechts: Dort stehen alle mit dem Ruecken zur Kamera.
+    # Weiter links sind Gesichter im Halbprofil zu sehen.
+    '20260922-Sportabzeichen-Aufwaermen.JPG': (
+        'sportabzeichen-aufwaermen.jpg', (0.95, 0.50), 0.02, 0.99, 1.06, 0.08, 1.08, 1.05, 0.45),
     # Sonniger Tag mit tiefen Schatten unter den Baeumen: Tiefen oeffnen, dann
     # nur massvoll anziehen. Ausschnitt leicht nach links, damit die ganze
     # Gruppe samt Brueckenanfang im Hochformat bleibt.

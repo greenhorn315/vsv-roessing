@@ -56,11 +56,6 @@ export interface VenuePhoto {
   alt: string;
   /** Kurze Bildunterschrift für die kleinen Ansichten. */
   caption?: string;
-  /**
-   * Seitenverhältnis als [Breite, Höhe]. Ohne Angabe 4:3 wie bei allen
-   * übrigen. Nötig, wo nur ein abweichender Ausschnitt in Frage kommt.
-   */
-  ratio?: [number, number];
 }
 
 /**
@@ -113,10 +108,16 @@ export const venues: Venue[] = [
     postalCode: '31171',
     city: 'Nordstemmen',
     note: 'Fußball und Leichtathletik im Sommerhalbjahr',
+    facilities: 'Rasenplatz mit drei Toren, dazu eine Weitsprunganlage mit Tartan-Anlaufbahn',
     photos: [
       {
         src: '/images/sportstaetten/sportplatz.jpg',
         alt: 'Rasenplatz des VSV Rössing mit drei Toren, Flutlichtmast und überdachtem Unterstand unter blauem Himmel',
+      },
+      {
+        src: '/images/sportstaetten/sportplatz-weitsprunganlage.jpg',
+        alt: 'Rote Tartanbahn mit weißer Markierungslinie, die auf eine Sandgrube zuläuft; am Ende harken zwei Personen den Sand',
+        caption: 'Weitsprunganlage',
       },
     ],
   },
@@ -141,14 +142,16 @@ export const venues: Venue[] = [
     postalCode: '31171',
     city: 'Nordstemmen',
     note: 'am Sportplatz',
+    facilities: 'Gaststube mit Tresen und Küche',
     photos: [
       {
-        // Vom Vereinsheim gibt es nur eine Aufnahme mit Betrieb davor. Gezeigt
-        // wird deshalb der Streifen oberhalb der Köpfe – breiter als 4:3, dafür
-        // ohne erkennbare Personen.
         src: '/images/sportstaetten/vereinsheim.jpg',
-        alt: 'Vereinsheim des VSV Rössing mit rotem Ziegeldach und einem Banner mit der Aufschrift „Herzlich Willkommen auf unserer Sportanlage“',
-        ratio: [1024, 290],
+        alt: 'Eingang des Vereinsheims: Klinkerfassade mit Glastür, darüber ein Banner mit Vereinswappen und der Aufschrift „Herzlich Willkommen auf unserer Sportanlage“, links der Aushangkasten',
+      },
+      {
+        src: '/images/sportstaetten/vereinsheim-gaststaette.jpg',
+        alt: 'Gaststube im Vereinsheim mit Tresen, Barhockern, Holztischen und einer Vitrine voller Pokale',
+        caption: 'Gaststube',
       },
     ],
   },

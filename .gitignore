@@ -2,6 +2,9 @@
 dist/
 .astro/
 
+# Erzeugte Checkliste – entsteht aus tools/checkliste.py, nicht einchecken
+VSV-Roessing-Offene-Punkte.pdf
+
 # Dependencies
 node_modules/
 
