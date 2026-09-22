@@ -7,9 +7,9 @@
  * müssen zusammenpassen; der Impressumstext ist bewusst eine unveränderte
  * Übernahme und wird deshalb nicht aus dieser Datei erzeugt.
  *
- * Der Name des Kassenwarts fehlt noch. Solange er fehlt, steht die Stelle
- * trotzdem in der Liste: Sie ist besetzt – die Beitragssätze hat der Kassenwart
- * bestätigt –, es fehlt nur der Name.
+ * Alle vier Ämter sind benannt. Das Feld `name` bleibt trotzdem optional: Bei
+ * einem Wechsel ist eine Stelle vorübergehend unbesetzt, und dann soll dort
+ * ein zurückhaltendes „Name folgt" stehen statt einer erfundenen Angabe.
  */
 
 export interface Vorstandsposten {
@@ -22,6 +22,6 @@ export interface Vorstandsposten {
 export const vorstand: Vorstandsposten[] = [
   { role: '1. Vorsitzender', name: 'Erich Könneke' },
   { role: '2. Vorsitzender', name: 'Uwe Speer' },
-  { role: 'Kassenwart' },
+  { role: 'Kassenwart', name: 'Thomas Kuse' },
   { role: 'Schriftführerin', name: 'Monika Koch' },
 ];
