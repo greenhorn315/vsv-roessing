@@ -113,6 +113,9 @@ eigenen Klassen, Farben oder Skalen.
 * **Wiederkehrendes** steckt in Komponenten statt in CSS-Klassen:
   `Container.astro` (Inhaltsbreite), `SectionHead.astro` (Überschrift eines
   Abschnitts), `PageHeader.astro`.
+* **Bilder** direkt mit Astros `<Image>`/`<Picture>` aus `astro:assets` und
+  `layout="constrained"` samt Anzeigebreite; `srcset` und `sizes` rechnet
+  Astro daraus selbst.
 * **Neue Gestaltung** mit Utilities und daisyUI-Klassen direkt im Markup.
   Kein eigenes CSS in `global.css` und keine `<style>`-Blöcke.
 * Zielniveau Barrierefreiheit: WCAG 2.1 AA (Kontraste, Tastaturbedienung,

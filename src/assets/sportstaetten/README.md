@@ -22,8 +22,9 @@ Hinweis „Foto folgt“.
 **Format**
 
 * Querformat 4 : 3 als JPG. Die Dateien hier sind Vorlagen: Astro rechnet
-  daraus beim Bauen AVIF, WebP und JPEG in mehreren Breiten (bis 1024 px), der
-  Browser wählt davon. Die vorhandenen Dateien sind noch 1024 × 768 px (die
+  daraus beim Bauen AVIF, WebP und JPEG in mehreren Breiten (`layout="constrained"`,
+  bis zur doppelten Anzeigebreite von 560 px, höchstens so breit wie die
+  Vorlage), der Browser wählt davon. Die vorhandenen Dateien sind noch 1024 × 768 px (die
   Gaststube 640 × 480) – so kamen sie aus der Zeit, als sie unverändert
   ausgeliefert wurden. Neue Vorlagen dürfen größer sein, siehe
   `tools/README.md`.
