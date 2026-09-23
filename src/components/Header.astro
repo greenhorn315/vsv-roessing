@@ -15,13 +15,44 @@ const isActive = (href: string) => {
   const target = stripSlash(href);
   return target === '/' ? path === '/' : path === target || path.startsWith(`${target}/`);
 };
+
+// Menüpunkte (daisyUI-menu). Breit: Pillen nebeneinander; bis 940px:
+// untereinander im aufklappbaren Panel. daisyUI nimmt den Fokusrahmen weg,
+// deshalb setzen wir unseren (3px Korall) ausdrücklich wieder.
+const linkBase = [
+  'flex items-center gap-[0.45rem] rounded-full px-[0.85rem] py-[0.55rem]',
+  'text-[0.95rem] whitespace-nowrap no-underline transition-colors duration-150',
+  'focus-visible:outline-3 focus-visible:outline-solid focus-visible:outline-accent focus-visible:outline-offset-3',
+  'max-[940px]:rounded-sm max-[940px]:px-4 max-[940px]:py-[0.9rem] max-[940px]:text-[1.05rem]',
+];
+// Aktive Seite nicht nur über Farbe kennzeichnen (WCAG 1.4.1): zusätzlich fett.
+const linkNormal = [
+  'font-medium text-base-content',
+  // daisyUI tönt fokussierte Punkte grau; bei uns zeigt nur der Rahmen den Fokus.
+  'not-aria-[current=page]:focus-visible:bg-transparent',
+  'not-aria-[current=page]:hover:bg-tint-green not-aria-[current=page]:hover:text-primary',
+  'aria-[current=page]:bg-primary aria-[current=page]:text-white aria-[current=page]:font-semibold',
+  'max-[940px]:border-b max-[940px]:border-border',
+];
+const linkCta = [
+  'bg-accent text-white font-semibold ml-[0.35rem]',
+  'hover:bg-accent-hover hover:text-white aria-[current=page]:bg-accent-hover',
+  'max-[940px]:justify-center max-[940px]:ml-0 max-[940px]:mt-3 max-[940px]:min-h-12',
+];
 ---
 
-<header class="site-header">
-  <div class="header-inner">
-    <a class="brand" href="/">
+<header
+  id="siteHeader"
+  class="sticky top-0 z-100 border-b border-transparent bg-base-200/88 backdrop-blur-[10px] backdrop-saturate-[1.4] transition-[border-color,box-shadow] duration-200 data-scrolled:border-border data-scrolled:shadow-sm"
+>
+  <div
+    class="navbar group mx-auto min-h-header max-w-site justify-between gap-4 px-[clamp(1rem,4vw,1.5rem)] py-0"
+  >
+    <a class="flex items-center gap-2.5 py-2 no-underline" href="/">
+      {/* Vereinswappen. Das Bild trägt alt="", weil der Vereinsname direkt
+         daneben als Text steht – sonst läse ein Screenreader ihn doppelt. */}
       <Image
-        class="brand-mark"
+        class="h-12 w-auto shrink-0"
         src={logo}
         alt=""
         width={41}
@@ -30,249 +61,84 @@ const isActive = (href: string) => {
         loading="eager"
         decoding="async"
       />
-      <span class="brand-text">
-        <strong>{site.shortName}</strong>
-        <span>von {site.founded} e.V.</span>
+      <span class="flex flex-col leading-[1.15]">
+        <strong class="font-display text-[1.1rem] text-primary">{site.shortName}</strong>
+        <span class="text-[0.72rem] text-muted">von {site.founded} e.V.</span>
       </span>
     </a>
 
+    {/* Menüknopf fürs Handy. Öffnet das Menü als Popover: Der Browser
+       übernimmt Escape, Klick daneben und die Rückkehr des Fokus. */}
     <button
-      class="nav-toggle"
+      class="btn btn-ghost btn-square size-12 min-h-12 rounded-sm border border-border text-primary hover:translate-y-0 min-[941px]:hidden"
       id="navToggle"
       type="button"
+      popovertarget="mainNav"
       aria-label="Menü öffnen"
       aria-expanded="false"
       aria-controls="mainNav"
     >
-      <Icon name="menu" size={26} class="icon-menu" />
-      <Icon name="close" size={26} class="icon-close" />
+      <Icon name="menu" size={26} class="group-has-[#mainNav:popover-open]:hidden" />
+      <Icon name="close" size={26} class="hidden group-has-[#mainNav:popover-open]:block" />
     </button>
 
-    <nav class="main-nav" id="mainNav" aria-label="Hauptnavigation">
-      {
-        navigation.map((item) => (
-          <a
-            href={item.href}
-            class:list={['nav-link', { 'nav-link--cta': item.cta }]}
-            aria-current={isActive(item.href) ? 'page' : undefined}
-          >
-            <Icon name={item.icon} />
-            {item.label}
-          </a>
-        ))
-      }
+    {/* Bis 940px ein Popover in der obersten Ebene (top layer). Das umgeht
+       auch den backdrop-filter des Headers, der ein fixiertes Panel sonst
+       einfangen würde. Breit überschreiben min-[941px]:-Klassen die
+       Popover-Vorgaben des Browsers, und die Liste steht in der Zeile. */}
+    <nav
+      id="mainNav"
+      popover
+      aria-label="Hauptnavigation"
+      class="fixed inset-x-0 top-[calc(var(--spacing-header)+1px)] bottom-auto m-0 max-h-[calc(100dvh-var(--spacing-header))] w-full overflow-y-auto overscroll-contain border-0 border-b border-border bg-base-100 px-[clamp(1rem,4vw,1.5rem)] pt-4 pb-6 text-base-content shadow-lg -translate-y-1.5 opacity-0 transition-[opacity,translate,display,overlay] transition-discrete duration-200 open:translate-y-0 open:opacity-100 starting:open:-translate-y-1.5 starting:open:opacity-0 min-[941px]:static min-[941px]:flex min-[941px]:max-h-none min-[941px]:w-auto min-[941px]:translate-y-0 min-[941px]:overflow-visible min-[941px]:border-0 min-[941px]:bg-transparent min-[941px]:p-0 min-[941px]:opacity-100 min-[941px]:shadow-none"
+    >
+      <ul
+        class="menu menu-horizontal m-0 list-none items-center gap-1 p-0 [--menu-active-bg:var(--color-primary)] [--menu-active-fg:#fff] max-[940px]:flex max-[940px]:w-full max-[940px]:flex-col max-[940px]:items-stretch max-[940px]:gap-[0.35rem]"
+      >
+        {
+          navigation.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class:list={[linkBase, item.cta ? linkCta : linkNormal]}
+                aria-current={isActive(item.href) ? 'page' : undefined}
+              >
+                <Icon name={item.icon} />
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
     </nav>
   </div>
 </header>
-
-<style>
-  .site-header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: color-mix(in srgb, var(--c-bg) 88%, transparent);
-    backdrop-filter: blur(10px) saturate(1.4);
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  }
-  /* Trennlinie erst zeigen, wenn wirklich gescrollt wird. */
-  :global(body.is-scrolled) .site-header {
-    border-bottom-color: var(--c-border);
-    box-shadow: var(--shadow-sm);
-  }
-
-  .header-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--sp-4);
-    min-height: var(--header-height);
-    max-width: var(--max-width);
-    margin-inline: auto;
-    padding-inline: clamp(1rem, 4vw, 1.5rem);
-  }
-
-  .brand {
-    display: flex;
-    align-items: center;
-    gap: 0.625rem;
-    text-decoration: none;
-    padding-block: var(--sp-2);
-  }
-  /* Vereinswappen. Das Bild traegt alt="", weil der Vereinsname direkt
-     daneben als Text steht – sonst laese ein Screenreader ihn doppelt. */
-  .brand-mark {
-    height: 48px;
-    width: auto;
-    flex-shrink: 0;
-  }
-  .brand-text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.15;
-  }
-  .brand-text strong {
-    font-family: var(--font-display);
-    font-size: 1.1rem;
-    color: var(--c-primary);
-  }
-  .brand-text > span {
-    font-size: 0.72rem;
-    color: var(--c-text-muted);
-  }
-
-  .main-nav {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-  }
-
-  .nav-link {
-    display: flex;
-    align-items: center;
-    gap: 0.45rem;
-    text-decoration: none;
-    color: var(--c-text);
-    padding: 0.55rem 0.85rem;
-    border-radius: var(--radius-pill);
-    font-size: 0.95rem;
-    font-weight: 500;
-    white-space: nowrap;
-    transition: background-color 0.16s ease, color 0.16s ease;
-  }
-  .nav-link:hover {
-    background: var(--c-tint-green);
-    color: var(--c-primary);
-  }
-  /* Aktive Seite nicht nur über Farbe kennzeichnen (WCAG 1.4.1). */
-  .nav-link[aria-current='page'] {
-    background: var(--c-primary);
-    color: #fff;
-    font-weight: 600;
-  }
-  .nav-link--cta {
-    background: var(--c-accent-ink);
-    color: #fff;
-    font-weight: 600;
-    margin-left: 0.35rem;
-  }
-  .nav-link--cta:hover {
-    background: var(--c-accent-ink-hover);
-    color: #fff;
-  }
-  .nav-link--cta[aria-current='page'] {
-    background: var(--c-accent-ink-hover);
-  }
-
-  .nav-toggle {
-    display: none;
-    background: none;
-    border: 1px solid var(--c-border);
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    width: 48px;
-    height: 48px;
-    place-items: center;
-    color: var(--c-primary);
-  }
-  .nav-toggle :global(.icon-close) { display: none; }
-  .nav-toggle[aria-expanded='true'] :global(.icon-menu) { display: none; }
-  .nav-toggle[aria-expanded='true'] :global(.icon-close) { display: block; }
-
-  @media (max-width: 940px) {
-    .nav-toggle { display: grid; }
-
-    .main-nav {
-      /* Nicht `fixed`: der backdrop-filter des Headers macht diesen zum
-         Containing Block, wodurch ein fixiertes Panel kollabieren würde. */
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      max-height: calc(100dvh - var(--header-height));
-      background: var(--c-surface);
-      box-shadow: var(--shadow-lg);
-      border-bottom: 1px solid var(--c-border);
-      flex-direction: column;
-      align-items: stretch;
-      justify-content: start;
-      gap: 0.35rem;
-      padding: var(--sp-4) clamp(1rem, 4vw, 1.5rem) var(--sp-5);
-      overflow-y: auto;
-      overscroll-behavior: contain;
-      transform: translateY(-6px);
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
-    }
-    .main-nav.is-open {
-      opacity: 1;
-      transform: none;
-      visibility: visible;
-    }
-    .nav-link {
-      padding: 0.9rem 1rem;
-      font-size: 1.05rem;
-      border-bottom: 1px solid var(--c-border);
-      border-radius: var(--radius-sm);
-    }
-    .nav-link--cta {
-      justify-content: center;
-      margin: var(--sp-3) 0 0;
-      border-bottom: none;
-      min-height: 48px;
-    }
-  }
-</style>
 
 <script>
   const toggle = document.getElementById('navToggle');
   const nav = document.getElementById('mainNav');
 
   if (toggle && nav) {
-    const mobile = window.matchMedia('(max-width: 940px)');
-
-    const setOpen = (open: boolean) => {
-      nav.classList.toggle('is-open', open);
+    // Zustand und Beschriftung des Knopfs nachführen; beim Öffnen wie
+    // bisher direkt auf den ersten Menüpunkt springen.
+    nav.addEventListener('toggle', (event) => {
+      const open = (event as ToggleEvent).newState === 'open';
       toggle.setAttribute('aria-expanded', String(open));
       toggle.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
-      document.body.style.overflow = open ? 'hidden' : '';
-      // Geschlossenes Menü darf nicht per Tab erreichbar sein.
-      if (mobile.matches) nav.inert = !open;
       if (open) nav.querySelector<HTMLAnchorElement>('a')?.focus();
-    };
-
-    const syncViewport = () => {
-      if (mobile.matches) {
-        nav.inert = !nav.classList.contains('is-open');
-      } else {
-        nav.inert = false;
-        setOpen(false);
-      }
-    };
-
-    syncViewport();
-    mobile.addEventListener('change', syncViewport);
-
-    toggle.addEventListener('click', () => {
-      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
     });
 
-    nav.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', () => setOpen(false));
-    });
-
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && nav.classList.contains('is-open')) {
-        setOpen(false);
-        toggle.focus();
-      }
+    // Wird das Fenster breiter, gehört das Menü wieder in die Zeile.
+    const mobile = window.matchMedia('(max-width: 940px)');
+    mobile.addEventListener('change', () => {
+      if (!mobile.matches && nav.matches(':popover-open')) nav.hidePopover();
     });
   }
 
-  // Schatten am Header erst nach dem ersten Scrollen.
+  // Trennlinie und Schatten am Header erst, wenn wirklich gescrollt wird.
+  const header = document.getElementById('siteHeader');
   const onScroll = () => {
-    document.body.classList.toggle('is-scrolled', window.scrollY > 8);
+    header?.toggleAttribute('data-scrolled', window.scrollY > 8);
   };
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
