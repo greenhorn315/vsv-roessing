@@ -4,68 +4,23 @@ import { getFacts } from '../lib/site';
 const facts = await getFacts();
 ---
 
-<section class="facts" aria-label="Der Verein in Zahlen">
+{/* daisyUI-stats als dunkles Band: vier Spalten, mobil zwei. Zahl optisch
+    zuerst (flex-col-reverse), semantisch bleibt dt (Label) vorn. */}
+<section class="bg-primary text-white mt-section py-8" aria-label="Der Verein in Zahlen">
   <div class="container">
-    <dl class="facts-row">
+    <dl
+      class="stats grid grid-flow-row grid-cols-4 gap-6 m-0 rounded-none overflow-visible max-[720px]:grid-cols-2 max-[720px]:gap-x-3 max-[720px]:gap-y-4"
+    >
       {
         facts.map((fact) => (
-          <div class="fact">
-            <dt>{fact.label}</dt>
-            <dd>{fact.value}</dd>
+          <div class="stat flex flex-col-reverse gap-[0.15rem] p-0 pe-6 border-0 border-e border-solid border-white/18 last:border-e-0 max-[720px]:even:border-e-0">
+            <dt class="stat-title text-[0.9rem] text-white/78 whitespace-normal">{fact.label}</dt>
+            <dd class="stat-value m-0 font-display text-[clamp(1.6rem,1.2rem+1.6vw,2.2rem)] font-semibold leading-[1.05] whitespace-normal">
+              {fact.value}
+            </dd>
           </div>
         ))
       }
     </dl>
   </div>
 </section>
-
-<style>
-  .facts {
-    background: var(--c-primary);
-    color: #fff;
-    margin-top: var(--section-y);
-    padding-block: var(--sp-6);
-  }
-
-  .facts-row {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--sp-5);
-    margin: 0;
-  }
-
-  .fact {
-    padding-right: var(--sp-5);
-    border-right: 1px solid rgba(255, 255, 255, 0.18);
-    /* Zahl optisch zuerst, semantisch bleibt dt (Label) vorn. */
-    display: flex;
-    flex-direction: column-reverse;
-    gap: 0.15rem;
-  }
-  .fact:last-child {
-    border-right: none;
-  }
-
-  .fact dt {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.78);
-  }
-
-  .fact dd {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.2rem);
-    font-weight: 600;
-    line-height: 1.05;
-  }
-
-  @media (max-width: 720px) {
-    .facts-row {
-      grid-template-columns: repeat(2, 1fr);
-      gap: var(--sp-4) var(--sp-3);
-    }
-    .fact:nth-child(2n) {
-      border-right: none;
-    }
-  }
-</style>

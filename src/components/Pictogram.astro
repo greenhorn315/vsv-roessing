@@ -36,7 +36,7 @@ if (name && !bild) {
 {
   bild ? (
     <Image
-      class:list={['pictogram', className]}
+      class:list={['pictogram block aspect-square h-auto', className]}
       src={bild}
       alt=""
       width={size}
@@ -46,24 +46,14 @@ if (name && !bild) {
       decoding="async"
     />
   ) : (
+    /* Gleiche Kontur wie die Piktogramme, nur ohne Figur. */
     <span
-      class:list={['pictogram', 'pictogram--leer', className]}
+      class:list={[
+        'pictogram block aspect-square border border-dashed border-border-strong rounded-[17%]',
+        className,
+      ]}
       style={`width:${size}px;height:${size}px`}
       aria-hidden="true"
     />
   )
 }
-
-<style>
-  .pictogram {
-    display: block;
-    aspect-ratio: 1;
-    height: auto;
-  }
-
-  /* Gleiche Kontur wie die Piktogramme, nur ohne Figur. */
-  .pictogram--leer {
-    border: 1px dashed var(--c-border-strong);
-    border-radius: 17%;
-  }
-</style>

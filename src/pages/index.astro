@@ -53,19 +53,21 @@ const SportCountWord = await getSportCountWordCapitalized();
   </section>
 
   <section class="section">
-    <div class="container split">
+    <div
+      class="container grid grid-cols-[1.3fr_1fr] gap-[clamp(2rem,5vw,4rem)] items-start max-[900px]:grid-cols-1"
+    >
       <div class="reveal">
-        <div class="section-head" style="margin-bottom:var(--sp-5)">
+        <div class="section-head mb-6">
           <h2>Aktuelles aus dem Verein</h2>
         </div>
         <NewsList limit={3} />
       </div>
       <div class="reveal">
-        <div class="section-head" style="margin-bottom:var(--sp-5)">
+        <div class="section-head mb-6">
           <h2>Nächste Trainingszeiten</h2>
         </div>
         <TrainingList limit={6} />
-        <a class="btn btn-link" href="/sportangebote/" style="margin-top:var(--sp-4)">
+        <a class="btn btn-link mt-4" href="/sportangebote/">
           Alle Trainingszeiten
           <Icon name="arrowRight" size={16} />
         </a>
@@ -101,17 +103,3 @@ const SportCountWord = await getSportCountWordCapitalized();
     </div>
   </section>
 </BaseLayout>
-
-<style>
-  .split {
-    display: grid;
-    grid-template-columns: 1.3fr 1fr;
-    gap: clamp(2rem, 5vw, 4rem);
-    align-items: start;
-  }
-  @media (max-width: 900px) {
-    .split {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>

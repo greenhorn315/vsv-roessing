@@ -38,29 +38,37 @@ const gruppen: { day: Weekday | null; entries: Training[] }[] =
   grouped && !sport && !limit
     ? await trainingsByDay()
     : [{ day: null, entries: sichtbar }];
+
+// Zusatzzeilen unter dem Namen (Zielgruppe, Übungsleitung, Ort …)
+const klein = 'text-[0.8rem] text-muted font-normal';
 ---
 
-<div class="trainings">
+<div class="flex flex-col gap-6">
   {
     gruppen.map((gruppe) => (
-      <section class="trainings__group">
-        {gruppe.day && <h3 class="trainings__day">{wochentagNamen[gruppe.day]}</h3>}
-        <ul class="trainings__list">
+      <section>
+        {gruppe.day && <h3 class="text-[1rem] m-0 mb-[0.6rem]">{wochentagNamen[gruppe.day]}</h3>}
+        <ul class="list-none p-0 m-0 flex flex-col gap-[0.6rem]">
           {gruppe.entries.map((training) => (
-            <li>
-              <span class="trainings__name">
+            <li class="flex justify-between items-center gap-3 py-[0.85rem] px-4 bg-base-100 border border-border rounded-sm">
+              <span class="flex flex-col font-medium leading-[1.3]">
                 {training.title}
-                {training.audience && <small>{training.audience}</small>}
+                {training.audience && <small class={klein}>{training.audience}</small>}
                 {training.trainers && training.trainers.length > 0 && (
-                  <small>Übungsleitung: {training.trainers.join(', ')}</small>
+                  <small class={klein}>Übungsleitung: {training.trainers.join(', ')}</small>
                 )}
+                {/* Halbjahres-Hinweis, damit eine Wintergruppe im Sommer nicht
+                    unkommentiert im Wochenplan steht. */}
                 {training.season && (
-                  <small class="trainings__saison">{seasonLabels[training.season]}</small>
+                  <small class="inline-block mt-[0.2rem] py-[0.1rem] px-2 rounded-full bg-base-300 text-primary text-[0.74rem] font-semibold tracking-[0.03em]">
+                    {seasonLabels[training.season]}
+                  </small>
                 )}
-                {training.note && <small class="trainings__note">{training.note}</small>}
-                {training.place && <small>{training.place}</small>}
+                {training.note && <small class:list={[klein, 'italic']}>{training.note}</small>}
+                {training.place && <small class={klein}>{training.place}</small>}
               </span>
-              <span class="trainings__time">
+              {/* Dunkles Braun auf Gelb: 8,4:1 Kontrast. */}
+              <span class="badge badge-warning h-auto border-0 rounded-full gap-[0.35rem] py-[0.3rem] px-[0.7rem] text-[0.82rem] font-bold text-[#4A3600] whitespace-nowrap">
                 <Icon name="clock" size={14} />
                 {gruppe.day ? training.time : `${training.day} ${training.time}`}
               </span>
@@ -71,74 +79,3 @@ const gruppen: { day: Weekday | null; entries: Training[] }[] =
     ))
   }
 </div>
-
-<style>
-  .trainings {
-    display: flex;
-    flex-direction: column;
-    gap: var(--sp-5);
-  }
-  .trainings__day {
-    font-size: 1rem;
-    margin: 0 0 0.6rem;
-  }
-  .trainings__list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-  }
-  .trainings__list li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--sp-3);
-    padding: 0.85rem 1rem;
-    background: var(--c-surface);
-    border: 1px solid var(--c-border);
-    border-radius: var(--radius-sm);
-  }
-  .trainings__name {
-    display: flex;
-    flex-direction: column;
-    font-weight: 500;
-    line-height: 1.3;
-  }
-  .trainings__name small {
-    font-size: 0.8rem;
-    color: var(--c-text-muted);
-    font-weight: 400;
-  }
-  /* Halbjahres-Hinweis, damit eine Wintergruppe im Sommer nicht
-     unkommentiert im Wochenplan steht. */
-  .trainings__saison {
-    display: inline-block;
-    margin-top: 0.2rem;
-    padding: 0.1rem 0.5rem;
-    border-radius: var(--radius-pill);
-    background: var(--c-surface-sunken);
-    color: var(--c-primary);
-    font-size: 0.74rem !important;
-    font-weight: 600;
-    letter-spacing: 0.03em;
-  }
-
-  .trainings__note {
-    font-style: italic;
-  }
-  .trainings__time {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    font-size: 0.82rem;
-    font-weight: 700;
-    padding: 0.3rem 0.7rem;
-    border-radius: var(--radius-pill);
-    background: var(--c-sun);
-    /* Dunkles Braun auf Gelb: 8,4:1 Kontrast. */
-    color: #4A3600;
-    white-space: nowrap;
-  }
-</style>
