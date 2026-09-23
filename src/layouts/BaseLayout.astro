@@ -120,7 +120,9 @@ const jsonLdText = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
     <script is:inline type="application/ld+json" set:html={jsonLdText} />
   </head>
 
-  <body>
+  {/* Offenes Handymenü (Popover in Header.astro): Seite dahinter nicht
+     mitscrollen. */}
+  <body class="max-[940px]:has-[#mainNav:popover-open]:overflow-hidden">
     <a class="skip-link" href="#main">Zum Inhalt springen</a>
     <Header />
     <main id="main">

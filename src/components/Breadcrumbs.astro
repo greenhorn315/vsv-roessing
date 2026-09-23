@@ -10,55 +10,34 @@ interface Props {
 const { items } = Astro.props;
 ---
 
-<nav class="site-breadcrumbs" aria-label="Sie sind hier">
-  <ol>
+{/* daisyUI-breadcrumbs: Trenner zeichnet die Komponente selbst (für
+   Screenreader unsichtbar). Umbrechen statt waagerecht zu scrollen, damit
+   lange Titel auf dem Handy lesbar bleiben. daisyUI setzt einen eigenen
+   Fokusrahmen; unser 3px-Korall-Rahmen wird ausdrücklich gesetzt. */}
+<nav
+  class="breadcrumbs overflow-visible pt-6 pb-0 text-[0.86rem] [&>ol]:flex-wrap [&>ol]:whitespace-normal"
+  aria-label="Sie sind hier"
+>
+  <ol class="m-0 list-none">
     {
-      items.map((item, index) => (
-        <li>
-          {item.href ? (
-            <a href={item.href}>{item.label}</a>
-          ) : (
-            <span aria-current="page">{item.label}</span>
-          )}
-          {index < items.length - 1 && <span class="sep" aria-hidden="true">/</span>}
-        </li>
-      ))
+      items.map((item) =>
+        item.href ? (
+          <li>
+            <a
+              class="text-muted no-underline hover:text-primary hover:underline focus-visible:outline-3 focus-visible:outline-solid focus-visible:outline-accent focus-visible:outline-offset-3"
+              href={item.href}
+            >
+              {item.label}
+            </a>
+          </li>
+        ) : (
+          <li>
+            <span class="cursor-default font-semibold text-primary hover:no-underline" aria-current="page">
+              {item.label}
+            </span>
+          </li>
+        )
+      )
     }
   </ol>
 </nav>
-
-<style>
-  .site-breadcrumbs {
-    padding-top: var(--sp-5);
-  }
-  .site-breadcrumbs ol {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0;
-    margin: 0;
-    font-size: 0.86rem;
-  }
-  .site-breadcrumbs li {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  .site-breadcrumbs a {
-    color: var(--c-text-muted);
-    text-decoration: none;
-  }
-  .site-breadcrumbs a:hover {
-    color: var(--c-primary);
-    text-decoration: underline;
-  }
-  .site-breadcrumbs [aria-current='page'] {
-    color: var(--c-primary);
-    font-weight: 600;
-  }
-  .sep {
-    color: var(--c-border-strong);
-  }
-</style>

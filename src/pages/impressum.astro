@@ -20,14 +20,14 @@ const { Content } = await render(impressum);
 
   <section class="section">
     <div class="container">
-      <p class="intro">{intro}</p>
+      <p class="max-w-[720px] font-semibold">{intro}</p>
 
       <LegalContent><Content /></LegalContent>
 
-      <div class="datenschutz">
-        <h2>{datenschutzHinweis.heading}</h2>
+      <div class="max-w-[720px]">
+        <h2 class="mt-8 text-step-1">{datenschutzHinweis.heading}</h2>
         <p>
-          <a class="datenschutz__link" href={datenschutzHinweis.href}>
+          <a class="inline-flex items-center gap-[0.35rem] font-semibold text-accent" href={datenschutzHinweis.href}>
             {datenschutzHinweis.linkLabel}
             <Icon name="arrowRight" size={16} />
           </a>
@@ -36,24 +36,3 @@ const { Content } = await render(impressum);
     </div>
   </section>
 </BaseLayout>
-
-<style>
-  .intro {
-    max-width: 720px;
-    font-weight: 600;
-  }
-  .datenschutz {
-    max-width: 720px;
-  }
-  .datenschutz h2 {
-    font-size: var(--step-1);
-    margin-top: var(--sp-6);
-  }
-  .datenschutz__link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    font-weight: 600;
-    color: var(--c-accent-ink);
-  }
-</style>

@@ -8,14 +8,14 @@ import Icon from '../components/Icon.astro';
   description="Diese Seite gibt es beim VSV Rössing nicht (mehr). Weiter geht es über die Startseite, die Sportangebote oder den Kontakt."
   noindex
 >
-  <section class="section notfound">
+  <section class="py-[clamp(3rem,8vw,6rem)]">
     <div class="container">
       <p class="eyebrow">Fehler 404</p>
       <h1>Diese Seite ist wohl ins Aus gegangen.</h1>
       <p class="lead">
         Die Adresse gibt es nicht (mehr). Von hier kommst du direkt weiter:
       </p>
-      <div class="notfound__ctas">
+      <div class="mt-8 flex flex-wrap gap-3">
         <a class="btn btn-accent" href="/"><Icon name="home" />Zur Startseite</a>
         <a class="btn btn-outline" href="/sportangebote/">Sportangebote</a>
         <a class="btn btn-outline" href="/kontakt/">Kontakt</a>
@@ -23,15 +23,3 @@ import Icon from '../components/Icon.astro';
     </div>
   </section>
 </BaseLayout>
-
-<style>
-  .notfound {
-    padding-block: clamp(3rem, 8vw, 6rem);
-  }
-  .notfound__ctas {
-    display: flex;
-    gap: var(--sp-3);
-    flex-wrap: wrap;
-    margin-top: var(--sp-6);
-  }
-</style>
