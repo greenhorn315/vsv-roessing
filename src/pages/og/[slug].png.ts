@@ -2,11 +2,6 @@ import type { APIRoute, GetStaticPaths } from 'astro';
 import { getSports, type Sport } from '../../lib/sportarten';
 import { vorschaubild } from '../../lib/og';
 
-/**
- * Vorschaubild je Sportart unter /og/<slug>.png – erscheint, wenn jemand
- * die Detailseite in WhatsApp, Facebook & Co. teilt. Die Startseite und alle
- * übrigen Seiten zeigen weiter public/og-default.png.
- */
 export const getStaticPaths = (async () =>
   (await getSports()).map((sport) => ({ params: { slug: sport.id }, props: { sport } }))) satisfies GetStaticPaths;
 

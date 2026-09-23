@@ -1,16 +1,3 @@
-# Formulare zum Herunterladen auf /mitglied-werden/#formulare.
-#
-# Der Schlüssel ganz links ist die interne Kennung und erscheint nirgends auf
-# der Seite; er muss in der Datei eindeutig sein. Darunter:
-#   order  Reihenfolge auf der Seite, aufsteigend
-#   title  Name des Formulars
-#   text   ein, zwei Sätze, wofür es gedacht ist
-#   file   Pfad unter public/, also /downloads/<datei>.pdf
-#   pages  Seitenzahl, wird neben dem Link angezeigt
-#
-# Die Dateigröße steht bewusst nicht hier: Sie wird beim Bauen aus der Datei
-# unter public/ gelesen und stimmt damit auch nach einem Austausch des PDFs.
-# Fehlt die Datei, bricht der Build mit einer Meldung ab.
 
 aufnahmeantrag:
   order: 1

@@ -4,12 +4,6 @@ import Icon from './Icon.astro';
 import Photo from './Photo.astro';
 import { site } from '../lib/site';
 
-/*
- * Vier quadratische Kacheln. Bilder dafür kommen nach src/assets/social/
- * (JPG, PNG oder WebP) und werden nach Dateinamen sortiert verwendet; bis
- * dahin zeigt jede Kachel nur den gestalteten Platzhalter – ohne Anfrage an
- * den Server.
- */
 const dateien = import.meta.glob<ImageMetadata>('/src/assets/social/*.{jpg,png,webp}', {
   eager: true,
   import: 'default',

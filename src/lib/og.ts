@@ -5,17 +5,6 @@ import satori from 'satori';
 import sharp from 'sharp';
 import { site } from './site';
 
-/**
- * Vorschaubilder für WhatsApp, Facebook & Co. (Open Graph), beim Bauen
- * erzeugt. Satori setzt das Layout als SVG, sharp macht daraus ein PNG.
- *
- * Satori liest nur TTF, OTF und WOFF – kein WOFF2. Die Variable-Fonts der
- * Seite (`@fontsource-variable/…`) gibt es nur als WOFF2, deshalb kommen die
- * Schriften hier aus den statischen Paketen `@fontsource/fraunces` und
- * `@fontsource/source-sans-3`. Gebraucht wird nur der Zeichensatz „latin“,
- * der enthält auch Umlaute und ß.
- */
-
 export const OG_WIDTH = 1200;
 export const OG_HEIGHT = 630;
 
@@ -31,6 +20,7 @@ const fromRoot = (...teile: string[]) => resolve(process.cwd(), ...teile);
 
 let schriften: Promise<{ name: string; data: Buffer; weight: 400 | 600 | 700; style: 'normal' }[]> | undefined;
 
+// Satori liest kein WOFF2, deshalb die statischen @fontsource-Pakete (WOFF).
 function ladeSchriften() {
   schriften ??= Promise.all([
     readFile(fromRoot('node_modules/@fontsource/fraunces/files/fraunces-latin-600-normal.woff')).then(
@@ -46,7 +36,6 @@ function ladeSchriften() {
   return schriften;
 }
 
-/** Piktogramm aus `src/assets/piktogramme/` als Data-URI. */
 async function piktogramm(name: string | undefined): Promise<string | undefined> {
   if (!name) return undefined;
   const pfad = fromRoot('src/assets/piktogramme', `${name}.png`);
@@ -54,7 +43,6 @@ async function piktogramm(name: string | undefined): Promise<string | undefined>
   return `data:image/png;base64,${(await readFile(pfad)).toString('base64')}`;
 }
 
-/** Minimaler Ersatz für JSX: Satori erwartet Objekte in Reacts Form. */
 type Knoten = { type: string; props: Record<string, unknown> };
 const h = (type: string, style: Record<string, unknown>, ...children: unknown[]): Knoten => ({
   type,
@@ -62,15 +50,11 @@ const h = (type: string, style: Record<string, unknown>, ...children: unknown[])
 });
 
 interface Vorschau {
-  /** Große Überschrift, z. B. der Name der Sportart. */
   titel: string;
-  /** Kurzer Satz darunter. */
   unterzeile?: string;
-  /** Dateiname des DOSB-Piktogramms ohne Endung. */
   piktogramm?: string;
 }
 
-/** Erzeugt ein Vorschaubild 1200 × 630 als PNG. */
 export async function vorschaubild({ titel, unterzeile, piktogramm: name }: Vorschau): Promise<Buffer> {
   const bild = await piktogramm(name);
   const titelGroesse = titel.length > 12 ? 92 : 118;
@@ -78,7 +62,6 @@ export async function vorschaubild({ titel, unterzeile, piktogramm: name }: Vors
   const links = h(
     'div',
     { flexDirection: 'column', justifyContent: 'space-between', width: 640, height: '100%' },
-    // Oben: Vereinsname als Pille mit Sonnenpunkt, wie auf og-default.png.
     h(
       'div',
       {
@@ -118,7 +101,6 @@ export async function vorschaubild({ titel, unterzeile, piktogramm: name }: Vors
     h('div', { fontSize: 28, fontWeight: 700, color: farben.text }, 'vsv-roessing.de'),
   );
 
-  // Rechts: das Piktogramm unverändert auf weißer Karte, dahinter die Sonne.
   const rechts = h(
     'div',
     { position: 'relative', flexGrow: 1, alignItems: 'center', justifyContent: 'center' },

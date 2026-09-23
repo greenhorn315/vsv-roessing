@@ -27,9 +27,6 @@ const panels = [
     cta: { label: 'Probetraining anfragen', href: '/kontakt/#probetraining' },
   },
   {
-    // Bewusst ohne Altersgrenze in der Überschrift: Eine Zahl dort läse sich
-    // wie eine Zugangsbedingung. Die Zahlen stehen im Fließtext und
-    // beschreiben damit die Mitglieder, nicht die Voraussetzung.
     variant: 'later' as const,
     icon: 'sport' as const,
     title: 'Für die zweite Lebenshälfte',
@@ -43,7 +40,6 @@ const panels = [
   },
 ];
 
-// Hintergrund je Zielgruppe, als vollständige Klassennamen für Tailwind.
 const hintergrund = {
   families: 'bg-base-300',
   youth: 'bg-accent/10',

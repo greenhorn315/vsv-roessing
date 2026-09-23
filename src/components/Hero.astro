@@ -17,9 +17,6 @@ const sportNames = (await getSportNames()).join(', ');
       </p>
       <h1 class="mb-4 max-w-[15ch] text-4xl md:text-5xl lg:text-6xl max-[940px]:max-w-[20ch]">{slogan}</h1>
       <p class="max-w-[46ch] text-lg text-base-content/70 md:text-xl">
-        {/* „in jedem Alter“ statt einer eigenen Nennung der Älteren: Der Verein
-            hat viele ältere Mitglieder, aber niemand soll hier in eine
-            Schublade gesteckt werden. */}
         {sportNames} – für Kinder, Jugendliche, Familien und Erwachsene in
         jedem Alter.
         Schon ab <strong class="font-bold whitespace-nowrap text-base-content">4&nbsp;€ im Monat</strong> dabei.
@@ -41,10 +38,6 @@ const sportNames = (await getSportNames()).join(', ');
     </div>
 
     <div class="relative isolate max-[940px]:-order-1 max-[940px]:max-w-[520px]">
-      {/* Bogenform als wiedererkennbares Gestaltungselement. Mobil flacher
-          als am Desktop, damit der Aufruf zum Handeln in Sichtweite bleibt –
-          aber nicht so flach, dass von den Hochformaten zu wenig übrig
-          bleibt. */}
       <HeroKarussell
         class="aspect-4/5 rounded-3xl rounded-tl-[clamp(80px,18vw,180px)] shadow-lg max-[940px]:aspect-4/3 max-[940px]:rounded-tl-3xl"
       />

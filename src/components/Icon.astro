@@ -3,17 +3,7 @@ import { icons, type IconName } from './icons';
 
 interface Props {
   name: IconName;
-  /**
-   * Größe in px (Breite = Höhe). Standard: 1em, also die Schriftgröße.
-   * Steht als Inline-Stil am Element, damit keine Klasse sie verändert
-   * (z. B. `.btn svg`). Größe deshalb über `size` setzen, nicht per Klasse.
-   */
   size?: number | string;
-  /**
-   * Barrierefreiheit: Icons ohne `label` sind dekorativ und werden
-   * von Screenreadern übersprungen. Mit `label` werden sie zum Bild
-   * mit Textalternative.
-   */
   label?: string;
   class?: string;
   strokeWidth?: number;

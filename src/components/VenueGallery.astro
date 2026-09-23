@@ -12,10 +12,8 @@ interface Props {
   lead?: string;
 }
 
-// Orte und Reihenfolge in src/content/sportstaetten.yaml.
 const venues = (await getCollection('sportstaetten')).sort(nachOrder).map((eintrag) => eintrag.data);
 
-/** Kleine Zahlen ausschreiben – im Fließtext lesen sie sich besser. Akkusativ: „einen Ort“. */
 const orteWort = zahlwort(venues.length, { eins: 'einen' });
 
 const {
@@ -24,19 +22,12 @@ const {
   lead = `Zwei Anschriften, ${orteWort} Orte: Sporthalle und Dorfbrunnen liegen im Loderwinkel unter einem Dach, Sportplatz, Feuerplatz und Vereinsheim gemeinsam Zum Klay.`,
 } = Astro.props;
 
-/*
- * Bildbreiten. Die Kacheln stehen ab 700 px zweispaltig im 1180-px-Container
- * (höchstens rund 560 px breit), darunter einspaltig über die volle Breite.
- * Die weiteren Ansichten teilen sich die Kachelbreite abzüglich des Rands;
- * steht nur eine da, ist sie so breit wie die Kachel.
- */
 const kachelBreiten = [360, 560, 800, 1024];
 const kachelSizes = '(max-width: 700px) calc(100vw - 2rem), (max-width: 1220px) calc(50vw - 3rem), 560px';
 const kleinBreiten = [280, 400, 560, 800, 1024];
 const kleinSizes = (anzahl: number) =>
   `(max-width: 700px) calc((100vw - 3.2rem) / ${anzahl}), (max-width: 1220px) calc((50vw - 4.2rem) / ${anzahl}), calc(540px / ${anzahl})`;
 
-/** Karten-Link auf die Anschrift, damit Navigation direkt startet. */
 const mapsUrl = (ort: (typeof venues)[number]) =>
   `https://www.openstreetmap.org/search?query=${encodeURIComponent(
     [ort.street, ort.postalCode, ort.city].filter(Boolean).join(' ')
@@ -54,9 +45,6 @@ const mapsUrl = (ort: (typeof venues)[number]) =>
       {
         venues.map((ort) => (
           <li class="card overflow-hidden rounded-3xl bg-base-100 shadow-sm">
-            {/* Photo rundet seine Ecken im eigenen (ungeschichteten) CSS ab –
-                deshalb die Radien hier mit ! (important): oben ohne Rundung,
-                weil die Karte schon abschneidet, die kleinen Ansichten mit 10px. */}
             <Photo
               image={ort.photos?.[0]?.src}
               alt={ort.photos?.[0]?.alt}

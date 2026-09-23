@@ -7,7 +7,6 @@ import Container from '../components/Container.astro';
 import { getEntry, render } from 'astro:content';
 import { isPrototype } from '../lib/site';
 
-// Wortlaut und offene Punkte in src/content/rechtliches/datenschutz.md.
 const datenschutz = await getEntry('rechtliches', 'datenschutz');
 if (!datenschutz) throw new Error('src/content/rechtliches/datenschutz.md fehlt.');
 const { Content } = await render(datenschutz);
@@ -20,8 +19,6 @@ const { Content } = await render(datenschutz);
   <PageHeader title="Datenschutzerklärung" />
   <section class="py-16 md:py-20">
     <Container>
-      {/* Entwurfshinweis als daisyUI-alert (weich, Warnfarbe), als Block statt
-         Raster und mit Sonnenstreifen links. */}
       {
         isPrototype && (
           <aside class="alert mb-8 block max-w-3xl border-warning border-l-4 bg-warning/20 p-6 text-base">

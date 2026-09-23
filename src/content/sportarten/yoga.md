@@ -6,9 +6,6 @@ description: Ruhige Einheiten für Beweglichkeit, Kraft und Entspannung – als 
 status:
   label: Angaben werden ergänzt
   text: Übungsleitung und Trainingszeit stehen fest. Die Spartenleitung ist noch nicht benannt, deshalb läuft der Kontakt bis auf Weiteres über den Vorstand.
-# ⚠️ Angenommen, nicht bestätigt: Altersgruppe und was mitzubringen ist.
-# Sobald die Angaben vorliegen, hier ergänzen und den Status oben
-# entfernen.
 pictogram: yoga
 color: primary-light
 ageGroups:

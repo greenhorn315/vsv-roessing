@@ -1,8 +1,3 @@
-# Regeln rund um den Beitrag, wie sie in den Formularen stehen. Quelle wie bei
-# beitraege.yaml: die Vereinsformulare vom September 2026.
-#
-# Die Seite zeigt sie als Liste unter der Beitragstabelle, aufsteigend nach
-# `order`. Der Schlüssel links ist nur eine interne Kennung.
 
 einzug:
   order: 1

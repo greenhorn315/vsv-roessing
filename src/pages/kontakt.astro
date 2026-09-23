@@ -12,21 +12,13 @@ import { nachOrder } from '../lib/reihenfolge';
 const venues = (await getCollection('sportstaetten')).sort(nachOrder).map((eintrag) => eintrag.data);
 const sportNames = await getSportNames();
 
-/*
- * Formular mit daisyUI (fieldset, label, input, select, textarea) im
- * Vereinslook: Felder mit kleinem Radius auf hellgrünem Grund, beim Fokus
- * grüner Rand mit weichem Schein. Fehler setzt das Skript unten über
- * aria-invalid – die Rahmenfarbe hängt direkt an diesem Attribut.
- */
 const feld = 'fieldset mb-4 p-0';
 const beschriftung = 'label text-sm font-semibold whitespace-normal text-base-content';
 const eingabe = 'w-full aria-invalid:border-error';
 const fehler = 'text-sm font-semibold text-error';
 
-/** Gelber Hinweiskasten (daisyUI-alert) über dem Formular. */
 const hinweis = 'alert mb-6 border-0 bg-warning/20';
 
-/** Kontaktkarten in der Seitenspalte. */
 const infoKarte = 'card bg-base-300 p-6 text-base';
 const infoTitel = 'mb-1 text-base';
 const infoText = 'text-base-content/70';
@@ -219,7 +211,6 @@ const infoText = 'text-base-content/70';
     form.addEventListener('submit', (event) => {
       event.preventDefault();
 
-      // Alle Pflichtfelder prüfen, damit der Fokus im ersten Fehler landet.
       const invalid = required.filter((field) => !validate(field));
       if (invalid.length > 0) {
         invalid[0].focus();

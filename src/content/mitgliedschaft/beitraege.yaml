@@ -1,18 +1,4 @@
-# Mitgliedsbeiträge.
-#
-# Quelle sind die Vereinsformulare vom September 2026: die Eintrittserklärung
-# nennt die drei Beitragssätze, der Antrag auf Ermäßigung den ermäßigten
-# Jahresbeitrag. Der Kassenwart hat die Sätze bestätigt.
-#
-# Der Schlüssel ganz links ist die interne Kennung. `kinder`, `einzel` und
-# `familie` braucht der Familienrechner, sie dürfen nicht umbenannt werden –
-# er rechnet mit genau diesen drei Sätzen. Darunter:
-#   order    Reihenfolge in der Tabelle, aufsteigend
-#   label    Bezeichnung in der Beitragstabelle
-#   monthly  Monatsbeitrag in Euro. Abgebucht wird jährlich, siehe
-#            beitragsregeln.yaml
-#   yearly   Jahresbeitrag in Euro
-#   note     kurzer Zusatz unter der Bezeichnung (darf fehlen)
+# Kennungen kinder, einzel, familie nicht umbenennen – der Familienrechner braucht sie.
 
 kinder:
   order: 1

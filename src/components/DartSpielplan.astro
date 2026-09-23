@@ -2,7 +2,6 @@
 import Spielplan from './Spielplan.astro';
 import { getSpielplan, kommendeSpiele } from '../lib/spielplan';
 
-// Partien und Saison stehen in src/content/spielplaene/dart.yaml.
 const plan = await getSpielplan('dart');
 const dartSaison = plan.saison;
 if (!dartSaison) throw new Error('dart.yaml: Angabe „saison“ fehlt.');

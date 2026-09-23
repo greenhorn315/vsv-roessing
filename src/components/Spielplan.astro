@@ -6,16 +6,12 @@ import { spielDatum, type Spiel } from '../lib/spielplan';
 interface Props {
   heading: string;
   spiele: Spiel[];
-  /** Beschriftung der Tabelle für Screenreader. */
   caption: string;
-  /** Spalte „Team“ nur zeigen, wenn eine Sportart mehrere Mannschaften stellt. */
   withTeam?: boolean;
 }
 
 const { heading, spiele, caption, withTeam = false } = Astro.props;
 
-// daisyUI-table mit den bisherigen Abständen, Linien in der Rahmenfarbe.
-// Die Linie unter der letzten Zeile lässt daisyUI selbst weg.
 const kopf = 'text-xs font-bold tracking-wide uppercase whitespace-normal';
 const zelle = 'align-top';
 ---
@@ -28,7 +24,6 @@ const zelle = 'align-top';
           <p><slot /></p>
         </SectionHead>
 
-        {/* Auf schmalen Bildschirmen scrollt die Tabelle waagerecht. */}
         <div class="overflow-x-auto rounded-box border border-base-300 bg-base-100">
           <table class="table min-w-[34rem]">
             <caption class="sr-only">{caption}</caption>

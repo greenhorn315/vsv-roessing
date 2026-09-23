@@ -1,37 +1,5 @@
-# Bilder für das Karussell im Hero.
-#
-# Es steht an der Stelle, an der später ein einzelnes Vereinsfoto stehen
-# soll – bis es das gibt, zeigt der Verein sich lieber in mehreren Bildern
-# als gar nicht. Aufbereitet mit tools/karussell.py, Hochformat 4:5.
-#
-# Zwei Bilder stammen vom Sportabzeichen-Tag am 22. September 2026 und haben
-# die beiden unscharfen 300-px-Vorschauen von der alten Website abgelöst.
-# Auf dem Aufwärmbild sind auch Mitglieder des MTV Elze zu sehen – für deren
-# Einwilligung ist der VSV nicht zuständig, das ist mit dem MTV zu klären.
-#
-# ⚠️ Vor dem Livegang zu klären: Auf mehreren Bildern sind Personen
-# erkennbar, auf einem ein Kind. Dafür braucht es die Einwilligung der
-# Abgebildeten beziehungsweise der Erziehungsberechtigten (Recht am eigenen
-# Bild, KUG/DSGVO). Solange die Seite nicht öffentlich ist, ist das vertretbar.
-#
-# Bilder mit erkennbaren Kindergesichtern kommen hier gar nicht erst hinein.
-# Die Aufnahme vom Saisonabschluss vor dem Vereinsheim ist deshalb wieder
-# entfernt worden; das Vereinsheim zeigt inzwischen eine eigene Aufnahme
-# ohne Personen.
-#
-# Der Schlüssel ganz links ist die interne Kennung und erscheint nirgends auf
-# der Seite; er muss in der Datei eindeutig sein. Darunter:
-#   order    Reihenfolge im Karussell, aufsteigend
-#   src      Bilddatei, relativ zu dieser Datei (../assets/karussell/…).
-#            Fehlt die Datei oder ist der Name verschrieben, bricht der
-#            Build ab.
-#   alt      Bildbeschreibung für Screenreader
-#   caption  kurze Bildunterschrift, sichtbar über dem Bild
-#   credit   Quelle, wenn das Bild nicht vom Verein stammt
-#
-# Die Reihenfolge im Karussell steht in `order`; das erste Bild steht auch
-# ohne JavaScript da. Lücken in der Zählung sind erlaubt, so lässt sich ein
-# Bild einschieben, ohne alle anderen umzunummerieren.
+# ⚠️ Vor dem Livegang: Einwilligung der erkennbaren Personen einholen (KUG/DSGVO), beim
+# Aufwärmbild für die MTV-Elze-Mitglieder über den MTV. Keine erkennbaren Kindergesichter.
 
 gruppenfoto:
   order: 1
@@ -39,8 +7,7 @@ gruppenfoto:
   alt: Gruppe in Trikots mit dem Aufdruck „VSV Rössing“ kniet auf einem Rasenplatz und streckt die Arme in die Luft
   caption: Leichtathletik – gemeinsam am Start
 
-# Ausschnitt bewusst nach rechts gesetzt: Am linken Bildrand stand ein Kind
-# der gegnerischen Mannschaft im Profil, mit erkennbarem Gesicht.
+# Ausschnitt rechts: links stand ein Kind mit erkennbarem Gesicht.
 fussball-u7:
   order: 2
   src: ../assets/karussell/fussball-u7.jpg
@@ -83,21 +50,19 @@ freitagsradler-umland:
   alt: Radfahrergruppe steht mit ihren Rädern am Feldrand, dahinter Felder und eine helle Halde
   caption: Freitagsradler – unterwegs im Umland
 
-# Ausschnitt ganz rechts: Dort steht die Gruppe mit dem Rücken zur Kamera.
+# Ausschnitt rechts: dort nur Rücken zur Kamera.
 sportabzeichen-aufwaermen:
   order: 9
   src: ../assets/karussell/sportabzeichen-aufwaermen.jpg
   alt: Gruppe aus Kindern und Erwachsenen wärmt sich mit ausgebreiteten Armen auf einer Rasenfläche auf, von hinten gesehen
   caption: Aufwärmen vor der Abnahme des Sportabzeichens
 
-# Winteraufnahme – deshalb ohne Bezug aufs Sommerhalbjahr beschriftet.
 freitagsradler-schloss:
   order: 10
   src: ../assets/karussell/freitagsradler-schloss.jpg
   alt: Abgestelltes Fahrrad auf einer Wiese, dahinter Schloss Marienburg mit seinen neugotischen Türmen
   caption: Radtour zur Marienburg
 
-# E-Dart-Scheibe – die Dart-Gruppe spielt E-Darts, nicht Steel.
 dart:
   order: 11
   src: ../assets/karussell/dart.jpg

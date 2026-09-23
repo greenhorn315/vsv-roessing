@@ -6,12 +6,6 @@ interface Props {
   limit?: number;
 }
 
-/**
- * Meldungen aus src/content/news/, in der Reihenfolge ihres `order` – von
- * Hand gesetzt, siehe dort. Der Text ist der Inhalt unter den Angaben und
- * wird bewusst als schlichter Text gezeigt, nicht als Markdown gerendert:
- * Er steht in einem einzelnen Absatz der Liste.
- */
 const news = (await getCollection('news'))
   .sort(nachOrder)
   .map(({ data, body }) => ({
@@ -28,7 +22,6 @@ const monthFormat = new Intl.DateTimeFormat('de-DE', { month: 'short' });
 const fullFormat = new Intl.DateTimeFormat('de-DE', { dateStyle: 'long' });
 ---
 
-{/* daisyUI-list: Datum links, Meldung rechts, Linien zwischen den Einträgen. */}
 <ul class="list">
   {
     items.map((item) => {

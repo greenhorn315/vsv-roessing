@@ -5,9 +5,7 @@ import { ageGroupLabels, sportColorVar, AGE_GROUPS } from '../lib/labels';
 import { getSports } from '../lib/sportarten';
 
 interface Props {
-  /** Filterleiste nach Altersgruppen anzeigen (Sportangebote-Seite). */
   withFilter?: boolean;
-  /** Beschreibungstext auf den Karten anzeigen. */
   detailed?: boolean;
 }
 
@@ -24,8 +22,6 @@ const chip = 'btn btn-sm btn-outline btn-primary aria-pressed:bg-primary aria-pr
       <span class="text-sm font-semibold text-base-content/70" id="filterLabel">
         Passend für
       </span>
-      {/* Umschalter als daisyUI-btn in Chip-Form: niedriger als die großen
-          Buttons, ohne Anheben beim Hovern; der gedrückte ist grün. */}
       <div class="flex flex-wrap gap-1.5" role="group" aria-labelledby="filterLabel">
         <button type="button" class:list={['chip', chip]} data-filter="alle" aria-pressed="true">
           Alle
@@ -41,7 +37,6 @@ const chip = 'btn btn-sm btn-outline btn-primary aria-pressed:bg-primary aria-pr
   )
 }
 
-{/* Feste Dreierreihen: bei neun Sportarten ergibt das ein 3x3-Raster. */}
 <ul
   class="grid grid-cols-3 gap-4 max-[900px]:grid-cols-2 max-[560px]:grid-cols-1"
   data-sport-list

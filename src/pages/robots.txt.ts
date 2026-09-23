@@ -1,10 +1,6 @@
 import type { APIRoute } from 'astro';
 import { isPrototype } from '../lib/site';
 
-/**
- * Solange die Seite ein Entwurf ist, wird sie komplett für Suchmaschinen
- * gesperrt – sonst konkurriert sie mit der echten Vereinsseite.
- */
 export const GET: APIRoute = ({ site }) => {
   const body = isPrototype
     ? ['User-agent: *', 'Disallow: /', ''].join('\n')

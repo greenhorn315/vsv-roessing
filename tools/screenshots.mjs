@@ -1,9 +1,4 @@
-// Ganzseitige Screenshots aller Seiten für den Vorher-nachher-Vergleich.
-// Aufruf: npm run build && npm run screenshots -- <zielordner>
-//
-// Liefert dist/ über einen eigenen kleinen Server auf einem freien Port aus
-// statt über `astro preview`: Der läuft nach Programmende weiter und blockiert
-// den Port, sodass ein zweiter Lauf still die alte Seite fotografiert.
+// Eigener Server statt astro preview: der blockiert den Port nach Programmende.
 import { chromium } from 'playwright';
 import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
@@ -42,11 +37,9 @@ mkdirSync(out, { recursive: true });
 const browser = await chromium.launch();
 try {
   for (const [name, viewport] of Object.entries(viewports)) {
-    // reducedMotion stoppt Karussell und Einblend-Animationen.
     const page = await browser.newPage({ viewport, reducedMotion: 'reduce' });
     for (const route of routes) {
       await page.goto(base + route, { waitUntil: 'networkidle' });
-      // Lazy geladene Bilder vor dem Foto einmal ins Bild scrollen.
       await page.evaluate(async () => {
         for (let y = 0; y < document.body.scrollHeight; y += 600) {
           window.scrollTo(0, y);

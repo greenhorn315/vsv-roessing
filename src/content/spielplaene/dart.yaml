@@ -1,41 +1,10 @@
-# Spielplan der Dart-Mannschaften für die Saison 2026/2027.
-#
-# Quelle: der ausgehängte Spielplan des Vereins, abgetippt von den Fotos der
-# drei Blätter für A-, B- und C-Team. Erfasst sind nur die Partien ab dem
-# 14. September 2026; die Spiele davor sind bereits gelaufen.
-#
-# Zwei Stellen weichen bewusst vom Aushang ab:
-#
-# - Der Gegner des C-Teams am 20.02.2027 steht dort als „FC Ruthe 26ers A“,
-#   dieselbe Mannschaft also, gegen die am selben Tag zur selben Zeit auch
-#   das B-Team spielt. Das kann nicht sein. In der Klasse des C-Teams treten
-#   die übrigen Vereine jeweils mit ihrer nächsten Mannschaft an (Barrels &
-#   Bier B statt A, Rising Boyz C statt B), deshalb steht hier die
-#   B-Mannschaft.
-# - Der Ort heißt einheitlich Himmelsthür; das Blatt des A-Teams schreibt ihn
-#   ohne s.
-#
-# Am 11.12.2026 war der Gegner des A-Teams am Blattrand abgeschnitten. Nach
-# dem Rückspiel am 22.05.2027 ist es die B-Mannschaft der Dart Akademie.
-#
-# Je Partie:
-#   date      Datum als JJJJ-MM-TT
-#   time      Anstoß- bzw. Beginnzeit, in Anführungszeichen
-#   opponent  Gegner in der Schreibweise des Spielplans
-#   home      true = Heimspiel an der eigenen Spielstätte, false = auswärts
-#   team      Mannschaft, wenn eine Sportart mit mehreren antritt
-#   note      Zusatz aus dem Aushang, etwa „Pokal“ (darf fehlen)
-#
-# Die Reihenfolge der Partien ist egal, die Seite sortiert nach Datum,
-# Uhrzeit und Mannschaft. Gespielte Partien fallen beim nächsten Bauen von
-# selbst heraus und dürfen stehen bleiben.
+# Abweichend vom Aushang: C-Team am 20.02.2027 gegen FC Ruthe 26ers B (Aushang: A, zeitgleich mit
+# dem B-Team); Gegner des A-Teams am 11.12.2026 aus dem Rückspiel ergänzt; Himmelsthür mit s.
 
 saison: 2026/2027
-# Spielstätte der Heimspiele, siehe sportstaetten.yaml.
 spielstaette: Der Dorfbrunnen
 
 spiele:
-  # A-Team
   - { team: A, date: 2026-09-18, time: '19:00', opponent: "Tus Grün Weiß Himmelsthür A", home: true }
   - { team: A, date: 2026-09-25, time: '19:00', opponent: "1. Dartclub Hildesheim e.V. B", home: false }
   - { team: A, date: 2026-10-09, time: '19:00', opponent: "TSG Everode A", home: false }
@@ -53,7 +22,6 @@ spiele:
   - { team: A, date: 2027-05-07, time: '19:00', opponent: "PDC Hannover e.V. A", home: true }
   - { team: A, date: 2027-05-22, time: '19:00', opponent: "Dart Akademie Hannover e.V. B", home: false }
 
-  # B-Team
   - { team: B, date: 2026-09-19, time: '14:00', opponent: "SV Groß Düngen Darts A", home: true }
   - { team: B, date: 2026-10-10, time: '19:00', opponent: "Flying Owls Hörsum e.V. B", home: false }
   - { team: B, date: 2026-10-24, time: '14:00', opponent: "Sieben Zwerge Dart Team e.V. C", home: true }
@@ -70,7 +38,6 @@ spiele:
   - { team: B, date: 2027-05-08, time: '14:00', opponent: "Rising Boyz Hildesheim B", home: true }
   - { team: B, date: 2027-05-22, time: '16:00', opponent: "Thomy Roses DC Hildesheim C", home: false }
 
-  # C-Team
   - { team: C, date: 2026-09-19, time: '19:00', opponent: "TSV Söhlde e.V. C", home: true }
   - { team: C, date: 2026-10-09, time: '19:00', opponent: "TSG Everode B", home: false }
   - { team: C, date: 2026-10-24, time: '19:00', opponent: "Egentown Steelers B", home: true }

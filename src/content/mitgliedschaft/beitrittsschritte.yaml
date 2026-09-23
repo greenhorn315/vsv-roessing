@@ -1,5 +1,3 @@
-# Die drei Schritte zur Mitgliedschaft, nummeriert aufsteigend nach `order`.
-# Der Schlüssel links ist nur eine interne Kennung.
 
 formular:
   order: 1

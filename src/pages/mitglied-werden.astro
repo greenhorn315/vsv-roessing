@@ -10,7 +10,6 @@ import { getDownloads } from '../lib/mitgliedschaft';
 
 const downloads = await getDownloads();
 
-/** „138441“ liest sich schlecht – „135 KB“ schon. */
 const groesse = (bytes: number) => `${Math.round(bytes / 1024)} KB`;
 ---
 

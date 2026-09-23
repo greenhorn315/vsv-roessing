@@ -1,31 +1,6 @@
 ---
-# Datenschutzerklärung – ENTWURF.
-#
-# Beschreibt die Verarbeitung, die auf dieser Website tatsächlich
-# stattfindet, und ersetzt damit den von der bisherigen WordPress-Seite
-# übernommenen Text. Der lag als Referenz in
-# src/data/datenschutz-uebernommen.ts und ist in der Git-Historie weiter
-# nachzulesen; ausgeliefert wurde er nie.
-#
-# ⚠️ Noch nicht rechtlich geprüft. Vor dem Livegang zu klären:
-#   - Abschnitt 4: Name des Hosting-Anbieters, Speicherdauer der Logfiles
-#     und der Auftragsverarbeitungsvertrag nach Art. 28 DSGVO. Bewusst
-#     anbieterneutral formuliert, weil der Umzug in die Originalumgebung
-#     noch aussteht.
-#   - Abschnitt 8 gilt für das Kontaktformular in seinem jetzigen Zustand
-#     (öffnet das E-Mail-Programm). Sobald ein echter Versand-Endpunkt
-#     angebunden ist, muss dieser Abschnitt neu geschrieben werden.
-#   - Eigene E-Mail-Adresse für den Datenschutzbeauftragten erwägen.
-#
-# Zum Bearbeiten: Unter diesen Angaben steht der Text in Markdown.
-#   ## / ###      Abschnitt / Unterabschnitt
-#   Zeile\        Backslash am Zeilenende = Zeilenumbruch im selben Absatz
-#   Leerzeile     neuer Absatz
-#   [Text](Ziel)  Link – E-Mail als mailto:, Telefon als tel: in
-#                 internationaler Schreibweise ohne die „(0)“
-#   https\://     Backslash vor dem Doppelpunkt, wo eine Adresse nur als
-#                 Text gemeint ist – sonst macht Markdown von selbst einen
-#                 Link daraus (Abschnitt 5)
+# ⚠️ Nicht rechtlich geprüft. Vor dem Livegang: Hoster und AVV in Abschnitt 4 ergänzen;
+# Abschnitt 8 neu schreiben, sobald das Formular einen echten Versand-Endpunkt hat.
 ---
 
 Diese Erklärung beschreibt, welche personenbezogenen Daten beim Besuch dieser Website verarbeitet werden, zu welchem Zweck das geschieht und welche Rechte Ihnen dabei zustehen.

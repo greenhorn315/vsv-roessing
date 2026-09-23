@@ -5,7 +5,6 @@ import SectionHead from './SectionHead.astro';
 import { getBeitragsregeln, getFees, getJoinSteps } from '../lib/mitgliedschaft';
 
 interface Props {
-  /** Auf der Startseite als Teaser, auf der Unterseite als volle Sektion. */
   compact?: boolean;
 }
 
@@ -13,14 +12,12 @@ const { compact = false } = Astro.props;
 const fees = await getFees();
 const beitragsregeln = await getBeitragsregeln();
 const joinSteps = await getJoinSteps();
-// Zwei Nachkommastellen: 7,50 € wuerde sonst als 8 € erscheinen.
 const euro = new Intl.NumberFormat('de-DE', {
   style: 'currency',
   currency: 'EUR',
   minimumFractionDigits: 2,
 });
 
-// Preise in der Tabelle: Monat und Jahr gleich gewichtet.
 const preis = 'font-display text-lg font-semibold whitespace-nowrap text-primary md:text-xl';
 ---
 
@@ -34,8 +31,6 @@ const preis = 'font-display text-lg font-semibold whitespace-nowrap text-primary
 
   <div class="grid grid-cols-[1.15fr_0.85fr] items-start gap-8 md:gap-12 max-[900px]:grid-cols-1">
     <div>
-      {/* Beitragstabelle: daisyUI-table mit Linien in Rahmenfarbe; die letzte
-          Zeile (Familienbeitrag) grün hinterlegt mit runden Enden. */}
       <table class="table text-base">
         <caption class="sr-only">Mitgliedsbeiträge pro Monat und pro Jahr</caption>
         <thead class="text-xs tracking-wider uppercase">
@@ -67,9 +62,6 @@ const preis = 'font-display text-lg font-semibold whitespace-nowrap text-primary
         {beitragsregeln.map((regel) => <li class="border-l-2 border-base-300 pl-4">{regel}</li>)}
       </ul>
 
-      {/* So klappt der Beitritt. Bewusst kein daisyUI-steps: Das zentriert
-          den Text und zieht eine Verbindungslinie – hier stehen die Schritte
-          linksbündig nebeneinander, auf schmalen Bildschirmen untereinander. */}
       <ol class="mt-10 grid grid-cols-[repeat(auto-fit,minmax(170px,1fr))] gap-6">
         {
           joinSteps.map((step, index) => (

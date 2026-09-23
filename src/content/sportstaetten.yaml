@@ -1,30 +1,3 @@
-# Sportstätten des Vereins an zwei Anschriften: Sporthalle und Dorfbrunnen
-# teilen sich im Loderwinkel sogar ein Gebäude, Sportplatz und Vereinsheim
-# liegen Zum Klay.
-#
-# Zum Bearbeiten genügt diese Datei. Das Schema steht in
-# src/content.config.ts und wird beim Bauen geprüft.
-#
-# Der Schlüssel ganz links ist die interne Kennung und erscheint nirgends auf
-# der Seite; er muss in der Datei eindeutig sein. Darunter:
-#
-#   order       Reihenfolge auf der Seite, aufsteigend
-#   name        Name des Ortes
-#   alias       zweiter gebräuchlicher Name, z. B. auf Karten; erscheint als
-#               „auch …“
-#   street, postalCode, city
-#               Anschrift; daraus entsteht auch der Kartenlink
-#   note        was dort stattfindet
-#   facilities  was vor Ort zur Verfügung steht, z. B. Umkleiden
-#   photos      Fotos unter src/assets/sportstaetten/, als Pfad relativ zu
-#               dieser Datei (../assets/sportstaetten/…). Das erste ist das
-#               Hauptbild, weitere erscheinen als kleine Ansichten darunter,
-#               mit `caption` als kurzer Bildunterschrift. Ein verschriebener
-#               oder fehlender Dateiname bricht den Build ab. Ein Ort ganz
-#               ohne `photos` bekommt den Platzhalter „Foto folgt“.
-#
-# Die Zahl der Orte steht ausgeschrieben im Einleitungssatz auf der
-# Kontaktseite und passt sich von selbst an.
 
 sporthalle:
   order: 1
@@ -79,8 +52,7 @@ feuerplatz:
   city: Nordstemmen
   note: 'Treffpunkt der Freitagsradler: Im Sommerhalbjahr wird hier nach der Tour gegrillt'
   photos:
-    # Vorläufig: zeigt erkennbare Personen. Vor dem Livegang entweder deren
-    # Einwilligung einholen oder durch ein Bild ohne Personen ersetzen.
+    # ⚠️ Zeigt erkennbare Personen: vor dem Livegang Einwilligung einholen oder Bild ersetzen.
     - src: ../assets/sportstaetten/feuerplatz.jpg
       alt: Runde Feuerstelle am Waldrand, ringsum Bänke, an denen eine Gruppe im Abendlicht sitzt
 

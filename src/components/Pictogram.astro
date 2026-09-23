@@ -3,14 +3,7 @@ import type { ImageMetadata } from 'astro';
 import { Image } from 'astro:assets';
 
 interface Props {
-  /**
-   * Dateiname in src/assets/piktogramme/ ohne Endung. Ohne Wert wird ein
-   * leerer Rahmen gezeichnet – so bleibt eine Sportart sichtbar, für die noch
-   * kein Piktogramm vorliegt. Ein Name ohne passende Datei bricht den Build
-   * ab, statt still einen leeren Rahmen zu zeigen.
-   */
   name?: string;
-  /** Kantenlänge in px. Die Dateien liegen in 256 px vor; ausgeliefert wird 1x und 2x. */
   size?: number;
   class?: string;
 }
@@ -46,7 +39,6 @@ if (name && !bild) {
       decoding="async"
     />
   ) : (
-    /* Gleiche Kontur wie die Piktogramme, nur ohne Figur. */
     <span
       class:list={[
         'block aspect-square rounded-[17%] border border-dashed border-base-content/20',

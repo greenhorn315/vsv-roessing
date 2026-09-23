@@ -1,14 +1,9 @@
 ---
 import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
-// Vereinswappen, 275 × 320 px mit Transparenz; ausgeliefert als WebP (mit
-// Alphakanal) in der Anzeigegröße und doppelt so groß für feine Displays.
 import logo from '../assets/logo-vsv.png';
 import { navigation, site } from '../lib/site';
 
-// Pfade und Links enden auf „/“ (trailingSlash: 'always'). Beide Seiten
-// ohne Schrägstrich vergleichen, damit /sportangebote/dart/ den Punkt
-// „Sportangebote“ markiert, /sportangebote-xyz/ aber nicht.
 const stripSlash = (p: string) => p.replace(/\/+$/, '') || '/';
 const path = stripSlash(Astro.url.pathname);
 const isActive = (href: string) => {
@@ -16,15 +11,11 @@ const isActive = (href: string) => {
   return target === '/' ? path === '/' : path === target || path.startsWith(`${target}/`);
 };
 
-// Menüpunkte (daisyUI-menu). Breit: Pillen nebeneinander; bis 940px:
-// untereinander im aufklappbaren Panel. daisyUI nimmt den Fokusrahmen weg,
-// deshalb setzen wir unseren (3px Korall) ausdrücklich wieder.
 const linkBase = [
   'flex items-center gap-2 rounded-full px-3.5 py-2 text-base whitespace-nowrap',
   'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent',
   'max-[940px]:rounded-xl max-[940px]:px-4 max-[940px]:py-3.5 max-[940px]:text-lg',
 ];
-// Aktive Seite nicht nur über Farbe kennzeichnen (WCAG 1.4.1): zusätzlich fett.
 const linkNormal = [
   'font-medium text-base-content',
   'not-aria-[current=page]:hover:bg-base-300 not-aria-[current=page]:hover:text-primary',
@@ -46,8 +37,6 @@ const linkCta = [
     class="navbar group mx-auto min-h-18 max-w-6xl justify-between gap-4 px-4 py-0 sm:px-6"
   >
     <a class="flex items-center gap-2.5 py-2" href="/">
-      {/* Vereinswappen. Das Bild trägt alt="", weil der Vereinsname direkt
-         daneben als Text steht – sonst läse ein Screenreader ihn doppelt. */}
       <Image
         class="h-12 w-auto shrink-0"
         src={logo}
@@ -64,8 +53,6 @@ const linkCta = [
       </span>
     </a>
 
-    {/* Menüknopf fürs Handy. Öffnet das Menü als Popover: Der Browser
-       übernimmt Escape, Klick daneben und die Rückkehr des Fokus. */}
     <button
       class="btn btn-square btn-ghost btn-lg rounded-xl border-base-300 text-primary min-[941px]:hidden"
       id="navToggle"
@@ -79,10 +66,7 @@ const linkCta = [
       <Icon name="close" size={26} class="hidden group-has-[#mainNav:popover-open]:block" />
     </button>
 
-    {/* Bis 940px ein Popover in der obersten Ebene (top layer). Das umgeht
-       auch den backdrop-filter des Headers, der ein fixiertes Panel sonst
-       einfangen würde. Breit überschreiben min-[941px]:-Klassen die
-       Popover-Vorgaben des Browsers, und die Liste steht in der Zeile. */}
+    {/* Popover im top layer, sonst fängt der backdrop-filter des Headers das fixierte Panel ein. */}
     <nav
       id="mainNav"
       popover
@@ -116,8 +100,6 @@ const linkCta = [
   const nav = document.getElementById('mainNav');
 
   if (toggle && nav) {
-    // Zustand und Beschriftung des Knopfs nachführen; beim Öffnen wie
-    // bisher direkt auf den ersten Menüpunkt springen.
     nav.addEventListener('toggle', (event) => {
       const open = (event as ToggleEvent).newState === 'open';
       toggle.setAttribute('aria-expanded', String(open));
@@ -125,14 +107,12 @@ const linkCta = [
       if (open) nav.querySelector<HTMLAnchorElement>('a')?.focus();
     });
 
-    // Wird das Fenster breiter, gehört das Menü wieder in die Zeile.
     const mobile = window.matchMedia('(max-width: 940px)');
     mobile.addEventListener('change', () => {
       if (!mobile.matches && nav.matches(':popover-open')) nav.hidePopover();
     });
   }
 
-  // Trennlinie und Schatten am Header erst, wenn wirklich gescrollt wird.
   const header = document.getElementById('siteHeader');
   const onScroll = () => {
     header?.toggleAttribute('data-scrolled', window.scrollY > 8);

@@ -10,8 +10,6 @@ import { site } from '../lib/site';
 import { getSportCountWord } from '../lib/sportarten';
 import { getCollection } from 'astro:content';
 
-// Reihenfolge steht in der YAML-Datei als `order`; auf die Reihenfolge, in der
-// eine Collection ihre Einträge liefert, verlässt sich das bewusst nicht.
 const vorstand = (await getCollection('vorstand')).sort(
   (a, b) => a.data.order - b.data.order,
 );
@@ -62,9 +60,6 @@ const sportCountWord = await getSportCountWord();
                 {person.name ? (
                   <span class="text-base-content/70">{person.name}</span>
                 ) : (
-                  /* Zurückhaltend wie im Organigramm: Die Stelle ist besetzt,
-                     nur der Name fehlt noch – das soll nicht wie ein Mangel
-                     schreien. */
                   <span class="italic text-base-content/70">Name folgt</span>
                 )}
               </li>

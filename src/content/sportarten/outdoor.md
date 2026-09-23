@@ -23,9 +23,6 @@ activities:
     pictogram: nordic-walking
   - name: Radwandern
     pictogram: radfahren
-  # Für Boßeln gibt es kein eigenes DOSB-Piktogramm. Verwendet wird das
-  # von Boccia – unverändert, das Motiv passt inhaltlich: werfende Figur
-  # mit Kugeln am Boden.
   - name: Boßeln
     pictogram: boccia
 color: primary

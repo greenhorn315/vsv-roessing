@@ -4,29 +4,14 @@ import { nachOrder } from './reihenfolge';
 import { getSportNames } from './sportarten';
 import { kommendeSpiele, nachTermin } from './spielplan';
 
-/**
- * Strukturierte Daten (JSON-LD, schema.org) für Suchmaschinen. BaseLayout
- * gibt je Seite einen `@graph` aus: immer den Verein samt Sportstätten,
- * dazu, was die Seite selbst mitbringt – Brotkrumen, Spieltermine.
- *
- * Knoten verweisen per `@id` aufeinander, statt den Verein in jedem Termin
- * zu wiederholen.
- */
-
 export type JsonLdNode = Record<string, unknown>;
 
-/** Absolute Adresse zu einem Pfad der Seite. */
 const absolut = (pfad: string, origin: string) => new URL(pfad, origin).href;
 
 export const vereinId = (origin: string) => `${origin}/#verein`;
 const ortId = (origin: string, id: string) => `${origin}/#ort-${id}`;
 
-/**
- * Nur echte Profile nach `sameAs`. In `site.social` stehen bis zum Livegang
- * Platzhalter – die nackte Startseite von Instagram oder Facebook, bei
- * WhatsApp gar nichts. Die würden Suchmaschinen das falsche Profil
- * zuordnen, deshalb zählt eine Adresse erst, wenn sie auf einen Pfad zeigt.
- */
+// Bis zum Livegang stehen in site.social Platzhalter; nur Adressen mit Pfad sind echte Profile.
 function echteProfile(): string[] {
   return Object.values(site.social)
     .map((eintrag) => eintrag.url)
@@ -65,7 +50,6 @@ function ortKnoten(origin: string, { id, data }: Sportstaette): JsonLdNode {
   };
 }
 
-/** Der Verein und seine Sportstätten – auf jeder Seite gleich. */
 export async function vereinsKnoten(origin: string, description: string): Promise<JsonLdNode[]> {
   const orte = await getSportstaetten();
   const sameAs = echteProfile();
@@ -79,8 +63,6 @@ export async function vereinsKnoten(origin: string, description: string): Promis
       foundingDate: String(site.founded),
       description,
       url: absolut('/', origin),
-      // Das Wappen liegt noch in public/; das Touch-Icon ist quadratisch
-      // und bleibt beim Umzug der Bilder an seinem Platz.
       logo: absolut('/apple-touch-icon.png', origin),
       image: absolut('/og-default.png', origin),
       email: site.email,
@@ -102,11 +84,9 @@ export async function vereinsKnoten(origin: string, description: string): Promis
 
 export interface Brotkrume {
   label: string;
-  /** Fehlt beim letzten Glied, der aktuellen Seite. */
   href?: string;
 }
 
-/** BreadcrumbList aus denselben Einträgen wie die sichtbaren Brotkrumen. */
 export function brotkrumenKnoten(items: Brotkrume[], seite: URL): JsonLdNode {
   return {
     '@type': 'BreadcrumbList',
@@ -119,10 +99,7 @@ export function brotkrumenKnoten(items: Brotkrume[], seite: URL): JsonLdNode {
   };
 }
 
-/**
- * Abstand von Europe/Berlin zu UTC an einem Tag, z. B. „+02:00“. Mittags
- * gelesen: Die Zeitumstellung liegt nachts, alle Spiele am Abend.
- */
+// Mittags gelesen: Die Zeitumstellung liegt nachts.
 function berlinOffset(isoDatum: string): string {
   const teile = new Intl.DateTimeFormat('en-US', {
     timeZone: 'Europe/Berlin',
@@ -132,12 +109,6 @@ function berlinOffset(isoDatum: string): string {
   return name === 'GMT' ? '+00:00' : name.replace('GMT', '');
 }
 
-/**
- * Kommende Partien einer Sportart als SportsEvent. Ohne Spielplan-Datei
- * gibt es keine Knoten. Den Ort kennen wir nur bei Heimspielen – er kommt
- * über `spielstaette` aus sportstaetten.yaml. Auswärts bleibt er offen,
- * statt ihn zu erfinden.
- */
 export async function spielKnoten(sport: string, sportName: string, origin: string): Promise<JsonLdNode[]> {
   const plan = await getEntry('spielplaene', sport);
   if (!plan) return [];
@@ -164,7 +135,6 @@ export async function spielKnoten(sport: string, sportName: string, origin: stri
       startDate: `${spiel.date}T${spiel.time}:00${berlinOffset(spiel.date)}`,
       homeTeam: heim,
       awayTeam: gast,
-      // Ausrichter und Ort nur bei Heimspielen; auswärts richtet der Gegner aus.
       ...(spiel.home && { organizer: { '@id': vereinId(origin) } }),
       ...(spiel.home && heimOrt && { location: { '@id': ortId(origin, heimOrt.id) } }),
       ...(spiel.note && { description: spiel.note }),

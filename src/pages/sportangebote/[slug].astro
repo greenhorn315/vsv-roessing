@@ -23,19 +23,11 @@ export async function getStaticPaths() {
 }
 
 const { eintrag } = Astro.props as { eintrag: Sport };
-// Angaben aus dem Kopf der Markdown-Datei, Slug aus dem Dateinamen.
 const sport = { ...eintrag.data, slug: eintrag.id };
-// Der Fließtext der Detailseite ist der Markdown-Inhalt unter den Angaben.
 const { Content } = await render(eintrag);
 const sports = (await getSports()).map(({ id, data }) => ({ ...data, slug: id }));
 const sessions = await trainingsOfSport(sport.slug);
 
-// Für die Weiter-Navigation am Seitenende.
-/**
- * Deutsche Rufnummer in die internationale Schreibweise für tel:-Links.
- * Die führende Null ist die nationale Verkehrsausscheidungsziffer und
- * entfällt dabei.
- */
 function telHref(nummer: string) {
   const ziffern = nummer.replace(/[^\d+]/g, '');
   if (ziffern.startsWith('+')) return `tel:${ziffern}`;
@@ -52,12 +44,9 @@ const brotkrumen: Brotkrume[] = [
   { label: sport.name },
 ];
 
-// Beschreibung für Suchmaschinen: mit Vereinsname, solange sie in die
-// üblichen rund 160 Zeichen passt, sonst nur der Text der Sportart.
 const mitVerein = `${sport.name} beim ${site.shortName}: ${sport.description}`;
 const description = mitVerein.length <= 160 ? mitVerein : sport.description;
 
-// Zeilen der Infokarte „Auf einen Blick“: Icon links, Titel und Text rechts.
 const zeile = 'flex gap-3 border-t border-base-300 py-4';
 const zeilenIcon = 'mt-0.5 shrink-0 text-secondary';
 const zeilenTitel = 'mb-1 font-sans text-xs font-bold tracking-wider uppercase text-base-content/70';
@@ -84,7 +73,6 @@ const jsonLd = [
     <Breadcrumbs items={brotkrumen} />
   </Container>
 
-  {/* Kopfband in der Farbe der Sportart (--sport-color) */}
   <section
     class="border-t-4 border-(--sport-color) bg-base-300 py-8 md:py-12"
     style={`--sport-color:${sportColorVar(sport.color)}`}
@@ -139,8 +127,6 @@ const jsonLd = [
           )
         }
 
-        {/* Fließtext aus der Markdown-Datei: Er trägt keine Klassen, deshalb
-             erbt er die gedämpfte Textfarbe von diesem Rahmen. */}
         <div class="prose max-w-none text-base-content/70">
           <Content />
         </div>
@@ -190,11 +176,9 @@ const jsonLd = [
         </div>
       </div>
 
-      {/* Infokarte: bleibt auf breiten Bildschirmen beim Scrollen stehen */}
       <aside class="card sticky top-22 rounded-3xl border border-base-300 bg-base-100 p-6 text-base max-[900px]:static">
         <h2 class="mb-6 text-xl">Auf einen Blick</h2>
 
-        {/* Erste Zeile ohne Trennlinie */}
         <div class="flex gap-3 pb-4">
           <Icon name="clock" size={19} class={zeilenIcon} />
           <div>

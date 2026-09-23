@@ -3,7 +3,6 @@ import Spielplan from './Spielplan.astro';
 import { getSpielplan, kommendeSpiele } from '../lib/spielplan';
 import { grossAnfang, zahlwort } from '../lib/labels';
 
-// Partien und Kopfangaben stehen in src/content/spielplaene/fussball.yaml.
 const plan = await getSpielplan('fussball');
 const {
   team: fussballTeam,
@@ -16,7 +15,6 @@ if (!fussballTeam || !fussballSpielplanStand || !fussballSpielstaette) {
 const spiele = kommendeSpiele(plan.spiele);
 const heimspiele = spiele.filter((spiel) => spiel.home).length;
 
-// „ein“/„kein“ statt „eine“/„null“: Es folgt „Spiel“ bzw. „davon“.
 const alsWort = (n: number) => zahlwort(n, { eins: 'ein', null: 'kein' });
 
 const anzahl =
@@ -31,7 +29,6 @@ const heim =
       ? `alle auf dem ${fussballSpielstaette}`
       : `${alsWort(heimspiele)} davon auf dem ${fussballSpielstaette}`;
 
-/** Eine gemeinsame Anstoßzeit lässt sich in einem Satz sagen. */
 const anstoss = new Set(spiele.map((spiel) => spiel.time));
 const zeitsatz = anstoss.size === 1 ? ` Angestoßen wird jeweils um ${[...anstoss][0]} Uhr.` : '';
 

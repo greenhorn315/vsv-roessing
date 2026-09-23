@@ -5,26 +5,13 @@ import Icon from './Icon.astro';
 import type { IconName } from './icons';
 
 interface Props {
-  /**
-   * Importiertes Bild aus src/assets/ (etwa über image() in einer Content
-   * Collection). Ohne Bild zeigt die Komponente nur den gestalteten
-   * Platzhalter – und stellt keine Anfrage an den Server.
-   */
   image?: ImageMetadata;
   alt?: string;
-  /**
-   * Seitenverhältnis der Kachel, z. B. 4 und 3. Das Foto füllt sie per
-   * object-fit: cover; width/height am <img> kommen aus der Bilddatei.
-   */
   width: number;
   height: number;
-  /** Breiten der erzeugten Varianten in px; größere als das Original entfallen. */
   widths?: number[];
-  /** Angezeigte Breite je Viewport, wie im sizes-Attribut. */
   sizes?: string;
-  /** Erstes Bild im Viewport eifrig laden, alle anderen lazy. */
   eager?: boolean;
-  /** Icon des Platzhalters, solange das Foto noch fehlt. */
   placeholderIcon?: IconName;
   placeholderText?: string;
   class?: string;
@@ -44,11 +31,6 @@ const {
 } = Astro.props;
 ---
 
-<!--
-  Fotos liegen unter src/assets/ und laufen durch Astros Bildverarbeitung:
-  AVIF und WebP mit JPEG als Rückfall, je mehrere Breiten. Fehlt ein Foto
-  noch ganz, bleibt der gestaltete Platzhalter stehen.
--->
 <div
   class:list={['relative isolate aspect-(--photo-ratio) overflow-hidden bg-base-300', className]}
   style={`--photo-ratio:${width} / ${height}`}

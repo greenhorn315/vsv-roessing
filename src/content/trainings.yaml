@@ -1,54 +1,6 @@
-# Trainingszeiten der Sportarten.
-#
-# Quellen: Hallenplan Winter 2025/26 für Hallenzeiten und Trainingsorte,
-# Übungsleiterliste mit Stand 2022 für alles Übrige.
-#
-# Im Hallenplan stehen auch Fremdnutzer der Alfred-Stubenrauch-Sporthalle,
-# die keine VSV-Angebote sind und hier nicht auftauchen dürfen:
-#   Kiga  örtlicher Kindergarten, Mo bis Mi 08:00–12:30
-#   DRK   Deutsches Rotes Kreuz, Mo 14:30–15:30
-#   FFW   Freiwillige Feuerwehr, Do 18:00–19:00
-#
-# Die Angaben aus der Übungsleiterliste sind nicht vom Verein bestätigt –
-# Gruppen können weggefallen, Zeiten verschoben und Übungsleitungen
-# gewechselt sein.
-#
-# Ein Trainingsort steht dort, wo der Hallenplan die Halle belegt oder die
-# Übungsleiterliste ihn nennt. Bei Fußball und Leichtathletik fehlt er
-# bewusst: Der Hallenplan gilt fürs Winterhalbjahr, im Sommer wird draußen
-# trainiert.
-#
-# Zum Bearbeiten genügt diese Datei. Das Schema steht in
-# src/content.config.ts und wird beim Bauen geprüft.
-#
-# Der Schlüssel ganz links ist die interne Kennung, frei wählbar, aber in der
-# Datei eindeutig; er erscheint nirgends auf der Seite. Darunter:
-#
-#   title           Name der Gruppe
-#   day             Mo, Di, Mi, Do, Fr, Sa oder So
-#   time            Anzeigetext: Uhrzeit, Spanne oder „nach Absprache“. In
-#                   Anführungszeichen, damit YAML „19:00“ sicher als Text liest
-#   place           Trainingsort, darf fehlen
-#   sport           Dateiname der Sportart in src/content/sportarten/, ohne .md
-#   audience        für wen die Gruppe gedacht ist, in Worten
-#   note            kurzer Zusatz, z. B. „14-tägig“
-#   trainers        Übungsleitung; eine leere Liste [] heißt: die Gruppe sucht
-#                   jemanden
-#   ageGroups       kinder, jugend, erwachsene
-#   audienceGroups  unter welchem Einstieg „Für wen ist was?“ die Gruppe steht:
-#                   kinder, jugend, frauen, maenner, alle – auch mehrere. Eine
-#                   Gruppe kann in mehreren stehen, „Jazzdance JAM-Touch“ etwa
-#                   bei Jugendlichen und bei allen Altersgruppen
-#   season          winter oder sommer; ohne Angabe ganzjährig
-#
-# Die Reihenfolge in dieser Datei ist egal: Die Seite sortiert nach Wochentag
-# und Uhrzeit, bei gleicher Anfangszeit nach dem Namen der Gruppe.
+# Fremdnutzer aus dem Hallenplan (Kiga, DRK, FFW) sind keine VSV-Angebote und fehlen bewusst.
 
-# Fußball
-# Die Damenmannschaft aus der Liste von 2022 gibt es nicht mehr; der Verein
-# hat das im September 2026 bestätigt. Ihre Zeiten – montags 19:00 auf dem
-# Sportplatz, im Winter donnerstags 20:00 in der Halle – stehen deshalb
-# nicht mehr hier.
+# Die Damenmannschaft aus der Liste von 2022 gibt es nicht mehr (vom Verein bestätigt).
 
 fussball-i-herren:
   title: I. Herren
@@ -62,8 +14,7 @@ fussball-i-herren:
   ageGroups: [erwachsene]
   audienceGroups: [maenner]
 
-# In der Liste von 2022 stand hier „Ü32“ ohne Übungsleitung. Es ist die
-# Ü40, deren Spielplan auf der Fußball-Seite steht.
+# In der Liste von 2022 „Ü32“ – es ist die Ü40.
 fussball-ue40:
   title: Ü40
   day: Di
@@ -141,8 +92,6 @@ fussball-e-jugend:
   ageGroups: [kinder]
   audienceGroups: [kinder]
 
-# Volleyball
-
 volleyball-mixed:
   title: Volleyball mixed
   day: Mo
@@ -152,8 +101,6 @@ volleyball-mixed:
   trainers: [Gunnar Wolpert]
   ageGroups: [erwachsene]
   audienceGroups: [alle]
-
-# Turnen
 
 turnen-montagsturner:
   title: Montagsturner
@@ -250,15 +197,13 @@ turnen-freitagsturner:
   place: Alfred-Stubenrauch-Sporthalle
   sport: turnen
   audience: Männer
-  # Zuordnung und Übungsleitung sind vom Verein bestätigt.
   note: Gymnastik, gelegentlich auch Yoga. Im Sommerhalbjahr fährt dieselbe Gruppe als „Freitagsradler“.
   season: winter
   trainers: [Olaf Elbeshausen]
   ageGroups: [erwachsene]
   audienceGroups: [maenner]
 
-# Bewusst unter Turnen, nicht unter Outdoor: Vereinsintern ist die
-# Gruppe dem Turnen zugeordnet, auch wenn im Sommer Rad gefahren wird.
+# Bewusst unter Turnen, nicht Outdoor: so im Verein zugeordnet.
 turnen-freitagsradler:
   title: Freitagsradler
   day: Fr
@@ -268,13 +213,9 @@ turnen-freitagsradler:
   audience: Männer
   note: Touren mit Gravelbike oder E-Bike durch das Rössinger Umland, anschließend Grillen am Feuerplatz beim VSV-Sportplatz. Im Winterhalbjahr turnt dieselbe Gruppe als „Freitagsturner“ in der Halle.
   season: sommer
-  # Vom Verein bestätigt: Freitagsturner und Freitagsradler sind dieselbe
-  # Gruppe mit derselben Übungsleitung.
   trainers: [Olaf Elbeshausen]
   ageGroups: [erwachsene]
   audienceGroups: [maenner]
-
-# Tanzen
 
 tanzen-jazz-dance-frauen:
   title: Jazz Dance Frauen
@@ -342,8 +283,6 @@ tanzen-jazzdance-jam-touch:
   ageGroups: [jugend, erwachsene]
   audienceGroups: [jugend, alle]
 
-# Basketball
-
 basketball:
   title: Basketball
   day: Sa
@@ -354,8 +293,6 @@ basketball:
   trainers: [Lennart Ahrens]
   ageGroups: [jugend, erwachsene]
   audienceGroups: [jugend, alle]
-
-# Leichtathletik
 
 leichtathletik-kinderleichtathletik:
   title: Kinderleichtathletik
@@ -369,8 +306,6 @@ leichtathletik-kinderleichtathletik:
   ageGroups: [kinder]
   audienceGroups: [kinder]
 
-# Als einzige Leichtathletik-Gruppe ganzjährig in der Halle, nicht nur
-# im Winterhalbjahr.
 leichtathletik-hochsprung:
   title: Hochsprung
   day: Mo
@@ -461,11 +396,6 @@ leichtathletik-krafttraining:
   ageGroups: [jugend, erwachsene]
   audienceGroups: [alle]
 
-# Yoga
-
-# Offen für Frauen und Männer; dass zurzeit nur Frauen mitmachen, ist eine
-# Momentaufnahme und kein Zuschnitt der Gruppe. Deshalb steht sie sowohl
-# unter „Frauen“ als auch unter „alle Altersgruppen“.
 yoga:
   title: Yoga
   day: Fr
@@ -477,8 +407,6 @@ yoga:
   trainers: [Sandra Dettmer, Heike Husmann, Christoph Nowothnig]
   ageGroups: [erwachsene]
   audienceGroups: [alle, frauen]
-
-# Dart
 
 dart-training:
   title: Dart-Training

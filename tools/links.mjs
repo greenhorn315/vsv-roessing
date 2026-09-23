@@ -1,10 +1,3 @@
-// Prüft alle internen Links im fertigen Build.
-// Aufruf: npm run build && npm run links
-//
-// Jeder <a href>, der auf diese Seite zeigt, muss auf eine vorhandene Datei
-// oder ein Verzeichnis mit index.html in dist/ führen. Seitenlinks müssen auf
-// „/“ enden (trailingSlash: 'always'), sonst leitet Cloudflare erst um. Anker
-// werden gegen die id-Attribute der Zielseite geprüft.
 import { readdirSync, readFileSync, statSync, existsSync } from 'node:fs';
 import { join, relative, resolve, extname } from 'node:path';
 

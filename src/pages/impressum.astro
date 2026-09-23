@@ -6,7 +6,6 @@ import Icon from '../components/Icon.astro';
 import Container from '../components/Container.astro';
 import { getEntry, render } from 'astro:content';
 
-// Wortlaut und Herkunftshinweise in src/content/rechtliches/impressum.md.
 const impressum = await getEntry('rechtliches', 'impressum');
 if (!impressum) throw new Error('src/content/rechtliches/impressum.md fehlt.');
 const { intro, datenschutzHinweis } = impressum.data;

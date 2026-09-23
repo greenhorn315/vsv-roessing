@@ -4,34 +4,14 @@ import { getCollection } from 'astro:content';
 import { nachOrder } from '../lib/reihenfolge';
 
 interface Props {
-  /** Form, Schatten und Seitenverhältnis bestimmt der Hero. */
   class?: string;
 }
 
-/**
- * Rollierendes Bild an der Stelle des künftigen Vereinsfotos.
- *
- * daisyUI-carousel: Die Bilder stehen nebeneinander in einem waagerechten
- * Scroll-Container mit Scroll-Snap. Wischen und Scrollen gehen damit ohne
- * JavaScript; das Skript unten blättert alle sechs Sekunden weiter und hält
- * die Punkte aktuell. Bei „Bewegung reduzieren“ wechselt nichts von selbst –
- * dann zählt nur, was jemand selbst anklickt oder wischt. Ohne JavaScript
- * sind die Punkte ausgeblendet.
- *
- * Laden: Die Bilder außerhalb des sichtbaren Ausschnitts sind loading="lazy"
- * und werden erst geladen, wenn sie in den Container rücken. Nur das erste
- * Bild lädt sofort und mit hoher Priorität.
- */
-// Bilder und Reihenfolge in src/content/karussell.yaml.
 const bilder = (await getCollection('karussell')).sort(nachOrder).map((eintrag) => eintrag.data);
 const dauer = 6000;
 const { class: className } = Astro.props;
 
-/*
- * Am Desktop steht das Karussell in der rechten Spalte des Heros (rund
- * 550 px breit), darunter über die volle Breite, höchstens 520 px. Die
- * Vorlagen sind 800 × 1000 px; größere Breiten entfallen von selbst.
- */
+// Nur das erste Bild eager: die übrigen liegen außerhalb des Containers und laden erst beim Blättern.
 const widths = [400, 560, 800];
 const sizes = '(max-width: 940px) min(calc(100vw - 2rem), 520px), 560px';
 ---
@@ -65,8 +45,6 @@ const sizes = '(max-width: 940px) min(calc(100vw - 2rem), 520px), 560px';
             class="w-full h-full object-cover"
             pictureAttributes={{ class: 'contents' }}
           />
-          {/* Verlauf statt Balken: Der Bildrand bleibt sichtbar. Unten Platz
-              für die Punkte, damit lange Zeilen nicht darunter laufen. */}
           <p class="absolute inset-x-0 bottom-0 bg-linear-to-t from-neutral/85 to-neutral/0 px-4 pt-10 pb-8 text-sm font-semibold text-neutral-content text-shadow-sm">
             {bild.caption}
             {bild.credit && (
@@ -124,7 +102,6 @@ const sizes = '(max-width: 940px) min(calc(100vw - 2rem), 520px), 560px';
     let timer: number | undefined;
     let pausiert = false;
 
-    /** Blättert zum Bild – nur im Container, die Seite scrollt nicht mit. */
     const gehe = (index: number) => {
       const ziel = bilder[(index + bilder.length) % bilder.length];
       if (!ziel) return;
@@ -136,14 +113,12 @@ const sizes = '(max-width: 940px) min(calc(100vw - 2rem), 520px), 560px';
       timer = undefined;
     };
 
-    /** Plant den nächsten Wechsel – außer bei Pause oder „Bewegung reduzieren“. */
     const planen = () => {
       stoppen();
       if (pausiert || document.hidden || ruhig.matches) return;
       timer = window.setTimeout(() => gehe(aktuell + 1), dauer);
     };
 
-    /** Punkte, Vorlesetext und aria-hidden folgen dem sichtbaren Bild. */
     const markiere = (index: number) => {
       if (index === aktuell) return;
       aktuell = index;
@@ -156,11 +131,9 @@ const sizes = '(max-width: 940px) min(calc(100vw - 2rem), 520px), 560px';
         else punkt.removeAttribute('aria-current');
       });
       if (status) status.textContent = `Bild ${aktuell + 1} von ${bilder.length}`;
-      // Nach jedem Wechsel – auch nach Wischen – wieder die volle Standzeit.
       planen();
     };
 
-    // Welches Bild gerade zu mehr als der Hälfte im Container steht.
     const beobachter = new IntersectionObserver(
       (eintraege) => {
         for (const eintrag of eintraege) {
@@ -176,7 +149,6 @@ const sizes = '(max-width: 940px) min(calc(100vw - 2rem), 520px), 560px';
       punkt.addEventListener('click', () => gehe(Number(punkt.dataset.zu))),
     );
 
-    // Wer hinschaut oder tabbt, soll nicht vom Wechsel überrascht werden.
     const pause = (an: boolean) => () => {
       pausiert = an;
       planen();

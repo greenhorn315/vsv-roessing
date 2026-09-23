@@ -1,42 +1,9 @@
 ---
-# Impressum – Wortlaut wortgleich von https://vsv-roessing.de/ übernommen.
-#
-# Abweichung vom Original: Die Gesetzesverweise sind auf den aktuellen Stand
-# gebracht, der Rest ist wortgleich.
-#   § 5 TMG            -> § 5 DDG            (DDG seit 14.05.2024)
-#   § 55 Abs. 2 RStV   -> § 18 Abs. 2 MStV   (MStV seit 07.11.2020)
-#   § 7 Abs. 1 TMG     -> Verweis entfällt; die Vorschrift hat im DDG keine
-#                         wortgleiche Entsprechung, die Verantwortlichkeit
-#                         für eigene Inhalte folgt aus den allgemeinen Gesetzen
-#   §§ 8 bis 10 TMG    -> Art. 4 bis 6 DSA i.V.m. § 7 DDG; die alten
-#                         Paragraphen sind ersatzlos entfallen
-#
-# Außerdem korrigiert: Im Absatz "Haftung für Links" stand "ist der LSB nur
-# dann verantwortlich". LSB steht für Landessportbund und ist ein Rest aus
-# der Mustervorlage, aus der der Text stammt – der Verein ist nicht der
-# Landessportbund. Ersetzt durch "sind wir", passend zum "Wir" der übrigen
-# Sätze des Absatzes.
-#
-# Diese Änderungen gehören auch ins Original übernommen.
-#
-# Zum Bearbeiten: Unter diesen Angaben steht der Text in Markdown.
-#   ## / ###      Abschnitt / Unterabschnitt
-#   Zeile\        Backslash am Zeilenende = Zeilenumbruch im selben Absatz
-#   Leerzeile     neuer Absatz
-#   [Text](Ziel)  Link – E-Mail als mailto:, Telefon als tel: in
-#                 internationaler Schreibweise ohne die „(0)“
-#   1\. …         Backslash vor dem Punkt, sonst wird aus der Zeile eine
-#                 nummerierte Liste
-#
-# Der 1. Vorsitzende steht auch in src/content/vorstand.yaml. Beide Stellen
-# müssen zusammenpassen; dieser Text wird bewusst nicht daraus erzeugt.
+# Rechtstext, wortgleich von vsv-roessing.de; nur Gesetzesverweise aktualisiert und „LSB“ → „wir“.
+# Nicht umformulieren. Der 1. Vorsitzende steht auch in vorstand.yaml.
 
-# Fettgedruckter Satz über dem Text.
 intro: 'Verantwortlich für den Inhalt dieser Seite:'
 
-# Im Original folgt am Ende eine Überschrift „Datenschutz“ ohne eigenen Text.
-# Auf dieser Seite gibt es dafür eine eigene Unterseite, auf die verwiesen
-# wird – eine leere Überschrift wäre für Lesende wertlos.
 datenschutzHinweis:
   heading: Datenschutz
   linkLabel: Zur Datenschutzerklärung

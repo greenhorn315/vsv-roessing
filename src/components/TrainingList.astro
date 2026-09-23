@@ -9,11 +9,8 @@ import {
 import { seasonLabels, type Weekday } from '../lib/labels';
 
 interface Props {
-  /** Nur die Trainings dieser Sportart (Dateiname in src/content/sportarten/). */
   sport?: string;
-  /** Höchstens so viele Einträge zeigen. */
   limit?: number;
-  /** Nach Wochentagen gruppieren statt einer durchgehenden Liste. */
   grouped?: boolean;
 }
 
@@ -32,14 +29,11 @@ const wochentagNamen: Record<Weekday, string> = {
 const auswahl = sport ? await trainingsOfSport(sport) : await getTrainings();
 const sichtbar = limit ? auswahl.slice(0, limit) : auswahl;
 
-// Gruppiert wird nur ohne Sportart- und Anzahl-Filter, sonst zeigt die Liste
-// Tagesüberschriften über einem Ausschnitt.
 const gruppen: { day: Weekday | null; entries: Training[] }[] =
   grouped && !sport && !limit
     ? await trainingsByDay()
     : [{ day: null, entries: sichtbar }];
 
-// Zusatzzeilen unter dem Namen (Zielgruppe, Übungsleitung, Ort …)
 const klein = 'text-xs font-normal text-base-content/70';
 ---
 
@@ -57,8 +51,6 @@ const klein = 'text-xs font-normal text-base-content/70';
                 {training.trainers && training.trainers.length > 0 && (
                   <small class={klein}>Übungsleitung: {training.trainers.join(', ')}</small>
                 )}
-                {/* Halbjahres-Hinweis, damit eine Wintergruppe im Sommer nicht
-                    unkommentiert im Wochenplan steht. */}
                 {training.season && (
                   <small class="mt-1 badge self-start badge-sm border-0 bg-base-300 font-semibold text-primary">
                     {seasonLabels[training.season]}

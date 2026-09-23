@@ -3,19 +3,9 @@ import { getCalculator } from '../lib/mitgliedschaft';
 
 const calculator = await getCalculator();
 
-/**
- * Der Verein rechnet für eine Familie automatisch den günstigsten Beitrag ab.
- * Genau das bildet der Rechner nach: Einzelbeiträge zusammenzählen, und wenn
- * minderjährige Kinder dabei sind, bei 15 € deckeln. Ohne Kinder gibt es
- * keinen Deckel – zwei Erwachsene zahlen ohnehin dasselbe.
- */
-
-// Gemeinsame Klassen beider Regler. Schieberegler: daisyUI-range in Korall,
-// etwas schlanker als daisyUIs Vorgabe, die leere Spur in Rahmenfarbe.
 const label = 'mb-2 block text-sm font-semibold tracking-wide uppercase text-base-content/70';
 const regler = 'range range-accent range-sm my-1.5 w-full';
-// Skala unter dem Regler: Chrome zeigt die Datalist-Beschriftungen an,
-// sobald sie nicht mehr display: none ist.
+// Chrome zeigt Datalist-Beschriftungen, sobald die Datalist nicht display: none ist.
 const skala = 'flex justify-between px-2 text-xs text-base-content/70 [writing-mode:horizontal-tb]';
 ---
 
@@ -35,7 +25,6 @@ const skala = 'flex justify-between px-2 text-xs text-base-content/70 [writing-m
     <div>
       <label class={label} for="erwachsene">Erwachsene: <span class="text-primary" data-wert="erwachsene">2</span></label>
       <input type="range" id="erwachsene" name="erwachsene" min="0" max="4" value="2" step="1" list="ticksErwachsene" class={regler} />
-      {/* Eigene Skala je Regler – eine gemeinsame erschiene nur einmal. */}
       <datalist id="ticksErwachsene" class={skala}>
         <option value="0" label="0"></option>
         <option value="1" label="1"></option>
@@ -57,7 +46,6 @@ const skala = 'flex justify-between px-2 text-xs text-base-content/70 [writing-m
     </div>
   </div>
 
-  <!-- aria-live: Screenreader bekommen das neue Ergebnis mit. -->
   <output class="card block rounded-box bg-primary p-4 text-primary-content" aria-live="polite">
     <strong class="block font-display text-2xl leading-tight" data-ergebnis>15,00 € / Monat</strong>
     <span class="text-sm text-primary-content/80" data-hinweis>Familienbeitrag statt 23,00 € einzeln gerechnet</span>
@@ -99,7 +87,6 @@ const skala = 'flex justify-between px-2 text-xs text-base-content/70 [writing-m
       zeigeWert(kinder);
 
       const einzeln = a * satzErwachsen + k * satzKind;
-      // Der Familienbeitrag gilt für Familien mit minderjährigen Kindern.
       const gedeckelt = k > 0 ? Math.min(einzeln, satzFamilie) : einzeln;
 
       if (a + k === 0) {
