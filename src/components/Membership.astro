@@ -60,11 +60,11 @@ const euro = new Intl.NumberFormat('de-DE', {
         <li>{beitragsregeln.kuendigung}</li>
       </ul>
 
-      <ol class="steps">
+      <ol class="membership-steps">
         {
           joinSteps.map((step, index) => (
-            <li class="step">
-              <span class="step__num" aria-hidden="true">{index + 1}</span>
+            <li class="membership-step">
+              <span class="membership-step__num" aria-hidden="true">{index + 1}</span>
               <h3>{step.title}</h3>
               <p>{step.text}</p>
             </li>
@@ -73,13 +73,13 @@ const euro = new Intl.NumberFormat('de-DE', {
       </ol>
 
       <div class="membership-ctas">
-        <a class="btn btn--primary" href="/mitglied-werden#formulare">
+        <a class="btn btn-accent" href="/mitglied-werden#formulare">
           <Icon name="download" />
           Mitgliedsantrag herunterladen
         </a>
         {
           compact && (
-            <a class="btn btn--ghost" href="/mitglied-werden">
+            <a class="btn btn-link" href="/mitglied-werden">
               Alle Infos zur Mitgliedschaft
               <Icon name="arrowRight" size={16} />
             </a>
@@ -174,7 +174,7 @@ const euro = new Intl.NumberFormat('de-DE', {
   .fees tbody tr:last-child td { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
 
   /* ---- Schritte ---- */
-  .steps {
+  .membership-steps {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
     gap: var(--sp-5);
@@ -182,7 +182,7 @@ const euro = new Intl.NumberFormat('de-DE', {
     padding: 0;
     margin: var(--sp-7) 0 0;
   }
-  .step__num {
+  .membership-step__num {
     display: grid;
     place-items: center;
     width: 34px;
@@ -194,11 +194,11 @@ const euro = new Intl.NumberFormat('de-DE', {
     font-family: var(--font-display);
     margin-bottom: var(--sp-3);
   }
-  .step h3 {
+  .membership-step h3 {
     font-size: 1rem;
     margin: 0 0 0.25rem;
   }
-  .step p {
+  .membership-step p {
     font-size: 0.9rem;
     color: var(--c-text-muted);
     margin: 0;

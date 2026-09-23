@@ -16,11 +16,11 @@ const groups = Object.keys(ageGroupLabels) as AgeGroup[];
 
 {
   withFilter && (
-    <div class="filter" data-sport-filter>
-      <span class="filter__label" id="filterLabel">
+    <div class="sport-filter" data-sport-filter>
+      <span class="sport-filter__label" id="filterLabel">
         Passend für
       </span>
-      <div class="filter__options" role="group" aria-labelledby="filterLabel">
+      <div class="sport-filter__options" role="group" aria-labelledby="filterLabel">
         <button type="button" class="chip is-active" data-filter="alle" aria-pressed="true">
           Alle
         </button>
@@ -30,7 +30,7 @@ const groups = Object.keys(ageGroupLabels) as AgeGroup[];
           </button>
         ))}
       </div>
-      <p class="filter__status" role="status" data-filter-status />
+      <p class="sport-filter__status" role="status" data-filter-status />
     </div>
   )
 }
@@ -119,19 +119,19 @@ const groups = Object.keys(ageGroupLabels) as AgeGroup[];
   }
 
   /* ---- Filter ---- */
-  .filter {
+  .sport-filter {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     gap: var(--sp-3);
     margin-bottom: var(--sp-5);
   }
-  .filter__label {
+  .sport-filter__label {
     font-weight: 600;
     color: var(--c-text-muted);
     font-size: 0.9rem;
   }
-  .filter__options {
+  .sport-filter__options {
     display: flex;
     flex-wrap: wrap;
     gap: 0.4rem;
@@ -156,7 +156,7 @@ const groups = Object.keys(ageGroupLabels) as AgeGroup[];
     border-color: var(--c-primary);
     color: #fff;
   }
-  .filter__status {
+  .sport-filter__status {
     flex-basis: 100%;
     margin: 0;
     font-size: 0.86rem;

@@ -75,19 +75,19 @@ const previous = sports[(index - 1 + sports.length) % sports.length];
       <div>
         {
           sport.status && (
-            <aside class="status">
-              <p class="status__label">
+            <aside class="sport-status">
+              <p class="sport-status__label">
                 <Icon name="info" size={17} />
                 {sport.status.label}
               </p>
-              <p class="status__text">{sport.status.text}</p>
+              <p class="sport-status__text">{sport.status.text}</p>
               {sport.status.next && (
                 <>
-                  <h2 class="status__heading">Als Nächstes geplant</h2>
-                  <ul class="status__list">
+                  <h2 class="sport-status__heading">Als Nächstes geplant</h2>
+                  <ul class="sport-status__list">
                     {sport.status.next.map((item) => (
                       <li>
-                        <Icon name="calendar" size={17} class="status__icon" />
+                        <Icon name="calendar" size={17} class="sport-status__icon" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -136,7 +136,7 @@ const previous = sports[(index - 1 + sports.length) % sports.length];
         }
 
         <div class="cta-inline">
-          <a class="btn btn--primary" href="/kontakt#probetraining">
+          <a class="btn btn-accent" href="/kontakt#probetraining">
             <Icon name="sport" />
             Probetraining bei {sport.name} anfragen
           </a>
@@ -246,7 +246,7 @@ const previous = sports[(index - 1 + sports.length) % sports.length];
           {previous.name}
         </span>
       </a>
-      <a href="/sportangebote" class="btn btn--ghost">Alle Sportarten</a>
+      <a href="/sportangebote" class="btn btn-link">Alle Sportarten</a>
       <a href={`/sportangebote/${next.slug}`} class="sport-nav__link sport-nav__link--next">
         <span>
           <small>Nächste Sportart</small>
@@ -368,7 +368,7 @@ const previous = sports[(index - 1 + sports.length) % sports.length];
   }
 
   /* ---- Hinweis für Sportarten im Aufbau ---- */
-  .status {
+  .sport-status {
     background: var(--c-sun-soft);
     border: 1px solid #E8CE8A;
     border-left: 5px solid var(--c-sun);
@@ -376,7 +376,7 @@ const previous = sports[(index - 1 + sports.length) % sports.length];
     padding: var(--sp-5);
     margin-bottom: var(--sp-6);
   }
-  .status__label {
+  .sport-status__label {
     display: flex;
     align-items: center;
     gap: 0.45rem;
@@ -387,11 +387,11 @@ const previous = sports[(index - 1 + sports.length) % sports.length];
     letter-spacing: 0.06em;
     color: #6B5400 !important;
   }
-  .status__text {
+  .sport-status__text {
     margin: 0;
     color: #4A3D14 !important;
   }
-  .status__heading {
+  .sport-status__heading {
     font-size: 0.82rem !important;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -400,7 +400,7 @@ const previous = sports[(index - 1 + sports.length) % sports.length];
     color: #6B5400;
     margin: var(--sp-5) 0 var(--sp-2) !important;
   }
-  .status__list {
+  .sport-status__list {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -408,14 +408,14 @@ const previous = sports[(index - 1 + sports.length) % sports.length];
     flex-direction: column;
     gap: 0.5rem;
   }
-  .status__list li {
+  .sport-status__list li {
     display: flex;
     align-items: start;
     gap: 0.55rem;
     color: #4A3D14;
     line-height: 1.45;
   }
-  .status :global(.status__icon) {
+  .sport-status :global(.sport-status__icon) {
     color: #8A6D00;
     margin-top: 0.2rem;
     flex-shrink: 0;

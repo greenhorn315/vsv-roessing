@@ -11,7 +11,7 @@ interface Props {
 const { items } = Astro.props;
 ---
 
-<nav class="breadcrumbs" aria-label="Sie sind hier">
+<nav class="site-breadcrumbs" aria-label="Sie sind hier">
   <ol>
     {
       items.map((item, index) => (
@@ -29,10 +29,10 @@ const { items } = Astro.props;
 </nav>
 
 <style>
-  .breadcrumbs {
+  .site-breadcrumbs {
     padding-top: var(--sp-5);
   }
-  .breadcrumbs ol {
+  .site-breadcrumbs ol {
     list-style: none;
     display: flex;
     flex-wrap: wrap;
@@ -42,20 +42,20 @@ const { items } = Astro.props;
     margin: 0;
     font-size: 0.86rem;
   }
-  .breadcrumbs li {
+  .site-breadcrumbs li {
     display: flex;
     align-items: center;
     gap: 0.5rem;
   }
-  .breadcrumbs a {
+  .site-breadcrumbs a {
     color: var(--c-text-muted);
     text-decoration: none;
   }
-  .breadcrumbs a:hover {
+  .site-breadcrumbs a:hover {
     color: var(--c-primary);
     text-decoration: underline;
   }
-  .breadcrumbs [aria-current='page'] {
+  .site-breadcrumbs [aria-current='page'] {
     color: var(--c-primary);
     font-weight: 600;
   }
