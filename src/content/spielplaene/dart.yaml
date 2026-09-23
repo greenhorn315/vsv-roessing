@@ -31,6 +31,8 @@
 # selbst heraus und dürfen stehen bleiben.
 
 saison: 2026/2027
+# Spielstätte der Heimspiele, siehe sportstaetten.yaml.
+spielstaette: Der Dorfbrunnen
 
 spiele:
   # A-Team

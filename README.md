@@ -122,7 +122,16 @@ Aussehen bestimmt, steht an einer Stelle: `src/styles/global.css`.
 * Zielniveau Barrierefreiheit: WCAG 2.1 AA (Kontraste, Tastaturbedienung,
   sichtbarer Fokus, `prefers-reduced-motion`).
 * Das Vorschaubild `public/og-default.png` (1200 × 630) wird beim Teilen in
-  WhatsApp, Facebook & Co. angezeigt.
+  WhatsApp, Facebook & Co. angezeigt. Die Detailseiten der Sportarten
+  bekommen ein eigenes, beim Bauen erzeugtes Bild unter `/og/<slug>.png`:
+  Name, Kurzzeile und DOSB-Piktogramm auf Tannengrün (`src/lib/og.ts`,
+  Satori + sharp). Die Schriften dafür kommen als WOFF aus
+  `@fontsource/fraunces` und `@fontsource/source-sans-3`, weil Satori kein
+  WOFF2 liest.
+* Strukturierte Daten (schema.org) setzt `src/lib/seo.ts` zusammen: Verein
+  mit Sportstätten auf jeder Seite, dazu Brotkrumen und die kommenden
+  Spiele aus den Spielplänen auf den Seiten der Sportarten. Weitere Knoten
+  reicht eine Seite über `jsonLd` an `BaseLayout` weiter.
 
 ## Deployment (Cloudflare)
 

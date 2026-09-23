@@ -8,46 +8,71 @@ import frauncesLatin from '@fontsource-variable/fraunces/files/fraunces-latin-wg
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { site, isPrototype, getSiteDescription } from '../lib/site';
-import { getSportNames } from '../lib/sportarten';
+import { vereinsKnoten, type JsonLdNode } from '../lib/seo';
+
+/** Vorschaubild beim Teilen (Open Graph, Twitter/X). */
+interface OgImage {
+  /** Pfad unter der Seite, z. B. /og/dart.png. */
+  src: string;
+  /** Beschreibung für Screenreader und Plattformen, die sie anzeigen. */
+  alt: string;
+  width?: number;
+  height?: number;
+}
 
 interface Props {
   title: string;
   description?: string;
   /** Seitentitel ohne Vereinsname anhängen (z. B. für die Startseite). */
   bareTitle?: boolean;
-  ogImage?: string;
+  /** Ohne Angabe gilt public/og-default.png. */
+  ogImage?: OgImage;
+  /** Weitere schema.org-Knoten der Seite, z. B. Brotkrumen oder Termine. */
+  jsonLd?: JsonLdNode[];
+  /** Seite nicht indexieren, auch nach dem Livegang (z. B. 404). */
+  noindex?: boolean;
 }
 
-const { title, bareTitle = false, ogImage = '/og-default.png' } = Astro.props;
+const defaultOgImage: OgImage = {
+  src: '/og-default.png',
+  alt: `${site.name}: Dein Verein, dein Sport.`,
+  width: 1200,
+  height: 630,
+};
+
+const {
+  title,
+  bareTitle = false,
+  ogImage = defaultOgImage,
+  jsonLd: seitenKnoten = [],
+  noindex = false,
+} = Astro.props;
 const siteDescription = await getSiteDescription();
 const description = Astro.props.description ?? siteDescription;
-const sportNames = await getSportNames();
 
 const fullTitle = bareTitle ? title : `${title} – ${site.shortName}`;
-const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://vsv-roessing.de');
-const ogImageUrl = new URL(ogImage, Astro.site ?? 'https://vsv-roessing.de');
+const origin = Astro.site ?? new URL('https://vsv-roessing.de');
+const canonical = new URL(Astro.url.pathname, origin);
+const ogImageUrl = new URL(ogImage.src, origin);
+const ogImageType = /\.jpe?g$/i.test(ogImage.src) ? 'image/jpeg' : 'image/png';
 
-/** Strukturierte Daten für Suchmaschinen und Google-Vereinsprofil. */
+/*
+ * Solange dies ein Entwurf ist, darf er nicht neben der echten Vereinsseite
+ * in den Suchergebnissen auftauchen. Danach große Bildvorschauen erlauben.
+ */
+const robots = isPrototype
+  ? 'noindex, nofollow'
+  : noindex
+    ? 'noindex'
+    : 'max-image-preview:large';
+
+/** Strukturierte Daten: Verein und Sportstätten, dazu was die Seite mitbringt. */
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'SportsClub',
-  name: site.name,
-  legalName: site.legalName,
-  alternateName: site.shortName,
-  foundingDate: String(site.founded),
-  description: siteDescription,
-  url: canonical.origin,
-  email: site.email,
-  telephone: site.phone,
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: site.address.street,
-    addressLocality: site.address.city,
-    postalCode: site.address.postalCode,
-    addressCountry: site.address.country,
-  },
-  sport: sportNames,
+  '@graph': [...(await vereinsKnoten(canonical.origin, siteDescription)), ...seitenKnoten],
 };
+// „<“ maskieren, damit kein Text im JSON das Script-Element beenden kann.
+const jsonLdText = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
 ---
 
 <!doctype html>
@@ -58,11 +83,7 @@ const jsonLd = {
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical.href} />
-    {
-      /* Solange dies ein Entwurf ist, darf er nicht neben der echten
-         Vereinsseite in den Suchergebnissen auftauchen. */
-      isPrototype && <meta name="robots" content="noindex, nofollow" />
-    }
+    <meta name="robots" content={robots} />
 
     <link rel="preload" href={frauncesLatin} as="font" type="font/woff2" crossorigin />
 
@@ -77,8 +98,16 @@ const jsonLd = {
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical.href} />
     <meta property="og:image" content={ogImageUrl.href} />
+    <meta property="og:image:type" content={ogImageType} />
+    {ogImage.width && <meta property="og:image:width" content={String(ogImage.width)} />}
+    {ogImage.height && <meta property="og:image:height" content={String(ogImage.height)} />}
+    <meta property="og:image:alt" content={ogImage.alt} />
     <meta property="og:locale" content="de_DE" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl.href} />
+    <meta name="twitter:image:alt" content={ogImage.alt} />
 
     <link rel="sitemap" href="/sitemap-index.xml" />
 
@@ -88,7 +117,7 @@ const jsonLd = {
       document.documentElement.classList.add('js');
     </script>
 
-    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <script is:inline type="application/ld+json" set:html={jsonLdText} />
   </head>
 
   <body>
