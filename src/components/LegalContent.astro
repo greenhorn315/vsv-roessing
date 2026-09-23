@@ -5,39 +5,17 @@
  * Links auf E-Mail-Adressen, Web-Adressen und Telefonnummern stehen dort
  * ausdrücklich im Markdown.
  *
- * Die Stile greifen mit :global(), weil gerendertes Markdown nicht die
- * Kennung trägt, mit der Astro die Stile einer Komponente eingrenzt. Die
- * Klasse .legal-content davor hält sie trotzdem auf diesen Rahmen beschränkt.
+ * Gerendertes Markdown trägt keine eigenen Klassen. Die Stile greifen
+ * deshalb über Nachfahren-Varianten ([&_h2]:…) dieses Rahmens und bleiben
+ * so auf ihn beschränkt. Überschriften, Absätze und Listen bringen ihr
+ * Grundaussehen aus global.css mit; hier stehen nur die Abweichungen für
+ * Rechtstexte. Lange URLs dürfen den Textfluss nicht sprengen
+ * (wrap-anywhere).
  */
 ---
 
-<div class="legal-content">
+<div
+  class="max-w-[720px] [&_a]:text-accent [&_a]:wrap-anywhere [&_h2]:mt-8 [&_h2]:text-step-1 [&_h2:first-child]:mt-0 [&_h3]:mt-6 [&_h3]:mb-2 [&_h3]:text-[1.02rem] [&_p]:text-[0.96rem] [&_p]:text-muted"
+>
   <slot />
 </div>
-
-<style>
-  .legal-content {
-    max-width: 720px;
-  }
-  .legal-content :global(h2) {
-    font-size: var(--step-1);
-    margin-top: var(--sp-6);
-  }
-  .legal-content :global(h2:first-child) {
-    margin-top: 0;
-  }
-  .legal-content :global(h3) {
-    font-size: 1.02rem;
-    margin-top: var(--sp-5);
-    margin-bottom: var(--sp-2);
-  }
-  .legal-content :global(p) {
-    color: var(--c-text-muted);
-    font-size: 0.96rem;
-  }
-  .legal-content :global(a) {
-    color: var(--c-accent-ink);
-    /* Lange URLs dürfen den Textfluss nicht sprengen. */
-    overflow-wrap: anywhere;
-  }
-</style>
