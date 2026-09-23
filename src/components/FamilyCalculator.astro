@@ -1,5 +1,7 @@
 ---
-import { calculator } from '../data/membership';
+import { getCalculator } from '../lib/mitgliedschaft';
+
+const calculator = await getCalculator();
 
 /**
  * Der Verein rechnet für eine Familie automatisch den günstigsten Beitrag ab.

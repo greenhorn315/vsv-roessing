@@ -3,8 +3,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Membership from '../components/Membership.astro';
 import Icon from '../components/Icon.astro';
-import { site } from '../data/site';
-import { downloads } from '../data/membership';
+import { site } from '../lib/site';
+import { getDownloads } from '../lib/mitgliedschaft';
+
+const downloads = await getDownloads();
 
 /** „138441“ liest sich schlecht – „135 KB“ schon. */
 const groesse = (bytes: number) => `${Math.round(bytes / 1024)} KB`;

@@ -1,0 +1,41 @@
+# Formulare zum Herunterladen auf /mitglied-werden#formulare.
+#
+# Der Schlüssel ganz links ist die interne Kennung und erscheint nirgends auf
+# der Seite; er muss in der Datei eindeutig sein. Darunter:
+#   order  Reihenfolge auf der Seite, aufsteigend
+#   title  Name des Formulars
+#   text   ein, zwei Sätze, wofür es gedacht ist
+#   file   Pfad unter public/, also /downloads/<datei>.pdf
+#   pages  Seitenzahl, wird neben dem Link angezeigt
+#
+# Die Dateigröße steht bewusst nicht hier: Sie wird beim Bauen aus der Datei
+# unter public/ gelesen und stimmt damit auch nach einem Austausch des PDFs.
+# Fehlt die Datei, bricht der Build mit einer Meldung ab.
+
+aufnahmeantrag:
+  order: 1
+  title: Aufnahmeantrag
+  text: Eintrittserklärung mit SEPA-Lastschriftmandat und Datenschutzhinweisen. Für neue Mitglieder genügt dieses eine Formular.
+  file: /downloads/aufnahmeantrag.pdf
+  pages: 2
+
+sepa-lastschriftmandat:
+  order: 2
+  title: SEPA-Lastschriftmandat
+  text: Einzeln, falls sich eure Bankverbindung ändert. Ein neues Mandat ersetzt das alte.
+  file: /downloads/sepa-lastschriftmandat.pdf
+  pages: 1
+
+beitragsermaessigung:
+  order: 3
+  title: Antrag auf Beitragsermäßigung
+  text: Für Schulausbildung, Studium sowie Grundwehr- oder Ersatzdienst. Nachweis bitte beilegen.
+  file: /downloads/beitragsermaessigung.pdf
+  pages: 1
+
+austrittserklaerung:
+  order: 4
+  title: Austrittserklärung
+  text: Kündigung zum Quartalsende. Familienmitglieder könnt ihr einzeln angeben.
+  file: /downloads/austrittserklaerung.pdf
+  pages: 1

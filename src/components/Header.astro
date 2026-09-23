@@ -1,6 +1,6 @@
 ---
 import Icon from './Icon.astro';
-import { navigation, site } from '../data/site';
+import { navigation, site } from '../lib/site';
 
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));

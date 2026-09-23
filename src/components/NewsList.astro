@@ -1,9 +1,24 @@
 ---
-import { news } from '../data/news';
+import { getCollection } from 'astro:content';
+import { nachOrder } from '../lib/reihenfolge';
 
 interface Props {
   limit?: number;
 }
+
+/**
+ * Meldungen aus src/content/news/, in der Reihenfolge ihres `order` – von
+ * Hand gesetzt, siehe dort. Der Text ist der Inhalt unter den Angaben und
+ * wird bewusst als schlichter Text gezeigt, nicht als Markdown gerendert:
+ * Er steht in einem einzelnen Absatz der Liste.
+ */
+const news = (await getCollection('news'))
+  .sort(nachOrder)
+  .map(({ data, body }) => ({
+    date: data.date.toISOString().slice(0, 10),
+    title: data.title,
+    text: (body ?? '').trim(),
+  }));
 
 const { limit = news.length } = Astro.props;
 const items = news.slice(0, limit);

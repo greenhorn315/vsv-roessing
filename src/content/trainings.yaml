@@ -1,0 +1,492 @@
+# Trainingszeiten der Sportarten.
+#
+# Quellen: Hallenplan Winter 2025/26 für Hallenzeiten und Trainingsorte,
+# Übungsleiterliste mit Stand 2022 für alles Übrige.
+#
+# Im Hallenplan stehen auch Fremdnutzer der Alfred-Stubenrauch-Sporthalle,
+# die keine VSV-Angebote sind und hier nicht auftauchen dürfen:
+#   Kiga  örtlicher Kindergarten, Mo bis Mi 08:00–12:30
+#   DRK   Deutsches Rotes Kreuz, Mo 14:30–15:30
+#   FFW   Freiwillige Feuerwehr, Do 18:00–19:00
+#
+# Die Angaben aus der Übungsleiterliste sind nicht vom Verein bestätigt –
+# Gruppen können weggefallen, Zeiten verschoben und Übungsleitungen
+# gewechselt sein.
+#
+# Ein Trainingsort steht dort, wo der Hallenplan die Halle belegt oder die
+# Übungsleiterliste ihn nennt. Bei Fußball und Leichtathletik fehlt er
+# bewusst: Der Hallenplan gilt fürs Winterhalbjahr, im Sommer wird draußen
+# trainiert.
+#
+# Zum Bearbeiten genügt diese Datei. Das Schema steht in
+# src/content.config.ts und wird beim Bauen geprüft.
+#
+# Der Schlüssel ganz links ist die interne Kennung, frei wählbar, aber in der
+# Datei eindeutig; er erscheint nirgends auf der Seite. Darunter:
+#
+#   title           Name der Gruppe
+#   day             Mo, Di, Mi, Do, Fr, Sa oder So
+#   time            Anzeigetext: Uhrzeit, Spanne oder „nach Absprache“. In
+#                   Anführungszeichen, damit YAML „19:00“ sicher als Text liest
+#   place           Trainingsort, darf fehlen
+#   sport           Dateiname der Sportart in src/content/sportarten/, ohne .md
+#   audience        für wen die Gruppe gedacht ist, in Worten
+#   note            kurzer Zusatz, z. B. „14-tägig“
+#   trainers        Übungsleitung; eine leere Liste [] heißt: die Gruppe sucht
+#                   jemanden
+#   ageGroups       kinder, jugend, erwachsene
+#   audienceGroups  unter welchem Einstieg „Für wen ist was?“ die Gruppe steht:
+#                   kinder, jugend, frauen, maenner, alle – auch mehrere. Eine
+#                   Gruppe kann in mehreren stehen, „Jazzdance JAM-Touch“ etwa
+#                   bei Jugendlichen und bei allen Altersgruppen
+#   season          winter oder sommer; ohne Angabe ganzjährig
+#
+# Die Reihenfolge in dieser Datei ist egal: Die Seite sortiert nach Wochentag
+# und Uhrzeit, bei gleicher Anfangszeit nach dem Namen der Gruppe.
+
+# Fußball
+# Die Damenmannschaft aus der Liste von 2022 gibt es nicht mehr; der Verein
+# hat das im September 2026 bestätigt. Ihre Zeiten – montags 19:00 auf dem
+# Sportplatz, im Winter donnerstags 20:00 in der Halle – stehen deshalb
+# nicht mehr hier.
+
+fussball-i-herren:
+  title: I. Herren
+  day: Di
+  time: '19:00'
+  place: VSV-Sportplatz
+  sport: fussball
+  audience: Männer
+  note: Im Winter montags 20:00 in der Sporthalle
+  trainers: [Dustin Schiewe]
+  ageGroups: [erwachsene]
+  audienceGroups: [maenner]
+
+# In der Liste von 2022 stand hier „Ü32“ ohne Übungsleitung. Es ist die
+# Ü40, deren Spielplan auf der Fußball-Seite steht.
+fussball-ue40:
+  title: Ü40
+  day: Di
+  time: '19:00'
+  place: VSV-Sportplatz
+  sport: fussball
+  audience: Männer ab 40 Jahren
+  trainers: [Roman Veselý]
+  ageGroups: [erwachsene]
+  audienceGroups: [maenner]
+
+fussball-g-jugend:
+  title: G-Jugend
+  day: Mi
+  time: '16:30–17:30'
+  place: VSV-Sportplatz, im Winterhalbjahr Sporthalle
+  sport: fussball
+  audience: Kinder, etwa 5 bis 6 Jahre
+  trainers: [Johanna Kasten, Marlene Ahrens]
+  ageGroups: [kinder]
+  audienceGroups: [kinder]
+
+fussball-f-jugend-ii:
+  title: F-Jugend II
+  day: Mi
+  time: '17:30–18:30'
+  place: VSV-Sportplatz, im Winterhalbjahr Sporthalle
+  sport: fussball
+  audience: Kinder, etwa 7 bis 8 Jahre
+  trainers: [Roman Veselý]
+  ageGroups: [kinder]
+  audienceGroups: [kinder]
+
+fussball-d-junioren-di:
+  title: D-Junioren
+  day: Di
+  time: '17:00'
+  place: VSV-Sportplatz, im Winterhalbjahr Sporthalle
+  sport: fussball
+  audience: Jungen, 11 bis 12 Jahre
+  trainers: [Ute Gadesmann]
+  ageGroups: [kinder]
+  audienceGroups: [kinder]
+
+fussball-d-junioren-fr:
+  title: D-Junioren
+  day: Fr
+  time: '17:00'
+  place: VSV-Sportplatz, im Winterhalbjahr Sporthalle
+  sport: fussball
+  audience: Jungen, 11 bis 12 Jahre
+  trainers: [Ute Gadesmann]
+  ageGroups: [kinder]
+  audienceGroups: [kinder]
+
+fussball-f-jugend-i:
+  title: F-Jugend I
+  day: Fr
+  time: '16:30–17:30'
+  place: VSV-Sportplatz, im Winterhalbjahr Sporthalle
+  sport: fussball
+  audience: Kinder, etwa 7 bis 8 Jahre
+  trainers: [Luca Busche, Felix Satow]
+  ageGroups: [kinder]
+  audienceGroups: [kinder]
+
+fussball-e-jugend:
+  title: E-Jugend
+  day: Fr
+  time: '17:30–18:30'
+  place: VSV-Sportplatz, im Winterhalbjahr Sporthalle
+  sport: fussball
+  audience: Kinder, etwa 9 bis 10 Jahre
+  trainers: [Thomas Bajgier, Felix Satow]
+  ageGroups: [kinder]
+  audienceGroups: [kinder]
+
+# Volleyball
+
+volleyball-mixed:
+  title: Volleyball mixed
+  day: Mo
+  time: '20:00'
+  sport: volleyball
+  audience: Erwachsene, gemischt
+  trainers: [Gunnar Wolpert]
+  ageGroups: [erwachsene]
+  audienceGroups: [alle]
+
+# Turnen
+
+turnen-montagsturner:
+  title: Montagsturner
+  day: Mo
+  time: '15:45–16:45'
+  place: Alfred-Stubenrauch-Sporthalle
+  sport: turnen
+  note: Zielgruppe noch zu klären
+  trainers: [Monika Koch]
+  ageGroups: [erwachsene]
+  audienceGroups: [alle]
+
+turnen-move-your-body:
+  title: move your body
+  day: Mi
+  time: '18:00–19:00'
+  place: Alfred-Stubenrauch-Sporthalle
+  sport: turnen
+  audience: Erwachsene
+  trainers: [Denise Hoffmann]
+  ageGroups: [erwachsene]
+  audienceGroups: [alle]
+
+turnen-frauengymnastik:
+  title: Frauengymnastik
+  day: Do
+  time: '10:30–11:30'
+  place: Alfred-Stubenrauch-Sporthalle
+  sport: turnen
+  audience: Frauen, vormittags
+  trainers: [Monika Koch]
+  ageGroups: [erwachsene]
+  audienceGroups: [frauen]
+
+turnen-eltern-kind-turnen:
+  title: Eltern-Kind-Turnen
+  day: Do
+  time: '15:00–16:00'
+  place: Alfred-Stubenrauch-Sporthalle
+  sport: turnen
+  audience: Kleinkinder mit einem Elternteil
+  trainers: [Elke Winkler]
+  ageGroups: [kinder]
+  audienceGroups: [kinder]
+
+turnen-kinderturnen-ab-3:
+  title: Kinderturnen ab 3
+  day: Do
+  time: '16:00–17:00'
+  place: Alfred-Stubenrauch-Sporthalle
+  sport: turnen
+  audience: Kinder ab 3 Jahren
+  trainers: [Elke Winkler]
+  ageGroups: [kinder]
+  audienceGroups: [kinder]
+
+turnen-jugendturnen-ab-6:
+  title: Jugendturnen ab 6
+  day: Do
+  time: '17:00–18:00'
+  place: Alfred-Stubenrauch-Sporthalle
+  sport: turnen
+  audience: Kinder ab 6 Jahren
+  trainers: [Elke Winkler]
+  ageGroups: [kinder]
+  audienceGroups: [kinder]
+
+turnen-kinderturnen-ab-9:
+  title: Kinderturnen ab 9
+  day: Do
+  time: '18:00–19:00'
+  sport: turnen
+  audience: Kinder ab 9 Jahren
+  note: 14-tägig
+  trainers: [Elke Winkler]
+  ageGroups: [kinder]
+  audienceGroups: [kinder]
+
+turnen-fit-for-fun:
+  title: Fit for fun
+  day: Do
+  time: '19:00–20:00'
+  place: Alfred-Stubenrauch-Sporthalle
+  sport: turnen
+  audience: Erwachsene
+  trainers: [Monika Koch]
+  ageGroups: [erwachsene]
+  audienceGroups: [alle]
+
+turnen-freitagsturner:
+  title: Freitagsturner
+  day: Fr
+  time: '19:30–21:30'
+  place: Alfred-Stubenrauch-Sporthalle
+  sport: turnen
+  audience: Männer
+  # Zuordnung und Übungsleitung sind vom Verein bestätigt.
+  note: Gymnastik, gelegentlich auch Yoga. Im Sommerhalbjahr fährt dieselbe Gruppe als „Freitagsradler“.
+  season: winter
+  trainers: [Olaf Elbeshausen]
+  ageGroups: [erwachsene]
+  audienceGroups: [maenner]
+
+# Bewusst unter Turnen, nicht unter Outdoor: Vereinsintern ist die
+# Gruppe dem Turnen zugeordnet, auch wenn im Sommer Rad gefahren wird.
+turnen-freitagsradler:
+  title: Freitagsradler
+  day: Fr
+  time: 'nach Absprache'
+  place: Treffpunkt am VSV-Sportplatz
+  sport: turnen
+  audience: Männer
+  note: Touren mit Gravelbike oder E-Bike durch das Rössinger Umland, anschließend Grillen am Feuerplatz beim VSV-Sportplatz. Im Winterhalbjahr turnt dieselbe Gruppe als „Freitagsturner“ in der Halle.
+  season: sommer
+  # Vom Verein bestätigt: Freitagsturner und Freitagsradler sind dieselbe
+  # Gruppe mit derselben Übungsleitung.
+  trainers: [Olaf Elbeshausen]
+  ageGroups: [erwachsene]
+  audienceGroups: [maenner]
+
+# Tanzen
+
+tanzen-jazz-dance-frauen:
+  title: Jazz Dance Frauen
+  day: Mi
+  time: '19:00–20:00'
+  place: Alfred-Stubenrauch-Sporthalle
+  sport: tanzen
+  audience: Frauen
+  trainers: [Britta Ahrens]
+  ageGroups: [erwachsene]
+  audienceGroups: [frauen]
+
+tanzen-jazz-dance-jugend:
+  title: Jazz Dance Jugend
+  day: Mi
+  time: '20:00–21:00'
+  place: Alfred-Stubenrauch-Sporthalle
+  sport: tanzen
+  audience: Jugendliche
+  trainers: [Britta Ahrens]
+  ageGroups: [jugend]
+  audienceGroups: [jugend]
+
+tanzen-jazzdance-sweeties:
+  title: Jazzdance Sweeties
+  day: Sa
+  time: '9:00–9:45'
+  place: Alfred-Stubenrauch-Sporthalle
+  sport: tanzen
+  audience: Kinder ab 3 Jahren bis zur 1. Klasse
+  trainers: [Louisa Maiwald]
+  ageGroups: [kinder]
+  audienceGroups: [kinder]
+
+tanzen-jazzdance-butterflies:
+  title: Jazzdance Butterflies
+  day: Sa
+  time: '9:45–10:30'
+  place: Alfred-Stubenrauch-Sporthalle
+  sport: tanzen
+  audience: Kinder der 2. bis 5. Klasse
+  trainers: [Louisa Maiwald]
+  ageGroups: [kinder]
+  audienceGroups: [kinder]
+
+tanzen-jazzdance-nameless:
+  title: Jazzdance Nameless
+  day: Sa
+  time: '10:30–11:00'
+  place: Alfred-Stubenrauch-Sporthalle
+  sport: tanzen
+  audience: Jugendliche ab der 6. Klasse
+  trainers: [Louisa Maiwald]
+  ageGroups: [jugend]
+  audienceGroups: [jugend]
+
+tanzen-jazzdance-jam-touch:
+  title: Jazzdance JAM-Touch
+  day: Sa
+  time: '11:00–12:00'
+  place: Alfred-Stubenrauch-Sporthalle
+  sport: tanzen
+  audience: ab 15 Jahren
+  trainers: [Britta Ahrens]
+  ageGroups: [jugend, erwachsene]
+  audienceGroups: [jugend, alle]
+
+# Basketball
+
+basketball:
+  title: Basketball
+  day: Sa
+  time: '14:00–16:00'
+  place: Alfred-Stubenrauch-Sporthalle
+  sport: basketball
+  note: Altersgruppe noch zu klären
+  trainers: [Lennart Ahrens]
+  ageGroups: [jugend, erwachsene]
+  audienceGroups: [jugend, alle]
+
+# Leichtathletik
+
+leichtathletik-kinderleichtathletik:
+  title: Kinderleichtathletik
+  day: Mo
+  time: '17:00–18:00'
+  place: VSV-Sportplatz, von den Herbst- bis zu den Osterferien in der Sporthalle
+  sport: leichtathletik
+  audience: Kinder von 4 bis 8 Jahren
+  note: Laufen, Springen, Werfen – spielerisch und ohne Wettkampf
+  trainers: [Alexandra Stichnoth]
+  ageGroups: [kinder]
+  audienceGroups: [kinder]
+
+# Als einzige Leichtathletik-Gruppe ganzjährig in der Halle, nicht nur
+# im Winterhalbjahr.
+leichtathletik-hochsprung:
+  title: Hochsprung
+  day: Mo
+  time: '18:00–19:45'
+  place: Alfred-Stubenrauch-Sporthalle, ganzjährig
+  sport: leichtathletik
+  audience: Leistungsgruppe
+  trainers: [Claudia Losch]
+  ageGroups: [jugend, erwachsene]
+  audienceGroups: [alle]
+
+leichtathletik-fit-for-school:
+  title: Fit for School
+  day: Di
+  time: '16:30–18:00'
+  place: VSV-Sportplatz, im Winterhalbjahr Sporthalle
+  sport: leichtathletik
+  audience: Kinder und Jugendliche von 8 bis 14 Jahren
+  note: Dreikampf aus Laufen, Springen und Werfen – ohne Wettkämpfe
+  trainers: [Olga Schmidt]
+  ageGroups: [kinder, jugend]
+  audienceGroups: [kinder, jugend]
+
+leichtathletik-leistungsgruppe:
+  title: Leistungsgruppe
+  day: Di
+  time: '18:00–19:30'
+  place: VSV-Sportplatz, im Winterhalbjahr Sporthalle
+  sport: leichtathletik
+  audience: Kinder und Jugendliche von 8 bis 14 Jahren
+  note: Derselbe Dreikampf wie bei „Fit for School“, hier in Vorbereitung auf Wettkämpfe
+  trainers: [Olga Schmidt]
+  ageGroups: [kinder, jugend]
+  audienceGroups: [kinder, jugend]
+
+leichtathletik-erwachsene:
+  title: Erwachsene
+  day: Di
+  time: '19:30–21:30'
+  place: VSV-Sportplatz, im Winterhalbjahr Sporthalle
+  sport: leichtathletik
+  audience: Erwachsene
+  trainers: [Svenja Ebeling]
+  ageGroups: [erwachsene]
+  audienceGroups: [alle]
+
+leichtathletik-wurfgruppe:
+  title: Wurfgruppe
+  day: Do
+  time: '18:00–19:30'
+  place: VSV-Sportplatz
+  sport: leichtathletik
+  audience: Leistungsgruppe
+  trainers: [Vivien Sekul]
+  ageGroups: [jugend, erwachsene]
+  audienceGroups: [alle]
+
+leichtathletik-sprint-und-sprunggruppe:
+  title: Sprint- und Sprunggruppe
+  day: Do
+  time: '18:30–20:00'
+  place: SLZ Hannover
+  sport: leichtathletik
+  audience: Leistungsgruppe
+  trainers: [Britta Härke]
+  ageGroups: [jugend, erwachsene]
+  audienceGroups: [alle]
+
+leichtathletik-lauf-und-sprungtraining:
+  title: Lauf- und Sprungtraining
+  day: Fr
+  time: 'nach Absprache'
+  place: Sportplatz Nordstemmen
+  sport: leichtathletik
+  audience: Leistungsgruppe
+  trainers: [Britta Härke]
+  ageGroups: [jugend, erwachsene]
+  audienceGroups: [alle]
+
+leichtathletik-krafttraining:
+  title: Krafttraining
+  day: Sa
+  time: '12:00–14:00'
+  place: Alfred-Stubenrauch-Sporthalle
+  sport: leichtathletik
+  audience: Leistungsgruppe
+  trainers: [Claudia Losch]
+  ageGroups: [jugend, erwachsene]
+  audienceGroups: [alle]
+
+# Yoga
+
+# Offen für Frauen und Männer; dass zurzeit nur Frauen mitmachen, ist eine
+# Momentaufnahme und kein Zuschnitt der Gruppe. Deshalb steht sie sowohl
+# unter „Frauen“ als auch unter „alle Altersgruppen“.
+yoga:
+  title: Yoga
+  day: Fr
+  time: '18:30–19:30'
+  place: Alfred-Stubenrauch-Sporthalle
+  sport: yoga
+  audience: Erwachsene, Frauen und Männer
+  note: Zurzeit nehmen nur Frauen teil – Männer sind willkommen.
+  trainers: [Sandra Dettmer, Heike Husmann, Christoph Nowothnig]
+  ageGroups: [erwachsene]
+  audienceGroups: [alle, frauen]
+
+# Dart
+
+dart-training:
+  title: Dart-Training
+  day: Mo
+  time: 'ab 19:00'
+  place: Der Dorfbrunnen, Loderwinkel 2A
+  sport: dart
+  audience: von 14 bis 60 Jahren, alle Spielstärken
+  trainers: [Marina Miska]
+  ageGroups: [jugend, erwachsene]
+  audienceGroups: [jugend, alle]

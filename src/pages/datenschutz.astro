@@ -3,8 +3,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import LegalContent from '../components/LegalContent.astro';
 import Icon from '../components/Icon.astro';
-import { blocks } from '../data/datenschutz';
-import { isPrototype } from '../data/site';
+import { getEntry, render } from 'astro:content';
+import { isPrototype } from '../lib/site';
+
+// Wortlaut und offene Punkte in src/content/rechtliches/datenschutz.md.
+const datenschutz = await getEntry('rechtliches', 'datenschutz');
+if (!datenschutz) throw new Error('src/content/rechtliches/datenschutz.md fehlt.');
+const { Content } = await render(datenschutz);
 ---
 
 <BaseLayout
@@ -30,7 +35,7 @@ import { isPrototype } from '../data/site';
         )
       }
 
-      <LegalContent blocks={blocks} />
+      <LegalContent><Content /></LegalContent>
     </div>
   </section>
 </BaseLayout>

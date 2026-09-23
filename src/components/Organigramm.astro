@@ -1,12 +1,15 @@
 ---
 import Pictogram from './Pictogram.astro';
-import { sports } from '../data/sports';
-import { trainings } from '../data/trainings';
-import { site } from '../data/site';
+import { getSports } from '../lib/sportarten';
+import { getTrainings } from '../lib/trainings';
+import { sportColorVar } from '../lib/labels';
+import { site } from '../lib/site';
 
-const zweige = sports.map((sport) => ({
-  sport,
-  gruppen: trainings.filter((t) => t.sport === sport.slug),
+const trainings = await getTrainings();
+const zweige = (await getSports()).map(({ id, data }) => ({
+  // Slug aus dem Dateinamen, alles Übrige aus den Angaben der Datei.
+  sport: { ...data, slug: id },
+  gruppen: trainings.filter((t) => t.sport === id),
 }));
 ---
 
@@ -20,7 +23,7 @@ const zweige = sports.map((sport) => ({
   <ul class="org__zweige">
     {
       zweige.map(({ sport, gruppen }) => (
-        <li class="zweig" style={`--sport-color:${sport.color}`}>
+        <li class="zweig" style={`--sport-color:${sportColorVar(sport.color)}`}>
           <div class="zweig__kopf">
             <Pictogram name={sport.pictogram} size={40} />
             <div>

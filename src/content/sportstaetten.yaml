@@ -1,0 +1,99 @@
+# Sportstätten des Vereins an zwei Anschriften: Sporthalle und Dorfbrunnen
+# teilen sich im Loderwinkel sogar ein Gebäude, Sportplatz und Vereinsheim
+# liegen Zum Klay.
+#
+# Zum Bearbeiten genügt diese Datei. Das Schema steht in
+# src/content.config.ts und wird beim Bauen geprüft.
+#
+# Der Schlüssel ganz links ist die interne Kennung und erscheint nirgends auf
+# der Seite; er muss in der Datei eindeutig sein. Darunter:
+#
+#   order       Reihenfolge auf der Seite, aufsteigend
+#   name        Name des Ortes
+#   alias       zweiter gebräuchlicher Name, z. B. auf Karten; erscheint als
+#               „auch …“
+#   street, postalCode, city
+#               Anschrift; daraus entsteht auch der Kartenlink
+#   note        was dort stattfindet
+#   facilities  was vor Ort zur Verfügung steht, z. B. Umkleiden
+#   photos      Fotos unter public/images/sportstaetten/. Das erste ist das
+#               Hauptbild, weitere erscheinen als kleine Ansichten darunter,
+#               mit `caption` als kurzer Bildunterschrift. Fehlt eine Datei,
+#               zeigt die Seite automatisch einen Platzhalter statt eines
+#               kaputten Bildes.
+#
+# Die Zahl der Orte steht ausgeschrieben im Einleitungssatz auf der
+# Kontaktseite und passt sich von selbst an.
+
+sporthalle:
+  order: 1
+  name: Alfred-Stubenrauch-Sporthalle
+  street: Loderwinkel 2A
+  postalCode: '31171'
+  city: Nordstemmen-Rössing
+  note: Turnen, Tanzen, Yoga, Basketball – und im Winterhalbjahr Fußball und Leichtathletik
+  facilities: Umkleiden und Duschen im Haus, Parkplätze und ein öffentlicher Spielplatz direkt nebenan
+  photos:
+    - src: /images/sportstaetten/sporthalle.jpg
+      alt: 'Alfred-Stubenrauch-Halle bei Abendsonne: roter Klinkerbau mit dem Namensschriftzug unter dem Dachrand, rechts das Schild „Zum Dorfbrunnen“'
+    - src: /images/sportstaetten/sporthalle-eingang.jpg
+      alt: Verglaster Eingang zur Sporthalle mit Doppeltür unter dem hölzernen Vordach
+      caption: Turnhalleneingang
+
+dorfbrunnen:
+  order: 2
+  name: Der Dorfbrunnen
+  street: Loderwinkel 2A
+  postalCode: '31171'
+  city: Nordstemmen-Rössing
+  note: Im selben Gebäude wie die Sporthalle. Treffpunkt des Vereins sowie Trainings- und Wettkampfstätte der Dart-Gruppe
+  photos:
+    - src: /images/sportstaetten/dorfbrunnen.jpg
+      alt: Eingang des Dorfbrunnens unter dem Vordach, darüber der Schriftzug „Zum Dorfbrunnen“
+    - src: /images/sportstaetten/dorfbrunnen-hinten.jpg
+      alt: 'Rückseite des Dorfbrunnens: verglaste Front unter dem Vordach, davor eine Bank'
+      caption: Rückseite
+
+sportplatz:
+  order: 3
+  name: VSV-Sportplatz
+  alias: Sportplatz Rössing
+  street: Zum Klay 6
+  postalCode: '31171'
+  city: Nordstemmen
+  note: Fußball und Leichtathletik im Sommerhalbjahr
+  facilities: Rasenplatz mit drei Toren, dazu eine Weitsprunganlage mit Tartan-Anlaufbahn
+  photos:
+    - src: /images/sportstaetten/sportplatz.jpg
+      alt: Rasenplatz des VSV Rössing mit drei Toren, Flutlichtmast und überdachtem Unterstand unter blauem Himmel
+    - src: /images/sportstaetten/sportplatz-weitsprunganlage.jpg
+      alt: Rote Tartanbahn mit weißer Markierungslinie, die auf eine Sandgrube zuläuft; am Ende harken zwei Personen den Sand
+      caption: Weitsprunganlage
+
+feuerplatz:
+  order: 4
+  name: Feuerplatz am Sportplatz
+  street: Zum Klay 6
+  postalCode: '31171'
+  city: Nordstemmen
+  note: 'Treffpunkt der Freitagsradler: Im Sommerhalbjahr wird hier nach der Tour gegrillt'
+  photos:
+    # Vorläufig: zeigt erkennbare Personen. Vor dem Livegang entweder deren
+    # Einwilligung einholen oder durch ein Bild ohne Personen ersetzen.
+    - src: /images/sportstaetten/feuerplatz.jpg
+      alt: Runde Feuerstelle am Waldrand, ringsum Bänke, an denen eine Gruppe im Abendlicht sitzt
+
+vereinsheim:
+  order: 5
+  name: Vereinsheim VSV Rössing
+  street: Zum Klay 6
+  postalCode: '31171'
+  city: Nordstemmen
+  note: am Sportplatz
+  facilities: Gaststube mit Tresen und Küche
+  photos:
+    - src: /images/sportstaetten/vereinsheim.jpg
+      alt: 'Eingang des Vereinsheims: Klinkerfassade mit Glastür, darüber ein Banner mit Vereinswappen und der Aufschrift „Herzlich Willkommen auf unserer Sportanlage“, links der Aushangkasten'
+    - src: /images/sportstaetten/vereinsheim-gaststaette.jpg
+      alt: Gaststube im Vereinsheim mit Tresen, Barhockern, Holztischen und einer Vitrine voller Pokale
+      caption: Gaststube

@@ -6,19 +6,26 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import CallToAction from '../../components/CallToAction.astro';
 import DartSpielplan from '../../components/DartSpielplan.astro';
 import FussballSpielplan from '../../components/FussballSpielplan.astro';
-import { sports, ageGroupLabels } from '../../data/sports';
-import { trainingsOfSport } from '../../data/trainings';
-import { site } from '../../data/site';
+import { render } from 'astro:content';
+import { getSports, type Sport } from '../../lib/sportarten';
+import { trainingsOfSport } from '../../lib/trainings';
+import { ageGroupLabels, sportColorVar } from '../../lib/labels';
+import { site } from '../../lib/site';
 
-export function getStaticPaths() {
-  return sports.map((sport) => ({
-    params: { slug: sport.slug },
-    props: { sport },
+export async function getStaticPaths() {
+  return (await getSports()).map((eintrag) => ({
+    params: { slug: eintrag.id },
+    props: { eintrag },
   }));
 }
 
-const { sport } = Astro.props;
-const sessions = trainingsOfSport(sport.slug);
+const { eintrag } = Astro.props as { eintrag: Sport };
+// Angaben aus dem Kopf der Markdown-Datei, Slug aus dem Dateinamen.
+const sport = { ...eintrag.data, slug: eintrag.id };
+// Der Fließtext der Detailseite ist der Markdown-Inhalt unter den Angaben.
+const { Content } = await render(eintrag);
+const sports = (await getSports()).map(({ id, data }) => ({ ...data, slug: id }));
+const sessions = await trainingsOfSport(sport.slug);
 
 // Für die Weiter-Navigation am Seitenende.
 /**
@@ -51,7 +58,7 @@ const previous = sports[(index - 1 + sports.length) % sports.length];
     />
   </div>
 
-  <section class="sport-hero" style={`--sport-color:${sport.color}`}>
+  <section class="sport-hero" style={`--sport-color:${sportColorVar(sport.color)}`}>
     <div class="container sport-hero__inner">
       <span class="sport-hero__icon" aria-hidden="true">
         <Pictogram name={sport.pictogram} size={88} />
@@ -98,7 +105,7 @@ const previous = sports[(index - 1 + sports.length) % sports.length];
           )
         }
 
-        {sport.longText?.map((paragraph) => <p>{paragraph}</p>)}
+        <Content />
 
         {
           sport.highlights && (
@@ -307,7 +314,10 @@ const previous = sports[(index - 1 + sports.length) % sports.length];
     gap: clamp(2rem, 4vw, 3.5rem);
     align-items: start;
   }
-  .detail-grid p {
+  /* Zweiter Selektor: Der Fließtext aus der Markdown-Datei trägt keine
+     Scope-Kennung und wird nur über :global() erreicht. */
+  .detail-grid p,
+  .detail-grid :global(p) {
     color: var(--c-text-muted);
   }
   .detail-grid h2 {

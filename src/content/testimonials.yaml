@@ -1,0 +1,21 @@
+# Stimmen von Mitgliedern für die Startseite („Warum unsere Mitglieder
+# bleiben“).
+#
+# Der Schlüssel ganz links ist die interne Kennung und erscheint nirgends auf
+# der Seite; er muss in der Datei eindeutig sein. Darunter:
+#   order   Reihenfolge auf der Seite, aufsteigend
+#   text    das Zitat selbst; das große Anführungszeichen davor setzt die Seite
+#   author  Vorname, gern mit Alter
+#   role    kurze Einordnung unter dem Namen
+
+melanie:
+  order: 1
+  text: Meine zwei Kinder trainieren beide hier – und ich zahle trotzdem nur einen Familienbeitrag. Das war der Grund, warum wir geblieben sind.
+  author: Melanie
+  role: Mutter von zwei Vereinsmitgliedern
+
+jonas:
+  order: 2
+  text: Ich bin einfach mal zum Probetraining hin, ohne mich vorher anzumelden. Zwei Wochen später war ich Mitglied.
+  author: Jonas, 19
+  role: Basketball

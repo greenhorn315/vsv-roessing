@@ -1,7 +1,7 @@
 ---
 import Icon from './Icon.astro';
 import FamilyCalculator from './FamilyCalculator.astro';
-import { beitragsregeln, fees, joinSteps } from '../data/membership';
+import { getBeitragsregeln, getFees, getJoinSteps } from '../lib/mitgliedschaft';
 
 interface Props {
   /** Auf der Startseite als Teaser, auf der Unterseite als volle Sektion. */
@@ -9,6 +9,9 @@ interface Props {
 }
 
 const { compact = false } = Astro.props;
+const fees = await getFees();
+const beitragsregeln = await getBeitragsregeln();
+const joinSteps = await getJoinSteps();
 // Zwei Nachkommastellen: 7,50 € wuerde sonst als 8 € erscheinen.
 const euro = new Intl.NumberFormat('de-DE', {
   style: 'currency',
@@ -54,10 +57,7 @@ const euro = new Intl.NumberFormat('de-DE', {
       </table>
 
       <ul class="regeln">
-        <li>{beitragsregeln.einzug}</li>
-        <li>{beitragsregeln.guenstigster}</li>
-        <li>{beitragsregeln.ermaessigung}</li>
-        <li>{beitragsregeln.kuendigung}</li>
+        {beitragsregeln.map((regel) => <li>{regel}</li>)}
       </ul>
 
       <ol class="steps">

@@ -1,18 +1,24 @@
 ---
-import { audienceLabels, trainingsFuer, type AudienceKey } from '../data/trainings';
-import { sports } from '../data/sports';
+import { audienceLabels, sportColorVar, type AudienceKey } from '../lib/labels';
+import { trainingsFuer } from '../lib/trainings';
+import { getSports } from '../lib/sportarten';
 
 const reihenfolge: AudienceKey[] = ['kinder', 'jugend', 'frauen', 'maenner', 'alle'];
+const sports = await getSports();
 
 /** Sportart zu einer Gruppe finden, für die Farbmarkierung. */
-const farbe = (slug?: string) =>
-  sports.find((s) => s.slug === slug)?.color ?? 'var(--c-primary)';
+const farbe = (slug?: string) => {
+  const sport = sports.find((s) => s.id === slug);
+  return sport ? sportColorVar(sport.data.color) : 'var(--c-primary)';
+};
 
-const spalten = reihenfolge.map((key) => ({
-  key,
-  titel: audienceLabels[key],
-  gruppen: trainingsFuer(key),
-}));
+const spalten = await Promise.all(
+  reihenfolge.map(async (key) => ({
+    key,
+    titel: audienceLabels[key],
+    gruppen: await trainingsFuer(key),
+  })),
+);
 ---
 
 <div class="zielgruppen">

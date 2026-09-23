@@ -1,6 +1,9 @@
 ---
-import { vereinsZahlen } from '../data/trainings';
-import { sportCount } from '../data/sports';
+import { getVereinsZahlen } from '../lib/trainings';
+import { getSportCount } from '../lib/sportarten';
+
+const vereinsZahlen = await getVereinsZahlen();
+const sportCount = await getSportCount();
 
 const zahlen = [
   { wert: String(sportCount), text: 'Sportarten' },

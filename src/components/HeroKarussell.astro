@@ -1,5 +1,6 @@
 ---
-import { karussellBilder } from '../data/karussell';
+import { getCollection } from 'astro:content';
+import { nachOrder } from '../lib/reihenfolge';
 
 /**
  * Rollierendes Bild an der Stelle des künftigen Vereinsfotos.
@@ -9,7 +10,8 @@ import { karussellBilder } from '../data/karussell';
  * „Bewegung reduzieren“ wechselt nichts von selbst – dann zählt nur, was
  * jemand selbst anklickt.
  */
-const bilder = karussellBilder;
+// Bilder und Reihenfolge in src/content/karussell.yaml.
+const bilder = (await getCollection('karussell')).sort(nachOrder).map((eintrag) => eintrag.data);
 const dauer = 6000;
 ---
 

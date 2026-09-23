@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { isPrototype } from '../data/site';
+import { isPrototype } from '../lib/site';
 
 /**
  * Solange die Seite ein Entwurf ist, wird sie komplett für Suchmaschinen

@@ -317,7 +317,7 @@ story.append(Paragraph('Nicht dringend, aber nötig vor dem Livegang.', S['kaphi
 for t, d in [
   ('Vereinschronik', 'Der Geschichtsabschnitt ist bisher ein Platzhaltertext.'),
   ('Detailtexte der Sportarten fachlich prüfen',
-   'Die Beschreibungen in src/data/sports.ts sind aus dem Altbestand gebaut.'),
+   'Die Beschreibungen in src/content/sportarten/ sind aus dem Altbestand gebaut.'),
   ('Social-Media-Adressen', 'Die echten Links zu Instagram und Facebook, ggf. WhatsApp-Gruppe.'),
 ]:
     story.append(punkt(t, d))
@@ -340,7 +340,7 @@ for t, d in [
    'Eingaben tatsächlich an einen Server.'),
   ('Domain eintragen', 'In astro.config.mjs auf die endgültige Adresse setzen.'),
   ('Prototyp-Kennzeichnung entfernen',
-   'Ein Schalter in src/data/site.ts nimmt Banner und Suchmaschinen-Sperre gemeinsam weg.'),
+   'Ein Schalter in src/lib/site.ts nimmt Banner und Suchmaschinen-Sperre gemeinsam weg.'),
 ]:
     story.append(punkt(t, d))
 

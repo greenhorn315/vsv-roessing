@@ -1,23 +1,28 @@
 ---
 import Spielplan from './Spielplan.astro';
-import {
-  fussballSpiele,
-  fussballSpielplanStand,
-  fussballSpielstaette,
-  fussballTeam,
-} from '../data/fussballSpielplan';
-import { kommendeSpiele } from '../data/spielplan';
+import { getSpielplan, kommendeSpiele } from '../lib/spielplan';
+import { grossAnfang, zahlwort } from '../lib/labels';
 
-const spiele = kommendeSpiele(fussballSpiele);
+// Partien und Kopfangaben stehen in src/content/spielplaene/fussball.yaml.
+const plan = await getSpielplan('fussball');
+const {
+  team: fussballTeam,
+  stand: fussballSpielplanStand,
+  spielstaette: fussballSpielstaette,
+} = plan;
+if (!fussballTeam || !fussballSpielplanStand || !fussballSpielstaette) {
+  throw new Error('fussball.yaml: „team“, „stand“ und „spielstaette“ werden gebraucht.');
+}
+const spiele = kommendeSpiele(plan.spiele);
 const heimspiele = spiele.filter((spiel) => spiel.home).length;
 
-const zahlwort = ['kein', 'ein', 'zwei', 'drei', 'vier', 'fünf', 'sechs'];
-const alsWort = (n: number) => zahlwort[n] ?? String(n);
+// „ein“/„kein“ statt „eine“/„null“: Es folgt „Spiel“ bzw. „davon“.
+const alsWort = (n: number) => zahlwort(n, { eins: 'ein', null: 'kein' });
 
 const anzahl =
   spiele.length === 1
     ? 'Ein Spiel steht noch an'
-    : `${alsWort(spiele.length).replace(/^./, (c) => c.toUpperCase())} Spiele stehen noch an`;
+    : `${grossAnfang(alsWort(spiele.length))} Spiele stehen noch an`;
 
 const heim =
   heimspiele === 0

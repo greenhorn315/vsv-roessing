@@ -1,16 +1,15 @@
 ---
 import Icon from './Icon.astro';
 import {
-  trainings,
+  getTrainings,
   trainingsByDay,
   trainingsOfSport,
-  seasonLabels,
   type Training,
-  type Weekday,
-} from '../data/trainings';
+} from '../lib/trainings';
+import { seasonLabels, type Weekday } from '../lib/labels';
 
 interface Props {
-  /** Nur die Trainings dieser Sportart (slug aus sports.ts). */
+  /** Nur die Trainings dieser Sportart (Dateiname in src/content/sportarten/). */
   sport?: string;
   /** Höchstens so viele Einträge zeigen. */
   limit?: number;
@@ -30,14 +29,14 @@ const wochentagNamen: Record<Weekday, string> = {
   So: 'Sonntag',
 };
 
-const auswahl = sport ? trainingsOfSport(sport) : trainings;
+const auswahl = sport ? await trainingsOfSport(sport) : await getTrainings();
 const sichtbar = limit ? auswahl.slice(0, limit) : auswahl;
 
 // Gruppiert wird nur ohne Sportart- und Anzahl-Filter, sonst zeigt die Liste
 // Tagesüberschriften über einem Ausschnitt.
 const gruppen: { day: Weekday | null; entries: Training[] }[] =
   grouped && !sport && !limit
-    ? trainingsByDay()
+    ? await trainingsByDay()
     : [{ day: null, entries: sichtbar }];
 ---
 

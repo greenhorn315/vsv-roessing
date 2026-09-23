@@ -3,7 +3,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import LegalContent from '../components/LegalContent.astro';
 import Icon from '../components/Icon.astro';
-import { intro, blocks, datenschutzHinweis } from '../data/impressum';
+import { getEntry, render } from 'astro:content';
+
+// Wortlaut und Herkunftshinweise in src/content/rechtliches/impressum.md.
+const impressum = await getEntry('rechtliches', 'impressum');
+if (!impressum) throw new Error('src/content/rechtliches/impressum.md fehlt.');
+const { intro, datenschutzHinweis } = impressum.data;
+if (!intro || !datenschutzHinweis) {
+  throw new Error('impressum.md: „intro“ und „datenschutzHinweis“ werden gebraucht.');
+}
+const { Content } = await render(impressum);
 ---
 
 <BaseLayout title="Impressum" description="Impressum des VSV Rössing von 1897 e.V.">
@@ -13,7 +22,7 @@ import { intro, blocks, datenschutzHinweis } from '../data/impressum';
     <div class="container">
       <p class="intro">{intro}</p>
 
-      <LegalContent blocks={blocks} />
+      <LegalContent><Content /></LegalContent>
 
       <div class="datenschutz">
         <h2>{datenschutzHinweis.heading}</h2>

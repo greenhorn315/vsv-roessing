@@ -13,9 +13,10 @@
 #   name   darf fehlen: Dann steht dort „Name folgt“ statt einer Lücke
 #
 # Der 1. Vorsitzende steht auch im Impressum – § 5 DDG verlangt die
-# Vertretungsberechtigten, und src/data/impressum.ts nennt ihn dort wortgleich
-# wie die Altseite. Beide Stellen müssen zusammenpassen; der Impressumstext ist
-# bewusst eine unveränderte Übernahme und wird nicht aus dieser Datei erzeugt.
+# Vertretungsberechtigten, und src/content/rechtliches/impressum.md nennt ihn
+# dort wortgleich wie die Altseite. Beide Stellen müssen zusammenpassen; der
+# Impressumstext ist bewusst eine unveränderte Übernahme und wird nicht aus
+# dieser Datei erzeugt.
 
 erster-vorsitz:
   order: 1
