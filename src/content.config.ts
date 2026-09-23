@@ -35,9 +35,11 @@ const vorstand = defineCollection({
      */
     name: z.string().min(1).optional(),
   })
-    // .strict(), damit auch ein verschriebener Schlüssel auffällt: Ohne das
-    // würde aus „nmae: Thomas Kuse“ still ein Amt ohne Namen, statt eines
-    // Fehlers beim Bauen.
+    // .strict() fängt auch verschriebene Schlüssel ab. Ohne das ignoriert Zod
+    // alles, was hier nicht steht: Wer sich in der YAML-Datei beim Schlüssel
+    // „name“ vertippt, bekäme still ein Amt ohne Namen statt eines Fehlers
+    // beim Bauen. Genau dieser Tippfehler ist in einer handgepflegten Datei
+    // der wahrscheinlichste.
     .strict(),
 });
 

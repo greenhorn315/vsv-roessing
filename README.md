@@ -56,14 +56,20 @@ oft Logik mitträgt – abgeleitete Zahlen, Verweise zwischen Dateien. Das bleib
 in TypeScript.
 
 Das Schema in `src/content.config.ts` wird **beim Bauen geprüft**. Eine fehlende
-Pflichtangabe, ein leerer Wert oder ein verschriebener Schlüssel bricht den
-Build mit einer Meldung ab, die den betroffenen Eintrag nennt – statt still eine
-leere Stelle auf der Seite zu erzeugen:
+Pflichtangabe, ein leerer Wert oder ein verschriebener Schlüssel bricht den Build
+ab und nennt den betroffenen Eintrag – statt still eine leere Stelle auf der
+Seite zu erzeugen.
+
+Schreibt jemand versehentlich `nmae:` statt `name:`, sieht das so aus:
 
 ```
 [InvalidContentEntryDataError] vorstand → kassenwart data does not match collection schema.
   ****: Unrecognized key: "nmae"
 ```
+
+Dass auch dieser Fall auffällt, liegt an `.strict()` im Schema: Ohne das
+ignoriert Zod jeden Schlüssel, den es nicht kennt, und der Name wäre still
+verschwunden.
 
 Die generierten Typen liegen unter `.astro/` und gehören nicht ins Repository;
 `astro check` und `astro build` erzeugen sie selbst.
