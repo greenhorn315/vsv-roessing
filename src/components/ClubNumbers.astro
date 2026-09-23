@@ -28,15 +28,15 @@ const zahlen = [
 
 {/* daisyUI-stats als Kachelraster: Die 1px-Lücken zwischen den Kacheln
     zeigen den Hintergrund in Rahmenfarbe und wirken so als Trennlinien. */}
-<dl class="stats grid grid-flow-row grid-cols-3 max-[720px]:grid-cols-2 gap-px bg-border border border-border rounded-box overflow-hidden m-0">
+<dl class="stats grid grid-flow-row grid-cols-3 gap-px overflow-hidden rounded-box border border-base-300 bg-base-300 max-[720px]:grid-cols-2">
   {
     zahlen.map((z) => (
       /* Zahl optisch zuerst, semantisch bleibt das Label vorn. */
-      <div class="stat flex flex-col bg-base-100 p-6 border-0">
-        <dd class="stat-value m-0 font-display text-[clamp(1.9rem,1.4rem+1.8vw,2.6rem)] font-semibold leading-none text-primary whitespace-normal">
+      <div class="stat flex flex-col border-0 bg-base-100 p-6">
+        <dd class="stat-value font-display text-4xl leading-none font-semibold whitespace-normal text-primary md:text-5xl">
           {z.wert}
         </dd>
-        <dt class="stat-title mt-[0.35rem] text-[0.9rem] text-muted whitespace-normal">{z.text}</dt>
+        <dt class="stat-title mt-1.5 text-sm whitespace-normal text-base-content/70">{z.text}</dt>
       </div>
     ))
   }

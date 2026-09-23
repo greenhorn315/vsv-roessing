@@ -76,7 +76,7 @@ const jsonLdText = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
 ---
 
 <!doctype html>
-<html lang="de">
+<html lang="de" class="scroll-pt-24 scroll-smooth bg-base-200 motion-reduce:scroll-auto">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -111,46 +111,20 @@ const jsonLdText = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
 
     <link rel="sitemap" href="/sitemap-index.xml" />
 
-    <script is:inline>
-      // Markiert früh, dass JavaScript läuft – nur dann werden
-      // Scroll-Animationen überhaupt aktiv (kein Flash ohne JS).
-      document.documentElement.classList.add('js');
-    </script>
-
     <script is:inline type="application/ld+json" set:html={jsonLdText} />
   </head>
 
   {/* Offenes Handymenü (Popover in Header.astro): Seite dahinter nicht
      mitscrollen. */}
-  <body class="max-[940px]:has-[#mainNav:popover-open]:overflow-hidden">
-    <a class="skip-link" href="#main">Zum Inhalt springen</a>
+  <body class="antialiased max-[940px]:has-[#mainNav:popover-open]:overflow-hidden">
+    <a
+      class="sr-only z-200 rounded-br-xl bg-primary px-6 py-3 font-semibold text-primary-content focus:not-sr-only focus:absolute focus:top-0 focus:left-0"
+      href="#main">Zum Inhalt springen</a
+    >
     <Header />
     <main id="main">
       <slot />
     </main>
     <Footer />
-
-    <script>
-      // Sanftes Einblenden von Sektionen beim Scrollen.
-      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const targets = document.querySelectorAll<HTMLElement>('.reveal');
-
-      if (prefersReduced || !('IntersectionObserver' in window)) {
-        targets.forEach((el) => el.classList.add('is-visible'));
-      } else {
-        const observer = new IntersectionObserver(
-          (entries) => {
-            for (const entry of entries) {
-              if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
-                observer.unobserve(entry.target);
-              }
-            }
-          },
-          { rootMargin: '0px 0px -8% 0px', threshold: 0.05 }
-        );
-        targets.forEach((el) => observer.observe(el));
-      }
-    </script>
   </body>
 </html>

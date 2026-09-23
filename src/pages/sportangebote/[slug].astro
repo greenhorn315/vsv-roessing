@@ -6,6 +6,7 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import CallToAction from '../../components/CallToAction.astro';
 import DartSpielplan from '../../components/DartSpielplan.astro';
 import FussballSpielplan from '../../components/FussballSpielplan.astro';
+import Container from '../../components/Container.astro';
 import { render } from 'astro:content';
 import { getSports, type Sport } from '../../lib/sportarten';
 import { trainingsOfSport } from '../../lib/trainings';
@@ -57,10 +58,9 @@ const mitVerein = `${sport.name} beim ${site.shortName}: ${sport.description}`;
 const description = mitVerein.length <= 160 ? mitVerein : sport.description;
 
 // Zeilen der Infokarte „Auf einen Blick“: Icon links, Titel und Text rechts.
-const zeile = 'flex gap-3 py-4 border-t border-border';
-const zeilenIcon = 'text-secondary mt-[0.15rem] shrink-0';
-const zeilenTitel =
-  'font-sans text-[0.82rem] font-bold uppercase tracking-[0.05em] text-muted mt-0 mb-[0.3rem]';
+const zeile = 'flex gap-3 border-t border-base-300 py-4';
+const zeilenIcon = 'mt-0.5 shrink-0 text-secondary';
+const zeilenTitel = 'mb-1 font-sans text-xs font-bold tracking-wider uppercase text-base-content/70';
 
 const seite = new URL(Astro.url.pathname, Astro.site);
 const jsonLd = [
@@ -80,55 +80,55 @@ const jsonLd = [
   }}
   jsonLd={jsonLd}
 >
-  <div class="container">
+  <Container>
     <Breadcrumbs items={brotkrumen} />
-  </div>
+  </Container>
 
   {/* Kopfband in der Farbe der Sportart (--sport-color) */}
   <section
-    class="bg-tint-green py-[clamp(2rem,4vw,3rem)] border-t-4 border-(--sport-color)"
+    class="border-t-4 border-(--sport-color) bg-base-300 py-8 md:py-12"
     style={`--sport-color:${sportColorVar(sport.color)}`}
   >
-    <div class="container flex items-start gap-6 max-[620px]:flex-col">
-      <span class="block w-[88px] shrink-0" aria-hidden="true">
+    <Container class="flex items-start gap-6 max-[620px]:flex-col">
+      <span class="block w-22 shrink-0" aria-hidden="true">
         <Pictogram name={sport.pictogram} size={88} />
       </span>
       <div>
-        <h1 class="mb-2">{sport.name}</h1>
-        <p class="lead max-w-[60ch] mb-4">{sport.description}</p>
-        <ul class="list-none flex flex-wrap gap-[0.4rem] p-0 m-0">
+        <h1 class="mb-2 text-4xl md:text-5xl">{sport.name}</h1>
+        <p class="mb-4 max-w-[60ch] text-lg text-base-content/70 md:text-xl">{sport.description}</p>
+        <ul class="flex flex-wrap gap-1.5">
           {
             sport.ageGroups.map((group) => (
-              <li class="badge h-auto border-0 rounded-full bg-base-100 text-primary text-[0.8rem] font-semibold leading-[1.6] px-3 py-1">
+              <li class="badge border-0 bg-base-100 font-semibold text-primary">
                 {ageGroupLabels[group]}
               </li>
             ))
           }
         </ul>
       </div>
-    </div>
+    </Container>
   </section>
 
-  <section class="section">
-    <div class="container grid grid-cols-[1.3fr_0.7fr] max-[900px]:grid-cols-1 gap-[clamp(2rem,4vw,3.5rem)] items-start">
+  <section class="py-16 md:py-20">
+    <Container class="grid grid-cols-[1.3fr_0.7fr] items-start gap-8 md:gap-14 max-[900px]:grid-cols-1">
       <div>
         {
           sport.status && (
-            <aside class="alert alert-warning block bg-sun-soft border border-[#E8CE8A] border-l-[5px] border-l-sun rounded-box p-6 mb-8 text-step-0 leading-[1.6] text-base-content">
-              <p class="flex items-center gap-[0.45rem] m-0 mb-3 text-[0.78rem] font-bold uppercase tracking-[0.06em] text-[#6B5400]">
+            <aside class="alert mb-8 block border-warning border-l-4 bg-warning/20 p-6 text-base">
+              <p class="mb-3 flex items-center gap-2 text-xs font-bold tracking-wider uppercase">
                 <Icon name="info" size={17} />
                 {sport.status.label}
               </p>
-              <p class="m-0 text-[#4A3D14]">{sport.status.text}</p>
+              <p>{sport.status.text}</p>
               {sport.status.next && (
                 <>
-                  <h2 class="font-sans text-[0.82rem] font-bold uppercase tracking-[0.05em] text-[#6B5400] mt-6 mb-2 mx-0">
+                  <h2 class="mt-6 mb-2 font-sans text-xs font-bold tracking-wider uppercase text-base-content">
                     Als Nächstes geplant
                   </h2>
-                  <ul class="list-none flex flex-col gap-2 p-0 m-0">
+                  <ul class="flex flex-col gap-2">
                     {sport.status.next.map((item) => (
-                      <li class="flex items-start gap-[0.55rem] text-[#4A3D14] leading-[1.45]">
-                        <Icon name="calendar" size={17} class="text-[#8A6D00] mt-[0.2rem] shrink-0" />
+                      <li class="flex items-start gap-2 leading-snug">
+                        <Icon name="calendar" size={17} class="mt-0.5 shrink-0 text-primary" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -141,18 +141,18 @@ const jsonLd = [
 
         {/* Fließtext aus der Markdown-Datei: Er trägt keine Klassen, deshalb
              erbt er die gedämpfte Textfarbe von diesem Rahmen. */}
-        <div class="text-muted">
+        <div class="prose max-w-none text-base-content/70">
           <Content />
         </div>
 
         {
           sport.highlights && (
             <>
-              <h2 class="text-step-2 mt-8">Das erwartet dich</h2>
-              <ul class="list-none flex flex-col gap-[0.6rem] p-0 m-0">
+              <h2 class="mt-8 mb-4 text-2xl">Das erwartet dich</h2>
+              <ul class="flex flex-col gap-2.5">
                 {sport.highlights.map((item) => (
-                  <li class="flex items-start gap-[0.6rem]">
-                    <Icon name="check" size={18} strokeWidth={2.6} class="text-secondary mt-[0.2rem]" />
+                  <li class="flex items-start gap-2.5">
+                    <Icon name="check" size={18} strokeWidth={2.6} class="mt-0.5 text-secondary" />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -164,15 +164,15 @@ const jsonLd = [
         {
           sport.activities && sport.activities.length > 0 && (
             <>
-              <h2 class="text-step-2 mt-8">Das gehört dazu</h2>
-              <ul class="list-none grid grid-cols-[repeat(auto-fill,minmax(110px,1fr))] gap-4 p-0 m-0">
+              <h2 class="mt-8 mb-4 text-2xl">Das gehört dazu</h2>
+              <ul class="grid grid-cols-[repeat(auto-fill,minmax(110px,1fr))] gap-4">
                 {sport.activities.map((activity) => (
                   <li class="flex flex-col items-center gap-2 text-center">
                     <Pictogram name={activity.pictogram} size={64} />
-                    <span class="text-[0.92rem] font-semibold text-base-content leading-[1.25]">
+                    <span class="text-sm leading-tight font-semibold">
                       {activity.name}
                       {activity.note && (
-                        <small class="block text-[0.8rem] font-normal text-muted">{activity.note}</small>
+                        <small class="block text-xs font-normal text-base-content/70">{activity.note}</small>
                       )}
                     </span>
                   </li>
@@ -182,8 +182,8 @@ const jsonLd = [
           )
         }
 
-        <div class="mt-11">
-          <a class="btn btn-accent" href="/kontakt/#probetraining">
+        <div class="mt-10">
+          <a class="btn btn-lg btn-accent" href="/kontakt/#probetraining">
             <Icon name="sport" />
             Probetraining bei {sport.name} anfragen
           </a>
@@ -191,8 +191,8 @@ const jsonLd = [
       </div>
 
       {/* Infokarte: bleibt auf breiten Bildschirmen beim Scrollen stehen */}
-      <aside class="card bg-base-100 border border-border rounded-lg p-6 sticky top-[calc(var(--spacing-header)+1rem)] max-[900px]:static">
-        <h2 class="text-step-1 mt-0 mb-6">Auf einen Blick</h2>
+      <aside class="card sticky top-22 rounded-3xl border border-base-300 bg-base-100 p-6 text-base max-[900px]:static">
+        <h2 class="mb-6 text-xl">Auf einen Blick</h2>
 
         {/* Erste Zeile ohne Trennlinie */}
         <div class="flex gap-3 pb-4">
@@ -203,9 +203,9 @@ const jsonLd = [
             </h3>
             {
               sessions.length > 0 ? (
-                <ul class="list-none flex flex-col gap-[0.4rem] p-0 m-0">
+                <ul class="flex flex-col gap-1.5">
                   {sessions.map((session) => (
-                    <li class="flex flex-col text-[0.94rem] [&>span]:text-[0.84rem] [&>span]:text-muted">
+                    <li class="flex flex-col [&>span]:text-sm [&>span]:text-base-content/70">
                       <strong class="text-primary">
                         {session.day} {session.time}
                       </strong>
@@ -220,7 +220,7 @@ const jsonLd = [
                   ))}
                 </ul>
               ) : (
-                <p class="m-0 text-[0.94rem] text-muted">
+                <p class="text-base-content/70">
                   Termine erfragt ihr am besten kurz per E-Mail – wir melden uns
                   mit der passenden Gruppe.
                 </p>
@@ -237,7 +237,7 @@ const jsonLd = [
                 <h3 class={zeilenTitel}>
                   Wo
                 </h3>
-                <p class="m-0 text-[0.94rem] text-muted">{sport.venue}</p>
+                <p class="text-base-content/70">{sport.venue}</p>
               </div>
             </div>
           )
@@ -251,7 +251,7 @@ const jsonLd = [
                 <h3 class={zeilenTitel}>
                   Mitbringen
                 </h3>
-                <p class="m-0 text-[0.94rem] text-muted">{sport.bring}</p>
+                <p class="text-base-content/70">{sport.bring}</p>
               </div>
             </div>
           )
@@ -259,69 +259,69 @@ const jsonLd = [
 
         <div class={zeile}>
           <Icon name="mail" size={19} class={zeilenIcon} />
-          <div class="text-muted">
+          <div class="text-base-content/70">
             <h3 class={zeilenTitel}>
               Ansprechpartner
             </h3>
             {
               sport.contact ? (
                 <>
-                  <p class="m-0 text-[0.94rem] font-semibold text-base-content">{sport.contact.name}</p>
-                  {sport.contact.role && <p class="m-0 mb-[0.35rem] text-[0.86rem]">{sport.contact.role}</p>}
+                  <p class="font-semibold text-base-content">{sport.contact.name}</p>
+                  {sport.contact.role && <p class="mb-1.5 text-sm">{sport.contact.role}</p>}
                   {sport.contact.email && (
-                    <p class="m-0 text-[0.94rem]">
-                      <a href={`mailto:${sport.contact.email}`}>{sport.contact.email}</a>
+                    <p>
+                      <a class="link" href={`mailto:${sport.contact.email}`}>{sport.contact.email}</a>
                     </p>
                   )}
                   {sport.contact.phone && (
-                    <p class="m-0 text-[0.94rem]">
-                      <a href={telHref(sport.contact.phone)}>{sport.contact.phone}</a>
+                    <p>
+                      <a class="link" href={telHref(sport.contact.phone)}>{sport.contact.phone}</a>
                     </p>
                   )}
                 </>
               ) : (
-                <p class="m-0 text-[0.94rem]">
-                  <a href={`mailto:${site.email}`}>{site.email}</a>
+                <p>
+                  <a class="link" href={`mailto:${site.email}`}>{site.email}</a>
                 </p>
               )
             }
           </div>
         </div>
       </aside>
-    </div>
+    </Container>
   </section>
 
   {sport.slug === 'dart' && <DartSpielplan />}
   {sport.slug === 'fussball' && <FussballSpielplan />}
 
-  <nav class="border-t border-border py-6" aria-label="Weitere Sportarten">
-    <div class="container flex flex-wrap items-center justify-between gap-4 max-[620px]:justify-center max-[620px]:text-center">
+  <nav class="border-t border-base-300 py-6" aria-label="Weitere Sportarten">
+    <Container class="flex flex-wrap items-center justify-between gap-4 max-[620px]:justify-center max-[620px]:text-center">
       <a
         href={`/sportangebote/${previous.slug}/`}
-        class="inline-flex items-center gap-[0.6rem] no-underline text-primary font-semibold"
+        class="inline-flex items-center gap-2.5 font-semibold text-primary"
       >
         <Icon name="arrowRight" size={16} class="rotate-180" />
         <span>
-          <small class="block text-[0.75rem] font-normal text-muted uppercase tracking-[0.04em]">
+          <small class="block text-xs font-normal tracking-wide uppercase text-base-content/70">
             Vorherige Sportart
           </small>
           {previous.name}
         </span>
       </a>
-      <a href="/sportangebote/" class="btn btn-link">Alle Sportarten</a>
+      <a href="/sportangebote/" class="link font-semibold link-accent">Alle Sportarten</a>
       <a
         href={`/sportangebote/${next.slug}/`}
-        class="inline-flex items-center gap-[0.6rem] no-underline text-primary font-semibold text-right"
+        class="inline-flex items-center gap-2.5 text-right font-semibold text-primary"
       >
         <span>
-          <small class="block text-[0.75rem] font-normal text-muted uppercase tracking-[0.04em]">
+          <small class="block text-xs font-normal tracking-wide uppercase text-base-content/70">
             Nächste Sportart
           </small>
           {next.name}
         </span>
         <Icon name="arrowRight" size={16} />
       </a>
-    </div>
+    </Container>
   </nav>
 
   <CallToAction />

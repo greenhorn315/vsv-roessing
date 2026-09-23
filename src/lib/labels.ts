@@ -54,9 +54,8 @@ export type SportColor = (typeof SPORT_COLORS)[number];
 const SPORT_COLOR_THEME: Record<SportColor, string> = {
   primary: 'primary',
   'primary-light': 'secondary',
-  // Das helle, dekorative Korall – nicht die Themenfarbe accent.
-  accent: 'coral',
-  'sun-dark': 'sun-dark',
+  accent: 'accent',
+  'sun-dark': 'warning',
 };
 
 export const sportColorVar = (color: SportColor): string =>

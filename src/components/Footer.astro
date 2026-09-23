@@ -1,27 +1,26 @@
 ---
 import Icon from './Icon.astro';
+import Container from './Container.astro';
 import { site } from '../lib/site';
 
 const year = new Date().getFullYear();
 
-const heading = 'mt-0 mb-4 font-display text-[1.05rem] text-white';
-const linkList = 'm-0 flex list-none flex-col gap-2 p-0';
+const heading = 'mb-4 text-lg text-primary-content';
+const linkList = 'flex flex-col gap-2';
 const link =
-  'inline-flex items-center gap-2 py-[0.2rem] text-[0.94rem] text-on-dark no-underline hover:text-white hover:underline';
+  'inline-flex items-center gap-2 py-1 text-primary-content/90 hover:text-primary-content hover:underline';
 const social =
-  'grid size-11 place-items-center rounded-full bg-white/12 text-white transition-colors duration-150 hover:bg-accent';
-const legalLink = 'text-white/82 no-underline hover:underline';
+  'btn btn-circle border-0 bg-primary-content/10 text-primary-content hover:bg-accent';
+const legalLink = 'hover:underline';
 ---
 
-<footer class="bg-primary pt-16 pb-6 text-on-dark">
+<footer class="bg-primary pt-16 pb-6 text-primary-content/90">
   {/* daisyUI-footer als Raster. Die Spalten ordnet es selbst als Raster mit
      Lücke an; hier bringen Überschriften ihren Abstand mit (*:gap-0). */}
-  <div
-    class="footer container grid-cols-[1.5fr_1fr_1fr] gap-11 text-step-0 leading-[1.6] *:gap-0 max-[800px]:grid-cols-1 max-[800px]:gap-8"
-  >
+  <Container class="footer grid-cols-[1.5fr_1fr_1fr] gap-10 text-base *:gap-0 max-[800px]:grid-cols-1 max-[800px]:gap-8">
     <div>
       <h2 class={heading}>{site.name}</h2>
-      <p class="m-0 text-[0.94rem] text-on-dark">
+      <p>
         {site.address.street}<br />
         {site.address.postalCode} {site.address.city}
       </p>
@@ -62,16 +61,14 @@ const legalLink = 'text-white/82 no-underline hover:underline';
         <li><a class={link} href="/mitglied-werden/#formulare">Formulare &amp; Downloads</a></li>
       </ul>
     </div>
-  </div>
+  </Container>
 
-  <div
-    class="container mt-11 flex flex-wrap justify-between gap-3 border-t border-white/15 pt-6 text-[0.85rem] text-white/72"
-  >
+  <Container class="mt-10 flex flex-wrap justify-between gap-3 border-t border-primary-content/15 pt-6 text-sm text-primary-content/75">
     <span>© {year} {site.name}</span>
     <nav class="flex gap-2" aria-label="Rechtliches">
       <a class={legalLink} href="/impressum/">Impressum</a>
       <span aria-hidden="true">·</span>
       <a class={legalLink} href="/datenschutz/">Datenschutz</a>
     </nav>
-  </div>
+  </Container>
 </footer>

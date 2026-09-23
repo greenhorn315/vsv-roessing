@@ -29,25 +29,25 @@ const fullFormat = new Intl.DateTimeFormat('de-DE', { dateStyle: 'long' });
 ---
 
 {/* daisyUI-list: Datum links, Meldung rechts, Linien zwischen den Einträgen. */}
-<ul class="list list-none p-0 m-0 text-step-0">
+<ul class="list">
   {
     items.map((item) => {
       const date = new Date(item.date);
       return (
-        <li class="list-row rounded-none px-0 py-4 gap-4 border-t border-border last:border-b after:hidden">
+        <li class="list-row gap-4 rounded-none border-t border-base-300 px-0 py-4 after:hidden last:border-b">
           <time
-            class="w-[58px] text-center font-display text-primary leading-[1.1]"
+            class="w-14 text-center font-display leading-tight text-primary"
             datetime={item.date}
           >
             <span class="sr-only">{fullFormat.format(date)}</span>
-            <strong class="block text-[1.45rem]" aria-hidden="true">{dayFormat.format(date)}</strong>
-            <span class="text-[0.74rem] text-muted uppercase tracking-[0.04em]" aria-hidden="true">
+            <strong class="block text-2xl" aria-hidden="true">{dayFormat.format(date)}</strong>
+            <span class="text-xs tracking-wide uppercase text-base-content/70" aria-hidden="true">
               {monthFormat.format(date)}
             </span>
           </time>
           <div>
-            <h3 class="m-0 mb-1 text-[1.05rem] text-base-content">{item.title}</h3>
-            <p class="m-0 text-[0.94rem] text-muted">{item.text}</p>
+            <h3 class="mb-1 text-lg text-base-content">{item.title}</h3>
+            <p class="text-base-content/70">{item.text}</p>
           </div>
         </li>
       );

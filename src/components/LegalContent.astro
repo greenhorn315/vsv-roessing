@@ -1,21 +1,5 @@
----
-/**
- * Rahmen für Rechtstexte (Impressum, Datenschutzerklärung). Der Text selbst
- * kommt als gerendertes Markdown aus src/content/rechtliches/ in den Slot;
- * Links auf E-Mail-Adressen, Web-Adressen und Telefonnummern stehen dort
- * ausdrücklich im Markdown.
- *
- * Gerendertes Markdown trägt keine eigenen Klassen. Die Stile greifen
- * deshalb über Nachfahren-Varianten ([&_h2]:…) dieses Rahmens und bleiben
- * so auf ihn beschränkt. Überschriften, Absätze und Listen bringen ihr
- * Grundaussehen aus global.css mit; hier stehen nur die Abweichungen für
- * Rechtstexte. Lange URLs dürfen den Textfluss nicht sprengen
- * (wrap-anywhere).
- */
----
-
 <div
-  class="max-w-[720px] [&_a]:text-accent [&_a]:wrap-anywhere [&_h2]:mt-8 [&_h2]:text-step-1 [&_h2:first-child]:mt-0 [&_h3]:mt-6 [&_h3]:mb-2 [&_h3]:text-[1.02rem] [&_p]:text-[0.96rem] [&_p]:text-muted"
+  class="prose max-w-3xl text-base-content/80 prose-h2:text-xl prose-h3:text-base prose-headings:font-display prose-headings:font-semibold prose-headings:text-primary prose-a:text-accent prose-a:wrap-anywhere"
 >
   <slot />
 </div>

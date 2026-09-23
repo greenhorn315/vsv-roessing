@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import Container from './Container.astro';
 
 interface Props {
   title?: string;
@@ -12,24 +13,18 @@ const {
 } = Astro.props;
 ---
 
-<section class="bg-primary text-white py-[clamp(2.5rem,5vw,4rem)] reveal">
-  <div class="container flex items-center justify-between flex-wrap gap-8">
+<section class="bg-primary py-10 text-primary-content md:py-16">
+  <Container class="flex flex-wrap items-center justify-between gap-8">
     <div>
-      <h2 class="text-white max-w-[22ch] mb-2">{title}</h2>
-      <p class="text-white/85 m-0 max-w-[46ch]">{text}</p>
+      <h2 class="mb-2 max-w-[22ch] text-3xl text-primary-content md:text-4xl">{title}</h2>
+      <p class="max-w-[46ch] text-primary-content/85">{text}</p>
     </div>
-    <div class="flex gap-3 flex-wrap">
-      <a class="btn btn-on-dark" href="/kontakt/#probetraining">
+    <div class="flex flex-wrap gap-3">
+      <a class="btn btn-lg btn-warning" href="/kontakt/#probetraining">
         <Icon name="sport" />
         Probetraining anfragen
       </a>
-      {/* Weiße Kontur auf Grün – btn-outline ist für hellen Grund gedacht. */}
-      <a
-        class="btn bg-transparent text-white border-white/45 hover:bg-white/12 hover:border-white"
-        href="/sportangebote/"
-      >
-        Sportarten ansehen
-      </a>
+      <a class="btn btn-lg btn-secondary" href="/sportangebote/">Sportarten ansehen</a>
     </div>
-  </div>
+  </Container>
 </section>

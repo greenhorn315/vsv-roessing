@@ -40,7 +40,7 @@ const {
   eager = false,
   placeholderIcon = 'sparkle',
   placeholderText,
-  class: className,
+  class: className = 'rounded-box',
 } = Astro.props;
 ---
 
@@ -50,7 +50,7 @@ const {
   noch ganz, bleibt der gestaltete Platzhalter stehen.
 -->
 <div
-  class:list={['photo relative aspect-(--photo-ratio) rounded-box overflow-hidden bg-tint-green isolate', className]}
+  class:list={['relative isolate aspect-(--photo-ratio) overflow-hidden bg-base-300', className]}
   style={`--photo-ratio:${width} / ${height}`}
 >
   {
@@ -69,12 +69,12 @@ const {
       />
     ) : (
       <div
-        class="absolute inset-0 grid place-content-center justify-items-center gap-2 p-4 text-center text-secondary bg-linear-135/srgb from-tint-green to-base-300"
+        class="absolute inset-0 grid place-content-center justify-items-center gap-2 bg-linear-135 from-primary/10 to-base-300 p-4 text-center text-secondary"
         aria-hidden="true"
       >
         <Icon name={placeholderIcon} size={30} />
         {placeholderText && (
-          <span class="text-[0.78rem] font-semibold tracking-[0.04em] uppercase opacity-75">
+          <span class="text-xs font-semibold tracking-wide uppercase opacity-75">
             {placeholderText}
           </span>
         )}

@@ -20,35 +20,32 @@ const isActive = (href: string) => {
 // untereinander im aufklappbaren Panel. daisyUI nimmt den Fokusrahmen weg,
 // deshalb setzen wir unseren (3px Korall) ausdrücklich wieder.
 const linkBase = [
-  'flex items-center gap-[0.45rem] rounded-full px-[0.85rem] py-[0.55rem]',
-  'text-[0.95rem] whitespace-nowrap no-underline transition-colors duration-150',
-  'focus-visible:outline-3 focus-visible:outline-solid focus-visible:outline-accent focus-visible:outline-offset-3',
-  'max-[940px]:rounded-sm max-[940px]:px-4 max-[940px]:py-[0.9rem] max-[940px]:text-[1.05rem]',
+  'flex items-center gap-2 rounded-full px-3.5 py-2 text-base whitespace-nowrap',
+  'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent',
+  'max-[940px]:rounded-xl max-[940px]:px-4 max-[940px]:py-3.5 max-[940px]:text-lg',
 ];
 // Aktive Seite nicht nur über Farbe kennzeichnen (WCAG 1.4.1): zusätzlich fett.
 const linkNormal = [
   'font-medium text-base-content',
-  // daisyUI tönt fokussierte Punkte grau; bei uns zeigt nur der Rahmen den Fokus.
-  'not-aria-[current=page]:focus-visible:bg-transparent',
-  'not-aria-[current=page]:hover:bg-tint-green not-aria-[current=page]:hover:text-primary',
-  'aria-[current=page]:bg-primary aria-[current=page]:text-white aria-[current=page]:font-semibold',
-  'max-[940px]:border-b max-[940px]:border-border',
+  'not-aria-[current=page]:hover:bg-base-300 not-aria-[current=page]:hover:text-primary',
+  'aria-[current=page]:bg-primary aria-[current=page]:text-primary-content aria-[current=page]:font-semibold',
+  'max-[940px]:border-b max-[940px]:border-base-300',
 ];
 const linkCta = [
-  'bg-accent text-white font-semibold ml-[0.35rem]',
-  'hover:bg-accent-hover hover:text-white aria-[current=page]:bg-accent-hover',
+  'bg-accent text-accent-content font-semibold ml-1.5',
+  'hover:bg-accent/90 hover:text-accent-content',
   'max-[940px]:justify-center max-[940px]:ml-0 max-[940px]:mt-3 max-[940px]:min-h-12',
 ];
 ---
 
 <header
   id="siteHeader"
-  class="sticky top-0 z-100 border-b border-transparent bg-base-200/88 backdrop-blur-[10px] backdrop-saturate-[1.4] transition-[border-color,box-shadow] duration-200 data-scrolled:border-border data-scrolled:shadow-sm"
+  class="sticky top-0 z-100 border-b border-transparent bg-base-200/90 backdrop-blur-md transition-[border-color,box-shadow] duration-200 data-scrolled:border-base-300 data-scrolled:shadow-sm"
 >
   <div
-    class="navbar group mx-auto min-h-header max-w-site justify-between gap-4 px-[clamp(1rem,4vw,1.5rem)] py-0"
+    class="navbar group mx-auto min-h-18 max-w-6xl justify-between gap-4 px-4 py-0 sm:px-6"
   >
-    <a class="flex items-center gap-2.5 py-2 no-underline" href="/">
+    <a class="flex items-center gap-2.5 py-2" href="/">
       {/* Vereinswappen. Das Bild trägt alt="", weil der Vereinsname direkt
          daneben als Text steht – sonst läse ein Screenreader ihn doppelt. */}
       <Image
@@ -62,15 +59,15 @@ const linkCta = [
         decoding="async"
       />
       <span class="flex flex-col leading-[1.15]">
-        <strong class="font-display text-[1.1rem] text-primary">{site.shortName}</strong>
-        <span class="text-[0.72rem] text-muted">von {site.founded} e.V.</span>
+        <strong class="font-display text-lg text-primary">{site.shortName}</strong>
+        <span class="text-xs text-base-content/70">von {site.founded} e.V.</span>
       </span>
     </a>
 
     {/* Menüknopf fürs Handy. Öffnet das Menü als Popover: Der Browser
        übernimmt Escape, Klick daneben und die Rückkehr des Fokus. */}
     <button
-      class="btn btn-ghost btn-square size-12 min-h-12 rounded-sm border border-border text-primary hover:translate-y-0 min-[941px]:hidden"
+      class="btn btn-square btn-ghost btn-lg rounded-xl border-base-300 text-primary min-[941px]:hidden"
       id="navToggle"
       type="button"
       popovertarget="mainNav"
@@ -90,10 +87,10 @@ const linkCta = [
       id="mainNav"
       popover
       aria-label="Hauptnavigation"
-      class="fixed inset-x-0 top-[calc(var(--spacing-header)+1px)] bottom-auto m-0 max-h-[calc(100dvh-var(--spacing-header))] w-full overflow-y-auto overscroll-contain border-0 border-b border-border bg-base-100 px-[clamp(1rem,4vw,1.5rem)] pt-4 pb-6 text-base-content shadow-lg -translate-y-1.5 opacity-0 transition-[opacity,translate,display,overlay] transition-discrete duration-200 open:translate-y-0 open:opacity-100 starting:open:-translate-y-1.5 starting:open:opacity-0 min-[941px]:static min-[941px]:flex min-[941px]:max-h-none min-[941px]:w-auto min-[941px]:translate-y-0 min-[941px]:overflow-visible min-[941px]:border-0 min-[941px]:bg-transparent min-[941px]:p-0 min-[941px]:opacity-100 min-[941px]:shadow-none"
+      class="fixed inset-x-0 top-[calc(4.5rem+1px)] bottom-auto m-0 max-h-[calc(100dvh-4.5rem)] w-full overflow-y-auto overscroll-contain border-0 border-b border-base-300 bg-base-100 px-4 pt-4 sm:px-6 pb-6 text-base-content shadow-lg -translate-y-1.5 opacity-0 transition-[opacity,translate,display,overlay] transition-discrete duration-200 open:translate-y-0 open:opacity-100 starting:open:-translate-y-1.5 starting:open:opacity-0 min-[941px]:static min-[941px]:flex min-[941px]:max-h-none min-[941px]:w-auto min-[941px]:translate-y-0 min-[941px]:overflow-visible min-[941px]:border-0 min-[941px]:bg-transparent min-[941px]:p-0 min-[941px]:opacity-100 min-[941px]:shadow-none"
     >
       <ul
-        class="menu menu-horizontal m-0 list-none items-center gap-1 p-0 [--menu-active-bg:var(--color-primary)] [--menu-active-fg:#fff] max-[940px]:flex max-[940px]:w-full max-[940px]:flex-col max-[940px]:items-stretch max-[940px]:gap-[0.35rem]"
+        class="menu menu-horizontal items-center gap-1 p-0 max-[940px]:flex max-[940px]:w-full max-[940px]:flex-col max-[940px]:items-stretch max-[940px]:gap-1.5"
       >
         {
           navigation.map((item) => (

@@ -45,9 +45,9 @@ const panels = [
 
 // Hintergrund je Zielgruppe, als vollständige Klassennamen für Tailwind.
 const hintergrund = {
-  families: 'bg-tint-green',
-  youth: 'bg-tint-coral',
-  later: 'bg-sun-soft',
+  families: 'bg-base-300',
+  youth: 'bg-accent/10',
+  later: 'bg-warning/20',
 } as const;
 ---
 
@@ -56,30 +56,27 @@ const hintergrund = {
     panels.map((panel) => (
       <article
         class:list={[
-          'card rounded-lg p-[clamp(1.75rem,3vw,2.5rem)] items-start reveal',
+          'card items-start rounded-3xl p-7 text-base md:p-10',
           hintergrund[panel.variant],
         ]}
       >
         <span
-          class="grid place-items-center size-11 rounded-full bg-base-100 text-primary mb-4 shadow-sm"
+          class="mb-4 grid size-11 place-items-center rounded-full bg-base-100 text-primary shadow-sm"
           aria-hidden="true"
         >
           <Icon name={panel.icon} size={22} />
         </span>
-        <h3 class="text-step-2 mb-2">{panel.title}</h3>
-        <p class="text-muted mb-4">{panel.lead}</p>
-        <ul class="list-none p-0 m-0 mb-8 flex flex-col gap-[0.6rem]">
+        <h3 class="mb-2 text-2xl">{panel.title}</h3>
+        <p class="mb-4 text-base-content/70">{panel.lead}</p>
+        <ul class="mb-8 flex flex-col gap-2.5">
           {panel.points.map((point) => (
-            <li class="flex items-start gap-[0.6rem] leading-[1.45]">
-              <Icon name="check" size={17} class="text-secondary stroke-[2.6] mt-[0.2rem]" />
+            <li class="flex items-start gap-2.5 leading-snug">
+              <Icon name="check" size={17} class="mt-0.5 stroke-[2.6] text-secondary" />
               <span>{point}</span>
             </li>
           ))}
         </ul>
-        <a
-          class="btn btn-outline mt-auto bg-base-100 border-transparent hover:bg-primary hover:border-primary"
-          href={panel.cta.href}
-        >
+        <a class="btn mt-auto btn-outline btn-primary" href={panel.cta.href}>
           {panel.cta.label}
         </a>
       </article>

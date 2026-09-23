@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import LegalContent from '../components/LegalContent.astro';
 import Icon from '../components/Icon.astro';
+import Container from '../components/Container.astro';
 import { getEntry, render } from 'astro:content';
 
 // Wortlaut und Herkunftshinweise in src/content/rechtliches/impressum.md.
@@ -18,21 +19,21 @@ const { Content } = await render(impressum);
 <BaseLayout title="Impressum" description="Impressum des VSV Rössing von 1897 e.V.">
   <PageHeader title="Impressum" />
 
-  <section class="section">
-    <div class="container">
-      <p class="max-w-[720px] font-semibold">{intro}</p>
+  <section class="py-16 md:py-20">
+    <Container>
+      <p class="mb-4 max-w-3xl font-semibold">{intro}</p>
 
       <LegalContent><Content /></LegalContent>
 
-      <div class="max-w-[720px]">
-        <h2 class="mt-8 text-step-1">{datenschutzHinweis.heading}</h2>
+      <div class="max-w-3xl">
+        <h2 class="mt-8 mb-2 text-xl">{datenschutzHinweis.heading}</h2>
         <p>
-          <a class="inline-flex items-center gap-[0.35rem] font-semibold text-accent" href={datenschutzHinweis.href}>
+          <a class="link inline-flex items-center gap-1.5 font-semibold link-accent" href={datenschutzHinweis.href}>
             {datenschutzHinweis.linkLabel}
             <Icon name="arrowRight" size={16} />
           </a>
         </p>
       </div>
-    </div>
+    </Container>
   </section>
 </BaseLayout>

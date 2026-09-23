@@ -1,90 +1,72 @@
 ---
 import Icon from './Icon.astro';
 import HeroKarussell from './HeroKarussell.astro';
+import Container from './Container.astro';
 import { site, slogan, clubAge } from '../lib/site';
 import { getSportNames } from '../lib/sportarten';
 
 const sportNames = (await getSportNames()).join(', ');
 ---
 
-<section class="site-hero pt-[clamp(2.5rem,1rem+5vw,4.5rem)] pb-0 overflow-x-clip">
-  <div
-    class="container grid grid-cols-[1.05fr_0.95fr] gap-[clamp(2rem,4vw,3.5rem)] items-center max-[940px]:grid-cols-1"
-  >
-    <div class="hero-copy">
-      <p class="inline-flex items-center gap-2 bg-primary text-white py-[0.35rem] px-[0.9rem] rounded-full text-[0.85rem] font-semibold m-0 mb-4">
+<section class="overflow-x-clip pt-10 md:pt-16">
+  <Container class="grid grid-cols-[1.05fr_0.95fr] items-center gap-8 md:gap-14 max-[940px]:grid-cols-1">
+    <div>
+      <p class="badge mb-4 gap-2 border-0 bg-primary py-3.5 font-semibold text-primary-content">
         <span class="status status-warning" aria-hidden="true"></span>
         {clubAge} Jahre {site.shortName}
       </p>
-      <h1 class="max-w-[15ch] mb-4 max-[940px]:max-w-[20ch]">{slogan}</h1>
-      <p class="lead">
+      <h1 class="mb-4 max-w-[15ch] text-4xl md:text-5xl lg:text-6xl max-[940px]:max-w-[20ch]">{slogan}</h1>
+      <p class="max-w-[46ch] text-lg text-base-content/70 md:text-xl">
         {/* „in jedem Alter“ statt einer eigenen Nennung der Älteren: Der Verein
             hat viele ältere Mitglieder, aber niemand soll hier in eine
             Schublade gesteckt werden. */}
         {sportNames} – für Kinder, Jugendliche, Familien und Erwachsene in
         jedem Alter.
-        Schon ab <strong class="text-base-content font-bold whitespace-nowrap">4&nbsp;€ im Monat</strong> dabei.
+        Schon ab <strong class="font-bold whitespace-nowrap text-base-content">4&nbsp;€ im Monat</strong> dabei.
       </p>
-      <div class="flex gap-3 flex-wrap mt-8">
-        <a class="btn btn-accent" href="/mitglied-werden/">
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a class="btn btn-lg btn-accent" href="/mitglied-werden/">
           <Icon name="join" />
           Jetzt Mitglied werden
         </a>
-        <a class="btn btn-outline" href="/kontakt/#probetraining">
+        <a class="btn btn-lg btn-outline btn-primary" href="/kontakt/#probetraining">
           <Icon name="sport" />
           Probetraining vereinbaren
         </a>
       </div>
-      <p class="flex items-center gap-[0.45rem] m-0 mt-4 text-[0.9rem] text-muted">
+      <p class="mt-4 flex items-center gap-2 text-sm text-base-content/70">
         <Icon name="check" size={16} class="text-secondary stroke-[2.5]" />
         Probetraining kostenlos &amp; unverbindlich – einfach vorbeikommen.
       </p>
     </div>
 
-    <div class="relative max-[940px]:-order-1 max-[940px]:max-w-[520px]">
+    <div class="relative isolate max-[940px]:-order-1 max-[940px]:max-w-[520px]">
       {/* Bogenform als wiedererkennbares Gestaltungselement. Mobil flacher
           als am Desktop, damit der Aufruf zum Handeln in Sichtweite bleibt –
           aber nicht so flach, dass von den Hochformaten zu wenig übrig
           bleibt. */}
       <HeroKarussell
-        class="aspect-[4/5] rounded-[clamp(80px,18vw,180px)_var(--radius-lg)_var(--radius-lg)_var(--radius-lg)] shadow-lg max-[940px]:aspect-[4/3] max-[940px]:rounded-lg"
+        class="aspect-4/5 rounded-3xl rounded-tl-[clamp(80px,18vw,180px)] shadow-lg max-[940px]:aspect-4/3 max-[940px]:rounded-tl-3xl"
       />
       <svg
-        class="absolute -left-[38px] -bottom-[28px] size-[190px] -z-1 opacity-90 max-[940px]:hidden"
+        class="absolute -bottom-7 -left-10 -z-1 size-48 text-accent/70 max-[940px]:hidden"
         viewBox="0 0 200 200"
         aria-hidden="true"
       >
         <path
           d="M10 190 C 10 100, 100 100, 100 10"
           fill="none"
-          stroke="var(--color-coral)"
+          stroke="currentColor"
           stroke-width="12"
           stroke-linecap="round"
         />
       </svg>
       <p
-        class="absolute -right-3 bottom-[26px] m-0 size-[84px] rounded-full bg-sun text-[#3F2E00] grid place-content-center text-center leading-[1.1] shadow-md font-display max-[940px]:-right-2 max-[940px]:-bottom-[18px] max-[940px]:size-[72px]"
+        class="absolute -right-3 bottom-6 grid size-21 place-content-center rounded-full bg-warning text-center font-display leading-tight text-warning-content shadow-md max-[940px]:-right-2 max-[940px]:-bottom-4 max-[940px]:size-18"
       >
-        <strong class="block text-[0.72rem] uppercase tracking-[0.08em] font-semibold">seit</strong>
-        <span class="text-[1.35rem] font-bold">{site.founded}</span>
+        <strong class="block text-xs font-semibold tracking-widest uppercase">seit</strong>
+        <span class="text-xl font-bold">{site.founded}</span>
       </p>
     </div>
-  </div>
+  </Container>
 </section>
-
-<style>
-  /* Einzig verbliebenes CSS: das gestaffelte Einblenden der Texte beim
-     Laden. Keyframes lassen sich nicht als Utility schreiben, und global.css
-     ist dafür der falsche Ort. */
-  .hero-copy > :global(*) {
-    animation: rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) backwards;
-  }
-  .hero-copy > :global(*:nth-child(2)) { animation-delay: 0.08s; }
-  .hero-copy > :global(*:nth-child(3)) { animation-delay: 0.16s; }
-  .hero-copy > :global(*:nth-child(4)) { animation-delay: 0.24s; }
-  .hero-copy > :global(*:nth-child(5)) { animation-delay: 0.32s; }
-
-  @keyframes rise {
-    from { opacity: 0; transform: translateY(14px); }
-  }
-</style>

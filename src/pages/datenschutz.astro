@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import LegalContent from '../components/LegalContent.astro';
 import Icon from '../components/Icon.astro';
+import Container from '../components/Container.astro';
 import { getEntry, render } from 'astro:content';
 import { isPrototype } from '../lib/site';
 
@@ -17,18 +18,18 @@ const { Content } = await render(datenschutz);
   description="Datenschutzerklärung des VSV Rössing von 1897 e.V."
 >
   <PageHeader title="Datenschutzerklärung" />
-  <section class="section">
-    <div class="container">
+  <section class="py-16 md:py-20">
+    <Container>
       {/* Entwurfshinweis als daisyUI-alert (weich, Warnfarbe), als Block statt
          Raster und mit Sonnenstreifen links. */}
       {
         isPrototype && (
-          <aside class="alert alert-warning alert-soft mb-8 block max-w-[720px] rounded-box border-[#E8CE8A] border-l-5 border-l-sun bg-sun-soft p-6 text-step-0 leading-[1.6] text-base-content">
-            <p class="m-0 mb-2 flex items-center gap-[0.45rem] font-bold text-[#5E4A0C]">
+          <aside class="alert mb-8 block max-w-3xl border-warning border-l-4 bg-warning/20 p-6 text-base">
+            <p class="mb-2 flex items-center gap-2 font-bold">
               <Icon name="info" size={18} />
               Entwurf, noch nicht rechtlich geprüft
             </p>
-            <p class="m-0 text-[0.94rem] text-[#4A3D14]">
+            <p>
               Dieser Text beschreibt die Verarbeitung auf dieser Entwurfsseite.
               Vor dem Livegang gehört er geprüft und um die Angaben zum
               Hosting-Anbieter ergänzt.
@@ -38,6 +39,6 @@ const { Content } = await render(datenschutz);
       }
 
       <LegalContent><Content /></LegalContent>
-    </div>
+    </Container>
   </section>
 </BaseLayout>

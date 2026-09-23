@@ -25,7 +25,7 @@ const shots = [1, 2, 3, 4].map((n) => ({ n, image: bilder[n - 1] }));
     {
       shots.map(({ n, image }) => (
         <a
-          class="block rounded-box overflow-hidden transition-[translate,box-shadow] duration-[180ms] ease-[ease] hover:-translate-y-[3px] hover:shadow-md focus-visible:-translate-y-[3px] focus-visible:shadow-md"
+          class="block overflow-hidden rounded-box transition hover:-translate-y-1 hover:shadow-md focus-visible:-translate-y-1 focus-visible:shadow-md"
           href={site.social.instagram.url}
           rel="noopener"
           aria-label={`Beitrag ${n} auf Instagram ansehen`}
@@ -43,7 +43,7 @@ const shots = [1, 2, 3, 4].map((n) => ({ n, image: bilder[n - 1] }));
       ))
     }
   </div>
-  <a class="btn btn-outline mt-6" href={site.social.instagram.url} rel="noopener">
+  <a class="btn mt-6 btn-outline btn-primary" href={site.social.instagram.url} rel="noopener">
     <Icon name="instagram" />
     {site.social.instagram.handle} folgen
   </a>

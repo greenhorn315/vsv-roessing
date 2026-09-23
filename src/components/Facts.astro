@@ -1,4 +1,5 @@
 ---
+import Container from './Container.astro';
 import { getFacts } from '../lib/site';
 
 const facts = await getFacts();
@@ -6,21 +7,21 @@ const facts = await getFacts();
 
 {/* daisyUI-stats als dunkles Band: vier Spalten, mobil zwei. Zahl optisch
     zuerst (flex-col-reverse), semantisch bleibt dt (Label) vorn. */}
-<section class="bg-primary text-white mt-section py-8" aria-label="Der Verein in Zahlen">
-  <div class="container">
+<section class="mt-16 bg-primary py-8 text-primary-content md:mt-20" aria-label="Der Verein in Zahlen">
+  <Container>
     <dl
-      class="stats grid grid-flow-row grid-cols-4 gap-6 m-0 rounded-none overflow-visible max-[720px]:grid-cols-2 max-[720px]:gap-x-3 max-[720px]:gap-y-4"
+      class="stats grid grid-flow-row grid-cols-4 gap-6 overflow-visible rounded-none max-[720px]:grid-cols-2 max-[720px]:gap-x-3 max-[720px]:gap-y-4"
     >
       {
         facts.map((fact) => (
-          <div class="stat flex flex-col-reverse gap-[0.15rem] p-0 pe-6 border-0 border-e border-solid border-white/18 last:border-e-0 max-[720px]:even:border-e-0">
-            <dt class="stat-title text-[0.9rem] text-white/78 whitespace-normal">{fact.label}</dt>
-            <dd class="stat-value m-0 font-display text-[clamp(1.6rem,1.2rem+1.6vw,2.2rem)] font-semibold leading-[1.05] whitespace-normal">
+          <div class="stat flex flex-col-reverse gap-0.5 border-0 border-e border-primary-content/20 p-0 pe-6 last:border-e-0 max-[720px]:even:border-e-0">
+            <dt class="stat-title text-sm whitespace-normal text-primary-content/80">{fact.label}</dt>
+            <dd class="stat-value font-display text-3xl font-semibold whitespace-normal md:text-4xl">
               {fact.value}
             </dd>
           </div>
         ))
       }
     </dl>
-  </div>
+  </Container>
 </section>

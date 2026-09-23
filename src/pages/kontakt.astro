@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Icon from '../components/Icon.astro';
 import VenueGallery from '../components/VenueGallery.astro';
+import Container from '../components/Container.astro';
 import { getCollection } from 'astro:content';
 import { site } from '../lib/site';
 import { getSportNames } from '../lib/sportarten';
@@ -17,24 +18,18 @@ const sportNames = await getSportNames();
  * grüner Rand mit weichem Schein. Fehler setzt das Skript unten über
  * aria-invalid – die Rahmenfarbe hängt direkt an diesem Attribut.
  */
-const feld = 'fieldset p-0 gap-[0.35rem] mb-4 text-step-0';
-const beschriftung =
-  'label gap-1 whitespace-normal text-base-content font-semibold text-[0.92rem] [&>span]:text-accent';
-const eingabe =
-  'w-full h-auto min-h-12 py-[0.7rem] px-[0.85rem] text-step-0 bg-base-200 border-border-strong rounded-sm ' +
-  'transition-[border-color,box-shadow] duration-[160ms] ' +
-  'focus:border-primary focus:outline-none focus:shadow-[0_0_0_3px_rgba(47,122,100,0.18)] ' +
-  'aria-invalid:border-[#B3261E]';
-const fehler = 'm-0 text-[0.85rem] font-semibold text-[#B3261E]';
+const feld = 'fieldset mb-4 p-0';
+const beschriftung = 'label text-sm font-semibold whitespace-normal text-base-content';
+const eingabe = 'w-full aria-invalid:border-error';
+const fehler = 'text-sm font-semibold text-error';
 
 /** Gelber Hinweiskasten (daisyUI-alert) über dem Formular. */
-const hinweis =
-  'alert bg-sun-soft text-[#5E4A0C] border-0 rounded-sm gap-2 py-[0.7rem] px-4 text-[0.88rem] leading-[1.6] mb-6';
+const hinweis = 'alert mb-6 border-0 bg-warning/20';
 
 /** Kontaktkarten in der Seitenspalte. */
-const infoKarte = 'card bg-tint-green rounded-box p-6';
-const infoTitel = 'text-[1rem] mt-0 mb-[0.3rem]';
-const infoText = 'm-0 text-muted';
+const infoKarte = 'card bg-base-300 p-6 text-base';
+const infoTitel = 'mb-1 text-base';
+const infoText = 'text-base-content/70';
 ---
 
 <BaseLayout
@@ -47,10 +42,10 @@ const infoText = 'm-0 text-muted';
     lead="Egal ob Probetraining, Mitgliedschaft oder eine Frage zum Verein – wir melden uns in der Regel innerhalb weniger Tage."
   />
 
-  <section class="section">
-    <div class="container grid grid-cols-[1.25fr_0.75fr] gap-[clamp(2rem,4vw,3.5rem)] items-start max-[900px]:grid-cols-1">
-      <div class="card bg-base-100 rounded-lg p-[clamp(1.5rem,4vw,2.5rem)] shadow-sm" id="probetraining">
-        <h2>Probetraining anfragen</h2>
+  <section class="py-16 md:py-20">
+    <Container class="grid grid-cols-[1.25fr_0.75fr] items-start gap-8 md:gap-14 max-[900px]:grid-cols-1">
+      <div class="card rounded-3xl bg-base-100 p-6 text-base shadow-sm md:p-10" id="probetraining">
+        <h2 class="mb-4 text-3xl md:text-4xl">Probetraining anfragen</h2>
         <p class={hinweis}>
           <Icon name="info" size={17} />
           <span>
@@ -61,7 +56,7 @@ const infoText = 'm-0 text-muted';
 
         <form data-contact-form data-recipient={site.email} novalidate>
           <div class={feld}>
-            <label class={beschriftung} for="name">Name <span aria-hidden="true">*</span></label>
+            <label class={beschriftung} for="name">Name <span class="text-accent" aria-hidden="true">*</span></label>
             <input
               type="text"
               id="name"
@@ -75,7 +70,7 @@ const infoText = 'm-0 text-muted';
           </div>
 
           <div class={feld}>
-            <label class={beschriftung} for="email">E-Mail <span aria-hidden="true">*</span></label>
+            <label class={beschriftung} for="email">E-Mail <span class="text-accent" aria-hidden="true">*</span></label>
             <input
               type="email"
               id="email"
@@ -90,7 +85,7 @@ const infoText = 'm-0 text-muted';
 
           <div class={feld}>
             <label class={beschriftung} for="sportart">Welche Sportart interessiert dich?</label>
-            <select id="sportart" name="sportart" class={`select ${eingabe} pr-7`}>
+            <select id="sportart" name="sportart" class={`select ${eingabe}`}>
               <option value="">Bitte auswählen</option>
               {sportNames.map((name) => <option value={name}>{name}</option>)}
               <option value="Noch unsicher">Noch unsicher</option>
@@ -99,13 +94,13 @@ const infoText = 'm-0 text-muted';
 
           <div class={feld}>
             <label class={beschriftung} for="nachricht">Nachricht</label>
-            <textarea id="nachricht" name="nachricht" rows="5" class={`textarea ${eingabe} resize-y mb-2`}></textarea>
+            <textarea id="nachricht" name="nachricht" rows="5" class={`textarea ${eingabe}`}></textarea>
           </div>
 
-          <p class="text-[0.82rem] text-muted">
+          <p class="mb-4 text-sm text-base-content/70">
             Mit dem Absenden stimmst du zu, dass wir deine Angaben zur
             Bearbeitung der Anfrage verwenden. Details in der
-            <a href="/datenschutz/">Datenschutzerklärung</a>.
+            <a class="link" href="/datenschutz/">Datenschutzerklärung</a>.
           </p>
 
           <button class="btn btn-accent" type="submit">
@@ -113,7 +108,7 @@ const infoText = 'm-0 text-muted';
             Anfrage senden
           </button>
 
-          <p class="mt-4 mb-0 text-[0.88rem] text-muted empty:hidden" role="status" data-form-status></p>
+          <p class="mt-4 text-sm text-base-content/70 empty:hidden" role="status" data-form-status></p>
         </form>
 
         <noscript>
@@ -121,7 +116,7 @@ const infoText = 'm-0 text-muted';
             <span>
               Ohne JavaScript funktioniert das Formular nicht. Schreibt uns
               stattdessen direkt an
-              <a href={`mailto:${site.email}`}>{site.email}</a>.
+              <a class="link" href={`mailto:${site.email}`}>{site.email}</a>.
             </span>
           </p>
         </noscript>
@@ -133,19 +128,19 @@ const infoText = 'm-0 text-muted';
         <div class={infoKarte}>
           <Icon name="mail" size={20} class="text-primary mb-2" />
           <h3 class={infoTitel}>E-Mail</h3>
-          <p class={`${infoText} text-[0.94rem]`}><a href={`mailto:${site.email}`}>{site.email}</a></p>
+          <p class={infoText}><a class="link" href={`mailto:${site.email}`}>{site.email}</a></p>
         </div>
 
         <div class={infoKarte}>
           <Icon name="pin" size={20} class="text-primary mb-2" />
           <h3 class={infoTitel}>Sportstätten</h3>
-          <ul class="list-none p-0 mt-0 mb-3 flex flex-col gap-3">
+          <ul class="mb-3 flex flex-col gap-3">
             {
               venues.map((ort) => (
-                <li class="flex flex-col text-[0.92rem] leading-[1.35]">
+                <li class="flex flex-col text-sm leading-snug">
                   <strong class="text-primary">{ort.name}</strong>
                   {ort.street && (
-                    <span class="text-[0.84rem] text-muted">
+                    <span class="text-base-content/70">
                       {ort.street}, {ort.postalCode} {ort.city}
                     </span>
                   )}
@@ -153,22 +148,22 @@ const infoText = 'm-0 text-muted';
               ))
             }
           </ul>
-          <p class={`${infoText} text-[0.85rem]`}>
-            <a href="#sportstaetten">Alle Sportstätten mit Fotos ansehen</a>
+          <p class={`${infoText} text-sm`}>
+            <a class="link" href="#sportstaetten">Alle Sportstätten mit Fotos ansehen</a>
           </p>
         </div>
 
         <div class={infoKarte}>
           <Icon name="instagram" size={20} class="text-primary mb-2" />
           <h3 class={infoTitel}>Social Media</h3>
-          <p class={`${infoText} text-[0.94rem]`}>
-            <a href={site.social.instagram.url} rel="noopener">
+          <p class={infoText}>
+            <a class="link" href={site.social.instagram.url} rel="noopener">
               {site.social.instagram.handle} auf Instagram
             </a>
           </p>
         </div>
       </aside>
-    </div>
+    </Container>
   </section>
 
   <VenueGallery />

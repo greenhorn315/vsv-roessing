@@ -9,6 +9,8 @@ import { getSportCountWordCapitalized, getSportNames } from '../lib/sportarten';
 import TrainingList from '../components/TrainingList.astro';
 import { trainingsStand } from '../lib/trainings';
 import CallToAction from '../components/CallToAction.astro';
+import Container from '../components/Container.astro';
+import SectionHead from '../components/SectionHead.astro';
 
 const SportCountWord = await getSportCountWordCapitalized();
 const sportNames = await getSportNames();
@@ -24,61 +26,52 @@ const sportNames = await getSportNames();
     lead="Filtere nach Altersgruppe und finde in wenigen Sekunden das passende Angebot. Bei jeder Sportart gilt: Das erste Training ist kostenlos und unverbindlich."
   />
 
-  <section class="section">
-    <div class="container">
+  <section class="py-16 md:py-20">
+    <Container>
       <ClubNumbers />
-    </div>
+    </Container>
   </section>
 
-  <section class="section--tight">
-    <div class="container">
-      <div class="section-head">
-        <p class="eyebrow">Für wen ist was?</p>
-        <h2>Finde das Angebot, das zu dir passt</h2>
+  <section class="pb-16 md:pb-20">
+    <Container>
+      <SectionHead eyebrow="Für wen ist was?" title="Finde das Angebot, das zu dir passt">
         <p>
           Dieselben Gruppen, nur andersherum sortiert: nicht nach Sportart,
           sondern nach der Person, die sucht.
         </p>
-      </div>
+      </SectionHead>
       <AudienceGuide />
-    </div>
+    </Container>
   </section>
 
-  <section class="section">
-    <div class="container">
-      <div class="section-head">
-        <p class="eyebrow">Nach Sportart</p>
-        <h2>Alle Sportarten im Überblick</h2>
-      </div>
+  <section class="py-16 md:py-20">
+    <Container>
+      <SectionHead eyebrow="Nach Sportart" title="Alle Sportarten im Überblick" />
       <SportGrid withFilter detailed />
-    </div>
+    </Container>
   </section>
 
-  <section class="section--tight">
-    <div class="container">
-      <div class="section-head">
-        <p class="eyebrow">Aufbau</p>
-        <h2>Verein, Sportarten, Gruppen</h2>
+  <section class="pb-16 md:pb-20">
+    <Container>
+      <SectionHead eyebrow="Aufbau" title="Verein, Sportarten, Gruppen">
         <p>
           Vom Verein über die neun Sportarten bis zu den einzelnen
           Trainingsgruppen.
         </p>
-      </div>
+      </SectionHead>
       <Organigramm />
-    </div>
+    </Container>
   </section>
 
-  <section class="section--tight">
-    <div class="container max-w-[720px]">
-      <div class="section-head">
-        <h2>Trainingszeiten im Überblick</h2>
+  <section class="pb-16 md:pb-20">
+    <Container narrow>
+      <SectionHead title="Trainingszeiten im Überblick">
         <p>Änderungen in den Ferien geben wir über Instagram und die Gruppen bekannt.</p>
         <p>{trainingsStand}</p>
-      </div>
+      </SectionHead>
       <TrainingList grouped />
-    </div>
+    </Container>
   </section>
 
   <CallToAction />
 </BaseLayout>
-

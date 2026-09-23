@@ -1,39 +1,28 @@
 ---
 import Icon from './Icon.astro';
+import Container from './Container.astro';
 import { originalSiteUrl } from '../lib/site';
 ---
 
-{/* daisyUI-alert als Band über die ganze Breite: Warnfarbe des
-   Design-Systems, dunkler Text (#3F2E00): 9,2:1 Kontrast. Der Inhalt steht
-   im .container; ab 780px abwärts rutscht der Link in eine eigene Zeile. */}
-<aside
-  class="alert alert-warning block rounded-none border-0 border-b-3 border-b-[#E0A800] p-0 text-step-0 leading-[1.6] text-[#3F2E00]"
-  aria-labelledby="prototype-title"
->
-  <div class="container flex items-center gap-4 py-4 max-[780px]:flex-wrap max-[780px]:gap-3">
+<aside class="alert alert-warning block rounded-none border-0 p-0 text-base" aria-labelledby="prototype-title">
+  <Container class="flex items-center gap-4 py-4 max-[780px]:flex-wrap max-[780px]:gap-3">
     <span
-      class="grid size-11 shrink-0 place-items-center rounded-full bg-white/55 max-[780px]:size-9"
+      class="grid size-11 shrink-0 place-items-center rounded-full bg-base-100/60 max-[780px]:size-9"
       aria-hidden="true"
     >
       <Icon name="info" size={24} />
     </span>
     <div class="flex-auto max-[780px]:basis-60">
-      <p class="m-0 mb-[0.15rem] text-[1.02rem] font-bold text-[#3F2E00]" id="prototype-title">
-        Entwurf – nicht die offizielle Vereinsseite
-      </p>
-      <p class="m-0 max-w-[70ch] text-[0.92rem] text-[#4A3800]">
+      <p class="font-bold" id="prototype-title">Entwurf – nicht die offizielle Vereinsseite</p>
+      <p class="max-w-[70ch] text-sm">
         Diese Seite ist ein Prototyp und ein möglicher Nachfolger der
         bestehenden Website. Inhalte, Zahlen und Termine sind teilweise
         Platzhalter und noch nicht vom Verein freigegeben.
       </p>
     </div>
-    <a
-      class="btn min-h-11 shrink-0 gap-[0.4rem] border-0 px-[1.1rem] py-2 text-[0.92rem] [--btn-color:#3F2E00] [--btn-fg:#fff] hover:[--btn-bg:#241A00] max-[780px]:w-full"
-      href={originalSiteUrl}
-      rel="noopener"
-    >
+    <a class="btn shrink-0 btn-primary max-[780px]:w-full" href={originalSiteUrl} rel="noopener">
       Zur offiziellen Seite
       <Icon name="arrowRight" size={16} />
     </a>
-  </div>
+  </Container>
 </aside>

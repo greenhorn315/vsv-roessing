@@ -1,4 +1,6 @@
 ---
+import Container from './Container.astro';
+import SectionHead from './SectionHead.astro';
 import { spielDatum, type Spiel } from '../lib/spielplan';
 
 interface Props {
@@ -14,25 +16,23 @@ const { heading, spiele, caption, withTeam = false } = Astro.props;
 
 // daisyUI-table mit den bisherigen Abständen, Linien in der Rahmenfarbe.
 // Die Linie unter der letzten Zeile lässt daisyUI selbst weg.
-const kopf =
-  'px-[0.9rem] py-[0.7rem] border-border text-[0.78rem] font-bold uppercase tracking-[0.04em] whitespace-normal';
-const zelle = 'px-[0.9rem] py-[0.65rem] border-border align-top';
+const kopf = 'text-xs font-bold tracking-wide uppercase whitespace-normal';
+const zelle = 'align-top';
 ---
 
 {
   spiele.length > 0 && (
-    <section class="section--tight">
-      <div class="container">
-        <div class="section-head">
-          <h2>{heading}</h2>
+    <section class="pb-16 md:pb-20">
+      <Container>
+        <SectionHead title={heading}>
           <p><slot /></p>
-        </div>
+        </SectionHead>
 
         {/* Auf schmalen Bildschirmen scrollt die Tabelle waagerecht. */}
-        <div class="overflow-x-auto border border-border rounded-sm bg-base-100">
-          <table class="table border-collapse rounded-none min-w-[34rem] text-[0.92rem]">
+        <div class="overflow-x-auto rounded-box border border-base-300 bg-base-100">
+          <table class="table min-w-[34rem]">
             <caption class="sr-only">{caption}</caption>
-            <thead class="text-muted">
+            <thead>
               <tr>
                 <th scope="col" class={kopf}>Datum</th>
                 <th scope="col" class={kopf}>Zeit</th>
@@ -49,18 +49,10 @@ const zelle = 'px-[0.9rem] py-[0.65rem] border-border align-top';
                   {withTeam && <td class={zelle}>{spiel.team}</td>}
                   <td class={zelle}>
                     {spiel.opponent}
-                    {spiel.note && <span class="ml-[0.4rem] text-[0.82rem] text-muted">{spiel.note}</span>}
+                    {spiel.note && <span class="ml-1.5 text-xs text-base-content/70">{spiel.note}</span>}
                   </td>
                   <td class={zelle}>
-                    {/* Heim: dunkles Braun auf Gelb, 8,4:1 Kontrast. */}
-                    <span
-                      class:list={[
-                        'badge h-auto rounded-full align-baseline whitespace-nowrap px-[0.55rem] py-[0.15rem] text-[0.78rem] font-bold leading-[inherit]',
-                        spiel.home
-                          ? 'badge-warning border-transparent text-[#4a3600]'
-                          : 'bg-transparent border-border text-muted',
-                      ]}
-                    >
+                    <span class:list={['badge badge-sm font-bold whitespace-nowrap', spiel.home ? 'badge-warning' : 'badge-ghost']}>
                       {spiel.home ? 'Heim' : 'Auswärts'}
                     </span>
                   </td>
@@ -69,7 +61,7 @@ const zelle = 'px-[0.9rem] py-[0.65rem] border-border align-top';
             </tbody>
           </table>
         </div>
-      </div>
+      </Container>
     </section>
   )
 }

@@ -15,16 +15,16 @@ const { items } = Astro.props;
    lange Titel auf dem Handy lesbar bleiben. daisyUI setzt einen eigenen
    Fokusrahmen; unser 3px-Korall-Rahmen wird ausdrücklich gesetzt. */}
 <nav
-  class="breadcrumbs overflow-visible pt-6 pb-0 text-[0.86rem] [&>ol]:flex-wrap [&>ol]:whitespace-normal"
+  class="breadcrumbs overflow-visible pt-6 pb-0 text-sm [&>ol]:flex-wrap [&>ol]:whitespace-normal"
   aria-label="Sie sind hier"
 >
-  <ol class="m-0 list-none">
+  <ol>
     {
       items.map((item) =>
         item.href ? (
           <li>
             <a
-              class="text-muted no-underline hover:text-primary hover:underline focus-visible:outline-3 focus-visible:outline-solid focus-visible:outline-accent focus-visible:outline-offset-3"
+              class="text-base-content/70 hover:text-primary"
               href={item.href}
             >
               {item.label}
@@ -32,7 +32,7 @@ const { items } = Astro.props;
           </li>
         ) : (
           <li>
-            <span class="cursor-default font-semibold text-primary hover:no-underline" aria-current="page">
+            <span class="font-semibold text-primary" aria-current="page">
               {item.label}
             </span>
           </li>

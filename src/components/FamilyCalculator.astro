@@ -12,18 +12,16 @@ const calculator = await getCalculator();
 
 // Gemeinsame Klassen beider Regler. Schieberegler: daisyUI-range in Korall,
 // etwas schlanker als daisyUIs Vorgabe, die leere Spur in Rahmenfarbe.
-const label =
-  'block font-semibold text-[0.86rem] tracking-[0.03em] uppercase text-muted mb-2 [&>span]:text-primary';
-const regler =
-  'range range-accent w-full my-1.5 [--range-thumb-size:1.25rem] [--range-bg:var(--color-border)] focus-visible:outline-[3px] focus-visible:outline-offset-[3px]';
+const label = 'mb-2 block text-sm font-semibold tracking-wide uppercase text-base-content/70';
+const regler = 'range range-accent range-sm my-1.5 w-full';
 // Skala unter dem Regler: Chrome zeigt die Datalist-Beschriftungen an,
 // sobald sie nicht mehr display: none ist.
-const skala = 'flex justify-between px-2 text-[0.75rem] text-muted [writing-mode:horizontal-tb]';
+const skala = 'flex justify-between px-2 text-xs text-base-content/70 [writing-mode:horizontal-tb]';
 ---
 
-<div class="card bg-base-200 border border-border rounded-lg p-[clamp(1.5rem,3vw,2rem)]" id="familienrechner">
-  <h3 class="text-step-1 mb-1">Familienrechner</h3>
-  <p class="text-[0.94rem] text-muted mb-6">
+<div class="card rounded-3xl border border-base-300 bg-base-200 p-6 text-base md:p-8" id="familienrechner">
+  <h3 class="mb-1 text-xl">Familienrechner</h3>
+  <p class="mb-6 text-base-content/70">
     Wer aus eurem Haushalt soll Mitglied werden?
   </p>
 
@@ -35,7 +33,7 @@ const skala = 'flex justify-between px-2 text-[0.75rem] text-muted [writing-mode
     data-familie={calculator.familie}
   >
     <div>
-      <label class={label} for="erwachsene">Erwachsene: <span data-wert="erwachsene">2</span></label>
+      <label class={label} for="erwachsene">Erwachsene: <span class="text-primary" data-wert="erwachsene">2</span></label>
       <input type="range" id="erwachsene" name="erwachsene" min="0" max="4" value="2" step="1" list="ticksErwachsene" class={regler} />
       {/* Eigene Skala je Regler – eine gemeinsame erschiene nur einmal. */}
       <datalist id="ticksErwachsene" class={skala}>
@@ -47,7 +45,7 @@ const skala = 'flex justify-between px-2 text-[0.75rem] text-muted [writing-mode
       </datalist>
     </div>
     <div>
-      <label class={label} for="kinder">Kinder und Jugendliche: <span data-wert="kinder">2</span></label>
+      <label class={label} for="kinder">Kinder und Jugendliche: <span class="text-primary" data-wert="kinder">2</span></label>
       <input type="range" id="kinder" name="kinder" min="0" max="4" value="2" step="1" list="ticksKinder" class={regler} />
       <datalist id="ticksKinder" class={skala}>
         <option value="0" label="0"></option>
@@ -60,12 +58,12 @@ const skala = 'flex justify-between px-2 text-[0.75rem] text-muted [writing-mode
   </div>
 
   <!-- aria-live: Screenreader bekommen das neue Ergebnis mit. -->
-  <output class="card block p-4 bg-primary text-primary-content rounded-box" aria-live="polite">
-    <strong class="block font-display text-step-2 leading-[1.1]" data-ergebnis>15,00 € / Monat</strong>
-    <span class="text-[0.86rem] text-white/82" data-hinweis>Familienbeitrag statt 23,00 € einzeln gerechnet</span>
+  <output class="card block rounded-box bg-primary p-4 text-primary-content" aria-live="polite">
+    <strong class="block font-display text-2xl leading-tight" data-ergebnis>15,00 € / Monat</strong>
+    <span class="text-sm text-primary-content/80" data-hinweis>Familienbeitrag statt 23,00 € einzeln gerechnet</span>
   </output>
 
-  <p class="mt-4 mb-0 text-[0.8rem] text-muted">
+  <p class="mt-4 text-xs text-base-content/70">
     Abgebucht wird einmal im Jahr, jeweils am 1. Juni. Verbindlich sind die
     Sätze im Aufnahmeantrag.
   </p>

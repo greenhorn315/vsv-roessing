@@ -15,23 +15,19 @@ const { withFilter = false, detailed = false } = Astro.props;
 const groups = AGE_GROUPS;
 const sports = await getSports();
 
-const chip = [
-  'btn min-h-10 py-[0.4rem] px-4 border border-border-strong bg-base-100 text-base-content',
-  'text-[0.9rem] font-semibold hover:transform-none hover:border-primary',
-  'aria-pressed:bg-primary aria-pressed:border-primary aria-pressed:text-white',
-];
+const chip = 'btn btn-sm btn-outline btn-primary aria-pressed:bg-primary aria-pressed:text-primary-content';
 ---
 
 {
   withFilter && (
     <div class="flex items-center flex-wrap gap-3 mb-6" data-sport-filter>
-      <span class="font-semibold text-muted text-[0.9rem]" id="filterLabel">
+      <span class="text-sm font-semibold text-base-content/70" id="filterLabel">
         Passend für
       </span>
       {/* Umschalter als daisyUI-btn in Chip-Form: niedriger als die großen
           Buttons, ohne Anheben beim Hovern; der gedrückte ist grün. */}
-      <div class="flex flex-wrap gap-[0.4rem]" role="group" aria-labelledby="filterLabel">
-        <button type="button" class:list={['chip is-active', chip]} data-filter="alle" aria-pressed="true">
+      <div class="flex flex-wrap gap-1.5" role="group" aria-labelledby="filterLabel">
+        <button type="button" class:list={['chip', chip]} data-filter="alle" aria-pressed="true">
           Alle
         </button>
         {groups.map((group) => (
@@ -40,14 +36,14 @@ const chip = [
           </button>
         ))}
       </div>
-      <p class="basis-full m-0 text-[0.86rem] text-muted" role="status" data-filter-status />
+      <p class="basis-full text-sm text-base-content/70" role="status" data-filter-status />
     </div>
   )
 }
 
 {/* Feste Dreierreihen: bei neun Sportarten ergibt das ein 3x3-Raster. */}
 <ul
-  class="grid grid-cols-3 gap-4 list-none p-0 m-0 max-[900px]:grid-cols-2 max-[560px]:grid-cols-1"
+  class="grid grid-cols-3 gap-4 max-[900px]:grid-cols-2 max-[560px]:grid-cols-1"
   data-sport-list
 >
   {
@@ -55,27 +51,25 @@ const chip = [
       <li data-age-groups={sport.data.ageGroups.join(' ')}>
         <a
           class:list={[
-            'group card h-full bg-base-100 text-base-content no-underline gap-2 py-6 px-4',
-            'border border-border border-l-[5px] border-l-(color:--sport-color)',
-            'transition-[translate,box-shadow,border-color] duration-[180ms] ease-[ease]',
-            'hover:-translate-y-1 hover:shadow-md hover:border-(color:--sport-color)',
-            'focus-visible:-translate-y-1 focus-visible:shadow-md focus-visible:border-(color:--sport-color)',
-            'focus-visible:outline-[3px] focus-visible:outline-solid focus-visible:outline-accent focus-visible:outline-offset-3',
+            'group card h-full gap-2 bg-base-100 px-4 py-6',
+            'border border-l-4 border-base-300 border-l-(--sport-color)',
+            'transition hover:-translate-y-1 hover:border-(--sport-color) hover:shadow-md',
+            'focus-visible:-translate-y-1 focus-visible:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent',
           ]}
           href={`/sportangebote/${sport.id}/`}
           style={`--sport-color:${sportColorVar(sport.data.color)}`}
         >
-          <Pictogram name={sport.data.pictogram} size={64} class="mb-[0.35rem]" />
-          <h3 class="card-title text-[1.1rem] m-0">{sport.data.name}</h3>
-          <p class="text-[0.92rem] text-muted m-0 grow">
+          <Pictogram name={sport.data.pictogram} size={64} class="mb-1.5" />
+          <h3 class="card-title text-lg">{sport.data.name}</h3>
+          <p class="grow text-sm text-base-content/70">
             {detailed ? sport.data.description : sport.data.teaser}
           </p>
-          <span class="inline-flex items-center gap-[0.35rem] mt-2 text-[0.86rem] font-semibold text-accent">
+          <span class="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-accent">
             Mehr erfahren
             <Icon
               name="arrowRight"
               size={16}
-              class="transition-[translate] duration-[180ms] ease-[ease] group-hover:translate-x-[3px]"
+              class="transition group-hover:translate-x-1"
             />
           </span>
         </a>
@@ -100,7 +94,6 @@ const chip = [
       const value = chip.dataset.filter ?? 'alle';
       chips.forEach((c) => {
         const active = c === chip;
-        c.classList.toggle('is-active', active);
         c.setAttribute('aria-pressed', String(active));
       });
 

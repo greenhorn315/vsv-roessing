@@ -1,6 +1,7 @@
 ---
 import Icon from './Icon.astro';
 import FamilyCalculator from './FamilyCalculator.astro';
+import SectionHead from './SectionHead.astro';
 import { getBeitragsregeln, getFees, getJoinSteps } from '../lib/mitgliedschaft';
 
 interface Props {
@@ -20,39 +21,38 @@ const euro = new Intl.NumberFormat('de-DE', {
 });
 
 // Preise in der Tabelle: Monat und Jahr gleich gewichtet.
-const preis = 'font-display font-semibold text-primary text-step-1 whitespace-nowrap';
+const preis = 'font-display text-lg font-semibold whitespace-nowrap text-primary md:text-xl';
 ---
 
-<div class="card reveal bg-base-100 rounded-lg p-[clamp(1.5rem,4vw,3rem)] shadow-sm">
-  <div class="section-head">
-    <h2>Mitmachen war noch nie so einfach</h2>
+<div class="card rounded-3xl bg-base-100 p-6 text-base shadow-sm md:p-12">
+  <SectionHead title="Mitmachen war noch nie so einfach">
     <p>
       Formular ausfüllen, unterschreiben, ab geht's aufs Feld – für kleines
       Geld und mit großem Spaß.
     </p>
-  </div>
+  </SectionHead>
 
-  <div class="grid grid-cols-[1.15fr_0.85fr] gap-[clamp(2rem,4vw,3rem)] items-start max-[900px]:grid-cols-1">
+  <div class="grid grid-cols-[1.15fr_0.85fr] items-start gap-8 md:gap-12 max-[900px]:grid-cols-1">
     <div>
       {/* Beitragstabelle: daisyUI-table mit Linien in Rahmenfarbe; die letzte
           Zeile (Familienbeitrag) grün hinterlegt mit runden Enden. */}
-      <table class="table text-step-0 [&_:is(th,td)]:px-2 [&_:is(th,td)]:py-3 [&_:is(th,td)]:border-border">
+      <table class="table text-base">
         <caption class="sr-only">Mitgliedsbeiträge pro Monat und pro Jahr</caption>
-        <thead class="text-muted font-semibold text-[0.78rem] uppercase tracking-[0.05em]">
+        <thead class="text-xs tracking-wider uppercase">
           <tr>
             <th scope="col">Beitrag</th>
             <th scope="col">Pro Monat</th>
             <th scope="col">Pro Jahr</th>
           </tr>
         </thead>
-        <tbody class="[&>tr:last-child>*]:bg-tint-green [&>tr:last-child>:first-child]:rounded-l-sm [&>tr:last-child>:last-child]:rounded-r-sm">
+        <tbody>
           {
             fees.map((fee) => (
-              <tr>
-                <th scope="row" class="font-medium text-base-content text-[0.98rem]">
+              <tr class="last:bg-base-300">
+                <th scope="row" class="font-medium">
                   {fee.label}
                   {fee.note && (
-                    <span class="block text-[0.8rem] font-normal text-muted">{fee.note}</span>
+                    <span class="block text-xs font-normal text-base-content/70">{fee.note}</span>
                   )}
                 </th>
                 <td class={preis}>{euro.format(fee.monthly)}</td>
@@ -63,38 +63,38 @@ const preis = 'font-display font-semibold text-primary text-step-1 whitespace-no
         </tbody>
       </table>
 
-      <ul class="list-none p-0 mt-4 mb-8 flex flex-col gap-2 text-[0.9rem] leading-normal text-muted">
-        {beitragsregeln.map((regel) => <li class="pl-4 border-l-2 border-border">{regel}</li>)}
+      <ul class="mt-4 mb-8 flex flex-col gap-2 text-sm text-base-content/70">
+        {beitragsregeln.map((regel) => <li class="border-l-2 border-base-300 pl-4">{regel}</li>)}
       </ul>
 
       {/* So klappt der Beitritt. Bewusst kein daisyUI-steps: Das zentriert
           den Text und zieht eine Verbindungslinie – hier stehen die Schritte
           linksbündig nebeneinander, auf schmalen Bildschirmen untereinander. */}
-      <ol class="list-none p-0 mt-11 mb-0 grid grid-cols-[repeat(auto-fit,minmax(170px,1fr))] gap-6">
+      <ol class="mt-10 grid grid-cols-[repeat(auto-fit,minmax(170px,1fr))] gap-6">
         {
           joinSteps.map((step, index) => (
             <li>
               <span
-                class="grid place-items-center size-[34px] rounded-full bg-accent text-accent-content font-display font-bold mb-3"
+                class="mb-3 grid size-9 place-items-center rounded-full bg-accent font-display font-bold text-accent-content"
                 aria-hidden="true"
               >
                 {index + 1}
               </span>
-              <h3 class="text-[1rem] mt-0 mb-1">{step.title}</h3>
-              <p class="text-[0.9rem] text-muted m-0">{step.text}</p>
+              <h3 class="mb-1 text-base">{step.title}</h3>
+              <p class="text-sm text-base-content/70">{step.text}</p>
             </li>
           ))
         }
       </ol>
 
-      <div class="flex items-center flex-wrap gap-4 mt-11">
+      <div class="mt-10 flex flex-wrap items-center gap-4">
         <a class="btn btn-accent" href="/mitglied-werden/#formulare">
           <Icon name="download" />
           Mitgliedsantrag herunterladen
         </a>
         {
           compact && (
-            <a class="btn btn-link" href="/mitglied-werden/">
+            <a class="link inline-flex items-center gap-1.5 font-semibold link-accent" href="/mitglied-werden/">
               Alle Infos zur Mitgliedschaft
               <Icon name="arrowRight" size={16} />
             </a>

@@ -3,6 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Membership from '../components/Membership.astro';
 import Icon from '../components/Icon.astro';
+import Container from '../components/Container.astro';
+import SectionHead from '../components/SectionHead.astro';
 import { site } from '../lib/site';
 import { getDownloads } from '../lib/mitgliedschaft';
 
@@ -22,36 +24,34 @@ const groesse = (bytes: number) => `${Math.round(bytes / 1024)} KB`;
     lead="Kinder und Jugendliche 4 € im Monat, Familien 15 € – egal wie viele Kinder. Und vorher könnt ihr jede Sportart kostenlos ausprobieren."
   />
 
-  <section class="section">
-    <div class="container">
+  <section class="py-16 md:py-20">
+    <Container>
       <Membership />
-    </div>
+    </Container>
   </section>
 
-  <section class="section--tight" id="formulare">
-    <div class="container">
-      <div class="section-head">
-        <p class="eyebrow">Formulare &amp; Downloads</p>
-        <h2>Alle Unterlagen an einem Ort</h2>
+  <section class="pb-16 md:pb-20" id="formulare">
+    <Container>
+      <SectionHead eyebrow="Formulare & Downloads" title="Alle Unterlagen an einem Ort">
         <p>
           Alle Formulare als PDF zum Ausdrucken. Für den Eintritt genügt der
           Aufnahmeantrag – das SEPA-Mandat ist darin schon enthalten.
         </p>
-      </div>
+      </SectionHead>
 
-      <ul class="list-none p-0 m-0 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4">
+      <ul class="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4">
         {
           downloads.map((form) => (
-            <li class="card flex-row items-start gap-4 bg-base-100 border border-border rounded-box p-6">
-              <Icon name="download" size={22} class="text-secondary mt-[0.15rem]" />
+            <li class="card flex-row items-start gap-4 border border-base-300 bg-base-100 p-6 text-base">
+              <Icon name="download" size={22} class="mt-0.5 text-secondary" />
               <div>
-                <h3 class="text-[1.02rem] mt-0 mb-[0.2rem] text-base-content">
-                  <a href={form.file} download>
+                <h3 class="mb-1 text-base text-base-content">
+                  <a class="link" href={form.file} download>
                     {form.title}
                   </a>
                 </h3>
-                <p class="m-0 text-[0.9rem] text-muted">{form.text}</p>
-                <p class="mt-[0.35rem] mb-0 text-[0.8rem] tracking-[0.02em] text-muted">
+                <p class="text-sm text-base-content/70">{form.text}</p>
+                <p class="mt-1.5 text-xs text-base-content/70">
                   PDF · {form.pages === 1 ? '1 Seite' : `${form.pages} Seiten`} ·{' '}
                   {groesse(form.bytes)}
                 </p>
@@ -61,11 +61,11 @@ const groesse = (bytes: number) => `${Math.round(bytes / 1024)} KB`;
         }
       </ul>
 
-      <p class="flex items-center gap-2 mt-6 text-muted">
+      <p class="mt-6 flex items-center gap-2 text-base-content/70">
         <Icon name="mail" size={17} />
-        Unterlagen anfordern: <a href={`mailto:${site.email}`}>{site.email}</a>
+        Unterlagen anfordern: <a class="link" href={`mailto:${site.email}`}>{site.email}</a>
       </p>
-    </div>
+    </Container>
   </section>
 </BaseLayout>
 

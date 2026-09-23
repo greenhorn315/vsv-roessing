@@ -37,14 +37,14 @@ const sizes = '(max-width: 940px) min(calc(100vw - 2rem), 520px), 560px';
 ---
 
 <div
-  class:list={['karussell relative overflow-hidden bg-tint-green isolate', className]}
+  class:list={['relative isolate overflow-hidden bg-base-300', className]}
   data-karussell
   data-dauer={dauer}
   role="group"
   aria-roledescription="Karussell"
   aria-label="Eindrücke aus dem Vereinsleben"
 >
-  <ul class="carousel absolute inset-0 m-0 p-0 list-none" data-karussell-bilder>
+  <ul class="carousel absolute inset-0" data-karussell-bilder>
     {
       bilder.map((bild, i) => (
         <li
@@ -67,10 +67,10 @@ const sizes = '(max-width: 940px) min(calc(100vw - 2rem), 520px), 560px';
           />
           {/* Verlauf statt Balken: Der Bildrand bleibt sichtbar. Unten Platz
               für die Punkte, damit lange Zeilen nicht darunter laufen. */}
-          <p class="absolute inset-x-0 bottom-0 m-0 pt-10 px-[1.1rem] pb-[2.1rem] text-[0.88rem] font-semibold text-white bg-linear-to-t/srgb from-[rgba(10,34,30,0.85)] to-[rgba(10,34,30,0)] [text-shadow:0_1px_2px_rgba(0,0,0,0.5)]">
+          <p class="absolute inset-x-0 bottom-0 bg-linear-to-t from-neutral/85 to-neutral/0 px-4 pt-10 pb-8 text-sm font-semibold text-neutral-content text-shadow-sm">
             {bild.caption}
             {bild.credit && (
-              <small class="block font-normal text-[0.74rem] opacity-80">{bild.credit}</small>
+              <small class="block text-xs font-normal opacity-80">{bild.credit}</small>
             )}
           </p>
         </li>
@@ -81,7 +81,7 @@ const sizes = '(max-width: 940px) min(calc(100vw - 2rem), 520px), 560px';
   <p class="sr-only" aria-live="polite" data-karussell-status></p>
 
   <div
-    class="absolute inset-x-0 bottom-[0.7rem] z-1 flex justify-center gap-[0.45rem]"
+    class="absolute inset-x-0 bottom-3 z-1 flex justify-center gap-2"
     hidden
     data-karussell-punkte
   >
@@ -90,13 +90,13 @@ const sizes = '(max-width: 940px) min(calc(100vw - 2rem), 520px), 560px';
         <button
           type="button"
           class:list={[
-            'relative size-[0.65rem] p-0 m-0 border-0 rounded-full cursor-pointer',
-            'bg-white/50 shadow-[0_0_0_1px_rgba(10,34,30,0.35)] hover:bg-white/80',
+            'relative size-2.5 cursor-pointer rounded-full',
+            'bg-white/50 ring-1 ring-neutral/35 hover:bg-white/80',
             'aria-[current=true]:bg-white aria-[current=true]:scale-130',
             'transition-[background-color,scale] duration-200 motion-reduce:transition-none',
             'focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-3',
             // Größere Trefferfläche für Finger, ohne den Punkt zu vergrößern.
-            'before:absolute before:-inset-x-[0.225rem] before:-inset-y-3',
+            'before:absolute before:-inset-x-1 before:-inset-y-3',
           ]}
           data-zu={i}
           aria-current={i === 0 ? 'true' : undefined}

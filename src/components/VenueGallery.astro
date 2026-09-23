@@ -1,6 +1,7 @@
 ---
 import Icon from './Icon.astro';
 import Photo from './Photo.astro';
+import Container from './Container.astro';
 import { getCollection } from 'astro:content';
 import { zahlwort } from '../lib/labels';
 import { nachOrder } from '../lib/reihenfolge';
@@ -42,17 +43,17 @@ const mapsUrl = (ort: (typeof venues)[number]) =>
   )}`;
 ---
 
-<section class="section" id={id}>
-  <div class="container">
-    <header class="max-w-[52ch] mb-8">
-      <h2>{title}</h2>
-      <p class="lead">{lead}</p>
+<section class="py-16 md:py-20" id={id}>
+  <Container>
+    <header class="mb-8 max-w-[52ch]">
+      <h2 class="text-3xl md:text-4xl">{title}</h2>
+      <p class="mt-3 text-lg text-base-content/70">{lead}</p>
     </header>
 
-    <ul class="list-none m-0 p-0 grid grid-cols-2 gap-[clamp(1.25rem,3vw,2rem)] items-start max-[700px]:grid-cols-1">
+    <ul class="grid grid-cols-2 items-start gap-5 md:gap-8 max-[700px]:grid-cols-1">
       {
         venues.map((ort) => (
-          <li class="card bg-base-100 rounded-lg overflow-hidden shadow-sm">
+          <li class="card overflow-hidden rounded-3xl bg-base-100 shadow-sm">
             {/* Photo rundet seine Ecken im eigenen (ungeschichteten) CSS ab –
                 deshalb die Radien hier mit ! (important): oben ohne Rundung,
                 weil die Karte schon abschneidet, die kleinen Ansichten mit 10px. */}
@@ -65,12 +66,12 @@ const mapsUrl = (ort: (typeof venues)[number]) =>
               sizes={kachelSizes}
               placeholderIcon="camera"
               placeholderText="Foto folgt"
-              class="rounded-none!"
+              class="rounded-none"
             />
             {ort.photos && ort.photos.length > 1 && (
-              <ul class="list-none m-0 pt-[0.6rem] px-[0.6rem] pb-0 grid grid-cols-[repeat(auto-fit,minmax(0,1fr))] gap-[0.6rem]">
+              <ul class="grid grid-cols-[repeat(auto-fit,minmax(0,1fr))] gap-2.5 px-2.5 pt-2.5">
                 {ort.photos.slice(1).map((bild) => (
-                  <li class="flex flex-col gap-[0.3rem]">
+                  <li class="flex flex-col gap-1">
                     <Photo
                       image={bild.src}
                       alt={bild.alt}
@@ -79,31 +80,31 @@ const mapsUrl = (ort: (typeof venues)[number]) =>
                       widths={kleinBreiten}
                       sizes={kleinSizes(ort.photos!.length - 1)}
                       placeholderIcon="camera"
-                      class="rounded-sm!"
+                      class="rounded-xl"
                     />
-                    {bild.caption && <span class="text-[0.78rem] text-muted text-center">{bild.caption}</span>}
+                    {bild.caption && <span class="text-center text-xs text-base-content/70">{bild.caption}</span>}
                   </li>
                 ))}
               </ul>
             )}
-            <div class="card-body gap-0 p-[clamp(1.1rem,2.5vw,1.6rem)] text-step-0">
-              <h3 class="m-0 text-[1.15rem]">{ort.name}</h3>
-              {ort.alias && <p class="mt-[0.15rem] mb-0 text-[0.85rem] text-muted">auch {ort.alias}</p>}
+            <div class="card-body gap-0 p-5 text-base md:p-6">
+              <h3 class="text-xl">{ort.name}</h3>
+              {ort.alias && <p class="mt-0.5 text-sm text-base-content/70">auch {ort.alias}</p>}
               {ort.street && (
-                <p class="flex items-center gap-[0.4rem] mt-[0.6rem] mb-0 text-[0.92rem]">
+                <p class="mt-2.5 flex items-center gap-1.5 text-sm">
                   <Icon name="pin" size={16} class="flex-none text-secondary" />
-                  <a href={mapsUrl(ort)} target="_blank" rel="noopener">
+                  <a class="link" href={mapsUrl(ort)} target="_blank" rel="noopener">
                     {ort.street}, {ort.postalCode} {ort.city}
                   </a>
                 </p>
               )}
-              <p class="mt-[0.6rem] mb-0 text-[0.92rem] text-muted">{ort.note}</p>
-              {ort.facilities && <p class="mt-[0.6rem] mb-0 text-[0.92rem] text-muted">{ort.facilities}</p>}
+              <p class="mt-2.5 text-sm text-base-content/70">{ort.note}</p>
+              {ort.facilities && <p class="mt-2.5 text-sm text-base-content/70">{ort.facilities}</p>}
             </div>
           </li>
         ))
       }
     </ul>
-  </div>
+  </Container>
 </section>
 
