@@ -18,8 +18,8 @@ src/
 ├── content/       Content Collections: vom Verein gepflegt, schemageprüft
 ├── content.config.ts   Schema je Collection
 ├── data/          Inhalte – hier wird gepflegt (Beiträge, Sportarten, News …)
-├── styles/        global.css: Design-Tokens, Reset, Buttons, Layout-Primitives
-├── components/    Wiederverwendbare Bausteine, CSS jeweils scoped im <style>
+├── styles/        global.css: Tailwind-Einstieg, daisyUI-Thema „vsv“, Basisstile
+├── components/    Wiederverwendbare Bausteine (Tailwind-Klassen, teils noch scoped <style>)
 ├── layouts/       BaseLayout: <head>, SEO, Schema.org, Header/Footer
 └── pages/         Eine Datei = eine URL
     └── sportangebote/[slug].astro  erzeugt je Sportart eine Detailseite
@@ -76,13 +76,38 @@ Die generierten Typen liegen unter `.astro/` und gehören nicht ins Repository;
 
 ## Design-System
 
-Alle Farben, Schriftgrößen und Abstände sind Tokens in `src/styles/global.css`.
+Gestaltet wird mit **Tailwind CSS 4** und **daisyUI 5**. Alles, was das
+Aussehen bestimmt, steht an einer Stelle: `src/styles/global.css`.
 
-* **Primär** Tannengrün `#14453D` · **Akzent** Korall `#FF6B4A` (dekorativ)
-  · **Akzent für Text/Buttons** `#C9401F` · **Sonne** `#FFC857`
-* **Schriften** Fraunces (Headlines) + Source Sans 3 (Fließtext), fluid skaliert
-* Schriften werden **lokal** ausgeliefert (`@fontsource-variable`) – keine
-  Verbindung zu Google Fonts, damit DSGVO-konform.
+* **Thema** `vsv` (daisyUI, nur hell): **Primär** Tannengrün `#14453D`
+  (`primary`) · **Sekundär** helleres Grün `#2F7A64` (`secondary`) ·
+  **Akzent** Korall für Text und Buttons `#C9401F` (`accent`) · **Sonne**
+  `#FFC857` (`warning`) · Seitenhintergrund `#F5F8F6` (`base-200`), Flächen
+  weiß (`base-100`), Text `#1C2A24` (`base-content`).
+* **Zusatzfarben** im `@theme`-Block, z. B. `coral` (das helle Korall
+  `#FF6B4A`, nur dekorativ – mit weißer Schrift zu kontrastarm), `muted`
+  für gedämpften Text, `tint-green`, `sun-soft`, `border`, `border-strong`.
+* **Schriften** Fraunces für Überschriften (`font-display`) und Source Sans 3
+  für Fließtext (`font-sans`, Standard). Sie werden **lokal** ausgeliefert
+  (`@fontsource-variable`) – keine Verbindung zu Google Fonts, damit
+  DSGVO-konform.
+* **Schriftgrößen** fluid von `text-step--1` bis `text-step-4`; Überschriften
+  h1–h4 bekommen sie automatisch.
+* **Abstände** nach Tailwinds 4px-Raster (`p-4` = 1rem), dazu `py-section`
+  für den Abstand zwischen Abschnitten und `max-w-site` (1180px) für die
+  Inhaltsbreite.
+* **Bausteine** kommen aus daisyUI statt aus eigenem CSS: `btn` (Varianten
+  `btn-accent`, `btn-outline`, `btn-on-dark`, `btn-link`), außerdem `card`,
+  `badge`, `alert`, `table`, `breadcrumbs`, `steps`, `stats`, Formularfelder
+  (`input`, `select`, `textarea`, `fieldset`) und `menu`/`navbar`.
+* **Neue Gestaltung** möglichst mit vorhandenen Utilities und
+  daisyUI-Klassen direkt im Markup. Fehlt ein Wert, gehört er als Variable
+  in den `@theme`-Block (Farbe `--color-…`, Abstand `--spacing-…`, Radius
+  `--radius-…`) – dann gibt es die passende Klasse automatisch. Eigene
+  Klassen nur über `@utility` in `global.css`.
+* Die alten Variablen (`--c-*`, `--sp-*`, `--step-*` …) und Hilfsklassen
+  (`.container`, `.section`, `.eyebrow` …) gibt es noch, bis alle Komponenten
+  umgestellt sind; siehe `docs/tailwind-migration.md`.
 * Zielniveau Barrierefreiheit: WCAG 2.1 AA (Kontraste, Tastaturbedienung,
   sichtbarer Fokus, `prefers-reduced-motion`).
 * Das Vorschaubild `public/og-default.png` (1200 × 630) wird beim Teilen in
