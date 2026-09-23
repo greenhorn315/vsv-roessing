@@ -1,7 +1,8 @@
 # Fotos der Sportstätten
 
-Diese Dateien zeigt die Kontaktseite im Abschnitt „Unsere Sportstätten“
-(`/kontakt#sportstaetten`). Solange eine Datei fehlt, erscheint automatisch ein
+Diese Dateien zeigt die Vereinsseite im Abschnitt „Unsere Sportstätten“
+(`/verein#sportstaetten`). Die Kontaktseite führt die Anschriften kurz in der
+Seitenleiste auf und verweist dorthin. Solange eine Datei fehlt, erscheint ein
 gestalteter Platzhalter mit dem Hinweis „Foto folgt“ – kein kaputtes Bild.
 
 | Datei | Ort | Aufnahme |

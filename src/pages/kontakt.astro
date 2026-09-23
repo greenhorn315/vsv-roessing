@@ -2,8 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Icon from '../components/Icon.astro';
-import VenueGallery from '../components/VenueGallery.astro';
-import { site, venues } from '../data/site';
+import { site, venues, mapsUrl } from '../data/site';
 import { sports } from '../data/sports';
 ---
 
@@ -110,7 +109,9 @@ import { sports } from '../data/sports';
                   <strong>{ort.name}</strong>
                   {ort.street && (
                     <span>
-                      {ort.street}, {ort.postalCode} {ort.city}
+                      <a href={mapsUrl(ort)} target="_blank" rel="noopener">
+                        {ort.street}, {ort.postalCode} {ort.city}
+                      </a>
                     </span>
                   )}
                 </li>
@@ -118,7 +119,7 @@ import { sports } from '../data/sports';
             }
           </ul>
           <p class="info-card__hint">
-            <a href="#sportstaetten">Alle Sportstätten mit Fotos ansehen</a>
+            <a href="/verein#sportstaetten">Alle Sportstätten mit Fotos ansehen</a>
           </p>
         </div>
 
@@ -134,8 +135,6 @@ import { sports } from '../data/sports';
       </aside>
     </div>
   </section>
-
-  <VenueGallery />
 </BaseLayout>
 
 <style>

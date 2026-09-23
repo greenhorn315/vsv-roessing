@@ -275,7 +275,7 @@ export const sports: Sport[] = [
       'Freizeitrunde und Ligabetrieb',
       'Leihpfeile für den ersten Abend vorhanden',
     ],
-    venue: 'Der Dorfbrunnen, Loderwinkel 2A',
+    venue: 'Zum Dorfbrunnen, Loderwinkel 2A',
     bring: 'Nichts – Pfeile können für den Anfang geliehen werden.',
     pictogram: 'darts',
     color: 'var(--c-sun-dark)',
