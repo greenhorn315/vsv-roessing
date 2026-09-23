@@ -2,8 +2,15 @@
 import Icon from './Icon.astro';
 import { navigation, site } from '../lib/site';
 
-const path = Astro.url.pathname.replace(/\/$/, '') || '/';
-const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+// Pfade und Links enden auf „/“ (trailingSlash: 'always'). Beide Seiten
+// ohne Schrägstrich vergleichen, damit /sportangebote/dart/ den Punkt
+// „Sportangebote“ markiert, /sportangebote-xyz/ aber nicht.
+const stripSlash = (p: string) => p.replace(/\/+$/, '') || '/';
+const path = stripSlash(Astro.url.pathname);
+const isActive = (href: string) => {
+  const target = stripSlash(href);
+  return target === '/' ? path === '/' : path === target || path.startsWith(`${target}/`);
+};
 ---
 
 <header class="site-header">

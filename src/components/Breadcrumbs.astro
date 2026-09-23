@@ -1,11 +1,10 @@
 ---
-interface Crumb {
-  label: string;
-  href?: string;
-}
+import type { Brotkrume } from '../lib/seo';
 
+// Die Seite reicht dieselben Einträge als BreadcrumbList an BaseLayout
+// weiter (siehe brotkrumenKnoten in src/lib/seo.ts).
 interface Props {
-  items: Crumb[];
+  items: Brotkrume[];
 }
 
 const { items } = Astro.props;

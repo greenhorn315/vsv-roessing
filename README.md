@@ -38,7 +38,7 @@ Kommentar, welche Angaben sie erwartet und woher die Daten stammen.
 
 | Datei | Inhalt |
 |---|---|
-| `sportarten/<slug>.md` | Je Sportart eine Datei: Angaben oben, darunter der Text der Detailseite. Der Dateiname ist die Adresse (`/sportangebote/<slug>`) |
+| `sportarten/<slug>.md` | Je Sportart eine Datei: Angaben oben, darunter der Text der Detailseite. Der Dateiname ist die Adresse (`/sportangebote/<slug>/`) |
 | `trainings.yaml` | Trainingszeiten; `sport` verweist auf den Dateinamen der Sportart |
 | `sportstaetten.yaml` | Sportstätten mit Anschrift und Fotos |
 | `news/*.md` | Meldungen, je Datei eine; `order` bestimmt die Reihenfolge |
@@ -122,7 +122,16 @@ Aussehen bestimmt, steht an einer Stelle: `src/styles/global.css`.
 * Zielniveau Barrierefreiheit: WCAG 2.1 AA (Kontraste, Tastaturbedienung,
   sichtbarer Fokus, `prefers-reduced-motion`).
 * Das Vorschaubild `public/og-default.png` (1200 × 630) wird beim Teilen in
-  WhatsApp, Facebook & Co. angezeigt.
+  WhatsApp, Facebook & Co. angezeigt. Die Detailseiten der Sportarten
+  bekommen ein eigenes, beim Bauen erzeugtes Bild unter `/og/<slug>.png`:
+  Name, Kurzzeile und DOSB-Piktogramm auf Tannengrün (`src/lib/og.ts`,
+  Satori + sharp). Die Schriften dafür kommen als WOFF aus
+  `@fontsource/fraunces` und `@fontsource/source-sans-3`, weil Satori kein
+  WOFF2 liest.
+* Strukturierte Daten (schema.org) setzt `src/lib/seo.ts` zusammen: Verein
+  mit Sportstätten auf jeder Seite, dazu Brotkrumen und die kommenden
+  Spiele aus den Spielplänen auf den Seiten der Sportarten. Weitere Knoten
+  reicht eine Seite über `jsonLd` an `BaseLayout` weiter.
 
 ## Deployment (Cloudflare)
 
@@ -131,11 +140,20 @@ Statischer Build, kein Server nötig.
 * **Pages/Workers via Git:** Build-Befehl `npm run build`, Output-Verzeichnis `dist`.
 * **Manuell:** `npm run deploy` (nutzt `wrangler.jsonc`).
 
-Der Build nutzt `format: 'directory'` (`kontakt/index.html`). Das ist nötig,
-weil es sowohl die Übersicht `/sportangebote` als auch die Detailseiten
-`/sportangebote/<sportart>` gibt – als flache Dateien würden Datei und
-Verzeichnis kollidieren. Verzeichnis-Indizes liefern Cloudflare und die
-Synology Web Station gleichermaßen aus.
+Der Build nutzt `format: 'directory'` (`kontakt/index.html`). Verzeichnis-Indizes
+liefert jeder Webserver ohne Zusatzregeln aus, Cloudflare genauso wie die
+Synology Web Station. Mit dem `file`-Format (`kontakt.html`) müsste der Server
+`/kontakt` erst auf `kontakt.html` abbilden. Eine Kollision gäbe es dabei
+übrigens nicht: `sportangebote.html` und das Verzeichnis `sportangebote/`
+vertragen sich.
+
+Die kanonische Adresse jeder Seite endet damit auf einen Schrägstrich
+(`/kontakt/`), und so sind auch alle internen Links geschrieben
+(`trailingSlash: 'always'` in `astro.config.mjs`). Ein Link auf `/kontakt`
+würde von Cloudflare erst per Weiterleitung auf `/kontakt/` geschickt. Neue
+Links also immer mit `/` am Ende, auch vor einem Anker
+(`/kontakt/#probetraining`). Dateien wie `/downloads/….pdf` oder Bilder
+bleiben ohne.
 
 ## Offene Punkte vor dem Livegang
 
@@ -192,7 +210,7 @@ Fußbereich steht als `STAND` oben im Skript.
       Danach muss Abschnitt 8 der Datenschutzerklärung neu geschrieben werden,
       denn dann werden die Eingaben tatsächlich an einen Server übertragen.
 - [x] PDF-Formulare unter `public/downloads/` hinterlegt und auf
-      `/mitglied-werden#formulare` verlinkt
+      `/mitglied-werden/#formulare` verlinkt
 - [ ] Die Eintrittserklärung nennt nur sechs Sportarten zum Ankreuzen (Dart,
       Fußball, Leichtathletik, Turnen, Volleyball, Wandern). Auf der Website
       stehen neun; Basketball, Tanzen und Yoga fehlen im Formular, und

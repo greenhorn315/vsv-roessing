@@ -41,7 +41,7 @@ const sports = await getSports();
   {
     sports.map((sport) => (
       <li data-age-groups={sport.data.ageGroups.join(' ')}>
-        <a class="sport-card" href={`/sportangebote/${sport.id}`} style={`--sport-color:${sportColorVar(sport.data.color)}`}>
+        <a class="sport-card" href={`/sportangebote/${sport.id}/`} style={`--sport-color:${sportColorVar(sport.data.color)}`}>
           <Pictogram name={sport.data.pictogram} size={64} class="sport-card__icon" />
           <h3>{sport.data.name}</h3>
           <p>{detailed ? sport.data.description : sport.data.teaser}</p>

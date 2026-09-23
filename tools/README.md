@@ -54,3 +54,13 @@ Langfassung des Abschnitts „Offene Punkte vor dem Livegang" im README – beim
 Kapitelüberschriften bleiben mit ihrem ersten Punkt zusammen; darum kümmert
 sich `ohne_verwaiste_ueberschriften()` am fertigen Ablauf, nicht jede
 Aufrufstelle einzeln.
+
+## Linkprüfung
+
+**`links.mjs`** geht alle Seiten in `dist/` durch und prüft jeden internen
+Link: Ziel vorhanden, Seitenlinks mit `/` am Ende, Anker vorhanden auf der
+Zielseite. Bricht mit einer Liste ab, wenn etwas nicht stimmt.
+
+```
+npm run build && npm run links
+```

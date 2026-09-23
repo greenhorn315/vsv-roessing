@@ -11,6 +11,8 @@ import { getSports, type Sport } from '../../lib/sportarten';
 import { trainingsOfSport } from '../../lib/trainings';
 import { ageGroupLabels, sportColorVar } from '../../lib/labels';
 import { site } from '../../lib/site';
+import { brotkrumenKnoten, spielKnoten, type Brotkrume } from '../../lib/seo';
+import { OG_HEIGHT, OG_WIDTH } from '../../lib/og';
 
 export async function getStaticPaths() {
   return (await getSports()).map((eintrag) => ({
@@ -42,20 +44,38 @@ function telHref(nummer: string) {
 const index = sports.findIndex((s) => s.slug === sport.slug);
 const next = sports[(index + 1) % sports.length];
 const previous = sports[(index - 1 + sports.length) % sports.length];
+
+const brotkrumen: Brotkrume[] = [
+  { label: 'Start', href: '/' },
+  { label: 'Sportangebote', href: '/sportangebote/' },
+  { label: sport.name },
+];
+
+// Beschreibung für Suchmaschinen: mit Vereinsname, solange sie in die
+// üblichen rund 160 Zeichen passt, sonst nur der Text der Sportart.
+const mitVerein = `${sport.name} beim ${site.shortName}: ${sport.description}`;
+const description = mitVerein.length <= 160 ? mitVerein : sport.description;
+
+const seite = new URL(Astro.url.pathname, Astro.site);
+const jsonLd = [
+  brotkrumenKnoten(brotkrumen, seite),
+  ...(await spielKnoten(sport.slug, sport.name, seite.origin)),
+];
 ---
 
 <BaseLayout
   title={sport.name}
-  description={`${sport.name} beim ${site.shortName}: ${sport.description}`}
+  description={description}
+  ogImage={{
+    src: `/og/${sport.slug}.png`,
+    alt: `${sport.name} beim ${site.name} – mit dem DOSB-Piktogramm der Sportart`,
+    width: OG_WIDTH,
+    height: OG_HEIGHT,
+  }}
+  jsonLd={jsonLd}
 >
   <div class="container">
-    <Breadcrumbs
-      items={[
-        { label: 'Start', href: '/' },
-        { label: 'Sportangebote', href: '/sportangebote' },
-        { label: sport.name },
-      ]}
-    />
+    <Breadcrumbs items={brotkrumen} />
   </div>
 
   <section class="sport-hero" style={`--sport-color:${sportColorVar(sport.color)}`}>
@@ -143,7 +163,7 @@ const previous = sports[(index - 1 + sports.length) % sports.length];
         }
 
         <div class="cta-inline">
-          <a class="btn btn-accent" href="/kontakt#probetraining">
+          <a class="btn btn-accent" href="/kontakt/#probetraining">
             <Icon name="sport" />
             Probetraining bei {sport.name} anfragen
           </a>
@@ -246,15 +266,15 @@ const previous = sports[(index - 1 + sports.length) % sports.length];
 
   <nav class="sport-nav" aria-label="Weitere Sportarten">
     <div class="container sport-nav__inner">
-      <a href={`/sportangebote/${previous.slug}`} class="sport-nav__link">
+      <a href={`/sportangebote/${previous.slug}/`} class="sport-nav__link">
         <Icon name="arrowRight" size={16} class="sport-nav__back" />
         <span>
           <small>Vorherige Sportart</small>
           {previous.name}
         </span>
       </a>
-      <a href="/sportangebote" class="btn btn-link">Alle Sportarten</a>
-      <a href={`/sportangebote/${next.slug}`} class="sport-nav__link sport-nav__link--next">
+      <a href="/sportangebote/" class="btn btn-link">Alle Sportarten</a>
+      <a href={`/sportangebote/${next.slug}/`} class="sport-nav__link sport-nav__link--next">
         <span>
           <small>Nächste Sportart</small>
           {next.name}

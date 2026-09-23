@@ -3,7 +3,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
 ---
 
-<BaseLayout title="Seite nicht gefunden">
+<BaseLayout
+  title="Seite nicht gefunden"
+  description="Diese Seite gibt es beim VSV Rössing nicht (mehr). Weiter geht es über die Startseite, die Sportangebote oder den Kontakt."
+  noindex
+>
   <section class="section notfound">
     <div class="container">
       <p class="eyebrow">Fehler 404</p>
@@ -13,8 +17,8 @@ import Icon from '../components/Icon.astro';
       </p>
       <div class="notfound__ctas">
         <a class="btn btn-accent" href="/"><Icon name="home" />Zur Startseite</a>
-        <a class="btn btn-outline" href="/sportangebote">Sportangebote</a>
-        <a class="btn btn-outline" href="/kontakt">Kontakt</a>
+        <a class="btn btn-outline" href="/sportangebote/">Sportangebote</a>
+        <a class="btn btn-outline" href="/kontakt/">Kontakt</a>
       </div>
     </div>
   </section>

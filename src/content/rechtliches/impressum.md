@@ -40,7 +40,7 @@ intro: 'Verantwortlich für den Inhalt dieser Seite:'
 datenschutzHinweis:
   heading: Datenschutz
   linkLabel: Zur Datenschutzerklärung
-  href: /datenschutz
+  href: /datenschutz/
 ---
 
 ## Angaben gemäß § 5 DDG:

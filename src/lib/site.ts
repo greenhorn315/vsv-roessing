@@ -50,7 +50,7 @@ export const site = {
  * weil die Zahl der Sportarten aus der Collection kommt.
  */
 export async function getSiteDescription(): Promise<string> {
-  return `Volkssportvereinigung Rössing von 1897 e.V. – ${await getSportCountWord()} Sportarten für Kinder, Jugendliche, Familien und Erwachsene in jedem Alter. Schon ab 4 € im Monat dabei.`;
+  return `Volkssportvereinigung Rössing von 1897 e.V. – ${await getSportCountWord()} Sportarten für Kinder, Jugendliche, Familien und Erwachsene. Schon ab 4 € im Monat dabei.`;
 }
 
 export interface NavItem {
@@ -80,10 +80,10 @@ export const slogan = site.sloganTemplate.replace('{age}', String(clubAge));
 /** Hauptnavigation – bewusst auf fünf Punkte begrenzt. */
 export const navigation: NavItem[] = [
   { label: 'Start', href: '/', icon: 'home' },
-  { label: 'Sportangebote', href: '/sportangebote', icon: 'sport' },
-  { label: 'Mitglied werden', href: '/mitglied-werden', icon: 'join', cta: true },
-  { label: 'Verein', href: '/verein', icon: 'info' },
-  { label: 'Kontakt', href: '/kontakt', icon: 'mail' },
+  { label: 'Sportangebote', href: '/sportangebote/', icon: 'sport' },
+  { label: 'Mitglied werden', href: '/mitglied-werden/', icon: 'join', cta: true },
+  { label: 'Verein', href: '/verein/', icon: 'info' },
+  { label: 'Kontakt', href: '/kontakt/', icon: 'mail' },
 ];
 
 /** Kennzahlen für die Faktenleiste unter dem Hero. */
