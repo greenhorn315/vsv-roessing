@@ -97,14 +97,17 @@ const sportarten = defineCollection({
       /** Stichpunkte unter „Als Nächstes geplant“. */
       next: z.array(text()).optional(),
     }).strict().optional(),
-    /** Dateiname des Piktogramms in public/piktogramme/ ohne Endung. */
+    /**
+     * Dateiname des Piktogramms in src/assets/piktogramme/ ohne Endung. Ein
+     * unbekannter Name bricht den Build ab (siehe Pictogram.astro).
+     */
     pictogram: text(),
     /** Einzelne Angebote, die zu dieser Sportart gehören, z. B. Boßeln bei Outdoor. */
     activities: z.array(
       z.object({
         name: text(),
         /**
-         * Dateiname in public/piktogramme/ ohne Endung. Fehlt der Wert, zeigt
+         * Dateiname in src/assets/piktogramme/ ohne Endung. Fehlt der Wert, zeigt
          * die Seite einen leeren Rahmen – besser als die Aktivität zu
          * verschweigen.
          */
@@ -164,7 +167,7 @@ const trainings = defineCollection({
 
 const sportstaetten = defineCollection({
   loader: file('src/content/sportstaetten.yaml'),
-  schema: z.object({
+  schema: ({ image }) => z.object({
     order: order(),
     name: text(),
     /** Zweiter gebräuchlicher Name, z. B. auf Karten. Wird als „auch …“ gezeigt. */
@@ -177,14 +180,14 @@ const sportstaetten = defineCollection({
     /** Was vor Ort zur Verfügung steht, z. B. Umkleiden. */
     facilities: text().optional(),
     /**
-     * Fotos unter public/images/sportstaetten/. Das erste ist das Hauptbild,
-     * weitere erscheinen als kleine Ansichten darunter. Fehlt eine Datei,
-     * zeigt die Seite automatisch einen Platzhalter statt eines kaputten
-     * Bildes.
+     * Fotos unter src/assets/sportstaetten/, als Pfad relativ zur YAML-Datei.
+     * Das erste ist das Hauptbild, weitere erscheinen als kleine Ansichten
+     * darunter. Über image() gehen sie durch Astros Bildverarbeitung (AVIF,
+     * WebP, passende Breiten); eine fehlende Datei bricht den Build ab.
      */
     photos: z.array(
       z.object({
-        src: text(),
+        src: image(),
         alt: text(),
         /** Kurze Bildunterschrift für die kleinen Ansichten. */
         caption: text().optional(),
@@ -225,9 +228,10 @@ const testimonials = defineCollection({
 /** Bilder im Karussell der Startseite. */
 const karussell = defineCollection({
   loader: file('src/content/karussell.yaml'),
-  schema: z.object({
+  schema: ({ image }) => z.object({
     order: order(),
-    src: text(),
+    /** Pfad relativ zur YAML-Datei, unter src/assets/karussell/. */
+    src: image(),
     alt: text(),
     /** Kurze Bildunterschrift, sichtbar über dem Bild. */
     caption: text(),

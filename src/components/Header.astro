@@ -1,5 +1,9 @@
 ---
+import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
+// Vereinswappen, 275 × 320 px mit Transparenz; ausgeliefert als WebP (mit
+// Alphakanal) in der Anzeigegröße und doppelt so groß für feine Displays.
+import logo from '../assets/logo-vsv.png';
 import { navigation, site } from '../lib/site';
 
 // Pfade und Links enden auf „/“ (trailingSlash: 'always'). Beide Seiten
@@ -16,12 +20,14 @@ const isActive = (href: string) => {
 <header class="site-header">
   <div class="header-inner">
     <a class="brand" href="/">
-      <img
+      <Image
         class="brand-mark"
-        src="/logo-vsv.png"
+        src={logo}
         alt=""
-        width="41"
-        height="48"
+        width={41}
+        height={48}
+        densities={[1, 2]}
+        loading="eager"
         decoding="async"
       />
       <span class="brand-text">

@@ -8,23 +8,26 @@ Die Dateien heißen nach ihrem **Motiv**, nicht nach der Sparte. So kann
 dasselbe Bild an zwei Stellen dienen: `wandern.png` ist zugleich das
 Piktogramm der Sparte Outdoor und das der Sportart Wandern.
 
-Zugeordnet wird in `src/data/sports.ts`:
+Zugeordnet wird im Kopf der Sportart unter `src/content/sportarten/`, hier
+`outdoor.md`:
 
-```ts
-{
-  slug: 'outdoor',
-  pictogram: 'wandern',          // Bild der Sparte
-  activities: [
-    { name: 'Wandern',        pictogram: 'wandern' },
-    { name: 'Nordic Walking', pictogram: 'nordic-walking' },
-    { name: 'Radwandern',     pictogram: 'radfahren' },
-    { name: 'Boßeln',        pictogram: 'boccia' },
-  ],
-}
+```yaml
+pictogram: wandern              # Bild der Sportart
+activities:
+  - name: Wandern
+    pictogram: wandern
+  - name: Nordic Walking
+    pictogram: nordic-walking
+  - name: Radwandern
+    pictogram: radfahren
+  - name: Boßeln
+    pictogram: boccia
 ```
 
-Eine Sportart ohne `pictogram` bekommt einen gestrichelten leeren Rahmen.
-Sie bleibt dadurch sichtbar, statt unter den Tisch zu fallen.
+Eine Aktivität ohne `pictogram` bekommt einen gestrichelten leeren Rahmen.
+Sie bleibt dadurch sichtbar, statt unter den Tisch zu fallen. Ein Name, zu dem
+es hier keine Datei gibt, bricht dagegen den Build ab – ein Tippfehler soll
+nicht still als leerer Rahmen durchgehen.
 
 Für Boßeln gibt es kein eigenes DOSB-Piktogramm. Verwendet wird deshalb das
 von Boccia – unverändert, das Motiv passt inhaltlich.
@@ -61,8 +64,10 @@ DOSB-Vorlagen (500 px) erzeugt: auf den tatsächlichen Rahmen zugeschnitten,
 dann ohne Verzerrung auf ein Quadrat zentriert – die Vorlagen sind teils
 504 px breit und haben unterschiedlich viel Rand.
 
-Dargestellt mit 64 px in Sportkarten und Sportartenliste, 88 px im Kopf der
-Spartenseiten. 256 px deckt damit auch dreifache Bildschirmauflösung ab.
+Dargestellt mit 40 px im Organigramm, 64 px in Sportkarten und
+Sportartenliste, 88 px im Kopf der Spartenseiten. Ausgeliefert wird nicht die
+Datei selbst: Astro rechnet daraus WebP (mit Transparenz) in einfacher und
+doppelter Anzeigegröße. 256 px reichen dafür bei jeder Größe.
 
 ## Neues Piktogramm ergänzen
 
@@ -70,7 +75,8 @@ Spartenseiten. 256 px deckt damit auch dreifache Bildschirmauflösung ab.
    lizenzfrei für Vereine).
 2. Aus dem ZIP `Piktogramme_schwarz_auf_weiss/…_500px.png` nehmen, auf den
    Rahmen zuschneiden und auf 256 × 256 zentrieren.
-3. Nach Motiv benannt hier ablegen und in `sports.ts` eintragen.
+3. Nach Motiv benannt hier ablegen und bei der Sportart unter
+   `src/content/sportarten/` eintragen.
 
 ## Verändern ist nicht erlaubt
 
