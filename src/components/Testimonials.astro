@@ -6,66 +6,23 @@ import { nachOrder } from '../lib/reihenfolge';
 const testimonials = (await getCollection('testimonials')).sort(nachOrder).map((eintrag) => eintrag.data);
 ---
 
-<div class="quotes">
+{/* Ab 760px versetzt: Jedes zweite Zitat rückt nach unten, das gibt der
+    Sektion Rhythmus. */}
+<div class="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-[clamp(2rem,4vw,3rem)]">
   {
     testimonials.map((item) => (
-      <figure class="quote reveal">
-        <Icon name="quote" size={34} class="quote__mark" strokeWidth={0} />
-        <blockquote>
-          <p>{item.text}</p>
+      <figure class="m-0 min-[760px]:even:pt-12 reveal">
+        <Icon name="quote" size={34} class="text-coral mb-3" strokeWidth={0} />
+        <blockquote class="m-0">
+          <p class="font-display text-step-1 font-medium text-base-content leading-[1.4] m-0 mb-3 text-pretty">
+            {item.text}
+          </p>
         </blockquote>
-        <figcaption>
+        <figcaption class="text-[0.9rem] font-semibold text-primary">
           {item.author}
-          <span>{item.role}</span>
+          <span class="block font-normal text-muted">{item.role}</span>
         </figcaption>
       </figure>
     ))
   }
 </div>
-
-<style>
-  .quotes {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: clamp(2rem, 4vw, 3rem);
-  }
-
-  .quote {
-    margin: 0;
-  }
-  /* Versetzte Anordnung gibt der Sektion Rhythmus. */
-  @media (min-width: 760px) {
-    .quote:nth-child(even) {
-      padding-top: 3rem;
-    }
-  }
-
-  .quote :global(.quote__mark) {
-    color: var(--c-accent);
-    margin-bottom: var(--sp-3);
-  }
-
-  .quote blockquote {
-    margin: 0;
-  }
-  .quote blockquote p {
-    font-family: var(--font-display);
-    font-size: var(--step-1);
-    font-weight: 500;
-    color: var(--c-text);
-    line-height: 1.4;
-    margin: 0 0 var(--sp-3);
-    text-wrap: pretty;
-  }
-
-  .quote figcaption {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--c-primary);
-  }
-  .quote figcaption span {
-    display: block;
-    font-weight: 400;
-    color: var(--c-text-muted);
-  }
-</style>

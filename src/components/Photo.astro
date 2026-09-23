@@ -50,7 +50,7 @@ const {
   noch ganz, bleibt der gestaltete Platzhalter stehen.
 -->
 <div
-  class:list={['photo', className]}
+  class:list={['photo relative aspect-(--photo-ratio) rounded-box overflow-hidden bg-tint-green isolate', className]}
   style={`--photo-ratio:${width} / ${height}`}
 >
   {
@@ -65,51 +65,20 @@ const {
         loading={eager ? 'eager' : 'lazy'}
         decoding="async"
         fetchpriority={eager ? 'high' : undefined}
+        class="absolute inset-0 w-full h-full object-cover"
       />
     ) : (
-      <div class="photo__placeholder" aria-hidden="true">
+      <div
+        class="absolute inset-0 grid place-content-center justify-items-center gap-2 p-4 text-center text-secondary bg-linear-135/srgb from-tint-green to-base-300"
+        aria-hidden="true"
+      >
         <Icon name={placeholderIcon} size={30} />
-        {placeholderText && <span>{placeholderText}</span>}
+        {placeholderText && (
+          <span class="text-[0.78rem] font-semibold tracking-[0.04em] uppercase opacity-75">
+            {placeholderText}
+          </span>
+        )}
       </div>
     )
   }
 </div>
-
-<style>
-  .photo {
-    position: relative;
-    aspect-ratio: var(--photo-ratio);
-    border-radius: var(--radius);
-    overflow: hidden;
-    background: var(--c-tint-green);
-    isolation: isolate;
-  }
-
-  .photo__placeholder {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    place-content: center;
-    justify-items: center;
-    gap: var(--sp-2);
-    padding: var(--sp-4);
-    text-align: center;
-    color: var(--c-primary-light);
-    background: linear-gradient(135deg, var(--c-tint-green), var(--c-surface-sunken));
-  }
-  .photo__placeholder span {
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    opacity: 0.75;
-  }
-
-  .photo img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-</style>
