@@ -39,19 +39,19 @@ const groesse = (bytes: number) => `${Math.round(bytes / 1024)} KB`;
         </p>
       </div>
 
-      <ul class="forms">
+      <ul class="list-none p-0 m-0 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4">
         {
           downloads.map((form) => (
-            <li class="form-card">
-              <Icon name="download" size={22} class="form-card__icon" />
+            <li class="card flex-row items-start gap-4 bg-base-100 border border-border rounded-box p-6">
+              <Icon name="download" size={22} class="text-secondary mt-[0.15rem]" />
               <div>
-                <h3>
+                <h3 class="text-[1.02rem] mt-0 mb-[0.2rem] text-base-content">
                   <a href={form.file} download>
                     {form.title}
                   </a>
                 </h3>
-                <p>{form.text}</p>
-                <p class="form-card__meta">
+                <p class="m-0 text-[0.9rem] text-muted">{form.text}</p>
+                <p class="mt-[0.35rem] mb-0 text-[0.8rem] tracking-[0.02em] text-muted">
                   PDF · {form.pages === 1 ? '1 Seite' : `${form.pages} Seiten`} ·{' '}
                   {groesse(form.bytes)}
                 </p>
@@ -61,7 +61,7 @@ const groesse = (bytes: number) => `${Math.round(bytes / 1024)} KB`;
         }
       </ul>
 
-      <p class="forms__hint">
+      <p class="flex items-center gap-2 mt-6 text-muted">
         <Icon name="mail" size={17} />
         Unterlagen anfordern: <a href={`mailto:${site.email}`}>{site.email}</a>
       </p>
@@ -69,50 +69,3 @@ const groesse = (bytes: number) => `${Math.round(bytes / 1024)} KB`;
   </section>
 </BaseLayout>
 
-<style>
-  .forms {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: var(--sp-4);
-  }
-  .form-card {
-    display: flex;
-    align-items: start;
-    gap: var(--sp-4);
-    background: var(--c-surface);
-    border: 1px solid var(--c-border);
-    border-radius: var(--radius);
-    padding: var(--sp-5);
-  }
-  .form-card :global(.form-card__icon) {
-    color: var(--c-primary-light);
-    margin-top: 0.15rem;
-  }
-  .form-card__meta {
-    margin: 0.35rem 0 0 !important;
-    font-size: 0.8rem;
-    color: var(--c-text-muted);
-    letter-spacing: 0.02em;
-  }
-
-  .form-card h3 {
-    font-size: 1.02rem;
-    margin: 0 0 0.2rem;
-    color: var(--c-text);
-  }
-  .form-card p {
-    margin: 0;
-    font-size: 0.9rem;
-    color: var(--c-text-muted);
-  }
-  .forms__hint {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-top: var(--sp-5);
-    color: var(--c-text-muted);
-  }
-</style>

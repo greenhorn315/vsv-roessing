@@ -29,7 +29,7 @@ const sportCountWord = await getSportCountWord();
   <Facts />
 
   <section class="section">
-    <div class="container split">
+    <div class="container grid grid-cols-[1.4fr_1fr] gap-[clamp(2rem,5vw,4rem)] items-start max-[900px]:grid-cols-1">
       <div>
         <div class="section-head">
           <h2>Unsere Geschichte</h2>
@@ -46,7 +46,7 @@ const sportCountWord = await getSportCountWord();
           Freizeit investieren – Übungsleiterinnen, Betreuer, Vorstand und
           viele helfende Hände rund um Turniere und Feste.
         </p>
-        <p class="placeholder-note">
+        <p class="alert border-dashed border-[#D8B44A] bg-sun-soft text-[#5E4A0C] rounded-sm py-[0.7rem] px-4 text-[0.86rem] leading-[1.6]">
           Dieser Abschnitt ist ein Platzhalter und wird noch durch die
           Vereinschronik ersetzt.
         </p>
@@ -56,15 +56,18 @@ const sportCountWord = await getSportCountWord();
         <div class="section-head">
           <h2>Vorstand</h2>
         </div>
-        <ul class="board">
+        <ul class="list-none p-0 m-0 flex flex-col gap-[0.6rem]">
           {
             vorstand.map(({ data: person }) => (
-              <li>
-                <strong>{person.role}</strong>
+              <li class="flex justify-between gap-3 py-[0.8rem] px-4 bg-base-100 border border-border rounded-sm">
+                <strong class="text-primary font-semibold">{person.role}</strong>
                 {person.name ? (
-                  <span>{person.name}</span>
+                  <span class="text-muted">{person.name}</span>
                 ) : (
-                  <span class="offen">Name folgt</span>
+                  /* Zurückhaltend wie im Organigramm: Die Stelle ist besetzt,
+                     nur der Name fehlt noch – das soll nicht wie ein Mangel
+                     schreien. */
+                  <span class="text-muted italic">Name folgt</span>
                 )}
               </li>
             ))
@@ -89,53 +92,3 @@ const sportCountWord = await getSportCountWord();
   />
 </BaseLayout>
 
-<style>
-  .split {
-    display: grid;
-    grid-template-columns: 1.4fr 1fr;
-    gap: clamp(2rem, 5vw, 4rem);
-    align-items: start;
-  }
-  @media (max-width: 900px) {
-    .split { grid-template-columns: 1fr; }
-  }
-
-  .board {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-  }
-  .board li {
-    display: flex;
-    justify-content: space-between;
-    gap: var(--sp-3);
-    padding: 0.8rem 1rem;
-    background: var(--c-surface);
-    border: 1px solid var(--c-border);
-    border-radius: var(--radius-sm);
-  }
-  .board strong {
-    color: var(--c-primary);
-    font-weight: 600;
-  }
-  .board span {
-    color: var(--c-text-muted);
-  }
-  /* Zurückhaltend wie im Organigramm: Die Stelle ist besetzt, nur der Name
-     fehlt noch – das soll nicht wie ein Mangel schreien. */
-  .board .offen {
-    font-style: italic;
-  }
-
-  .placeholder-note {
-    background: var(--c-sun-soft);
-    border: 1px dashed #D8B44A;
-    color: #5E4A0C;
-    font-size: 0.86rem;
-    padding: 0.7rem 1rem;
-    border-radius: var(--radius-sm);
-  }
-</style>

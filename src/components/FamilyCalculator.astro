@@ -9,26 +9,36 @@ const calculator = await getCalculator();
  * minderjährige Kinder dabei sind, bei 15 € deckeln. Ohne Kinder gibt es
  * keinen Deckel – zwei Erwachsene zahlen ohnehin dasselbe.
  */
+
+// Gemeinsame Klassen beider Regler. Schieberegler: daisyUI-range in Korall,
+// etwas schlanker als daisyUIs Vorgabe, die leere Spur in Rahmenfarbe.
+const label =
+  'block font-semibold text-[0.86rem] tracking-[0.03em] uppercase text-muted mb-2 [&>span]:text-primary';
+const regler =
+  'range range-accent w-full my-1.5 [--range-thumb-size:1.25rem] [--range-bg:var(--color-border)] focus-visible:outline-[3px] focus-visible:outline-offset-[3px]';
+// Skala unter dem Regler: Chrome zeigt die Datalist-Beschriftungen an,
+// sobald sie nicht mehr display: none ist.
+const skala = 'flex justify-between px-2 text-[0.75rem] text-muted [writing-mode:horizontal-tb]';
 ---
 
-<div class="calc" id="familienrechner">
-  <h3 class="calc__title">Familienrechner</h3>
-  <p class="calc__intro">
+<div class="card bg-base-200 border border-border rounded-lg p-[clamp(1.5rem,3vw,2rem)]" id="familienrechner">
+  <h3 class="text-step-1 mb-1">Familienrechner</h3>
+  <p class="text-[0.94rem] text-muted mb-6">
     Wer aus eurem Haushalt soll Mitglied werden?
   </p>
 
   <div
-    class="calc__felder"
+    class="grid grid-cols-[repeat(auto-fit,minmax(190px,1fr))] gap-x-6 gap-y-4 mb-4"
     data-rechner
     data-erwachsen={calculator.erwachsen}
     data-kind={calculator.kind}
     data-familie={calculator.familie}
   >
-    <div class="calc__feld">
-      <label class="calc__label" for="erwachsene">Erwachsene: <span data-wert="erwachsene">2</span></label>
-      <input type="range" id="erwachsene" name="erwachsene" min="0" max="4" value="2" step="1" list="ticksErwachsene" />
+    <div>
+      <label class={label} for="erwachsene">Erwachsene: <span data-wert="erwachsene">2</span></label>
+      <input type="range" id="erwachsene" name="erwachsene" min="0" max="4" value="2" step="1" list="ticksErwachsene" class={regler} />
       {/* Eigene Skala je Regler – eine gemeinsame erschiene nur einmal. */}
-      <datalist id="ticksErwachsene">
+      <datalist id="ticksErwachsene" class={skala}>
         <option value="0" label="0"></option>
         <option value="1" label="1"></option>
         <option value="2" label="2"></option>
@@ -36,10 +46,10 @@ const calculator = await getCalculator();
         <option value="4" label="4+"></option>
       </datalist>
     </div>
-    <div class="calc__feld">
-      <label class="calc__label" for="kinder">Kinder und Jugendliche: <span data-wert="kinder">2</span></label>
-      <input type="range" id="kinder" name="kinder" min="0" max="4" value="2" step="1" list="ticksKinder" />
-      <datalist id="ticksKinder">
+    <div>
+      <label class={label} for="kinder">Kinder und Jugendliche: <span data-wert="kinder">2</span></label>
+      <input type="range" id="kinder" name="kinder" min="0" max="4" value="2" step="1" list="ticksKinder" class={regler} />
+      <datalist id="ticksKinder" class={skala}>
         <option value="0" label="0"></option>
         <option value="1" label="1"></option>
         <option value="2" label="2"></option>
@@ -50,104 +60,16 @@ const calculator = await getCalculator();
   </div>
 
   <!-- aria-live: Screenreader bekommen das neue Ergebnis mit. -->
-  <output class="calc__result" aria-live="polite">
-    <strong data-ergebnis>15,00 € / Monat</strong>
-    <span data-hinweis>Familienbeitrag statt 23,00 € einzeln gerechnet</span>
+  <output class="card block p-4 bg-primary text-primary-content rounded-box" aria-live="polite">
+    <strong class="block font-display text-step-2 leading-[1.1]" data-ergebnis>15,00 € / Monat</strong>
+    <span class="text-[0.86rem] text-white/82" data-hinweis>Familienbeitrag statt 23,00 € einzeln gerechnet</span>
   </output>
 
-  <p class="calc__disclaimer">
+  <p class="mt-4 mb-0 text-[0.8rem] text-muted">
     Abgebucht wird einmal im Jahr, jeweils am 1. Juni. Verbindlich sind die
     Sätze im Aufnahmeantrag.
   </p>
 </div>
-
-<style>
-  .calc {
-    background: var(--c-bg);
-    border: 1px solid var(--c-border);
-    border-radius: var(--radius-lg);
-    padding: clamp(1.5rem, 3vw, 2rem);
-  }
-
-  .calc__title {
-    font-size: var(--step-1);
-    margin-bottom: 0.25rem;
-  }
-
-  .calc__intro {
-    font-size: 0.94rem;
-    color: var(--c-text-muted);
-    margin-bottom: var(--sp-5);
-  }
-
-  .calc__felder {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-    gap: var(--sp-4) var(--sp-5);
-    margin-bottom: var(--sp-4);
-  }
-
-  .calc__label span {
-    color: var(--c-primary);
-  }
-
-  .calc__label {
-    display: block;
-    font-weight: 600;
-    font-size: 0.86rem;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-    color: var(--c-text-muted);
-    margin-bottom: var(--sp-2);
-  }
-
-  input[type='range'] {
-    width: 100%;
-    accent-color: var(--c-accent-ink);
-    height: 32px;
-    cursor: pointer;
-  }
-
-  datalist {
-    display: flex;
-    justify-content: space-between;
-    padding-inline: 2px;
-    font-size: 0.75rem;
-    color: var(--c-text-muted);
-    writing-mode: horizontal-tb;
-  }
-
-  .calc__hint {
-    margin: var(--sp-2) 0 0;
-    font-size: 0.9rem;
-    color: var(--c-text-muted);
-  }
-
-  .calc__result {
-    display: block;
-    margin-top: var(--sp-4);
-    padding: var(--sp-4);
-    background: var(--c-primary);
-    color: #fff;
-    border-radius: var(--radius);
-  }
-  .calc__result strong {
-    display: block;
-    font-family: var(--font-display);
-    font-size: var(--step-2);
-    line-height: 1.1;
-  }
-  .calc__result span {
-    font-size: 0.86rem;
-    color: rgba(255, 255, 255, 0.82);
-  }
-
-  .calc__disclaimer {
-    margin: var(--sp-4) 0 0;
-    font-size: 0.8rem;
-    color: var(--c-text-muted);
-  }
-</style>
 
 <script>
   const feld = document.querySelector<HTMLElement>('[data-rechner]');
