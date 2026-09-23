@@ -47,7 +47,7 @@ const hintergrund = {
 } as const;
 ---
 
-<div class="grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-4">
+<div class="grid grid-cols-[repeat(auto-fit,minmax(min(320px,100%),1fr))] gap-4">
   {
     panels.map((panel) => (
       <article

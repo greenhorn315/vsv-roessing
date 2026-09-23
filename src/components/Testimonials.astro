@@ -6,7 +6,7 @@ import { nachOrder } from '../lib/reihenfolge';
 const testimonials = (await getCollection('testimonials')).sort(nachOrder).map((eintrag) => eintrag.data);
 ---
 
-<div class="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-8 md:gap-12">
+<div class="grid grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] gap-8 md:gap-12">
   {
     testimonials.map((item) => (
       <figure class="min-[760px]:even:pt-12">
