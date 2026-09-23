@@ -1,20 +1,16 @@
 ---
 import Icon from './Icon.astro';
 import {
-  trainings,
+  getTrainings,
   trainingsByDay,
   trainingsOfSport,
-  seasonLabels,
   type Training,
-  type Weekday,
-} from '../data/trainings';
+} from '../lib/trainings';
+import { seasonLabels, type Weekday } from '../lib/labels';
 
 interface Props {
-  /** Nur die Trainings dieser Sportart (slug aus sports.ts). */
   sport?: string;
-  /** Höchstens so viele Einträge zeigen. */
   limit?: number;
-  /** Nach Wochentagen gruppieren statt einer durchgehenden Liste. */
   grouped?: boolean;
 }
 
@@ -30,38 +26,40 @@ const wochentagNamen: Record<Weekday, string> = {
   So: 'Sonntag',
 };
 
-const auswahl = sport ? trainingsOfSport(sport) : trainings;
+const auswahl = sport ? await trainingsOfSport(sport) : await getTrainings();
 const sichtbar = limit ? auswahl.slice(0, limit) : auswahl;
 
-// Gruppiert wird nur ohne Sportart- und Anzahl-Filter, sonst zeigt die Liste
-// Tagesüberschriften über einem Ausschnitt.
 const gruppen: { day: Weekday | null; entries: Training[] }[] =
   grouped && !sport && !limit
-    ? trainingsByDay()
+    ? await trainingsByDay()
     : [{ day: null, entries: sichtbar }];
+
+const klein = 'text-xs font-normal text-base-content/70';
 ---
 
-<div class="trainings">
+<div class="flex flex-col gap-6">
   {
     gruppen.map((gruppe) => (
-      <section class="trainings__group">
-        {gruppe.day && <h3 class="trainings__day">{wochentagNamen[gruppe.day]}</h3>}
-        <ul class="trainings__list">
+      <section>
+        {gruppe.day && <h3 class="mb-2.5 text-base">{wochentagNamen[gruppe.day]}</h3>}
+        <ul class="flex flex-col gap-2.5">
           {gruppe.entries.map((training) => (
-            <li>
-              <span class="trainings__name">
+            <li class="flex items-center justify-between gap-3 rounded-xl border border-base-300 bg-base-100 px-4 py-3.5">
+              <span class="flex flex-col leading-snug font-medium">
                 {training.title}
-                {training.audience && <small>{training.audience}</small>}
+                {training.audience && <small class={klein}>{training.audience}</small>}
                 {training.trainers && training.trainers.length > 0 && (
-                  <small>Übungsleitung: {training.trainers.join(', ')}</small>
+                  <small class={klein}>Übungsleitung: {training.trainers.join(', ')}</small>
                 )}
                 {training.season && (
-                  <small class="trainings__saison">{seasonLabels[training.season]}</small>
+                  <small class="mt-1 badge self-start badge-sm border-0 bg-base-300 font-semibold text-primary">
+                    {seasonLabels[training.season]}
+                  </small>
                 )}
-                {training.note && <small class="trainings__note">{training.note}</small>}
-                {training.place && <small>{training.place}</small>}
+                {training.note && <small class:list={[klein, 'italic']}>{training.note}</small>}
+                {training.place && <small class={klein}>{training.place}</small>}
               </span>
-              <span class="trainings__time">
+              <span class="badge badge-warning font-bold whitespace-nowrap">
                 <Icon name="clock" size={14} />
                 {gruppe.day ? training.time : `${training.day} ${training.time}`}
               </span>
@@ -72,74 +70,3 @@ const gruppen: { day: Weekday | null; entries: Training[] }[] =
     ))
   }
 </div>
-
-<style>
-  .trainings {
-    display: flex;
-    flex-direction: column;
-    gap: var(--sp-5);
-  }
-  .trainings__day {
-    font-size: 1rem;
-    margin: 0 0 0.6rem;
-  }
-  .trainings__list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-  }
-  .trainings__list li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--sp-3);
-    padding: 0.85rem 1rem;
-    background: var(--c-surface);
-    border: 1px solid var(--c-border);
-    border-radius: var(--radius-sm);
-  }
-  .trainings__name {
-    display: flex;
-    flex-direction: column;
-    font-weight: 500;
-    line-height: 1.3;
-  }
-  .trainings__name small {
-    font-size: 0.8rem;
-    color: var(--c-text-muted);
-    font-weight: 400;
-  }
-  /* Halbjahres-Hinweis, damit eine Wintergruppe im Sommer nicht
-     unkommentiert im Wochenplan steht. */
-  .trainings__saison {
-    display: inline-block;
-    margin-top: 0.2rem;
-    padding: 0.1rem 0.5rem;
-    border-radius: var(--radius-pill);
-    background: var(--c-surface-sunken);
-    color: var(--c-primary);
-    font-size: 0.74rem !important;
-    font-weight: 600;
-    letter-spacing: 0.03em;
-  }
-
-  .trainings__note {
-    font-style: italic;
-  }
-  .trainings__time {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    font-size: 0.82rem;
-    font-weight: 700;
-    padding: 0.3rem 0.7rem;
-    border-radius: var(--radius-pill);
-    background: var(--c-sun);
-    /* Dunkles Braun auf Gelb: 8,4:1 Kontrast. */
-    color: #4A3600;
-    white-space: nowrap;
-  }
-</style>

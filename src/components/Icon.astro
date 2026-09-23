@@ -3,26 +3,20 @@ import { icons, type IconName } from './icons';
 
 interface Props {
   name: IconName;
-  /** Größe in px (Breite = Höhe). Standard: erbt die Schriftgröße. */
   size?: number | string;
-  /**
-   * Barrierefreiheit: Icons ohne `label` sind dekorativ und werden
-   * von Screenreadern übersprungen. Mit `label` werden sie zum Bild
-   * mit Textalternative.
-   */
   label?: string;
   class?: string;
   strokeWidth?: number;
 }
 
 const { name, size, label, class: className, strokeWidth = 1.75 } = Astro.props;
-const dim = size ? (typeof size === 'number' ? `${size}px` : size) : undefined;
+const dim = size ? (typeof size === 'number' ? `${size}px` : size) : '1em';
 ---
 
 <svg
-  class:list={['icon', className]}
+  class:list={['shrink-0', className]}
   viewBox="0 0 24 24"
-  style={dim ? `width:${dim};height:${dim}` : undefined}
+  style={`width:${dim};height:${dim}`}
   fill="none"
   stroke="currentColor"
   stroke-width={strokeWidth}
@@ -34,11 +28,3 @@ const dim = size ? (typeof size === 'number' ? `${size}px` : size) : undefined;
   focusable="false"
   set:html={icons[name]}
 />
-
-<style>
-  .icon {
-    width: 1em;
-    height: 1em;
-    flex-shrink: 0;
-  }
-</style>

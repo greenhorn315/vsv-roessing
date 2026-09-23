@@ -1,33 +1,26 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
+import Container from '../components/Container.astro';
 ---
 
-<BaseLayout title="Seite nicht gefunden">
-  <section class="section notfound">
-    <div class="container">
-      <p class="eyebrow">Fehler 404</p>
-      <h1>Diese Seite ist wohl ins Aus gegangen.</h1>
-      <p class="lead">
+<BaseLayout
+  title="Seite nicht gefunden"
+  description="Diese Seite gibt es beim VSV Rössing nicht (mehr). Weiter geht es über die Startseite, die Sportangebote oder den Kontakt."
+  noindex
+>
+  <section class="py-12 md:py-24">
+    <Container>
+      <p class="mb-3 text-sm font-bold uppercase tracking-wider text-accent">Fehler 404</p>
+      <h1 class="text-4xl md:text-5xl">Diese Seite ist wohl ins Aus gegangen.</h1>
+      <p class="mt-4 max-w-[46ch] text-lg text-base-content/70 md:text-xl">
         Die Adresse gibt es nicht (mehr). Von hier kommst du direkt weiter:
       </p>
-      <div class="notfound__ctas">
-        <a class="btn btn--primary" href="/"><Icon name="home" />Zur Startseite</a>
-        <a class="btn btn--secondary" href="/sportangebote">Sportangebote</a>
-        <a class="btn btn--secondary" href="/kontakt">Kontakt</a>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a class="btn btn-accent" href="/"><Icon name="home" />Zur Startseite</a>
+        <a class="btn btn-outline btn-primary" href="/sportangebote/">Sportangebote</a>
+        <a class="btn btn-outline btn-primary" href="/kontakt/">Kontakt</a>
       </div>
-    </div>
+    </Container>
   </section>
 </BaseLayout>
-
-<style>
-  .notfound {
-    padding-block: clamp(3rem, 8vw, 6rem);
-  }
-  .notfound__ctas {
-    display: flex;
-    gap: var(--sp-3);
-    flex-wrap: wrap;
-    margin-top: var(--sp-6);
-  }
-</style>

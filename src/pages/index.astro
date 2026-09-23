@@ -12,8 +12,12 @@ import SocialStrip from '../components/SocialStrip.astro';
 import CallToAction from '../components/CallToAction.astro';
 import Icon from '../components/Icon.astro';
 import PrototypeNotice from '../components/PrototypeNotice.astro';
-import { site, isPrototype } from '../data/site';
-import { SportCountWord } from '../data/sports';
+import Container from '../components/Container.astro';
+import SectionHead from '../components/SectionHead.astro';
+import { site, isPrototype } from '../lib/site';
+import { getSportCountWordCapitalized } from '../lib/sportarten';
+
+const SportCountWord = await getSportCountWordCapitalized();
 ---
 
 <BaseLayout title={`${site.shortName} – Dein Verein, dein Sport`} bareTitle>
@@ -21,95 +25,66 @@ import { SportCountWord } from '../data/sports';
   <Hero />
   <Facts />
 
-  <section class="section" id="sportangebote">
-    <div class="container">
-      <div class="section-head reveal">
-        <p class="eyebrow">Sportangebote</p>
-        <h2>Für jede und jeden das passende Angebot</h2>
+  <section class="py-16 md:py-20" id="sportangebote">
+    <Container>
+      <SectionHead eyebrow="Sportangebote" title="Für jede und jeden das passende Angebot">
         <p>
           {SportCountWord} Sportarten, ein Verein. Klick dich direkt zu dem, was dich
           interessiert – Trainingszeiten und Ansprechpartner stehen auf jeder
           einzelnen Seite.
         </p>
-      </div>
-      <div class="reveal">
-        <SportGrid />
-      </div>
-    </div>
+      </SectionHead>
+      <SportGrid />
+    </Container>
   </section>
 
-  <section class="section--tight">
-    <div class="container">
+  <section class="pb-16 md:pb-20">
+    <Container>
       <Audiences />
-    </div>
+    </Container>
   </section>
 
-  <section class="section" id="mitgliedschaft">
-    <div class="container">
+  <section class="py-16 md:py-20" id="mitgliedschaft">
+    <Container>
       <Membership compact />
-    </div>
+    </Container>
   </section>
 
-  <section class="section">
-    <div class="container split">
-      <div class="reveal">
-        <div class="section-head" style="margin-bottom:var(--sp-5)">
-          <h2>Aktuelles aus dem Verein</h2>
-        </div>
+  <section class="py-16 md:py-20">
+    <Container class="grid grid-cols-[1.3fr_1fr] items-start gap-8 md:gap-16 max-[900px]:grid-cols-1">
+      <div>
+        <SectionHead title="Aktuelles aus dem Verein" class="mb-6" />
         <NewsList limit={3} />
       </div>
-      <div class="reveal">
-        <div class="section-head" style="margin-bottom:var(--sp-5)">
-          <h2>Nächste Trainingszeiten</h2>
-        </div>
+      <div>
+        <SectionHead title="Nächste Trainingszeiten" class="mb-6" />
         <TrainingList limit={6} />
-        <a class="btn btn--ghost" href="/sportangebote" style="margin-top:var(--sp-4)">
+        <a class="link mt-4 inline-flex items-center gap-1.5 font-semibold link-accent" href="/sportangebote/">
           Alle Trainingszeiten
           <Icon name="arrowRight" size={16} />
         </a>
       </div>
-    </div>
+    </Container>
   </section>
 
-  <section class="section">
-    <div class="container">
-      <div class="section-head reveal">
-        <p class="eyebrow">Stimmen aus dem Verein</p>
-        <h2>Warum unsere Mitglieder bleiben</h2>
-      </div>
+  <section class="py-16 md:py-20">
+    <Container>
+      <SectionHead eyebrow="Stimmen aus dem Verein" title="Warum unsere Mitglieder bleiben" />
       <Testimonials />
-    </div>
+    </Container>
   </section>
 
   <CallToAction />
 
-  <section class="section">
-    <div class="container">
-      <div class="section-head reveal">
-        <p class="eyebrow">Social</p>
-        <h2>Folg uns auf Instagram</h2>
+  <section class="py-16 md:py-20">
+    <Container>
+      <SectionHead eyebrow="Social" title="Folg uns auf Instagram">
         <p>
           Trainingsausschnitte, Turnierergebnisse und Vereinsleben –
           {site.social.instagram.handle}
         </p>
-      </div>
-      <div class="reveal">
-        <SocialStrip />
-      </div>
-    </div>
+      </SectionHead>
+      <SocialStrip />
+    </Container>
   </section>
 </BaseLayout>
-
-<style>
-  .split {
-    display: grid;
-    grid-template-columns: 1.3fr 1fr;
-    gap: clamp(2rem, 5vw, 4rem);
-    align-items: start;
-  }
-  @media (max-width: 900px) {
-    .split {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>

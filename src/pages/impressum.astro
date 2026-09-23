@@ -3,48 +3,36 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import LegalContent from '../components/LegalContent.astro';
 import Icon from '../components/Icon.astro';
-import { intro, blocks, datenschutzHinweis } from '../data/impressum';
+import Container from '../components/Container.astro';
+import { getEntry, render } from 'astro:content';
+
+const impressum = await getEntry('rechtliches', 'impressum');
+if (!impressum) throw new Error('src/content/rechtliches/impressum.md fehlt.');
+const { intro, datenschutzHinweis } = impressum.data;
+if (!intro || !datenschutzHinweis) {
+  throw new Error('impressum.md: „intro“ und „datenschutzHinweis“ werden gebraucht.');
+}
+const { Content } = await render(impressum);
 ---
 
 <BaseLayout title="Impressum" description="Impressum des VSV Rössing von 1897 e.V.">
   <PageHeader title="Impressum" />
 
-  <section class="section">
-    <div class="container">
-      <p class="intro">{intro}</p>
+  <section class="py-16 md:py-20">
+    <Container>
+      <p class="mb-4 max-w-3xl font-semibold">{intro}</p>
 
-      <LegalContent blocks={blocks} />
+      <LegalContent><Content /></LegalContent>
 
-      <div class="datenschutz">
-        <h2>{datenschutzHinweis.heading}</h2>
+      <div class="max-w-3xl">
+        <h2 class="mt-8 mb-2 text-xl">{datenschutzHinweis.heading}</h2>
         <p>
-          <a class="datenschutz__link" href={datenschutzHinweis.href}>
+          <a class="link inline-flex items-center gap-1.5 font-semibold link-accent" href={datenschutzHinweis.href}>
             {datenschutzHinweis.linkLabel}
             <Icon name="arrowRight" size={16} />
           </a>
         </p>
       </div>
-    </div>
+    </Container>
   </section>
 </BaseLayout>
-
-<style>
-  .intro {
-    max-width: 720px;
-    font-weight: 600;
-  }
-  .datenschutz {
-    max-width: 720px;
-  }
-  .datenschutz h2 {
-    font-size: var(--step-1);
-    margin-top: var(--sp-6);
-  }
-  .datenschutz__link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    font-weight: 600;
-    color: var(--c-accent-ink);
-  }
-</style>

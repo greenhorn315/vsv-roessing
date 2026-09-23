@@ -1,184 +1,77 @@
 ---
 import Pictogram from './Pictogram.astro';
 import Icon from './Icon.astro';
-import { sports, ageGroupLabels, type AgeGroup } from '../data/sports';
+import { ageGroupLabels, sportColorVar, AGE_GROUPS } from '../lib/labels';
+import { getSports } from '../lib/sportarten';
 
 interface Props {
-  /** Filterleiste nach Altersgruppen anzeigen (Sportangebote-Seite). */
   withFilter?: boolean;
-  /** Beschreibungstext auf den Karten anzeigen. */
   detailed?: boolean;
 }
 
 const { withFilter = false, detailed = false } = Astro.props;
-const groups = Object.keys(ageGroupLabels) as AgeGroup[];
+const groups = AGE_GROUPS;
+const sports = await getSports();
+
+const chip = 'btn btn-sm btn-outline btn-primary aria-pressed:bg-primary aria-pressed:text-primary-content';
 ---
 
 {
   withFilter && (
-    <div class="filter" data-sport-filter>
-      <span class="filter__label" id="filterLabel">
+    <div class="flex items-center flex-wrap gap-3 mb-6" data-sport-filter>
+      <span class="text-sm font-semibold text-base-content/70" id="filterLabel">
         Passend für
       </span>
-      <div class="filter__options" role="group" aria-labelledby="filterLabel">
-        <button type="button" class="chip is-active" data-filter="alle" aria-pressed="true">
+      <div class="flex flex-wrap gap-1.5" role="group" aria-labelledby="filterLabel">
+        <button type="button" class:list={['chip', chip]} data-filter="alle" aria-pressed="true">
           Alle
         </button>
         {groups.map((group) => (
-          <button type="button" class="chip" data-filter={group} aria-pressed="false">
+          <button type="button" class:list={['chip', chip]} data-filter={group} aria-pressed="false">
             {ageGroupLabels[group]}
           </button>
         ))}
       </div>
-      <p class="filter__status" role="status" data-filter-status />
+      <p class="basis-full text-sm text-base-content/70" role="status" data-filter-status />
     </div>
   )
 }
 
-<ul class="sport-grid" data-sport-list>
+<ul
+  class="grid grid-cols-3 gap-4 max-[900px]:grid-cols-2 max-[560px]:grid-cols-1"
+  data-sport-list
+>
   {
     sports.map((sport) => (
-      <li data-age-groups={sport.ageGroups.join(' ')}>
-        <a class="sport-card" href={`/sportangebote/${sport.slug}`} style={`--sport-color:${sport.color}`}>
-          <Pictogram name={sport.pictogram} size={64} class="sport-card__icon" />
-          <h3>{sport.name}</h3>
-          <p>{detailed ? sport.description : sport.teaser}</p>
-          <span class="sport-card__more">
+      <li data-age-groups={sport.data.ageGroups.join(' ')}>
+        <a
+          class:list={[
+            'group card h-full gap-2 bg-base-100 px-4 py-6',
+            'border border-l-4 border-base-300 border-l-(--sport-color)',
+            'transition hover:-translate-y-1 hover:border-(--sport-color) hover:shadow-md',
+            'focus-visible:-translate-y-1 focus-visible:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent',
+          ]}
+          href={`/sportangebote/${sport.id}/`}
+          style={`--sport-color:${sportColorVar(sport.data.color)}`}
+        >
+          <Pictogram name={sport.data.pictogram} size={64} class="mb-1.5" />
+          <h3 class="card-title text-lg">{sport.data.name}</h3>
+          <p class="grow text-sm text-base-content/70">
+            {detailed ? sport.data.description : sport.data.teaser}
+          </p>
+          <span class="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-accent">
             Mehr erfahren
-            <Icon name="arrowRight" size={16} />
+            <Icon
+              name="arrowRight"
+              size={16}
+              class="transition group-hover:translate-x-1"
+            />
           </span>
         </a>
       </li>
     ))
   }
 </ul>
-
-<style>
-  .sport-grid {
-    display: grid;
-    /* Feste Dreierreihen: bei neun Sportarten ergibt das ein 3x3-Raster. */
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--sp-4);
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .sport-card {
-    height: 100%;
-    background: var(--c-surface);
-    border: 1px solid var(--c-border);
-    border-left: 5px solid var(--sport-color, var(--c-primary));
-    border-radius: var(--radius);
-    padding: var(--sp-5) var(--sp-4);
-    text-decoration: none;
-    color: var(--c-text);
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
-  }
-  .sport-card:hover,
-  .sport-card:focus-visible {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-md);
-    border-color: var(--sport-color, var(--c-primary));
-  }
-
-  .sport-card :global(.sport-card__icon) {
-    width: 64px;
-    margin-bottom: 0.35rem;
-  }
-
-  .sport-card h3 {
-    font-size: 1.1rem;
-    margin: 0;
-  }
-
-  .sport-card p {
-    font-size: 0.92rem;
-    color: var(--c-text-muted);
-    margin: 0;
-    flex-grow: 1;
-  }
-
-  .sport-card__more {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    margin-top: var(--sp-2);
-    font-size: 0.86rem;
-    font-weight: 600;
-    color: var(--c-accent-ink);
-  }
-  .sport-card:hover .sport-card__more :global(.icon) {
-    transform: translateX(3px);
-  }
-  .sport-card__more :global(.icon) {
-    transition: transform 0.18s ease;
-  }
-
-  /* ---- Filter ---- */
-  .filter {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: var(--sp-3);
-    margin-bottom: var(--sp-5);
-  }
-  .filter__label {
-    font-weight: 600;
-    color: var(--c-text-muted);
-    font-size: 0.9rem;
-  }
-  .filter__options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-  }
-  .chip {
-    min-height: 40px;
-    padding: 0.4rem 1rem;
-    border-radius: var(--radius-pill);
-    border: 1px solid var(--c-border-strong);
-    background: var(--c-surface);
-    color: var(--c-text);
-    font-size: 0.9rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.16s ease, color 0.16s ease, border-color 0.16s ease;
-  }
-  .chip:hover {
-    border-color: var(--c-primary);
-  }
-  .chip.is-active {
-    background: var(--c-primary);
-    border-color: var(--c-primary);
-    color: #fff;
-  }
-  .filter__status {
-    flex-basis: 100%;
-    margin: 0;
-    font-size: 0.86rem;
-    color: var(--c-text-muted);
-  }
-
-  @media (max-width: 900px) {
-    .sport-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (max-width: 560px) {
-    .sport-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  li[hidden] {
-    display: none;
-  }
-</style>
 
 <script>
   const filter = document.querySelector<HTMLElement>('[data-sport-filter]');
@@ -196,7 +89,6 @@ const groups = Object.keys(ageGroupLabels) as AgeGroup[];
       const value = chip.dataset.filter ?? 'alle';
       chips.forEach((c) => {
         const active = c === chip;
-        c.classList.toggle('is-active', active);
         c.setAttribute('aria-pressed', String(active));
       });
 

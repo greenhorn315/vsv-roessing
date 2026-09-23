@@ -3,8 +3,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import LegalContent from '../components/LegalContent.astro';
 import Icon from '../components/Icon.astro';
-import { blocks } from '../data/datenschutz';
-import { isPrototype } from '../data/site';
+import Container from '../components/Container.astro';
+import { getEntry, render } from 'astro:content';
+import { isPrototype } from '../lib/site';
+
+const datenschutz = await getEntry('rechtliches', 'datenschutz');
+if (!datenschutz) throw new Error('src/content/rechtliches/datenschutz.md fehlt.');
+const { Content } = await render(datenschutz);
 ---
 
 <BaseLayout
@@ -12,12 +17,12 @@ import { isPrototype } from '../data/site';
   description="Datenschutzerklärung des VSV Rössing von 1897 e.V."
 >
   <PageHeader title="Datenschutzerklärung" />
-  <section class="section">
-    <div class="container">
+  <section class="py-16 md:py-20">
+    <Container>
       {
         isPrototype && (
-          <aside class="draft">
-            <p class="draft__title">
+          <aside class="alert mb-8 block max-w-3xl border-warning border-l-4 bg-warning/20 p-6 text-base">
+            <p class="mb-2 flex items-center gap-2 font-bold">
               <Icon name="info" size={18} />
               Entwurf, noch nicht rechtlich geprüft
             </p>
@@ -30,32 +35,7 @@ import { isPrototype } from '../data/site';
         )
       }
 
-      <LegalContent blocks={blocks} />
-    </div>
+      <LegalContent><Content /></LegalContent>
+    </Container>
   </section>
 </BaseLayout>
-
-<style>
-  .draft {
-    max-width: 720px;
-    background: var(--c-sun-soft);
-    border: 1px solid #E8CE8A;
-    border-left: 5px solid var(--c-sun);
-    border-radius: var(--radius);
-    padding: var(--sp-5);
-    margin-bottom: var(--sp-6);
-  }
-  .draft__title {
-    display: flex;
-    align-items: center;
-    gap: 0.45rem;
-    margin: 0 0 var(--sp-2);
-    font-weight: 700;
-    color: #5E4A0C;
-  }
-  .draft p:last-child {
-    margin: 0;
-    color: #4A3D14;
-    font-size: 0.94rem;
-  }
-</style>

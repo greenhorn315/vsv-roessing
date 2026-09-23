@@ -1,0 +1,21 @@
+# Kennungen kinder, einzel, familie nicht umbenennen – der Familienrechner braucht sie.
+
+kinder:
+  order: 1
+  label: Kinder und Jugendliche
+  monthly: 4
+  yearly: 48
+
+einzel:
+  order: 2
+  label: Einzelbeitrag
+  monthly: 7.5
+  yearly: 90
+  note: Erwachsene und aktive Rentnerinnen und Rentner
+
+familie:
+  order: 3
+  label: Familienbeitrag
+  monthly: 15
+  yearly: 180
+  note: Familien mit minderjährigen Kindern – egal wie viele

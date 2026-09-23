@@ -1,4 +1,3 @@
-"""Die offenen Punkte zum Website-Relaunch als PDF setzen.\n\nAufruf: python3 checkliste.py [zieldatei.pdf]   (benoetigt reportlab)\n"""
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import mm
 from reportlab.lib import colors
@@ -48,7 +47,6 @@ def kasten(inhalt):
     return t
 
 def kaestchen():
-    """Leeres Quadrat zum Abhaken."""
     k = Table([['']], colWidths=[3.8*mm], rowHeights=[3.8*mm])
     k.setStyle(TableStyle([
         ('BOX',(0,0),(-1,-1), 0.8, HELL),
@@ -58,7 +56,6 @@ def kaestchen():
     return k
 
 def punkt(titel, detail=None):
-    """Eine Zeile mit Ankreuzkästchen."""
     rechts = [Paragraph(titel, S['punkt'])]
     if detail:
         rechts.append(Paragraph(detail, S['detail']))
@@ -73,22 +70,14 @@ def punkt(titel, detail=None):
     return t
 
 def ohne_verwaiste_ueberschriften(story):
-    """Eine Kapitelüberschrift darf nicht allein am Seitenfuß stehen bleiben.
-
-    Überschrift, erklärender Absatz und der erste Punkt gehen deshalb als ein
-    Block in den Umbruch. Das geschieht hier am fertigen Ablauf statt an jeder
-    Aufrufstelle – so bleibt der Inhalt weiter als schlichte Liste lesbar.
-    """
     raus, i = [], 0
     while i < len(story):
         f = story[i]
         if isinstance(f, Paragraph) and f.style.name == 'kapitel':
             block, j = [f], i + 1
-            # erklärender Absatz, falls vorhanden
             while j < len(story) and isinstance(story[j], Paragraph) \
                     and story[j].style.name == 'kaphint':
                 block.append(story[j]); j += 1
-            # der erste Punkt
             if j < len(story) and isinstance(story[j], Table):
                 block.append(story[j]); j += 1
             raus.append(KeepTogether(block))
@@ -97,7 +86,6 @@ def ohne_verwaiste_ueberschriften(story):
             raus.append(f); i += 1
     return raus
 
-
 class Doc(BaseDocTemplate):
     def afterFlowable(self, flowable):
         pass
@@ -105,7 +93,6 @@ class Doc(BaseDocTemplate):
 def rahmen(canvas, doc):
     canvas.saveState()
     b, h = A4
-    # Kopfbalken
     canvas.setFillColor(GRUEN)
     canvas.rect(0, h-14*mm, b, 14*mm, stroke=0, fill=1)
     canvas.setFillColor(colors.white)
@@ -113,7 +100,6 @@ def rahmen(canvas, doc):
     canvas.drawString(20*mm, h-9.3*mm, 'VSV Rössing von 1897 e.V.')
     canvas.setFont('Helvetica', 9.5)
     canvas.drawRightString(b-20*mm, h-9.3*mm, 'Website-Relaunch – offene Punkte')
-    # Fußzeile
     canvas.setFillColor(GRAU); canvas.setFont('Helvetica', 7.8)
     canvas.drawString(20*mm, 11*mm, f'Stand: {STAND}')
     canvas.drawCentredString(b/2, 11*mm, 'github.com/greenhorn315/vsv-roessing')
@@ -154,7 +140,6 @@ story.append(kasten(
     'abarbeiten, müssen aber vor dem Livegang erledigt sein.'))
 story.append(Spacer(1, 8))
 
-# ---------- 1 ----------
 story.append(Paragraph('1 · Zuordnung der Angebote', S['kapitel']))
 story.append(Paragraph(
     'Jede Sportart soll auf ihrer Seite die einzelnen Angebote zeigen, die zu ihr '
@@ -176,7 +161,6 @@ for t, d in [
 ]:
     story.append(punkt(t, d))
 
-# ---------- 2 ----------
 story.append(Paragraph('2 · Yoga', S['kapitel']))
 story.append(Paragraph(
     'Die Übungsleitung steht seit dem 15. September: Sandra Dettmer, Heike Husmann und '
@@ -192,7 +176,6 @@ for t, d in [
 ]:
     story.append(punkt(t, d))
 
-# ---------- 3 ----------
 story.append(Paragraph('3 · Formulare', S['kapitel']))
 story.append(Paragraph(
     'Die Beiträge sind geklärt und vom Kassenwart bestätigt: 4 € für Kinder und '
@@ -210,7 +193,6 @@ for t, d in [
 ]:
     story.append(punkt(t, d))
 
-# ---------- 4 ----------
 story.append(Paragraph('4 · Fußball – Mannschaften und Spielpläne', S['kapitel']))
 story.append(Paragraph(
     'Der Spielplan der Ü40 steht auf der Fußball-Seite; gespielte Partien fallen von '
@@ -228,7 +210,6 @@ for t, d in [
 ]:
     story.append(punkt(t, d))
 
-# ---------- 5 ----------
 story.append(Paragraph('5 · Trainingszeiten', S['kapitel']))
 story.append(Paragraph(
     'In den Daten stehen 37 Gruppen mit 26 Übungsleitungen. Hallenzeiten und Trainingsorte '
@@ -280,7 +261,6 @@ for t, d in [
 ]:
     story.append(punkt(t, d))
 
-# ---------- 6 ----------
 story.append(Paragraph('6 · Fotos und Einwilligungen', S['kapitel']))
 story.append(Paragraph(
     'Im Karussell auf der Startseite laufen elf Bilder, die Übersicht der Sportstätten '
@@ -303,7 +283,8 @@ for t, d in [
    'Terrasse – ist nicht übernommen: Darauf stehen Stühle gestapelt und ein Grill mitten '
    'im Raum. Aufgeräumt wäre das eine dritte Ansicht des Vereinsheims wert.'),
   ('Vier quadratische Bilder für den Social-Bereich',
-   'Mindestens 400 × 400 px. Bis dahin zeigt die Seite gestaltete Platzhalter.'),
+   'Mindestens 600 × 600 px, abzulegen in src/assets/social/. Bis dahin zeigt die Seite '
+   'gestaltete Platzhalter.'),
   ('Vorschaubild fürs Teilen',
    'public/og-default.png, 1200 × 630 px – erscheint in WhatsApp und Facebook.'),
   ('Ein eigenes Dart-Foto aus dem Dorfbrunnen',
@@ -311,18 +292,16 @@ for t, d in [
 ]:
     story.append(punkt(t, d))
 
-# ---------- 7 ----------
 story.append(Paragraph('7 · Inhalte und Material', S['kapitel']))
 story.append(Paragraph('Nicht dringend, aber nötig vor dem Livegang.', S['kaphint']))
 for t, d in [
   ('Vereinschronik', 'Der Geschichtsabschnitt ist bisher ein Platzhaltertext.'),
   ('Detailtexte der Sportarten fachlich prüfen',
-   'Die Beschreibungen in src/data/sports.ts sind aus dem Altbestand gebaut.'),
+   'Die Beschreibungen in src/content/sportarten/ sind aus dem Altbestand gebaut.'),
   ('Social-Media-Adressen', 'Die echten Links zu Instagram und Facebook, ggf. WhatsApp-Gruppe.'),
 ]:
     story.append(punkt(t, d))
 
-# ---------- 8 ----------
 story.append(Paragraph('8 · Technik und Recht', S['kapitel']))
 story.append(Paragraph('Erledigt die Technik, nicht der Verein – bis auf die Prüfung.',
                        S['kaphint']))
@@ -340,11 +319,10 @@ for t, d in [
    'Eingaben tatsächlich an einen Server.'),
   ('Domain eintragen', 'In astro.config.mjs auf die endgültige Adresse setzen.'),
   ('Prototyp-Kennzeichnung entfernen',
-   'Ein Schalter in src/data/site.ts nimmt Banner und Suchmaschinen-Sperre gemeinsam weg.'),
+   'Ein Schalter in src/lib/site.ts nimmt Banner und Suchmaschinen-Sperre gemeinsam weg.'),
 ]:
     story.append(punkt(t, d))
 
-# ---------- 9 ----------
 story.append(Paragraph('9 · Für die bestehende Seite vsv-roessing.de', S['kapitel']))
 story.append(Paragraph(
     'Beim Übernehmen der Rechtstexte gefunden. Betrifft nicht die neue Seite, sondern die alte.',

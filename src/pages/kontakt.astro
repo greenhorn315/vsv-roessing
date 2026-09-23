@@ -2,8 +2,25 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Icon from '../components/Icon.astro';
-import { site, venues, mapsUrl } from '../data/site';
-import { sports } from '../data/sports';
+import Container from '../components/Container.astro';
+import { getCollection } from 'astro:content';
+import { site, mapsUrl } from '../lib/site';
+import { getSportNames } from '../lib/sportarten';
+import { nachOrder } from '../lib/reihenfolge';
+
+const venues = (await getCollection('sportstaetten')).sort(nachOrder).map((eintrag) => eintrag.data);
+const sportNames = await getSportNames();
+
+const feld = 'fieldset mb-4 p-0';
+const beschriftung = 'label text-sm font-semibold whitespace-normal text-base-content';
+const eingabe = 'w-full aria-invalid:border-error';
+const fehler = 'text-sm font-semibold text-error';
+
+const hinweis = 'alert mb-6 border-0 bg-warning/20';
+
+const infoKarte = 'card bg-base-300 p-6 text-base';
+const infoTitel = 'mb-1 text-base';
+const infoText = 'text-base-content/70';
 ---
 
 <BaseLayout
@@ -16,19 +33,21 @@ import { sports } from '../data/sports';
     lead="Egal ob Probetraining, Mitgliedschaft oder eine Frage zum Verein – wir melden uns in der Regel innerhalb weniger Tage."
   />
 
-  <section class="section">
-    <div class="container contact-grid">
-      <div class="form-wrap" id="probetraining">
-        <h2>Probetraining anfragen</h2>
-        <p class="form-note">
+  <section class="py-16 md:py-20">
+    <Container class="grid grid-cols-[1.25fr_0.75fr] items-start gap-8 md:gap-14 max-[900px]:grid-cols-1">
+      <div class="card rounded-3xl bg-base-100 p-6 text-base shadow-sm md:p-10" id="probetraining">
+        <h2 class="mb-4 text-3xl md:text-4xl">Probetraining anfragen</h2>
+        <p class={hinweis}>
           <Icon name="info" size={17} />
-          Noch kein Versand-Endpunkt angebunden: „Absenden" öffnet euer
-          E-Mail-Programm mit fertig ausgefüllter Nachricht.
+          <span>
+            Noch kein Versand-Endpunkt angebunden: „Absenden" öffnet euer
+            E-Mail-Programm mit fertig ausgefüllter Nachricht.
+          </span>
         </p>
 
-        <form class="contact-form" data-contact-form data-recipient={site.email} novalidate>
-          <div class="field">
-            <label for="name">Name <span aria-hidden="true">*</span></label>
+        <form data-contact-form data-recipient={site.email} novalidate>
+          <div class={feld}>
+            <label class={beschriftung} for="name">Name <span class="text-accent" aria-hidden="true">*</span></label>
             <input
               type="text"
               id="name"
@@ -36,12 +55,13 @@ import { sports } from '../data/sports';
               autocomplete="name"
               required
               aria-describedby="name-error"
+              class={`input ${eingabe}`}
             />
-            <p class="field__error" id="name-error" hidden></p>
+            <p class={fehler} id="name-error" hidden></p>
           </div>
 
-          <div class="field">
-            <label for="email">E-Mail <span aria-hidden="true">*</span></label>
+          <div class={feld}>
+            <label class={beschriftung} for="email">E-Mail <span class="text-accent" aria-hidden="true">*</span></label>
             <input
               type="email"
               id="email"
@@ -49,234 +69,95 @@ import { sports } from '../data/sports';
               autocomplete="email"
               required
               aria-describedby="email-error"
+              class={`input ${eingabe}`}
             />
-            <p class="field__error" id="email-error" hidden></p>
+            <p class={fehler} id="email-error" hidden></p>
           </div>
 
-          <div class="field">
-            <label for="sportart">Welche Sportart interessiert dich?</label>
-            <select id="sportart" name="sportart">
+          <div class={feld}>
+            <label class={beschriftung} for="sportart">Welche Sportart interessiert dich?</label>
+            <select id="sportart" name="sportart" class={`select ${eingabe}`}>
               <option value="">Bitte auswählen</option>
-              {sports.map((sport) => <option value={sport.name}>{sport.name}</option>)}
+              {sportNames.map((name) => <option value={name}>{name}</option>)}
               <option value="Noch unsicher">Noch unsicher</option>
             </select>
           </div>
 
-          <div class="field">
-            <label for="nachricht">Nachricht</label>
-            <textarea id="nachricht" name="nachricht" rows="5"></textarea>
+          <div class={feld}>
+            <label class={beschriftung} for="nachricht">Nachricht</label>
+            <textarea id="nachricht" name="nachricht" rows="5" class={`textarea ${eingabe}`}></textarea>
           </div>
 
-          <p class="privacy">
+          <p class="mb-4 text-sm text-base-content/70">
             Mit dem Absenden stimmst du zu, dass wir deine Angaben zur
-            Bearbeitung der Anfrage verwenden. Details in der
-            <a href="/datenschutz">Datenschutzerklärung</a>.
+            Bearbeitung der Anfrage verwenden. Details in der{' '}
+            <a class="link" href="/datenschutz/">Datenschutzerklärung</a>.
           </p>
 
-          <button class="btn btn--primary" type="submit">
+          <button class="btn btn-accent" type="submit">
             <Icon name="mail" />
             Anfrage senden
           </button>
 
-          <p class="form-fallback" role="status" data-form-status></p>
+          <p class="mt-4 text-sm text-base-content/70 empty:hidden" role="status" data-form-status></p>
         </form>
 
         <noscript>
-          <p class="form-note">
-            Ohne JavaScript funktioniert das Formular nicht. Schreibt uns
-            stattdessen direkt an
-            <a href={`mailto:${site.email}`}>{site.email}</a>.
+          <p class={hinweis}>
+            <span>
+              Ohne JavaScript funktioniert das Formular nicht. Schreibt uns
+              stattdessen direkt an
+              <a class="link" href={`mailto:${site.email}`}>{site.email}</a>.
+            </span>
           </p>
         </noscript>
       </div>
 
-      <aside class="contact-aside">
-        <h2 class="visually-hidden">Kontaktdaten</h2>
+      <aside class="flex flex-col gap-3">
+        <h2 class="sr-only">Kontaktdaten</h2>
 
-        <div class="info-card">
-          <Icon name="mail" size={20} class="info-card__icon" />
-          <h3>E-Mail</h3>
-          <p><a href={`mailto:${site.email}`}>{site.email}</a></p>
+        <div class={infoKarte}>
+          <Icon name="mail" size={20} class="text-primary mb-2" />
+          <h3 class={infoTitel}>E-Mail</h3>
+          <p class={infoText}><a class="link" href={`mailto:${site.email}`}>{site.email}</a></p>
         </div>
 
-        <div class="info-card">
-          <Icon name="pin" size={20} class="info-card__icon" />
-          <h3>Sportstätten</h3>
-          <ul class="orte">
+        <div class={infoKarte}>
+          <Icon name="pin" size={20} class="text-primary mb-2" />
+          <h3 class={infoTitel}>Sportstätten</h3>
+          <ul class="mb-3 flex flex-col gap-3">
             {
               venues.map((ort) => (
-                <li>
-                  <strong>{ort.name}</strong>
+                <li class="flex flex-col text-sm leading-snug">
+                  <strong class="text-primary">{ort.name}</strong>
                   {ort.street && (
-                    <span>
-                      <a href={mapsUrl(ort)} target="_blank" rel="noopener">
-                        {ort.street}, {ort.postalCode} {ort.city}
-                      </a>
-                    </span>
+                    <a class="link text-base-content/70" href={mapsUrl(ort)} target="_blank" rel="noopener">
+                      {ort.street}, {ort.postalCode} {ort.city}
+                    </a>
                   )}
                 </li>
               ))
             }
           </ul>
-          <p class="info-card__hint">
-            <a href="/verein#sportstaetten">Alle Sportstätten mit Fotos ansehen</a>
+          <p class={`${infoText} text-sm`}>
+            <a class="link" href="/verein/#sportstaetten">Alle Sportstätten mit Fotos ansehen</a>
           </p>
         </div>
 
-        <div class="info-card">
-          <Icon name="instagram" size={20} class="info-card__icon" />
-          <h3>Social Media</h3>
-          <p>
-            <a href={site.social.instagram.url} rel="noopener">
+        <div class={infoKarte}>
+          <Icon name="instagram" size={20} class="text-primary mb-2" />
+          <h3 class={infoTitel}>Social Media</h3>
+          <p class={infoText}>
+            <a class="link" href={site.social.instagram.url} rel="noopener">
               {site.social.instagram.handle} auf Instagram
             </a>
           </p>
         </div>
       </aside>
-    </div>
+    </Container>
   </section>
+
 </BaseLayout>
-
-<style>
-  .contact-grid {
-    display: grid;
-    grid-template-columns: 1.25fr 0.75fr;
-    gap: clamp(2rem, 4vw, 3.5rem);
-    align-items: start;
-  }
-  @media (max-width: 900px) {
-    .contact-grid { grid-template-columns: 1fr; }
-  }
-
-  .form-wrap {
-    background: var(--c-surface);
-    border-radius: var(--radius-lg);
-    padding: clamp(1.5rem, 4vw, 2.5rem);
-    box-shadow: var(--shadow-sm);
-  }
-
-  .form-note {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.88rem;
-    color: #5E4A0C;
-    background: var(--c-sun-soft);
-    border-radius: var(--radius-sm);
-    padding: 0.7rem 1rem;
-    margin-bottom: var(--sp-5);
-  }
-
-  .field {
-    margin-bottom: var(--sp-4);
-  }
-  .field label {
-    display: block;
-    font-weight: 600;
-    font-size: 0.92rem;
-    margin-bottom: 0.35rem;
-  }
-  .field label span {
-    color: var(--c-accent-ink);
-  }
-  .field input,
-  .field select,
-  .field textarea {
-    width: 100%;
-    min-height: 48px;
-    padding: 0.7rem 0.85rem;
-    border: 1px solid var(--c-border-strong);
-    border-radius: var(--radius-sm);
-    background: var(--c-bg);
-    transition: border-color 0.16s ease, box-shadow 0.16s ease;
-  }
-  .field textarea {
-    resize: vertical;
-  }
-  .field input:focus,
-  .field select:focus,
-  .field textarea:focus {
-    border-color: var(--c-primary);
-    box-shadow: 0 0 0 3px rgba(47, 122, 100, 0.18);
-    outline: none;
-  }
-
-  .field__error {
-    margin: 0.35rem 0 0;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #B3261E;
-  }
-  .field input[aria-invalid='true'],
-  .field select[aria-invalid='true'],
-  .field textarea[aria-invalid='true'] {
-    border-color: #B3261E;
-  }
-
-  .form-fallback:empty {
-    display: none;
-  }
-  .form-fallback {
-    margin: var(--sp-4) 0 0;
-    font-size: 0.88rem;
-    color: var(--c-text-muted);
-  }
-
-  .privacy {
-    font-size: 0.82rem;
-    color: var(--c-text-muted);
-  }
-
-  .contact-aside {
-    display: flex;
-    flex-direction: column;
-    gap: var(--sp-3);
-  }
-  .info-card {
-    background: var(--c-tint-green);
-    border-radius: var(--radius);
-    padding: var(--sp-5);
-  }
-  .info-card :global(.info-card__icon) {
-    color: var(--c-primary);
-    margin-bottom: var(--sp-2);
-  }
-  .info-card h3 {
-    font-size: 1rem;
-    margin: 0 0 0.3rem;
-  }
-  .info-card p {
-    margin: 0;
-    font-size: 0.94rem;
-    color: var(--c-text-muted);
-  }
-  .orte {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 var(--sp-3);
-    display: flex;
-    flex-direction: column;
-    gap: var(--sp-3);
-  }
-  .orte li {
-    display: flex;
-    flex-direction: column;
-    font-size: 0.92rem;
-    line-height: 1.35;
-  }
-  .orte strong {
-    color: var(--c-primary);
-  }
-  .orte li span {
-    font-size: 0.84rem;
-    color: var(--c-text-muted);
-  }
-
-  .info-card__hint {
-    margin-top: 0.5rem !important;
-    font-size: 0.85rem !important;
-  }
-</style>
 
 <script>
   const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
@@ -328,7 +209,6 @@ import { sports } from '../data/sports';
     form.addEventListener('submit', (event) => {
       event.preventDefault();
 
-      // Alle Pflichtfelder prüfen, damit der Fokus im ersten Fehler landet.
       const invalid = required.filter((field) => !validate(field));
       if (invalid.length > 0) {
         invalid[0].focus();

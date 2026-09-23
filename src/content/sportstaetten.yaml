@@ -1,0 +1,72 @@
+
+sporthalle:
+  order: 1
+  name: Alfred-Stubenrauch-Sporthalle
+  street: Loderwinkel 2A
+  postalCode: '31171'
+  city: Nordstemmen-Rössing
+  note: Turnen, Tanzen, Yoga, Basketball – und im Winterhalbjahr Fußball und Leichtathletik
+  facilities: Umkleiden und Duschen im Haus, Parkplätze und ein öffentlicher Spielplatz direkt nebenan
+  photos:
+    - src: ../assets/sportstaetten/sporthalle.jpg
+      alt: 'Alfred-Stubenrauch-Halle bei Abendsonne: roter Klinkerbau mit dem Namensschriftzug unter dem Dachrand, rechts das Schild „Zum Dorfbrunnen“'
+    - src: ../assets/sportstaetten/sporthalle-eingang.jpg
+      alt: Verglaster Eingang zur Sporthalle mit Doppeltür unter dem hölzernen Vordach
+      caption: Turnhalleneingang
+
+dorfbrunnen:
+  order: 2
+  name: Zum Dorfbrunnen
+  street: Loderwinkel 2A
+  postalCode: '31171'
+  city: Nordstemmen-Rössing
+  note: Im selben Gebäude wie die Sporthalle. Treffpunkt des Vereins sowie Trainings- und Wettkampfstätte der Dart-Gruppe
+  photos:
+    - src: ../assets/sportstaetten/dorfbrunnen.jpg
+      alt: Eingang des Dorfbrunnens unter dem Vordach, darüber der Schriftzug „Zum Dorfbrunnen“
+    - src: ../assets/sportstaetten/dorfbrunnen-hinten.jpg
+      alt: 'Rückseite des Dorfbrunnens: verglaste Front unter dem Vordach, davor eine Bank'
+      caption: Rückseite
+
+sportplatz:
+  order: 3
+  name: VSV-Sportplatz
+  alias: Sportplatz Rössing
+  street: Zum Klay 6
+  postalCode: '31171'
+  city: Nordstemmen
+  note: Fußball und Leichtathletik im Sommerhalbjahr
+  facilities: Rasenplatz mit drei Toren, dazu eine Weitsprunganlage mit Tartan-Anlaufbahn
+  photos:
+    - src: ../assets/sportstaetten/sportplatz.jpg
+      alt: Rasenplatz des VSV Rössing mit drei Toren, Flutlichtmast und überdachtem Unterstand unter blauem Himmel
+    - src: ../assets/sportstaetten/sportplatz-weitsprunganlage.jpg
+      alt: Rote Tartanbahn mit weißer Markierungslinie, die auf eine Sandgrube zuläuft; am Ende harken zwei Personen den Sand
+      caption: Weitsprunganlage
+
+feuerplatz:
+  order: 4
+  name: Feuerplatz am Sportplatz
+  street: Zum Klay 6
+  postalCode: '31171'
+  city: Nordstemmen
+  note: 'Treffpunkt der Freitagsradler: Im Sommerhalbjahr wird hier nach der Tour gegrillt'
+  photos:
+    # ⚠️ Zeigt erkennbare Personen: vor dem Livegang Einwilligung einholen oder Bild ersetzen.
+    - src: ../assets/sportstaetten/feuerplatz.jpg
+      alt: Runde Feuerstelle am Waldrand, ringsum Bänke, an denen eine Gruppe im Abendlicht sitzt
+
+vereinsheim:
+  order: 5
+  name: Vereinsheim VSV Rössing
+  street: Zum Klay 6
+  postalCode: '31171'
+  city: Nordstemmen
+  note: am Sportplatz
+  facilities: Gaststube mit Tresen und Küche
+  photos:
+    - src: ../assets/sportstaetten/vereinsheim.jpg
+      alt: 'Eingang des Vereinsheims: Klinkerfassade mit Glastür, darüber ein Banner mit Vereinswappen und der Aufschrift „Herzlich Willkommen auf unserer Sportanlage“, links der Aushangkasten'
+    - src: ../assets/sportstaetten/vereinsheim-gaststaette.jpg
+      alt: Gaststube im Vereinsheim mit Tresen, Barhockern, Holztischen und einer Vitrine voller Pokale
+      caption: Gaststube

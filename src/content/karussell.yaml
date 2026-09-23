@@ -1,0 +1,71 @@
+# ⚠️ Vor dem Livegang: Einwilligung der erkennbaren Personen einholen (KUG/DSGVO), beim
+# Aufwärmbild für die MTV-Elze-Mitglieder über den MTV. Keine erkennbaren Kindergesichter.
+
+gruppenfoto:
+  order: 1
+  src: ../assets/karussell/gruppenfoto.jpg
+  alt: Gruppe in Trikots mit dem Aufdruck „VSV Rössing“ kniet auf einem Rasenplatz und streckt die Arme in die Luft
+  caption: Leichtathletik – gemeinsam am Start
+
+# Ausschnitt rechts: links stand ein Kind mit erkennbarem Gesicht.
+fussball-u7:
+  order: 2
+  src: ../assets/karussell/fussball-u7.jpg
+  alt: Kindermannschaft in weißen Trikots steht Arm in Arm im Kreis auf dem Rasen, von hinten gesehen
+  caption: Fußball – die U7 beim Turnier
+
+freitagsradler:
+  order: 3
+  src: ../assets/karussell/freitagsradler.jpg
+  alt: Sieben Radfahrende mit Helmen stehen mit ihren Rädern auf einer Holzbrücke über einem Bach
+  caption: Freitagsradler im Sommerhalbjahr
+
+jazzdance:
+  order: 4
+  src: ../assets/karussell/jazzdance.jpg
+  alt: Tanzgruppe sitzt im Bühnenlicht auf einem Holzboden vor einer Bühne
+  caption: Jazz Dance – Auftritt
+
+leichtathletik-huerden:
+  order: 5
+  src: ../assets/karussell/leichtathletik-huerden.jpg
+  alt: Läuferin im Trikot mit dem Aufdruck „VSV Rössing“ steht am Start einer Hürdenbahn in einer Halle
+  caption: Leichtathletik – am Start der Hürdenbahn
+
+freitagsradler-abendlicht:
+  order: 6
+  src: ../assets/karussell/freitagsradler-abendlicht.jpg
+  alt: Radfahrende auf einem Feldweg, die tiefstehende Abendsonne blendet von rechts
+  caption: Freitagsradler – Heimweg im Abendlicht
+
+leichtathletik-weitsprung:
+  order: 7
+  src: ../assets/karussell/leichtathletik-weitsprung.jpg
+  alt: Kind landet von hinten gesehen in der Sandgrube einer Weitsprunganlage, davor die rote Anlaufbahn
+  caption: Weitsprung beim Sportabzeichen
+
+freitagsradler-umland:
+  order: 8
+  src: ../assets/karussell/freitagsradler-umland.jpg
+  alt: Radfahrergruppe steht mit ihren Rädern am Feldrand, dahinter Felder und eine helle Halde
+  caption: Freitagsradler – unterwegs im Umland
+
+# Ausschnitt rechts: dort nur Rücken zur Kamera.
+sportabzeichen-aufwaermen:
+  order: 9
+  src: ../assets/karussell/sportabzeichen-aufwaermen.jpg
+  alt: Gruppe aus Kindern und Erwachsenen wärmt sich mit ausgebreiteten Armen auf einer Rasenfläche auf, von hinten gesehen
+  caption: Aufwärmen vor der Abnahme des Sportabzeichens
+
+freitagsradler-schloss:
+  order: 10
+  src: ../assets/karussell/freitagsradler-schloss.jpg
+  alt: Abgestelltes Fahrrad auf einer Wiese, dahinter Schloss Marienburg mit seinen neugotischen Türmen
+  caption: Radtour zur Marienburg
+
+dart:
+  order: 11
+  src: ../assets/karussell/dart.jpg
+  alt: Dartpfeil mit rot-weißem Flight steckt in einer E-Dart-Scheibe
+  caption: Dart – jede Woche im Dorfbrunnen
+  credit: 'Symbolbild: Wikimedia Commons, CC0'

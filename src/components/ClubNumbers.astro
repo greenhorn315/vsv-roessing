@@ -1,6 +1,9 @@
 ---
-import { vereinsZahlen } from '../data/trainings';
-import { sportCount } from '../data/sports';
+import { getVereinsZahlen } from '../lib/trainings';
+import { getSportCount } from '../lib/sportarten';
+
+const vereinsZahlen = await getVereinsZahlen();
+const sportCount = await getSportCount();
 
 const zahlen = [
   { wert: String(sportCount), text: 'Sportarten' },
@@ -8,10 +11,6 @@ const zahlen = [
   { wert: String(vereinsZahlen.uebungsleitungen), text: 'Übungsleitungen' },
   { wert: String(vereinsZahlen.kinderangebote), text: 'Angebote für Kinder' },
   { wert: String(vereinsZahlen.trainingstage), text: 'Trainingstage pro Woche' },
-  // Offene Übungsleitungen nur nennen, solange es welche gibt. „0 Gruppen ohne
-  // Übungsleitung“ wäre zwar eine gute Nachricht, liest sich als Kachel aber
-  // wie ein Mangel. Sachlich formuliert: Ob eine Stelle vakant ist oder nur
-  // der Name fehlt, ist von außen nicht zu unterscheiden.
   ...(vereinsZahlen.ohneLeitung > 0
     ? [
         {
@@ -23,55 +22,16 @@ const zahlen = [
 ];
 ---
 
-<dl class="zahlen">
+<dl class="stats grid grid-flow-row grid-cols-3 gap-px overflow-hidden rounded-box border border-base-300 bg-base-300 max-[720px]:grid-cols-2">
   {
     zahlen.map((z) => (
-      <div class="zahl">
-        <dd>{z.wert}</dd>
-        <dt>{z.text}</dt>
+      <div class="stat flex flex-col border-0 bg-base-100 p-6">
+        <dd class="stat-value font-display text-4xl leading-none font-semibold whitespace-normal text-primary md:text-5xl">
+          {z.wert}
+        </dd>
+        <dt class="stat-title mt-1.5 text-sm whitespace-normal text-base-content/70">{z.text}</dt>
       </div>
     ))
   }
 </dl>
 
-<style>
-  .zahlen {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--c-border);
-    border: 1px solid var(--c-border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    margin: 0;
-  }
-
-  .zahl {
-    background: var(--c-surface);
-    padding: var(--sp-5);
-    /* Zahl optisch zuerst, semantisch bleibt das Label vorn. */
-    display: flex;
-    flex-direction: column;
-  }
-
-  .zahl dd {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: clamp(1.9rem, 1.4rem + 1.8vw, 2.6rem);
-    font-weight: 600;
-    line-height: 1;
-    color: var(--c-primary);
-  }
-
-  .zahl dt {
-    margin-top: 0.35rem;
-    font-size: 0.9rem;
-    color: var(--c-text-muted);
-  }
-
-  @media (max-width: 720px) {
-    .zahlen {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-</style>

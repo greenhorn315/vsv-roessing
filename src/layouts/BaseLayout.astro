@@ -2,66 +2,76 @@
 import '@fontsource-variable/fraunces/wght.css';
 import '@fontsource-variable/source-sans-3/wght.css';
 import '../styles/global.css';
+import frauncesLatin from '@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2?url';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { site, isPrototype } from '../data/site';
-import { sportNames } from '../data/sports';
+import { site, isPrototype, getSiteDescription } from '../lib/site';
+import { vereinsKnoten, type JsonLdNode } from '../lib/seo';
+
+interface OgImage {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+}
 
 interface Props {
   title: string;
   description?: string;
-  /** Seitentitel ohne Vereinsname anhängen (z. B. für die Startseite). */
   bareTitle?: boolean;
-  ogImage?: string;
+  ogImage?: OgImage;
+  jsonLd?: JsonLdNode[];
+  noindex?: boolean;
 }
+
+const defaultOgImage: OgImage = {
+  src: '/og-default.png',
+  alt: `${site.name}: Dein Verein, dein Sport.`,
+  width: 1200,
+  height: 630,
+};
 
 const {
   title,
-  description = site.description,
   bareTitle = false,
-  ogImage = '/og-default.png',
+  ogImage = defaultOgImage,
+  jsonLd: seitenKnoten = [],
+  noindex = false,
 } = Astro.props;
+const siteDescription = await getSiteDescription();
+const description = Astro.props.description ?? siteDescription;
 
 const fullTitle = bareTitle ? title : `${title} – ${site.shortName}`;
-const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://vsv-roessing.de');
-const ogImageUrl = new URL(ogImage, Astro.site ?? 'https://vsv-roessing.de');
+const origin = Astro.site ?? new URL('https://vsv-roessing.de');
+const canonical = new URL(Astro.url.pathname, origin);
+const ogImageUrl = new URL(ogImage.src, origin);
+const ogImageType = /\.jpe?g$/i.test(ogImage.src) ? 'image/jpeg' : 'image/png';
 
-/** Strukturierte Daten für Suchmaschinen und Google-Vereinsprofil. */
+const robots = isPrototype
+  ? 'noindex, nofollow'
+  : noindex
+    ? 'noindex'
+    : 'max-image-preview:large';
+
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'SportsClub',
-  name: site.name,
-  legalName: site.legalName,
-  alternateName: site.shortName,
-  foundingDate: String(site.founded),
-  description: site.description,
-  url: canonical.origin,
-  email: site.email,
-  telephone: site.phone,
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: site.address.street,
-    addressLocality: site.address.city,
-    postalCode: site.address.postalCode,
-    addressCountry: site.address.country,
-  },
-  sport: sportNames,
+  '@graph': [...(await vereinsKnoten(canonical.origin, siteDescription)), ...seitenKnoten],
 };
+// „<“ maskieren, damit kein Text im JSON das Script-Element beendet.
+const jsonLdText = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
 ---
 
 <!doctype html>
-<html lang="de">
+<html lang="de" class="scroll-pt-24 scroll-smooth bg-base-200 motion-reduce:scroll-auto">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical.href} />
-    {
-      /* Solange dies ein Entwurf ist, darf er nicht neben der echten
-         Vereinsseite in den Suchergebnissen auftauchen. */
-      isPrototype && <meta name="robots" content="noindex, nofollow" />
-    }
+    <meta name="robots" content={robots} />
+
+    <link rel="preload" href={frauncesLatin} as="font" type="font/woff2" crossorigin />
 
     <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
     <link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48" />
@@ -74,49 +84,31 @@ const jsonLd = {
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical.href} />
     <meta property="og:image" content={ogImageUrl.href} />
+    <meta property="og:image:type" content={ogImageType} />
+    {ogImage.width && <meta property="og:image:width" content={String(ogImage.width)} />}
+    {ogImage.height && <meta property="og:image:height" content={String(ogImage.height)} />}
+    <meta property="og:image:alt" content={ogImage.alt} />
     <meta property="og:locale" content="de_DE" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl.href} />
+    <meta name="twitter:image:alt" content={ogImage.alt} />
 
     <link rel="sitemap" href="/sitemap-index.xml" />
 
-    <script is:inline>
-      // Markiert früh, dass JavaScript läuft – nur dann werden
-      // Scroll-Animationen überhaupt aktiv (kein Flash ohne JS).
-      document.documentElement.classList.add('js');
-    </script>
-
-    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <script is:inline type="application/ld+json" set:html={jsonLdText} />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Zum Inhalt springen</a>
+  <body class="antialiased max-[940px]:has-[#mainNav:popover-open]:overflow-hidden">
+    <a
+      class="sr-only z-200 rounded-br-xl bg-primary px-6 py-3 font-semibold text-primary-content focus:not-sr-only focus:absolute focus:top-0 focus:left-0"
+      href="#main">Zum Inhalt springen</a
+    >
     <Header />
     <main id="main">
       <slot />
     </main>
     <Footer />
-
-    <script>
-      // Sanftes Einblenden von Sektionen beim Scrollen.
-      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const targets = document.querySelectorAll<HTMLElement>('.reveal');
-
-      if (prefersReduced || !('IntersectionObserver' in window)) {
-        targets.forEach((el) => el.classList.add('is-visible'));
-      } else {
-        const observer = new IntersectionObserver(
-          (entries) => {
-            for (const entry of entries) {
-              if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
-                observer.unobserve(entry.target);
-              }
-            }
-          },
-          { rootMargin: '0px 0px -8% 0px', threshold: 0.05 }
-        );
-        targets.forEach((el) => observer.observe(el));
-      }
-    </script>
   </body>
 </html>

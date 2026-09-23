@@ -1,35 +1,45 @@
 ---
-import { audienceLabels, trainingsFuer, type AudienceKey } from '../data/trainings';
-import { sports } from '../data/sports';
+import { audienceLabels, sportColorVar, type AudienceKey } from '../lib/labels';
+import { trainingsFuer } from '../lib/trainings';
+import { getSports } from '../lib/sportarten';
 
 const reihenfolge: AudienceKey[] = ['kinder', 'jugend', 'frauen', 'maenner', 'alle'];
+const sports = await getSports();
 
-/** Sportart zu einer Gruppe finden, für die Farbmarkierung. */
-const farbe = (slug?: string) =>
-  sports.find((s) => s.slug === slug)?.color ?? 'var(--c-primary)';
+const farbe = (slug?: string) => {
+  const sport = sports.find((s) => s.id === slug);
+  return sport ? sportColorVar(sport.data.color) : 'var(--color-primary)';
+};
 
-const spalten = reihenfolge.map((key) => ({
-  key,
-  titel: audienceLabels[key],
-  gruppen: trainingsFuer(key),
-}));
+const spalten = await Promise.all(
+  reihenfolge.map(async (key) => ({
+    key,
+    titel: audienceLabels[key],
+    gruppen: await trainingsFuer(key),
+  })),
+);
 ---
 
-<div class="zielgruppen">
+<div class="grid grid-cols-[repeat(auto-fit,minmax(190px,1fr))] gap-x-4 gap-y-8 items-start">
   {
     spalten.map((spalte) => (
-      <section class="zg">
-        <h3>{spalte.titel}</h3>
-        <p class="zg__anzahl">
+      <section>
+        <h3 class="border-b-2 border-primary pb-1.5 text-xl">{spalte.titel}</h3>
+        <p class="mt-2 mb-3 text-xs tracking-wider uppercase text-base-content/70">
           {spalte.gruppen.length} {spalte.gruppen.length === 1 ? 'Angebot' : 'Angebote'}
         </p>
-        <ul>
+        <ul class="flex flex-col gap-3">
           {spalte.gruppen.map((g) => (
-            <li style={`--sport-color:${farbe(g.sport)}`}>
-              <a href={g.sport ? `/sportangebote/${g.sport}` : '/sportangebote'}>
+            <li
+              class="border-l-3 border-(--sport-color) pl-3 leading-snug"
+              style={`--sport-color:${farbe(g.sport)}`}
+            >
+              <a
+                class="font-semibold hover:text-accent hover:underline"
+                href={g.sport ? `/sportangebote/${g.sport}/` : '/sportangebote/'}>
                 {g.title}
               </a>
-              <span class="zg__wann">
+              <span class="block text-sm text-base-content/70">
                 {g.day} {g.time}
                 {g.trainers && g.trainers.length > 0 && <> · {g.trainers.join(', ')}</>}
               </span>
@@ -41,59 +51,3 @@ const spalten = reihenfolge.map((key) => ({
   }
 </div>
 
-<style>
-  .zielgruppen {
-    display: grid;
-    /* Fünf Einstiege nebeneinander, solange die Breite reicht. */
-    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-    gap: var(--sp-6) var(--sp-4);
-    align-items: start;
-  }
-
-  .zg h3 {
-    font-size: var(--step-1);
-    margin: 0;
-    padding-bottom: 0.4rem;
-    border-bottom: 2px solid var(--c-primary);
-  }
-
-  .zg__anzahl {
-    margin: 0.5rem 0 var(--sp-3);
-    font-size: 0.8rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--c-text-muted);
-  }
-
-  .zg ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
-  }
-
-  .zg li {
-    padding-left: 0.7rem;
-    border-left: 3px solid var(--sport-color, var(--c-primary));
-    line-height: 1.35;
-  }
-
-  .zg li a {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--c-text);
-    text-decoration: none;
-  }
-  .zg li a:hover {
-    color: var(--c-accent-ink);
-    text-decoration: underline;
-  }
-
-  .zg__wann {
-    display: block;
-    font-size: 0.84rem;
-    color: var(--c-text-muted);
-  }
-</style>

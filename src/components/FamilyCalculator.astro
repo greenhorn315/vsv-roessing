@@ -1,32 +1,31 @@
 ---
-import { calculator } from '../data/membership';
+import { getCalculator } from '../lib/mitgliedschaft';
 
-/**
- * Der Verein rechnet für eine Familie automatisch den günstigsten Beitrag ab.
- * Genau das bildet der Rechner nach: Einzelbeiträge zusammenzählen, und wenn
- * minderjährige Kinder dabei sind, bei 15 € deckeln. Ohne Kinder gibt es
- * keinen Deckel – zwei Erwachsene zahlen ohnehin dasselbe.
- */
+const calculator = await getCalculator();
+
+const label = 'mb-2 block text-sm font-semibold tracking-wide uppercase text-base-content/70';
+const regler = 'range range-accent range-sm my-1.5 w-full';
+// Chrome zeigt Datalist-Beschriftungen, sobald die Datalist nicht display: none ist.
+const skala = 'flex justify-between px-2 text-xs text-base-content/70 [writing-mode:horizontal-tb]';
 ---
 
-<div class="calc" id="familienrechner">
-  <h3 class="calc__title">Familienrechner</h3>
-  <p class="calc__intro">
+<div class="card rounded-3xl border border-base-300 bg-base-200 p-6 text-base md:p-8" id="familienrechner">
+  <h3 class="mb-1 text-xl">Familienrechner</h3>
+  <p class="mb-6 text-base-content/70">
     Wer aus eurem Haushalt soll Mitglied werden?
   </p>
 
   <div
-    class="calc__felder"
+    class="grid grid-cols-[repeat(auto-fit,minmax(190px,1fr))] gap-x-6 gap-y-4 mb-4"
     data-rechner
     data-erwachsen={calculator.erwachsen}
     data-kind={calculator.kind}
     data-familie={calculator.familie}
   >
-    <div class="calc__feld">
-      <label class="calc__label" for="erwachsene">Erwachsene: <span data-wert="erwachsene">2</span></label>
-      <input type="range" id="erwachsene" name="erwachsene" min="0" max="4" value="2" step="1" list="ticksErwachsene" />
-      {/* Eigene Skala je Regler – eine gemeinsame erschiene nur einmal. */}
-      <datalist id="ticksErwachsene">
+    <div>
+      <label class={label} for="erwachsene">Erwachsene: <span class="text-primary" data-wert="erwachsene">2</span></label>
+      <input type="range" id="erwachsene" name="erwachsene" min="0" max="4" value="2" step="1" list="ticksErwachsene" class={regler} />
+      <datalist id="ticksErwachsene" class={skala}>
         <option value="0" label="0"></option>
         <option value="1" label="1"></option>
         <option value="2" label="2"></option>
@@ -34,10 +33,10 @@ import { calculator } from '../data/membership';
         <option value="4" label="4+"></option>
       </datalist>
     </div>
-    <div class="calc__feld">
-      <label class="calc__label" for="kinder">Kinder und Jugendliche: <span data-wert="kinder">2</span></label>
-      <input type="range" id="kinder" name="kinder" min="0" max="4" value="2" step="1" list="ticksKinder" />
-      <datalist id="ticksKinder">
+    <div>
+      <label class={label} for="kinder">Kinder und Jugendliche: <span class="text-primary" data-wert="kinder">2</span></label>
+      <input type="range" id="kinder" name="kinder" min="0" max="4" value="2" step="1" list="ticksKinder" class={regler} />
+      <datalist id="ticksKinder" class={skala}>
         <option value="0" label="0"></option>
         <option value="1" label="1"></option>
         <option value="2" label="2"></option>
@@ -47,105 +46,16 @@ import { calculator } from '../data/membership';
     </div>
   </div>
 
-  <!-- aria-live: Screenreader bekommen das neue Ergebnis mit. -->
-  <output class="calc__result" aria-live="polite">
-    <strong data-ergebnis>15,00 € / Monat</strong>
-    <span data-hinweis>Familienbeitrag statt 23,00 € einzeln gerechnet</span>
+  <output class="card block rounded-box bg-primary p-4 text-primary-content" aria-live="polite">
+    <strong class="block font-display text-2xl leading-tight" data-ergebnis>15,00 € / Monat</strong>
+    <span class="text-sm text-primary-content/80" data-hinweis>Familienbeitrag statt 23,00 € einzeln gerechnet</span>
   </output>
 
-  <p class="calc__disclaimer">
+  <p class="mt-4 text-xs text-base-content/70">
     Abgebucht wird einmal im Jahr, jeweils am 1. Juni. Verbindlich sind die
     Sätze im Aufnahmeantrag.
   </p>
 </div>
-
-<style>
-  .calc {
-    background: var(--c-bg);
-    border: 1px solid var(--c-border);
-    border-radius: var(--radius-lg);
-    padding: clamp(1.5rem, 3vw, 2rem);
-  }
-
-  .calc__title {
-    font-size: var(--step-1);
-    margin-bottom: 0.25rem;
-  }
-
-  .calc__intro {
-    font-size: 0.94rem;
-    color: var(--c-text-muted);
-    margin-bottom: var(--sp-5);
-  }
-
-  .calc__felder {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-    gap: var(--sp-4) var(--sp-5);
-    margin-bottom: var(--sp-4);
-  }
-
-  .calc__label span {
-    color: var(--c-primary);
-  }
-
-  .calc__label {
-    display: block;
-    font-weight: 600;
-    font-size: 0.86rem;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-    color: var(--c-text-muted);
-    margin-bottom: var(--sp-2);
-  }
-
-  input[type='range'] {
-    width: 100%;
-    accent-color: var(--c-accent-ink);
-    height: 32px;
-    cursor: pointer;
-  }
-
-  datalist {
-    display: flex;
-    justify-content: space-between;
-    padding-inline: 2px;
-    font-size: 0.75rem;
-    color: var(--c-text-muted);
-    writing-mode: horizontal-tb;
-  }
-
-  .calc__hint {
-    margin: var(--sp-2) 0 0;
-    font-size: 0.9rem;
-    color: var(--c-text-muted);
-  }
-
-  .calc__result {
-    display: block;
-    margin-top: var(--sp-4);
-    padding: var(--sp-4);
-    background: var(--c-primary);
-    color: #fff;
-    border-radius: var(--radius);
-  }
-  .calc__result strong {
-    display: block;
-    font-family: var(--font-display);
-    font-size: var(--step-2);
-    line-height: 1.1;
-  }
-  .calc__result span {
-    font-size: 0.86rem;
-    color: rgba(255, 255, 255, 0.82);
-  }
-
-  .calc__disclaimer {
-    margin: var(--sp-4) 0 0;
-    font-size: 0.8rem;
-    color: var(--c-text-muted);
-  }
-</style>
 
 <script>
   const feld = document.querySelector<HTMLElement>('[data-rechner]');
@@ -177,7 +87,6 @@ import { calculator } from '../data/membership';
       zeigeWert(kinder);
 
       const einzeln = a * satzErwachsen + k * satzKind;
-      // Der Familienbeitrag gilt für Familien mit minderjährigen Kindern.
       const gedeckelt = k > 0 ? Math.min(einzeln, satzFamilie) : einzeln;
 
       if (a + k === 0) {

@@ -1,23 +1,26 @@
 ---
 import Spielplan from './Spielplan.astro';
-import {
-  fussballSpiele,
-  fussballSpielplanStand,
-  fussballSpielstaette,
-  fussballTeam,
-} from '../data/fussballSpielplan';
-import { kommendeSpiele } from '../data/spielplan';
+import { getSpielplan, kommendeSpiele } from '../lib/spielplan';
+import { grossAnfang, zahlwort } from '../lib/labels';
 
-const spiele = kommendeSpiele(fussballSpiele);
+const plan = await getSpielplan('fussball');
+const {
+  team: fussballTeam,
+  stand: fussballSpielplanStand,
+  spielstaette: fussballSpielstaette,
+} = plan;
+if (!fussballTeam || !fussballSpielplanStand || !fussballSpielstaette) {
+  throw new Error('fussball.yaml: „team“, „stand“ und „spielstaette“ werden gebraucht.');
+}
+const spiele = kommendeSpiele(plan.spiele);
 const heimspiele = spiele.filter((spiel) => spiel.home).length;
 
-const zahlwort = ['kein', 'ein', 'zwei', 'drei', 'vier', 'fünf', 'sechs'];
-const alsWort = (n: number) => zahlwort[n] ?? String(n);
+const alsWort = (n: number) => zahlwort(n, { eins: 'ein', null: 'kein' });
 
 const anzahl =
   spiele.length === 1
     ? 'Ein Spiel steht noch an'
-    : `${alsWort(spiele.length).replace(/^./, (c) => c.toUpperCase())} Spiele stehen noch an`;
+    : `${grossAnfang(alsWort(spiele.length))} Spiele stehen noch an`;
 
 const heim =
   heimspiele === 0
@@ -26,7 +29,6 @@ const heim =
       ? `alle auf dem ${fussballSpielstaette}`
       : `${alsWort(heimspiele)} davon auf dem ${fussballSpielstaette}`;
 
-/** Eine gemeinsame Anstoßzeit lässt sich in einem Satz sagen. */
 const anstoss = new Set(spiele.map((spiel) => spiel.time));
 const zeitsatz = anstoss.size === 1 ? ` Angestoßen wird jeweils um ${[...anstoss][0]} Uhr.` : '';
 
@@ -37,6 +39,7 @@ const lead =
 ---
 
 <Spielplan
+  sport="fussball"
   heading={`Spiele der ${fussballTeam}`}
   caption={`Kommende Spiele der ${fussballTeam} nach dem Aushang vom ${fussballSpielplanStand}`}
   spiele={spiele}

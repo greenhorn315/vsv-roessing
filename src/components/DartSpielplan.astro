@@ -1,8 +1,11 @@
 ---
 import Spielplan from './Spielplan.astro';
-import { dartSaison, kommendeDartSpiele } from '../data/dartSpielplan';
+import { getSpielplan, kommendeSpiele } from '../lib/spielplan';
 
-const spiele = kommendeDartSpiele();
+const plan = await getSpielplan('dart');
+const dartSaison = plan.saison;
+if (!dartSaison) throw new Error('dart.yaml: Angabe „saison“ fehlt.');
+const spiele = kommendeSpiele(plan.spiele);
 const heimspiele = spiele.filter((spiel) => spiel.home).length;
 
 const lead =
@@ -12,6 +15,7 @@ const lead =
 ---
 
 <Spielplan
+  sport="dart"
   heading={`Ligaspiele ${dartSaison}`}
   caption={`Kommende Dart-Partien der Saison ${dartSaison}`}
   spiele={spiele}

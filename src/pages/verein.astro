@@ -4,16 +4,17 @@ import PageHeader from '../components/PageHeader.astro';
 import NewsList from '../components/NewsList.astro';
 import Facts from '../components/Facts.astro';
 import CallToAction from '../components/CallToAction.astro';
+import Container from '../components/Container.astro';
+import SectionHead from '../components/SectionHead.astro';
 import VenueGallery from '../components/VenueGallery.astro';
-import { site } from '../data/site';
-import { sportCountWord } from '../data/sports';
+import { site } from '../lib/site';
+import { getSportCountWord } from '../lib/sportarten';
 import { getCollection } from 'astro:content';
 
-// Reihenfolge steht in der YAML-Datei als `order`; auf die Reihenfolge, in der
-// eine Collection ihre Einträge liefert, verlässt sich das bewusst nicht.
 const vorstand = (await getCollection('vorstand')).sort(
   (a, b) => a.data.order - b.data.order,
 );
+const sportCountWord = await getSportCountWord();
 ---
 
 <BaseLayout
@@ -23,17 +24,15 @@ const vorstand = (await getCollection('vorstand')).sort(
   <PageHeader
     eyebrow="Über uns"
     title="Seit 1897 in Bewegung"
-    lead={`Was als kleiner Turnverein begann, ist heute ein Verein mit rund 660 Mitgliedern und ${sportCountWord} Sportarten – getragen von Ehrenamt und Nachbarschaft.`}
+    lead={`Was als kleiner Turnverein begann, ist heute ein Verein mit rund ${site.members} Mitgliedern und ${sportCountWord} Sportarten – getragen von Ehrenamt und Nachbarschaft.`}
   />
 
   <Facts />
 
-  <section class="section">
-    <div class="container split">
-      <div>
-        <div class="section-head">
-          <h2>Unsere Geschichte</h2>
-        </div>
+  <section class="py-16 md:py-20">
+    <Container class="grid grid-cols-[1.4fr_1fr] items-start gap-8 md:gap-16 max-[900px]:grid-cols-1">
+      <div class="space-y-4">
+        <SectionHead title="Unsere Geschichte" class="mb-6" />
         <p>
           Die Volkssportvereinigung Rössing wurde {site.founded} gegründet. Aus
           dem Turnbetrieb der Gründerjahre ist über Generationen ein
@@ -46,43 +45,39 @@ const vorstand = (await getCollection('vorstand')).sort(
           Freizeit investieren – Übungsleiterinnen, Betreuer, Vorstand und
           viele helfende Hände rund um Turniere und Feste.
         </p>
-        <p class="placeholder-note">
+        <p class="alert border-dashed border-warning bg-warning/20">
           Dieser Abschnitt ist ein Platzhalter und wird noch durch die
           Vereinschronik ersetzt.
         </p>
       </div>
 
       <div>
-        <div class="section-head">
-          <h2>Vorstand</h2>
-        </div>
-        <ul class="board">
+        <SectionHead title="Vorstand" class="mb-6" />
+        <ul class="flex flex-col gap-2.5">
           {
             vorstand.map(({ data: person }) => (
-              <li>
-                <strong>{person.role}</strong>
+              <li class="flex justify-between gap-3 rounded-xl border border-base-300 bg-base-100 px-4 py-3">
+                <strong class="text-primary font-semibold">{person.role}</strong>
                 {person.name ? (
-                  <span>{person.name}</span>
+                  <span class="text-base-content/70">{person.name}</span>
                 ) : (
-                  <span class="offen">Name folgt</span>
+                  <span class="italic text-base-content/70">Name folgt</span>
                 )}
               </li>
             ))
           }
         </ul>
       </div>
-    </div>
+    </Container>
   </section>
 
   <VenueGallery />
 
-  <section class="section--tight">
-    <div class="container narrow">
-      <div class="section-head">
-        <h2>Aktuelles</h2>
-      </div>
+  <section class="pb-16 md:pb-20">
+    <Container>
+      <SectionHead title="Aktuelles" />
       <NewsList />
-    </div>
+    </Container>
   </section>
 
   <CallToAction
@@ -91,53 +86,3 @@ const vorstand = (await getCollection('vorstand')).sort(
   />
 </BaseLayout>
 
-<style>
-  .split {
-    display: grid;
-    grid-template-columns: 1.4fr 1fr;
-    gap: clamp(2rem, 5vw, 4rem);
-    align-items: start;
-  }
-  @media (max-width: 900px) {
-    .split { grid-template-columns: 1fr; }
-  }
-
-  .board {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-  }
-  .board li {
-    display: flex;
-    justify-content: space-between;
-    gap: var(--sp-3);
-    padding: 0.8rem 1rem;
-    background: var(--c-surface);
-    border: 1px solid var(--c-border);
-    border-radius: var(--radius-sm);
-  }
-  .board strong {
-    color: var(--c-primary);
-    font-weight: 600;
-  }
-  .board span {
-    color: var(--c-text-muted);
-  }
-  /* Zurückhaltend wie im Organigramm: Die Stelle ist besetzt, nur der Name
-     fehlt noch – das soll nicht wie ein Mangel schreien. */
-  .board .offen {
-    font-style: italic;
-  }
-
-  .placeholder-note {
-    background: var(--c-sun-soft);
-    border: 1px dashed #D8B44A;
-    color: #5E4A0C;
-    font-size: 0.86rem;
-    padding: 0.7rem 1rem;
-    border-radius: var(--radius-sm);
-  }
-</style>

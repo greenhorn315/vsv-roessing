@@ -1,175 +1,97 @@
 ---
-import { karussellBilder } from '../data/karussell';
+import { Picture } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import { nachOrder } from '../lib/reihenfolge';
 
-/**
- * Rollierendes Bild an der Stelle des künftigen Vereinsfotos.
- *
- * Die Bilder liegen übereinander und werden übergeblendet; ohne JavaScript
- * bleibt das erste stehen und die Bedienelemente sind ausgeblendet. Bei
- * „Bewegung reduzieren“ wechselt nichts von selbst – dann zählt nur, was
- * jemand selbst anklickt.
- */
-const bilder = karussellBilder;
+interface Props {
+  class?: string;
+}
+
+const bilder = (await getCollection('karussell')).sort(nachOrder).map((eintrag) => eintrag.data);
 const dauer = 6000;
+const { class: className } = Astro.props;
+
+// Nur das erste Bild eager: die übrigen liegen außerhalb des Containers und laden erst beim Blättern.
+const widths = [400, 560, 800];
+const sizes = '(max-width: 940px) min(calc(100vw - 2rem), 520px), 560px';
 ---
 
 <div
-  class="karussell"
+  class:list={['relative isolate overflow-hidden bg-base-300', className]}
   data-karussell
   data-dauer={dauer}
   role="group"
   aria-roledescription="Karussell"
   aria-label="Eindrücke aus dem Vereinsleben"
 >
-  <ul class="karussell__bilder">
+  <ul class="carousel absolute inset-0" data-karussell-bilder>
     {
       bilder.map((bild, i) => (
         <li
-          class="karussell__bild"
+          class="carousel-item relative w-full h-full"
           data-slide={i}
           aria-hidden={i === 0 ? undefined : 'true'}
-          inert={i === 0 ? undefined : true}
         >
-          <img
+          <Picture
             src={bild.src}
             alt={bild.alt}
-            width={800}
-            height={1000}
+            formats={['avif', 'webp']}
+            fallbackFormat="jpg"
+            widths={widths}
+            sizes={sizes}
             loading={i === 0 ? 'eager' : 'lazy'}
             decoding="async"
             fetchpriority={i === 0 ? 'high' : undefined}
+            class="w-full h-full object-cover"
+            pictureAttributes={{ class: 'contents' }}
           />
-          <p class="karussell__caption">
+          <p class="absolute inset-x-0 bottom-0 bg-linear-to-t from-neutral/85 to-neutral/0 px-4 pt-10 pb-8 text-sm font-semibold text-neutral-content text-shadow-sm">
             {bild.caption}
-            {bild.credit && <small>{bild.credit}</small>}
+            {bild.credit && (
+              <small class="block text-xs font-normal opacity-80">{bild.credit}</small>
+            )}
           </p>
         </li>
       ))
     }
   </ul>
 
-  <p class="visually-hidden" aria-live="polite" data-karussell-status></p>
+  <p class="sr-only" aria-live="polite" data-karussell-status></p>
 
-  <div class="karussell__punkte" hidden data-karussell-punkte>
+  <div
+    class="absolute inset-x-0 bottom-3 z-1 flex justify-center gap-2"
+    hidden
+    data-karussell-punkte
+  >
     {
       bilder.map((bild, i) => (
         <button
           type="button"
-          class="karussell__punkt"
+          class:list={[
+            'relative size-2.5 cursor-pointer rounded-full',
+            'bg-white/50 ring-1 ring-neutral/35 hover:bg-white/80',
+            'aria-[current=true]:bg-white aria-[current=true]:scale-130',
+            'transition-[background-color,scale] duration-200 motion-reduce:transition-none',
+            'focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-3',
+            // Größere Trefferfläche für Finger, ohne den Punkt zu vergrößern.
+            'before:absolute before:-inset-x-1 before:-inset-y-3',
+          ]}
           data-zu={i}
           aria-current={i === 0 ? 'true' : undefined}
         >
-          <span class="visually-hidden">{`Bild ${i + 1}: ${bild.caption}`}</span>
+          <span class="sr-only">{`Bild ${i + 1}: ${bild.caption}`}</span>
         </button>
       ))
     }
   </div>
 </div>
 
-<style>
-  .karussell {
-    position: relative;
-    aspect-ratio: 4 / 5;
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    background: var(--c-tint-green);
-    isolation: isolate;
-  }
-
-  .karussell__bilder {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    position: absolute;
-    inset: 0;
-  }
-
-  .karussell__bild {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    transition: opacity 700ms ease;
-  }
-  /* Ohne JavaScript ist nur das erste Bild sichtbar. */
-  .karussell__bild[data-slide='0'],
-  .karussell__bild[data-aktiv] {
-    opacity: 1;
-  }
-
-  .karussell__bild img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .karussell__caption {
-    position: absolute;
-    inset: auto 0 0;
-    margin: 0;
-    /* Unten Platz für die Punkte, damit lange Zeilen nicht darunter laufen. */
-    padding: 2.5rem 1.1rem 2.1rem;
-    font-size: 0.88rem;
-    font-weight: 600;
-    color: #fff;
-    /* Verlauf statt Balken: Der Bildrand bleibt sichtbar. */
-    background: linear-gradient(to top, rgba(10, 34, 30, 0.85), rgba(10, 34, 30, 0));
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-  }
-  .karussell__caption small {
-    display: block;
-    font-weight: 400;
-    font-size: 0.74rem;
-    opacity: 0.8;
-  }
-
-  .karussell__punkte {
-    position: absolute;
-    inset: auto 0 0.7rem;
-    display: flex;
-    justify-content: center;
-    gap: 0.45rem;
-    z-index: 1;
-  }
-
-  .karussell__punkt {
-    width: 0.65rem;
-    height: 0.65rem;
-    padding: 0;
-    border: 0;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.5);
-    box-shadow: 0 0 0 1px rgba(10, 34, 30, 0.35);
-    cursor: pointer;
-    transition: background 200ms ease, transform 200ms ease;
-  }
-  .karussell__punkt:hover {
-    background: rgba(255, 255, 255, 0.8);
-  }
-  .karussell__punkt[aria-current='true'] {
-    background: #fff;
-    transform: scale(1.3);
-  }
-  .karussell__punkt:focus-visible {
-    outline: 2px solid #fff;
-    outline-offset: 3px;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .karussell__bild {
-      transition: none;
-    }
-    .karussell__punkt {
-      transition: none;
-    }
-  }
-</style>
-
 <script>
   const karussell = document.querySelector<HTMLElement>('[data-karussell]');
+  const leiste = karussell?.querySelector<HTMLElement>('[data-karussell-bilder]');
 
-  if (karussell) {
-    const bilder = [...karussell.querySelectorAll<HTMLElement>('.karussell__bild')];
+  if (karussell && leiste) {
+    const bilder = [...leiste.querySelectorAll<HTMLElement>('[data-slide]')];
     const punkteLeiste = karussell.querySelector<HTMLElement>('[data-karussell-punkte]');
     const punkte = [...karussell.querySelectorAll<HTMLButtonElement>('[data-zu]')];
     const status = karussell.querySelector<HTMLElement>('[data-karussell-status]');
@@ -178,14 +100,30 @@ const dauer = 6000;
 
     let aktuell = 0;
     let timer: number | undefined;
+    let pausiert = false;
 
-    const zeige = (index: number) => {
-      aktuell = (index + bilder.length) % bilder.length;
+    const gehe = (index: number) => {
+      const ziel = bilder[(index + bilder.length) % bilder.length];
+      if (!ziel) return;
+      leiste.scrollTo({ left: ziel.offsetLeft, behavior: ruhig.matches ? 'instant' : 'smooth' });
+    };
+
+    const stoppen = () => {
+      if (timer !== undefined) window.clearTimeout(timer);
+      timer = undefined;
+    };
+
+    const planen = () => {
+      stoppen();
+      if (pausiert || document.hidden || ruhig.matches) return;
+      timer = window.setTimeout(() => gehe(aktuell + 1), dauer);
+    };
+
+    const markiere = (index: number) => {
+      if (index === aktuell) return;
+      aktuell = index;
       bilder.forEach((bild, i) => {
-        const an = i === aktuell;
-        bild.toggleAttribute('data-aktiv', an);
-        bild.toggleAttribute('inert', !an);
-        if (an) bild.removeAttribute('aria-hidden');
+        if (i === aktuell) bild.removeAttribute('aria-hidden');
         else bild.setAttribute('aria-hidden', 'true');
       });
       punkte.forEach((punkt, i) => {
@@ -193,41 +131,35 @@ const dauer = 6000;
         else punkt.removeAttribute('aria-current');
       });
       if (status) status.textContent = `Bild ${aktuell + 1} von ${bilder.length}`;
+      planen();
     };
 
-    const stoppen = () => {
-      if (timer !== undefined) window.clearInterval(timer);
-      timer = undefined;
-    };
+    const beobachter = new IntersectionObserver(
+      (eintraege) => {
+        for (const eintrag of eintraege) {
+          if (eintrag.intersectionRatio >= 0.6) markiere(bilder.indexOf(eintrag.target as HTMLElement));
+        }
+      },
+      { root: leiste, threshold: 0.6 },
+    );
+    bilder.forEach((bild) => beobachter.observe(bild));
 
-    const starten = () => {
-      stoppen();
-      // Bei „Bewegung reduzieren“ wechselt nichts von selbst.
-      if (ruhig.matches) return;
-      timer = window.setInterval(() => zeige(aktuell + 1), dauer);
-    };
-
-    // Erst ab hier ist das erste Bild nicht mehr nur per CSS sichtbar.
-    bilder[0]?.setAttribute('data-aktiv', '');
     punkteLeiste?.removeAttribute('hidden');
-
     punkte.forEach((punkt) =>
-      punkt.addEventListener('click', () => {
-        zeige(Number(punkt.dataset.zu));
-        starten();
-      }),
+      punkt.addEventListener('click', () => gehe(Number(punkt.dataset.zu))),
     );
 
-    // Wer hinschaut oder tabbt, soll nicht vom Wechsel überrascht werden.
-    karussell.addEventListener('mouseenter', stoppen);
-    karussell.addEventListener('mouseleave', starten);
-    karussell.addEventListener('focusin', stoppen);
-    karussell.addEventListener('focusout', starten);
-    document.addEventListener('visibilitychange', () =>
-      document.hidden ? stoppen() : starten(),
-    );
-    ruhig.addEventListener('change', starten);
+    const pause = (an: boolean) => () => {
+      pausiert = an;
+      planen();
+    };
+    karussell.addEventListener('mouseenter', pause(true));
+    karussell.addEventListener('mouseleave', pause(false));
+    karussell.addEventListener('focusin', pause(true));
+    karussell.addEventListener('focusout', pause(false));
+    document.addEventListener('visibilitychange', planen);
+    ruhig.addEventListener('change', planen);
 
-    starten();
+    planen();
   }
 </script>

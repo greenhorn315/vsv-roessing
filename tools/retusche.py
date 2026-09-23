@@ -1,33 +1,16 @@
-"""Spiegelungen des Fotografen in Glasflaechen entfernen.
-
-Die Aufnahmen der Dorfbrunnen-Rueckseite zeigen den Fotografen in der Scheibe –
-die aeltere wie die neue, die sie abgeloest hat. Dahinter liegt jeweils dieselbe gleichfoermige, waagerecht gestreifte
-Bretterwand des Schuppens gegenueber – und genau das macht die Stelle
-rekonstruierbar: Der Bereich wird zeilenweise neu aufgebaut, als Grundton der
-mittlere Tonwert des Spenderstreifens in derselben Zeile, darauf dessen
-Feinstruktur. Weil nur der Hochpassanteil uebernommen wird, entsteht
-kein sichtbar gespiegeltes Muster; weil zeilenweise gearbeitet wird, bleiben
-Heckenkante, Sockel und Pflaster auf Hoehe.
-
-Fuer andere Motive taugt das nicht. Wo hinter der zu entfernenden Stelle
-Tische, Tueren oder weitere Personen liegen, gibt es nichts zu klonen.
-"""
 from PIL import Image, ImageFilter, ImageOps
 import pathlib
 
 QUELLEN = pathlib.Path('sportstaetten')
 ZIEL = pathlib.Path('retuschiert')
 
-# Datei: (Luecke x0, x1, y0, y1), (Spenderstreifen x0, x1)
-# Die Werte sind je Aufnahme ausgemessen und gelten nur fuer sie.
 STELLEN = {
     'ZumDorfbrunnen-Hinten.JPG': ((1122, 1258, 1432, 1810), (1262, 1310)),
 }
 
-RAND = 16       # weiche Kante ringsum
-TEXTUR = 0.75   # Anteil der uebernommenen Feinstruktur
-FENSTER = 5     # halbe Breite des Tiefpasses fuer den Hochpass
-
+RAND = 16
+TEXTUR = 0.75
+FENSTER = 5
 
 def retuschiere(quelle, ziel, luecke, spender):
     X0, X1, Y0, Y1 = luecke
@@ -42,9 +25,6 @@ def retuschiere(quelle, ziel, luecke, spender):
 
     for y in range(Y0, Y1):
         src = [px[SRC0 + i, y] for i in range(src_breite)]
-        # Grundton aus dem Spenderstreifen, nicht aus den Raendern der Luecke:
-        # Ein Rand kann im Fensterrahmen liegen, dann zieht ein Verlauf einen
-        # hellen Schleier durch die Flaeche.
         grund = tuple(sum(p[c] for p in src) / src_breite for c in range(3))
         tief = []
         for i in range(src_breite):
@@ -87,7 +67,6 @@ def retuschiere(quelle, ziel, luecke, spender):
     ziel.parent.mkdir(parents=True, exist_ok=True)
     im.save(ziel, 'JPEG', quality=95, subsampling=0)
     return im.size
-
 
 for name, (luecke, spender) in STELLEN.items():
     quelle = QUELLEN / name

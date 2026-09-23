@@ -1,0 +1,11 @@
+# Aushang: „Ü40 – Gegner“ = Heimspiel, „Gegner – Ü40“ = auswärts.
+
+team: Ü40
+spielstaette: VSV-Sportplatz
+stand: September 2026
+
+spiele:
+  - { date: 2026-09-25, time: '19:00', opponent: "SV Groß Düngen", home: false }
+  - { date: 2026-10-02, time: '19:00', opponent: "SV BW Neuhof", home: true }
+  - { date: 2026-10-09, time: '19:00', opponent: "SG Himmelsthür/Sorsum/Emmerke", home: false }
+  - { date: 2026-10-30, time: '19:00', opponent: "SC Itzum", home: true }

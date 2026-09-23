@@ -1,85 +1,92 @@
 ---
 import Icon from './Icon.astro';
 import FamilyCalculator from './FamilyCalculator.astro';
-import { beitragsregeln, fees, joinSteps } from '../data/membership';
+import SectionHead from './SectionHead.astro';
+import { getBeitragsregeln, getFees, getJoinSteps } from '../lib/mitgliedschaft';
 
 interface Props {
-  /** Auf der Startseite als Teaser, auf der Unterseite als volle Sektion. */
   compact?: boolean;
 }
 
 const { compact = false } = Astro.props;
-// Zwei Nachkommastellen: 7,50 € wuerde sonst als 8 € erscheinen.
+const fees = await getFees();
+const beitragsregeln = await getBeitragsregeln();
+const joinSteps = await getJoinSteps();
 const euro = new Intl.NumberFormat('de-DE', {
   style: 'currency',
   currency: 'EUR',
   minimumFractionDigits: 2,
 });
+
+const preis = 'font-display text-sm font-semibold whitespace-nowrap text-primary max-sm:px-2 min-[400px]:text-base sm:text-lg md:text-xl';
 ---
 
-<div class="membership reveal">
-  <div class="section-head">
-    <h2>Mitmachen war noch nie so einfach</h2>
+<div class="card rounded-3xl bg-base-100 p-4 text-base shadow-sm min-[400px]:p-6 md:p-12">
+  <SectionHead title="Mitmachen war noch nie so einfach">
     <p>
       Formular ausfüllen, unterschreiben, ab geht's aufs Feld – für kleines
       Geld und mit großem Spaß.
     </p>
-  </div>
+  </SectionHead>
 
-  <div class="membership-grid">
-    <div>
-      <table class="fees">
-        <caption class="visually-hidden">Mitgliedsbeiträge pro Monat und pro Jahr</caption>
-        <thead>
+  <div class="grid grid-cols-[1.15fr_0.85fr] items-start gap-8 md:gap-12 max-[900px]:grid-cols-1">
+    <div class="min-w-0">
+      <table class="table text-sm sm:text-base">
+        <caption class="sr-only">Mitgliedsbeiträge pro Monat und pro Jahr</caption>
+        <thead class="text-xs tracking-wider uppercase max-sm:tracking-normal max-sm:whitespace-normal">
           <tr>
-            <th scope="col">Beitrag</th>
-            <th scope="col">Pro Monat</th>
-            <th scope="col">Pro Jahr</th>
+            <th scope="col" class="max-sm:px-2">Beitrag</th>
+            <th scope="col" class="max-sm:px-2">Pro Monat</th>
+            <th scope="col" class="max-sm:px-2">Pro Jahr</th>
           </tr>
         </thead>
         <tbody>
           {
             fees.map((fee) => (
-              <tr>
-                <th scope="row">
+              <tr class="last:bg-base-300">
+                <th scope="row" class="font-medium hyphens-auto max-sm:px-2">
                   {fee.label}
-                  {fee.note && <span class="fees__note">{fee.note}</span>}
+                  {fee.note && (
+                    <span class="block text-xs font-normal text-base-content/70">{fee.note}</span>
+                  )}
                 </th>
-                <td class="fees__price">{euro.format(fee.monthly)}</td>
-                <td class="fees__price fees__price--year">{euro.format(fee.yearly)}</td>
+                <td class={preis}>{euro.format(fee.monthly)}</td>
+                <td class={preis}>{euro.format(fee.yearly)}</td>
               </tr>
             ))
           }
         </tbody>
       </table>
 
-      <ul class="regeln">
-        <li>{beitragsregeln.einzug}</li>
-        <li>{beitragsregeln.guenstigster}</li>
-        <li>{beitragsregeln.ermaessigung}</li>
-        <li>{beitragsregeln.kuendigung}</li>
+      <ul class="mt-4 mb-8 flex flex-col gap-2 text-sm text-base-content/70">
+        {beitragsregeln.map((regel) => <li class="border-l-2 border-base-300 pl-4">{regel}</li>)}
       </ul>
 
-      <ol class="steps">
+      <ol class="mt-10 grid gap-6 sm:grid-cols-3">
         {
           joinSteps.map((step, index) => (
-            <li class="step">
-              <span class="step__num" aria-hidden="true">{index + 1}</span>
-              <h3>{step.title}</h3>
-              <p>{step.text}</p>
+            <li>
+              <span
+                class="mb-3 grid size-9 place-items-center rounded-full bg-accent font-display font-bold text-accent-content"
+                aria-hidden="true"
+              >
+                {index + 1}
+              </span>
+              <h3 class="mb-1 text-base">{step.title}</h3>
+              <p class="text-sm text-base-content/70">{step.text}</p>
             </li>
           ))
         }
       </ol>
 
-      <div class="membership-ctas">
-        <a class="btn btn--primary" href="/mitglied-werden#formulare">
+      <div class="mt-10 flex flex-wrap items-center gap-4">
+        <a class="btn btn-accent" href="/mitglied-werden/#formulare">
           <Icon name="download" />
           Mitgliedsantrag herunterladen
         </a>
         {
           compact && (
-            <a class="btn btn--ghost" href="/mitglied-werden">
+            <a class="link inline-flex items-center gap-1.5 font-semibold link-accent" href="/mitglied-werden/">
               Alle Infos zur Mitgliedschaft
               <Icon name="arrowRight" size={16} />
             </a>
@@ -91,130 +98,3 @@ const euro = new Intl.NumberFormat('de-DE', {
     <FamilyCalculator />
   </div>
 </div>
-
-<style>
-  .membership {
-    background: var(--c-surface);
-    border-radius: var(--radius-lg);
-    padding: clamp(1.5rem, 4vw, 3rem);
-    box-shadow: var(--shadow-sm);
-  }
-
-  .membership-grid {
-    display: grid;
-    grid-template-columns: 1.15fr 0.85fr;
-    gap: clamp(2rem, 4vw, 3rem);
-    align-items: start;
-  }
-
-  /* ---- Beitragstabelle ---- */
-  .fees {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  .fees th,
-  .fees td {
-    text-align: left;
-    padding: 0.75rem 0.5rem;
-    border-bottom: 1px solid var(--c-border);
-  }
-  .fees thead th {
-    color: var(--c-text-muted);
-    font-weight: 600;
-    font-size: 0.78rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-  .fees tbody th {
-    font-weight: 500;
-    font-family: var(--font-body);
-    color: var(--c-text);
-    font-size: 0.98rem;
-  }
-  .fees__price--year {
-    color: var(--c-text-muted);
-    font-weight: 500;
-  }
-
-  .regeln {
-    list-style: none;
-    padding: 0;
-    margin: var(--sp-4) 0 var(--sp-6);
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    font-size: 0.9rem;
-    line-height: 1.5;
-    color: var(--c-text-muted);
-  }
-  .regeln li {
-    padding-left: 1rem;
-    border-left: 2px solid var(--c-border);
-  }
-
-  .fees__note {
-    display: block;
-    font-size: 0.8rem;
-    font-weight: 400;
-    color: var(--c-text-muted);
-  }
-  .fees__price {
-    font-family: var(--font-display);
-    font-weight: 600;
-    color: var(--c-primary);
-    font-size: var(--step-1);
-    white-space: nowrap;
-  }
-  .fees tbody tr:last-child th,
-  .fees tbody tr:last-child td {
-    border-bottom: none;
-    background: var(--c-tint-green);
-  }
-  .fees tbody tr:last-child th { border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
-  .fees tbody tr:last-child td { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
-
-  /* ---- Schritte ---- */
-  .steps {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-    gap: var(--sp-5);
-    list-style: none;
-    padding: 0;
-    margin: var(--sp-7) 0 0;
-  }
-  .step__num {
-    display: grid;
-    place-items: center;
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background: var(--c-accent-ink);
-    color: #fff;
-    font-weight: 700;
-    font-family: var(--font-display);
-    margin-bottom: var(--sp-3);
-  }
-  .step h3 {
-    font-size: 1rem;
-    margin: 0 0 0.25rem;
-  }
-  .step p {
-    font-size: 0.9rem;
-    color: var(--c-text-muted);
-    margin: 0;
-  }
-
-  .membership-ctas {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: var(--sp-4);
-    margin-top: var(--sp-7);
-  }
-
-  @media (max-width: 900px) {
-    .membership-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>

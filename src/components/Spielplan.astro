@@ -1,56 +1,65 @@
 ---
-import { spielDatum, type Spiel } from '../data/spielplan';
+import Container from './Container.astro';
+import SectionHead from './SectionHead.astro';
+import { getEntry } from 'astro:content';
+import { spielDatum, type Spiel } from '../lib/spielplan';
+import { spielKnoten } from '../lib/seo';
 
 interface Props {
+  sport: string;
   heading: string;
   spiele: Spiel[];
-  /** Beschriftung der Tabelle für Screenreader. */
   caption: string;
-  /** Spalte „Team“ nur zeigen, wenn eine Sportart mehrere Mannschaften stellt. */
   withTeam?: boolean;
 }
 
-const { heading, spiele, caption, withTeam = false } = Astro.props;
+const { sport, heading, spiele, caption, withTeam = false } = Astro.props;
+
+if (!Astro.isPrerendered) {
+  Astro.response.headers.set('Cache-Control', 'public, max-age=300, s-maxage=3600');
+}
+
+const sportName = (await getEntry('sportarten', sport))?.data.name ?? sport;
+const ereignisse = await spielKnoten(sport, sportName, Astro.site!.origin);
+const jsonLdText = JSON.stringify({ '@context': 'https://schema.org', '@graph': ereignisse }).replace(/</g, '\\u003c');
+
+const kopf = 'text-xs font-bold tracking-wide uppercase whitespace-normal';
+const zelle = 'align-top';
 ---
 
 {
   spiele.length > 0 && (
-    <section class="section--tight">
-      <div class="container narrow">
-        <div class="section-head">
-          <h2>{heading}</h2>
+    <section class="pb-16 md:pb-20">
+      <script is:inline type="application/ld+json" set:html={jsonLdText} />
+      <Container>
+        <SectionHead title={heading}>
           <p><slot /></p>
-        </div>
+        </SectionHead>
 
-        <div class="spielplan">
-          <table>
-            <caption class="visually-hidden">{caption}</caption>
+        <div class="overflow-x-auto rounded-box border border-base-300 bg-base-100">
+          <table class="table min-w-[34rem]">
+            <caption class="sr-only">{caption}</caption>
             <thead>
               <tr>
-                <th scope="col">Datum</th>
-                <th scope="col">Zeit</th>
-                {withTeam && <th scope="col">Team</th>}
-                <th scope="col">Gegner</th>
-                <th scope="col">Wo</th>
+                <th scope="col" class={kopf}>Datum</th>
+                <th scope="col" class={kopf}>Zeit</th>
+                {withTeam && <th scope="col" class={kopf}>Team</th>}
+                <th scope="col" class={kopf}>Gegner</th>
+                <th scope="col" class={kopf}>Wo</th>
               </tr>
             </thead>
             <tbody>
               {spiele.map((spiel) => (
                 <tr>
-                  <td class="spielplan__datum">{spielDatum(spiel.date)}</td>
-                  <td class="spielplan__zeit">{spiel.time}</td>
-                  {withTeam && <td>{spiel.team}</td>}
-                  <td>
+                  <td class={`${zelle} whitespace-nowrap tabular-nums`}>{spielDatum(spiel.date)}</td>
+                  <td class={`${zelle} whitespace-nowrap tabular-nums`}>{spiel.time}</td>
+                  {withTeam && <td class={zelle}>{spiel.team}</td>}
+                  <td class={zelle}>
                     {spiel.opponent}
-                    {spiel.note && <span class="spielplan__zusatz">{spiel.note}</span>}
+                    {spiel.note && <span class="ml-1.5 text-xs text-base-content/70">{spiel.note}</span>}
                   </td>
-                  <td>
-                    <span
-                      class:list={[
-                        'spielplan__ort',
-                        spiel.home && 'spielplan__ort--heim',
-                      ]}
-                    >
+                  <td class={zelle}>
+                    <span class:list={['badge badge-sm font-bold whitespace-nowrap', spiel.home ? 'badge-warning' : 'badge-ghost']}>
                       {spiel.home ? 'Heim' : 'Auswärts'}
                     </span>
                   </td>
@@ -59,73 +68,7 @@ const { heading, spiele, caption, withTeam = false } = Astro.props;
             </tbody>
           </table>
         </div>
-      </div>
+      </Container>
     </section>
   )
 }
-
-<style>
-  .spielplan {
-    overflow-x: auto;
-    border: 1px solid var(--c-border);
-    border-radius: var(--radius-sm);
-    background: var(--c-surface);
-  }
-  table {
-    width: 100%;
-    min-width: 34rem;
-    border-collapse: collapse;
-    font-size: 0.92rem;
-  }
-  caption.visually-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
-  }
-  th {
-    text-align: left;
-    font-size: 0.78rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--c-text-muted);
-    padding: 0.7rem 0.9rem;
-    border-bottom: 1px solid var(--c-border);
-  }
-  td {
-    padding: 0.65rem 0.9rem;
-    border-bottom: 1px solid var(--c-border);
-    vertical-align: top;
-  }
-  tbody tr:last-child td {
-    border-bottom: none;
-  }
-  .spielplan__datum,
-  .spielplan__zeit {
-    white-space: nowrap;
-    font-variant-numeric: tabular-nums;
-  }
-  .spielplan__zusatz {
-    margin-left: 0.4rem;
-    font-size: 0.82rem;
-    color: var(--c-text-muted);
-  }
-  .spielplan__ort {
-    display: inline-block;
-    font-size: 0.78rem;
-    font-weight: 700;
-    padding: 0.15rem 0.55rem;
-    border-radius: var(--radius-pill);
-    border: 1px solid var(--c-border);
-    color: var(--c-text-muted);
-    white-space: nowrap;
-  }
-  .spielplan__ort--heim {
-    background: var(--c-sun);
-    border-color: transparent;
-    /* Dunkles Braun auf Gelb: 8,4:1 Kontrast. */
-    color: #4a3600;
-  }
-</style>

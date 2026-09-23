@@ -1,17 +1,10 @@
-/**
- * Icon-Set der Website: einheitliche Outline-Icons auf 24×24-Raster.
- * Werte sind das Innere eines <svg viewBox="0 0 24 24"> – gerendert wird
- * über <Icon name="..." /> (siehe Icon.astro).
- */
 export const icons = {
-  // --- Navigation ---
   home: '<path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9a1 1 0 0 0 1 1H10v-6h4v6h3.5a1 1 0 0 0 1-1v-9"/>',
   sport: '<circle cx="16" cy="5" r="2"/><path d="M6 20l3-6 4-2-1-4 4 1 2 4-3 1 1 6"/><path d="M9 12 6 9"/>',
   join: '<circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c0-3 2.5-5.2 5.5-5.2s5.5 2.2 5.5 5.2"/><path d="M18 8v6M15 11h6"/>',
   info: '<circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5"/><circle cx="12" cy="8" r="0.9" fill="currentColor" stroke="none"/>',
   mail: '<rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="M4 6.5 12 13l8-6.5"/>',
 
-  // --- UI ---
   phone:
     '<path d="M5.5 4.5h3l1.3 4-2 1.5a11 11 0 0 0 5.2 5.2l1.5-2 4 1.3v3a1.5 1.5 0 0 1-1.6 1.5A15.5 15.5 0 0 1 4 5.6a1.5 1.5 0 0 1 1.5-1.1z"/>',
   pin: '<path d="M12 21s6.5-6.1 6.5-11A6.5 6.5 0 0 0 5.5 10c0 4.9 6.5 11 6.5 11z"/><circle cx="12" cy="10" r="2.2"/>',
@@ -34,7 +27,6 @@ export const icons = {
   camera:
     '<rect x="3.5" y="7" width="17" height="12" rx="2.5"/><circle cx="12" cy="13" r="3.4"/><path d="M8.5 7 9.7 5h4.6l1.2 2"/>',
 
-  // --- Social ---
   instagram:
     '<rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5"/><circle cx="12" cy="12" r="4.1"/><circle cx="17.1" cy="6.9" r="1.15" fill="currentColor" stroke="none"/>',
   facebook:
