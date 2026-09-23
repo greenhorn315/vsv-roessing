@@ -4,6 +4,9 @@ import { nachOrder } from './reihenfolge';
 import { getSportNames } from './sportarten';
 import { kommendeSpiele, nachTermin } from './spielplan';
 
+export const OG_WIDTH = 1200;
+export const OG_HEIGHT = 630;
+
 export type JsonLdNode = Record<string, unknown>;
 
 const absolut = (pfad: string, origin: string) => new URL(pfad, origin).href;

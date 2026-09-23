@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
+import cloudflare from '@astrojs/cloudflare';
 
 // Beim Livegang auf die echte Domain umstellen.
 export const SITE_URL = 'https://vsv-roessing.de';
@@ -10,6 +11,14 @@ export default defineConfig({
   site: SITE_URL,
   output: 'static',
   trailingSlash: 'always',
+  // Ohne Sessions legt der Adapter keinen KV-Namespace an.
+  session: false,
+  adapter: cloudflare({
+    imageService: 'compile',
+    imagesBindingName: false,
+    // og.ts braucht beim Vorrendern Node (Sharp, Dateisystem).
+    prerenderEnvironment: 'node',
+  }),
   integrations: [sitemap()],
   build: {
     format: 'directory',

@@ -12,8 +12,7 @@ import { getSports, type Sport } from '../../lib/sportarten';
 import { trainingsOfSport } from '../../lib/trainings';
 import { ageGroupLabels, sportColorVar } from '../../lib/labels';
 import { site } from '../../lib/site';
-import { brotkrumenKnoten, spielKnoten, type Brotkrume } from '../../lib/seo';
-import { OG_HEIGHT, OG_WIDTH } from '../../lib/og';
+import { brotkrumenKnoten, OG_HEIGHT, OG_WIDTH, type Brotkrume } from '../../lib/seo';
 
 export async function getStaticPaths() {
   return (await getSports()).map((eintrag) => ({
@@ -52,10 +51,7 @@ const zeilenIcon = 'mt-0.5 shrink-0 text-secondary';
 const zeilenTitel = 'mb-1 font-sans text-xs font-bold tracking-wider uppercase text-base-content/70';
 
 const seite = new URL(Astro.url.pathname, Astro.site);
-const jsonLd = [
-  brotkrumenKnoten(brotkrumen, seite),
-  ...(await spielKnoten(sport.slug, sport.name, seite.origin)),
-];
+const jsonLd = [brotkrumenKnoten(brotkrumen, seite)];
 ---
 
 <BaseLayout
@@ -275,8 +271,23 @@ const jsonLd = [
     </Container>
   </section>
 
-  {sport.slug === 'dart' && <DartSpielplan />}
-  {sport.slug === 'fussball' && <FussballSpielplan />}
+  {
+    /* Spielpläne als Server Island: gespielte Partien fallen ohne neuen Build heraus. */
+  }
+  {
+    sport.slug === 'dart' && (
+      <DartSpielplan server:defer>
+        <DartSpielplan slot="fallback" />
+      </DartSpielplan>
+    )
+  }
+  {
+    sport.slug === 'fussball' && (
+      <FussballSpielplan server:defer>
+        <FussballSpielplan slot="fallback" />
+      </FussballSpielplan>
+    )
+  }
 
   <nav class="border-t border-base-300 py-6" aria-label="Weitere Sportarten">
     <Container class="flex flex-wrap items-center justify-between gap-4 max-[620px]:justify-center max-[620px]:text-center">

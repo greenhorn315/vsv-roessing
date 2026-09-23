@@ -6,7 +6,7 @@ import { mkdirSync } from 'node:fs';
 import { extname, join, resolve } from 'node:path';
 
 const out = process.argv[2] ?? 'screenshots';
-const dist = resolve('dist');
+const dist = resolve('dist/client');
 const routes = [
   '/', '/sportangebote/', '/sportangebote/fussball/', '/sportangebote/outdoor/',
   '/sportangebote/dart/', '/sportangebote/yoga/', '/mitglied-werden/', '/verein/',

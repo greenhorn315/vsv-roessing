@@ -7,7 +7,7 @@ Relaunch der Vereinswebsite als statische Astro-Seite, ausgeliefert über Cloudf
 ```bash
 npm install
 npm run dev      # Entwicklungsserver auf http://localhost:4321
-npm run build    # Typprüfung + Produktions-Build nach dist/
+npm run build    # Typprüfung + Produktions-Build nach dist/ (client/ statisch, server/ Worker)
 npm run preview  # Build lokal testen
 ```
 
@@ -131,10 +131,15 @@ eigenen Klassen, Farben oder Skalen.
 
 ## Deployment (Cloudflare)
 
-Statischer Build, kein Server nötig.
+Cloudflare Workers mit dem Adapter `@astrojs/cloudflare`. Alle Seiten werden beim
+Build vorgerendert. Nur die Spielpläne auf den Seiten für Dart und Fußball sind
+Server Islands (`server:defer`): Sie kommen bei jedem Aufruf aus dem Worker
+(eine Stunde im Cloudflare-Cache), damit gespielte Partien ohne neuen Build aus
+der Liste fallen. Ohne JavaScript bleibt der Stand vom letzten Build stehen.
 
-* **Pages/Workers via Git:** Build-Befehl `npm run build`, Output-Verzeichnis `dist`.
-* **Manuell:** `npm run deploy` (nutzt `wrangler.jsonc`).
+* **Workers Builds via Git:** Build-Befehl `npm run build`, Deploy-Befehl
+  `npx wrangler deploy`.
+* **Manuell:** `npm run deploy`.
 
 Der Build nutzt `format: 'directory'` (`kontakt/index.html`). Verzeichnis-Indizes
 liefert jeder Webserver ohne Zusatzregeln aus, Cloudflare genauso wie die

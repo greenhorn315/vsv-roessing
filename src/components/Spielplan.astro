@@ -1,16 +1,27 @@
 ---
 import Container from './Container.astro';
 import SectionHead from './SectionHead.astro';
+import { getEntry } from 'astro:content';
 import { spielDatum, type Spiel } from '../lib/spielplan';
+import { spielKnoten } from '../lib/seo';
 
 interface Props {
+  sport: string;
   heading: string;
   spiele: Spiel[];
   caption: string;
   withTeam?: boolean;
 }
 
-const { heading, spiele, caption, withTeam = false } = Astro.props;
+const { sport, heading, spiele, caption, withTeam = false } = Astro.props;
+
+if (!Astro.isPrerendered) {
+  Astro.response.headers.set('Cache-Control', 'public, max-age=300, s-maxage=3600');
+}
+
+const sportName = (await getEntry('sportarten', sport))?.data.name ?? sport;
+const ereignisse = await spielKnoten(sport, sportName, Astro.site!.origin);
+const jsonLdText = JSON.stringify({ '@context': 'https://schema.org', '@graph': ereignisse }).replace(/</g, '\\u003c');
 
 const kopf = 'text-xs font-bold tracking-wide uppercase whitespace-normal';
 const zelle = 'align-top';
@@ -19,6 +30,7 @@ const zelle = 'align-top';
 {
   spiele.length > 0 && (
     <section class="pb-16 md:pb-20">
+      <script is:inline type="application/ld+json" set:html={jsonLdText} />
       <Container>
         <SectionHead title={heading}>
           <p><slot /></p>

@@ -10,12 +10,9 @@ export async function getSpielplan(sport: string): Promise<Spielplan> {
   return { ...eintrag.data, spiele: nachTermin(eintrag.data.spiele) };
 }
 
+// Der Worker läuft in UTC; „heute“ ist aber der Tag in Rössing.
 const alsIsoDatum = (tag: Date): string =>
-  [
-    tag.getFullYear(),
-    String(tag.getMonth() + 1).padStart(2, '0'),
-    String(tag.getDate()).padStart(2, '0'),
-  ].join('-');
+  new Intl.DateTimeFormat('sv-SE', { timeZone: 'Europe/Berlin' }).format(tag);
 
 export const kommendeSpiele = <T extends Spiel>(
   spiele: readonly T[],

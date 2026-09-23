@@ -4,9 +4,8 @@ import { resolve } from 'node:path';
 import satori from 'satori';
 import sharp from 'sharp';
 import { site } from './site';
+import { OG_HEIGHT, OG_WIDTH } from './seo';
 
-export const OG_WIDTH = 1200;
-export const OG_HEIGHT = 630;
 
 const farben = {
   primary: '#14453D',

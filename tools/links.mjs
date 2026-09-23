@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync, statSync, existsSync } from 'node:fs';
 import { join, relative, resolve, extname } from 'node:path';
 
-const dist = resolve('dist');
+const dist = resolve('dist/client');
 const origin = 'https://vsv-roessing.de';
 
 const htmlFiles = [];
