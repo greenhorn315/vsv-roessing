@@ -1,7 +1,8 @@
 # Fotos der Sportstätten
 
-Diese Dateien zeigt die Kontaktseite im Abschnitt „Unsere Sportstätten“
-(`/kontakt#sportstaetten`). Eingetragen werden sie in
+Diese Dateien zeigt die Vereinsseite im Abschnitt „Unsere Sportstätten“
+(`/verein/#sportstaetten`). Die Kontaktseite führt die Anschriften kurz in der
+Seitenleiste auf und verweist dorthin. Eingetragen werden sie in
 `src/content/sportstaetten.yaml`; ein verschriebener Dateiname bricht den Build
 ab. Ein Ort ganz ohne Fotos bekommt einen gestalteten Platzhalter mit dem
 Hinweis „Foto folgt“.

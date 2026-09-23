@@ -60,3 +60,8 @@ export async function getFacts(): Promise<{ value: string; label: string }[]> {
     { value: 'ab 4 €', label: 'im Monat dabei' },
   ];
 }
+
+export const mapsUrl = (ort: { street?: string; postalCode?: string; city?: string }): string =>
+  `https://www.openstreetmap.org/search?query=${encodeURIComponent(
+    [ort.street, ort.postalCode, ort.city].filter(Boolean).join(' '),
+  )}`;

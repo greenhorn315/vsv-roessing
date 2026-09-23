@@ -6,6 +6,7 @@ import Facts from '../components/Facts.astro';
 import CallToAction from '../components/CallToAction.astro';
 import Container from '../components/Container.astro';
 import SectionHead from '../components/SectionHead.astro';
+import VenueGallery from '../components/VenueGallery.astro';
 import { site } from '../lib/site';
 import { getSportCountWord } from '../lib/sportarten';
 import { getCollection } from 'astro:content';
@@ -18,7 +19,7 @@ const sportCountWord = await getSportCountWord();
 
 <BaseLayout
   title="Verein"
-  description="Der VSV Rössing von 1897 e.V.: Geschichte, Vorstand und Aktuelles aus dem Vereinsleben."
+  description="Der VSV Rössing von 1897 e.V.: Geschichte, Vorstand, Sportstätten mit Adressen und Fotos, Aktuelles aus dem Vereinsleben."
 >
   <PageHeader
     eyebrow="Über uns"
@@ -69,6 +70,8 @@ const sportCountWord = await getSportCountWord();
       </div>
     </Container>
   </section>
+
+  <VenueGallery />
 
   <section class="pb-16 md:pb-20">
     <Container>

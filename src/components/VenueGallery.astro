@@ -5,6 +5,7 @@ import Container from './Container.astro';
 import { getCollection } from 'astro:content';
 import { zahlwort } from '../lib/labels';
 import { nachOrder } from '../lib/reihenfolge';
+import { mapsUrl } from '../lib/site';
 
 interface Props {
   id?: string;
@@ -28,10 +29,6 @@ const kleinBreiten = [280, 400, 560, 800, 1024];
 const kleinSizes = (anzahl: number) =>
   `(max-width: 700px) calc((100vw - 3.2rem) / ${anzahl}), (max-width: 1220px) calc((50vw - 4.2rem) / ${anzahl}), calc(540px / ${anzahl})`;
 
-const mapsUrl = (ort: (typeof venues)[number]) =>
-  `https://www.openstreetmap.org/search?query=${encodeURIComponent(
-    [ort.street, ort.postalCode, ort.city].filter(Boolean).join(' ')
-  )}`;
 ---
 
 <section class="py-16 md:py-20" id={id}>

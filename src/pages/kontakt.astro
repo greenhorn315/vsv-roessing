@@ -2,10 +2,9 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Icon from '../components/Icon.astro';
-import VenueGallery from '../components/VenueGallery.astro';
 import Container from '../components/Container.astro';
 import { getCollection } from 'astro:content';
-import { site } from '../lib/site';
+import { site, mapsUrl } from '../lib/site';
 import { getSportNames } from '../lib/sportarten';
 import { nachOrder } from '../lib/reihenfolge';
 
@@ -132,16 +131,16 @@ const infoText = 'text-base-content/70';
                 <li class="flex flex-col text-sm leading-snug">
                   <strong class="text-primary">{ort.name}</strong>
                   {ort.street && (
-                    <span class="text-base-content/70">
+                    <a class="link text-base-content/70" href={mapsUrl(ort)} target="_blank" rel="noopener">
                       {ort.street}, {ort.postalCode} {ort.city}
-                    </span>
+                    </a>
                   )}
                 </li>
               ))
             }
           </ul>
           <p class={`${infoText} text-sm`}>
-            <a class="link" href="#sportstaetten">Alle Sportstätten mit Fotos ansehen</a>
+            <a class="link" href="/verein/#sportstaetten">Alle Sportstätten mit Fotos ansehen</a>
           </p>
         </div>
 
@@ -158,7 +157,6 @@ const infoText = 'text-base-content/70';
     </Container>
   </section>
 
-  <VenueGallery />
 </BaseLayout>
 
 <script>

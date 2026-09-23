@@ -2,7 +2,7 @@
 # dem B-Team); Gegner des A-Teams am 11.12.2026 aus dem Rückspiel ergänzt; Himmelsthür mit s.
 
 saison: 2026/2027
-spielstaette: Der Dorfbrunnen
+spielstaette: Zum Dorfbrunnen
 
 spiele:
   - { team: A, date: 2026-09-18, time: '19:00', opponent: "Tus Grün Weiß Himmelsthür A", home: true }
