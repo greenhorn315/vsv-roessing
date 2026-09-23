@@ -15,9 +15,10 @@ npm run preview  # Build lokal testen
 
 ```
 src/
-├── content/       Content Collections: vom Verein gepflegt, schemageprüft
+├── content/       Inhalte – hier wird gepflegt (Sportarten, Beiträge, News …)
 ├── content.config.ts   Schema je Collection
-├── data/          Inhalte – hier wird gepflegt (Beiträge, Sportarten, News …)
+├── lib/           Vereinsdaten, Beschriftungen und alles, was aus den Inhalten
+│                  abgeleitet wird (Anzahl der Sportarten, Kennzahlen …)
 ├── styles/        global.css: Design-Tokens, Reset, Buttons, Layout-Primitives
 ├── components/    Wiederverwendbare Bausteine, CSS jeweils scoped im <style>
 ├── layouts/       BaseLayout: <head>, SEO, Schema.org, Header/Footer
@@ -30,35 +31,45 @@ public/
 
 ### Inhalte pflegen
 
-Fast alles steckt in `src/data/` und braucht keine HTML-Kenntnisse:
+Alles, was der Verein laufend pflegt, liegt als Astro Content Collection unter
+`src/content/` – in YAML oder Markdown statt TypeScript, also ohne
+Programmierkenntnisse zu bearbeiten. Jede Datei erklärt oben in einem
+Kommentar, welche Angaben sie erwartet und woher die Daten stammen.
 
 | Datei | Inhalt |
 |---|---|
-| `site.ts` | Vereinsname, Adresse, E-Mail, Social, Navigation, Kennzahlen |
-| `sports.ts` | Die neun Sportarten inkl. Altersgruppen für den Filter |
-| `membership.ts` | Beitragstabelle, Rechenwerte des Familienrechners, Beitrittsschritte |
-| `news.ts` | Meldungen (neueste zuerst) |
-| `trainings.ts` | Trainingszeiten |
-| `testimonials.ts` | Zitate von Mitgliedern |
+| `sportarten/<slug>.md` | Je Sportart eine Datei: Angaben oben, darunter der Text der Detailseite. Der Dateiname ist die Adresse (`/sportangebote/<slug>`) |
+| `trainings.yaml` | Trainingszeiten; `sport` verweist auf den Dateinamen der Sportart |
+| `sportstaetten.yaml` | Sportstätten mit Anschrift und Fotos |
+| `news/*.md` | Meldungen, je Datei eine; `order` bestimmt die Reihenfolge |
+| `mitgliedschaft/beitraege.yaml` | Beitragssätze – auch die Rechenwerte des Familienrechners |
+| `mitgliedschaft/beitragsregeln.yaml` | Abbuchung, Ermäßigung, Kündigung |
+| `mitgliedschaft/formulare.yaml` | PDF-Formulare; die Dateigröße wird beim Bauen gelesen |
+| `mitgliedschaft/beitrittsschritte.yaml` | Die drei Schritte zur Mitgliedschaft |
+| `spielplaene/dart.yaml`, `spielplaene/fussball.yaml` | Spielpläne nach dem Aushang |
+| `karussell.yaml` | Bilder im Karussell der Startseite |
+| `testimonials.yaml` | Zitate von Mitgliedern |
+| `vorstand.yaml` | Ämter und Namen des Vorstands |
+| `rechtliches/impressum.md`, `rechtliches/datenschutz.md` | Rechtstexte in Markdown, Wortlaut unverändert übernommen |
+
+Wo die Reihenfolge auf der Seite zählt, steht ein `order` am Eintrag – Astro
+liefert die Einträge sonst in keiner verlässlichen Reihenfolge, auch nicht in
+der Reihenfolge der Datei.
+
+Vereinsname, Anschrift, E-Mail, Mitgliederzahl, Social-Media-Links und die
+Navigation stehen in `src/lib/site.ts`; das ist Konfiguration, die sich selten
+ändert. Zahlen, die sich aus den Inhalten ergeben – „neun Sportarten“, die
+Kennzahlen der Trainingsgruppen, die Rechenwerte des Familienrechners –,
+werden in `src/lib/` berechnet und stehen nirgends von Hand.
 
 ### Content Collections
-
-Was der Verein selbst pflegt und was keine Logik mitbringt, liegt als Astro
-Content Collection unter `src/content/` – in YAML statt TypeScript, also ohne
-Programmierkenntnisse zu bearbeiten.
-
-| Datei | Inhalt |
-|---|---|
-| `vorstand.yaml` | Ämter und Namen des Vorstands, in der Reihenfolge `order` |
-
-Der Unterschied zu `src/data/`: Dort steht, was die Seite selbst ausmacht und
-oft Logik mitträgt – abgeleitete Zahlen, Verweise zwischen Dateien. Das bleibt
-in TypeScript.
 
 Das Schema in `src/content.config.ts` wird **beim Bauen geprüft**. Eine fehlende
 Pflichtangabe, ein leerer Wert oder ein verschriebener Schlüssel bricht den Build
 ab und nennt den betroffenen Eintrag – statt still eine leere Stelle auf der
-Seite zu erzeugen.
+Seite zu erzeugen. Dasselbe gilt für Verweise: Steht in `trainings.yaml` bei
+`sport` ein Name, zu dem es keine Datei unter `sportarten/` gibt, bricht der
+Build ab.
 
 Schreibt jemand versehentlich `nmae:` statt `name:`, sieht das so aus:
 
@@ -126,20 +137,21 @@ Fußbereich steht als `STAND` oben im Skript.
 - [ ] Aufenthaltsraum im Vereinsheim noch einmal fotografieren: Auf der
       vorhandenen Aufnahme stehen Stühle gestapelt und ein Grill mitten im
       Raum. Aufgeräumt wäre das eine dritte Ansicht wert
-- [x] Beiträge in `src/data/membership.ts` gegen die Vereinsformulare
+- [x] Beiträge in `src/content/mitgliedschaft/beitraege.yaml` gegen die Vereinsformulare
       abgeglichen und vom Kassenwart bestätigt: 4 € für Kinder und
       Jugendliche, 7,50 € einzeln, 15 € für Familien mit minderjährigen
       Kindern; Einzug jährlich am 1. Juni, Kündigung zum Quartalsende
-- [x] Vorstand vollständig in `src/data/vorstand.ts`: 1. Vorsitzender Erich
+- [x] Vorstand vollständig in `src/content/vorstand.yaml`: 1. Vorsitzender Erich
       Könneke, 2. Vorsitzender Uwe Speer, Kassenwart Thomas Kuse,
       Schriftführerin Monika Koch
 - [ ] Vereinschronik: Der Geschichtsabschnitt in `src/pages/verein.astro` ist
       weiter ein Platzhaltertext
-- [x] Impressum aus der Altseite übernommen (`src/data/impressum.ts`)
-- [x] Datenschutzerklärung neu verfasst (`src/data/datenschutz.ts`): beschreibt
-      die Verarbeitung dieser Seite statt der bisherigen WordPress-Funktionen.
-      Der übernommene Originaltext liegt als Referenz in
-      `src/data/datenschutz-uebernommen.ts` und wird nicht ausgeliefert.
+- [x] Impressum aus der Altseite übernommen (`src/content/rechtliches/impressum.md`)
+- [x] Datenschutzerklärung neu verfasst (`src/content/rechtliches/datenschutz.md`):
+      beschreibt die Verarbeitung dieser Seite statt der bisherigen
+      WordPress-Funktionen. Der übernommene Originaltext lag als Referenz in
+      `src/data/datenschutz-uebernommen.ts`, wurde nie ausgeliefert und ist
+      nur noch in der Git-Historie nachzulesen.
 - [ ] **Datenschutzerklärung rechtlich prüfen lassen** und Abschnitt 4 um den
       Hosting-Anbieter, die Speicherdauer der Logfiles und den Vertrag zur
       Auftragsverarbeitung nach Art. 28 DSGVO ergänzen. Bewusst
@@ -164,7 +176,7 @@ Fußbereich steht als `STAND` oben im Skript.
       von „Sparten". Der Titel „Spartenleitung" bleibt, das ist die Bezeichnung
       im Verein
 - [ ] `site` in `astro.config.mjs` auf die finale Domain setzen
-- [ ] Detailtexte der Sportarten in `src/data/sports.ts` fachlich prüfen
+- [ ] Detailtexte der Sportarten in `src/content/sportarten/` fachlich prüfen
 - [ ] Zuordnung klären: welche einzelnen Angebote gehören zu welcher
       Sportart? Befüllt sind Outdoor (Wandern, Nordic Walking, Radwandern,
       Boßeln) und Leichtathletik (Laufen, Springen, Werfen). Es fehlen
@@ -173,16 +185,17 @@ Fußbereich steht als `STAND` oben im Skript.
       Kurzbeschreibung ergänzen. Übungsleitung und Trainingszeit stehen seit
       dem 15. September; die Altersgruppe „Erwachsene" ist eine Annahme, die
       Seite weist die fehlenden Angaben sichtbar aus.
-- [ ] Ansprechpartner je Sportart ergänzen (`contact` in `src/data/sports.ts`).
+- [ ] Ansprechpartner je Sportart ergänzen (`contact` in `src/content/sportarten/<slug>.md`).
       Der Titel im Verein ist „Spartenleitung“ und bleibt so stehen. Bisher nur
       Outdoor; die übrigen fallen auf die Vorstandsadresse zurück.
 
 ### Trainingszeiten
 
-Die 37 Gruppen in `src/data/trainings.ts` stammen überwiegend aus der
+Die 37 Gruppen in `src/content/trainings.yaml` stammen überwiegend aus der
 Übungsleiterliste von 2022 und sind nicht bestätigt. Bestätigt sind seit dem
 22. September die vier Leichtathletik-Gruppen und zwei Fußballgruppen. Der Hinweis darauf steht als
-`trainingsStand` überall dort, wo Zeiten angezeigt werden.
+`trainingsStand` (in `src/lib/trainings.ts`) überall dort, wo Zeiten angezeigt
+werden.
 
 - [ ] Stimmen die 37 Gruppen noch? Verteilung: Turnen 10 · Leichtathletik 9 ·
       Fußball 8 · Tanzen 6 · Basketball 1 · Dart 1 · Volleyball 1 · Yoga 1
