@@ -11,44 +11,54 @@ interface Props {
 }
 
 const { heading, spiele, caption, withTeam = false } = Astro.props;
+
+// daisyUI-table mit den bisherigen Abständen, Linien in der Rahmenfarbe.
+// Die Linie unter der letzten Zeile lässt daisyUI selbst weg.
+const kopf =
+  'px-[0.9rem] py-[0.7rem] border-border text-[0.78rem] font-bold uppercase tracking-[0.04em] whitespace-normal';
+const zelle = 'px-[0.9rem] py-[0.65rem] border-border align-top';
 ---
 
 {
   spiele.length > 0 && (
     <section class="section--tight">
-      <div class="container narrow">
+      <div class="container">
         <div class="section-head">
           <h2>{heading}</h2>
           <p><slot /></p>
         </div>
 
-        <div class="spielplan">
-          <table>
-            <caption class="visually-hidden">{caption}</caption>
-            <thead>
+        {/* Auf schmalen Bildschirmen scrollt die Tabelle waagerecht. */}
+        <div class="overflow-x-auto border border-border rounded-sm bg-base-100">
+          <table class="table border-collapse rounded-none min-w-[34rem] text-[0.92rem]">
+            <caption class="sr-only">{caption}</caption>
+            <thead class="text-muted">
               <tr>
-                <th scope="col">Datum</th>
-                <th scope="col">Zeit</th>
-                {withTeam && <th scope="col">Team</th>}
-                <th scope="col">Gegner</th>
-                <th scope="col">Wo</th>
+                <th scope="col" class={kopf}>Datum</th>
+                <th scope="col" class={kopf}>Zeit</th>
+                {withTeam && <th scope="col" class={kopf}>Team</th>}
+                <th scope="col" class={kopf}>Gegner</th>
+                <th scope="col" class={kopf}>Wo</th>
               </tr>
             </thead>
             <tbody>
               {spiele.map((spiel) => (
                 <tr>
-                  <td class="spielplan__datum">{spielDatum(spiel.date)}</td>
-                  <td class="spielplan__zeit">{spiel.time}</td>
-                  {withTeam && <td>{spiel.team}</td>}
-                  <td>
+                  <td class={`${zelle} whitespace-nowrap tabular-nums`}>{spielDatum(spiel.date)}</td>
+                  <td class={`${zelle} whitespace-nowrap tabular-nums`}>{spiel.time}</td>
+                  {withTeam && <td class={zelle}>{spiel.team}</td>}
+                  <td class={zelle}>
                     {spiel.opponent}
-                    {spiel.note && <span class="spielplan__zusatz">{spiel.note}</span>}
+                    {spiel.note && <span class="ml-[0.4rem] text-[0.82rem] text-muted">{spiel.note}</span>}
                   </td>
-                  <td>
+                  <td class={zelle}>
+                    {/* Heim: dunkles Braun auf Gelb, 8,4:1 Kontrast. */}
                     <span
                       class:list={[
-                        'spielplan__ort',
-                        spiel.home && 'spielplan__ort--heim',
+                        'badge h-auto rounded-full align-baseline whitespace-nowrap px-[0.55rem] py-[0.15rem] text-[0.78rem] font-bold leading-[inherit]',
+                        spiel.home
+                          ? 'badge-warning border-transparent text-[#4a3600]'
+                          : 'bg-transparent border-border text-muted',
                       ]}
                     >
                       {spiel.home ? 'Heim' : 'Auswärts'}
@@ -63,69 +73,3 @@ const { heading, spiele, caption, withTeam = false } = Astro.props;
     </section>
   )
 }
-
-<style>
-  .spielplan {
-    overflow-x: auto;
-    border: 1px solid var(--c-border);
-    border-radius: var(--radius-sm);
-    background: var(--c-surface);
-  }
-  table {
-    width: 100%;
-    min-width: 34rem;
-    border-collapse: collapse;
-    font-size: 0.92rem;
-  }
-  caption.visually-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
-  }
-  th {
-    text-align: left;
-    font-size: 0.78rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--c-text-muted);
-    padding: 0.7rem 0.9rem;
-    border-bottom: 1px solid var(--c-border);
-  }
-  td {
-    padding: 0.65rem 0.9rem;
-    border-bottom: 1px solid var(--c-border);
-    vertical-align: top;
-  }
-  tbody tr:last-child td {
-    border-bottom: none;
-  }
-  .spielplan__datum,
-  .spielplan__zeit {
-    white-space: nowrap;
-    font-variant-numeric: tabular-nums;
-  }
-  .spielplan__zusatz {
-    margin-left: 0.4rem;
-    font-size: 0.82rem;
-    color: var(--c-text-muted);
-  }
-  .spielplan__ort {
-    display: inline-block;
-    font-size: 0.78rem;
-    font-weight: 700;
-    padding: 0.15rem 0.55rem;
-    border-radius: var(--radius-pill);
-    border: 1px solid var(--c-border);
-    color: var(--c-text-muted);
-    white-space: nowrap;
-  }
-  .spielplan__ort--heim {
-    background: var(--c-sun);
-    border-color: transparent;
-    /* Dunkles Braun auf Gelb: 8,4:1 Kontrast. */
-    color: #4a3600;
-  }
-</style>
