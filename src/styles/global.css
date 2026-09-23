@@ -1,318 +1,493 @@
 /* =========================================================================
    VSV Rössing – Design-System
-   Tokens, Reset, Basistypografie und Layout-Primitives.
-   Komponentenspezifisches CSS liegt jeweils im <style> der .astro-Datei.
+   Einstieg für Tailwind CSS v4 + daisyUI 5 mit dem Vereinsthema „vsv“.
+
+   Aufbau:
+   1. Tailwind, daisyUI und Klassen, die Tailwind nicht erzeugen darf
+   2. daisyUI-Thema „vsv“ (Farben, Radien, Tiefe)
+   3. @theme: eigene Farben, Schriften, Typo-Skala, Abstände, Schatten
+   4. Alte Tokens (--c-*, --sp-*, --step-* …) als Aliase – bis alle
+      Komponenten auf Utilities umgestellt sind (docs/tailwind-migration.md)
+   5. Basisebene: Typografie, Fokus, reduzierte Bewegung, Druck
+   6. Komponentenebene: alte Hilfsklassen (.container, .section, .eyebrow …)
+   7. Buttons: daisyUI-.btn im Vereinslook
    ========================================================================= */
 
-:root {
-  /* ---- Farben ---------------------------------------------------------
-     Kontraste sind gegen --c-bg bzw. --c-primary auf WCAG AA geprüft.
-     Achtung: --c-accent (#FF6B4A) erreicht mit weißer Schrift nur 2,9:1
-     und ist deshalb rein dekorativ. Für Flächen mit Text auf Weiß gibt es
-     --c-accent-ink (4,96:1). */
-  --c-primary: #14453D;
-  --c-primary-light: #2F7A64;
-  --c-primary-dark: #0D302A;
-  --c-accent: #FF6B4A;
-  --c-accent-ink: #C9401F;
-  --c-accent-ink-hover: #A83217;
-  --c-sun: #FFC857;
-  --c-sun-dark: #A87B00;
-  --c-sun-soft: #FFF6E5;
+@import 'tailwindcss';
 
-  --c-bg: #F5F8F6;
-  --c-surface: #FFFFFF;
-  --c-surface-sunken: #EDF3EF;
-  --c-tint-green: #E7F0EA;
-  --c-tint-coral: #FFE9DE;
+/* Tailwind würde sonst eigene Utilities für Klassennamen erzeugen, die
+   hier eine andere Bedeutung haben:
+   - container: bei uns die Inhaltsbreite (1180px), nicht Tailwinds
+     Breakpoint-Container. Siehe .container unten. */
+@source not inline('container');
 
-  --c-text: #1C2A24;
-  --c-text-muted: #4B5D56;
-  --c-text-on-dark: rgba(255, 255, 255, 0.88);
-  --c-border: #DCE6E1;
-  --c-border-strong: #C3D3CB;
+/* Nur unser eigenes Thema, kein Dunkelmodus. Ausgeschlossen:
+   - scrollbar: daisyUI würde die Farbe der Bildlaufleiste ändern.
+   - rootcolor: daisyUI gäbe <html> einen eigenen Hintergrund. Dann malt
+     <body> seinen Hintergrund selbst und verdeckt Elemente mit negativem
+     z-index (z. B. den Bogen hinter dem Hero-Karussell). */
+@plugin 'daisyui' {
+  themes: false;
+  exclude: scrollbar, rootcolor;
+}
 
-  --focus-ring: 3px solid var(--c-accent-ink);
+/* ---- daisyUI-Thema -------------------------------------------------------
+   Kontraste sind gegen base-200 (Seitenhintergrund) bzw. primary auf
+   WCAG AA geprüft.
+   Achtung: Korall (#FF6B4A, --color-coral) erreicht mit weißer Schrift nur
+   2,9:1 und ist deshalb rein dekorativ. Für Flächen mit Text auf Weiß und
+   weiße Schrift auf Farbe gibt es accent (#C9401F, 4,96:1). */
+@plugin 'daisyui/theme' {
+  name: 'vsv';
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
 
-  /* ---- Typografie ----
-     Fluid zwischen 360px und 1180px Viewport. */
+  --color-base-100: #FFFFFF;          /* Flächen, Karten */
+  --color-base-200: #F5F8F6;          /* Seitenhintergrund */
+  --color-base-300: #EDF3EF;          /* abgesenkte Flächen */
+  --color-base-content: #1C2A24;      /* Fließtext */
+
+  --color-primary: #14453D;           /* Tannengrün */
+  --color-primary-content: #FFFFFF;
+  --color-secondary: #2F7A64;         /* helleres Grün */
+  --color-secondary-content: #FFFFFF;
+  --color-accent: #C9401F;            /* Korall für Text/Buttons, AA-tauglich */
+  --color-accent-content: #FFFFFF;
+  --color-neutral: #0D302A;           /* dunkles Tannengrün */
+  --color-neutral-content: #FFFFFF;
+
+  --color-info: #2F7A64;
+  --color-info-content: #FFFFFF;
+  --color-success: #2F7A64;
+  --color-success-content: #FFFFFF;
+  --color-warning: #FFC857;           /* Sonne */
+  --color-warning-content: #14453D;
+  --color-error: #C9401F;
+  --color-error-content: #FFFFFF;
+
+  --radius-selector: 10px;            /* Badges, Checkboxen, Toggles */
+  --radius-field: 999px;              /* Buttons und Felder: Pillenform */
+  --radius-box: 16px;                 /* Karten, Kästen */
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;                         /* flach: Schatten setzen wir selbst */
+  --noise: 0;
+}
+
+/* ---- Tailwind-Thema ------------------------------------------------------ */
+@theme {
+  /* Zusatzfarben neben den daisyUI-Themenfarben */
+  --color-coral: #FF6B4A;             /* nur dekorativ, s. o. */
+  --color-accent-hover: #A83217;      /* Hover für accent */
+  --color-sun: #FFC857;               /* = warning */
+  --color-sun-dark: #A87B00;
+  --color-sun-soft: #FFF6E5;
+  --color-tint-green: #E7F0EA;
+  --color-tint-coral: #FFE9DE;
+  --color-muted: #4B5D56;             /* gedämpfter Text */
+  --color-on-dark: rgba(255, 255, 255, 0.88); /* Text auf Grün */
+  --color-border: #DCE6E1;
+  --color-border-strong: #C3D3CB;
+
+  /* Schriften – lokal via @fontsource-variable (keine Google Fonts, DSGVO) */
   --font-display: 'Fraunces Variable', 'Fraunces', Georgia, 'Times New Roman', serif;
-  --font-body: 'Source Sans 3 Variable', 'Source Sans 3', system-ui, -apple-system,
+  --font-sans: 'Source Sans 3 Variable', 'Source Sans 3', system-ui, -apple-system,
     'Segoe UI', Roboto, sans-serif;
 
-  --step--1: clamp(0.83rem, 0.80rem + 0.15vw, 0.89rem);
-  --step-0: clamp(1rem, 0.96rem + 0.20vw, 1.09rem);
-  --step-1: clamp(1.15rem, 1.08rem + 0.35vw, 1.35rem);
-  --step-2: clamp(1.35rem, 1.20rem + 0.70vw, 1.75rem);
-  --step-3: clamp(1.62rem, 1.35rem + 1.25vw, 2.35rem);
-  --step-4: clamp(2rem, 1.50rem + 2.30vw, 3.25rem);
+  /* Fluide Typo-Skala zwischen 360px und 1180px Viewport: text-step-0 … */
+  --text-step--1: clamp(0.83rem, 0.80rem + 0.15vw, 0.89rem);
+  --text-step-0: clamp(1rem, 0.96rem + 0.20vw, 1.09rem);
+  --text-step-1: clamp(1.15rem, 1.08rem + 0.35vw, 1.35rem);
+  --text-step-2: clamp(1.35rem, 1.20rem + 0.70vw, 1.75rem);
+  --text-step-3: clamp(1.62rem, 1.35rem + 1.25vw, 2.35rem);
+  --text-step-4: clamp(2rem, 1.50rem + 2.30vw, 3.25rem);
 
-  /* ---- Abstände (4px-Raster) ---- */
-  --sp-1: 0.25rem;
-  --sp-2: 0.5rem;
-  --sp-3: 0.75rem;
-  --sp-4: 1rem;
-  --sp-5: 1.5rem;
-  --sp-6: 2rem;
-  --sp-7: 2.75rem;
-  --sp-8: 4rem;
-  --sp-9: 6rem;
-  --section-y: clamp(3.5rem, 2rem + 6vw, 5.5rem);
+  /* Abstände: Tailwinds 4px-Raster (p-4 = 1rem …) plus Sektionsabstand */
+  --spacing-section: clamp(3.5rem, 2rem + 6vw, 5.5rem); /* py-section */
+  --spacing-header: 72px;                                 /* Höhe Kopfzeile */
 
-  /* ---- Form & Tiefe ---- */
+  /* Inhaltsbreite: max-w-site */
+  --container-site: 1180px;
+
+  /* Radien: Tailwinds Skala ersetzt durch die drei Vereinsradien.
+     rounded-sm 10px · rounded-box 16px (daisyUI) · rounded-lg 28px ·
+     rounded-field Pille (daisyUI) · rounded-full */
+  --radius-*: initial;
   --radius-sm: 10px;
-  --radius: 16px;
   --radius-lg: 28px;
-  --radius-pill: 999px;
+
+  /* Schatten im Grünton */
   --shadow-sm: 0 1px 2px rgba(20, 69, 61, 0.06), 0 2px 6px rgba(20, 69, 61, 0.05);
   --shadow-md: 0 6px 16px rgba(20, 69, 61, 0.09), 0 2px 4px rgba(20, 69, 61, 0.05);
   --shadow-lg: 0 16px 40px rgba(20, 69, 61, 0.14);
-
-  --max-width: 1180px;
-  --header-height: 72px;
-
-  color-scheme: light;
 }
 
-/* ---------- Reset ---------- */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
+/* ---- Alte Tokens ---------------------------------------------------------
+   Aliase auf die Themenwerte, damit es nur eine Quelle gibt. Werden gelöscht,
+   sobald keine Komponente mehr var(--c-…) usw. benutzt. */
+@layer base {
+  :root {
+    --c-primary: var(--color-primary);
+    --c-primary-light: var(--color-secondary);
+    --c-primary-dark: var(--color-neutral);
+    --c-accent: var(--color-coral);
+    --c-accent-ink: var(--color-accent);
+    --c-accent-ink-hover: var(--color-accent-hover);
+    --c-sun: var(--color-sun);
+    --c-sun-dark: var(--color-sun-dark);
+    --c-sun-soft: var(--color-sun-soft);
 
-html {
-  scroll-behavior: smooth;
-  /* Sticky Header darf Sprungziele nicht verdecken. */
-  scroll-padding-top: calc(var(--header-height) + var(--sp-4));
-  -webkit-text-size-adjust: 100%;
-}
+    --c-bg: var(--color-base-200);
+    --c-surface: var(--color-base-100);
+    --c-surface-sunken: var(--color-base-300);
+    --c-tint-green: var(--color-tint-green);
+    --c-tint-coral: var(--color-tint-coral);
 
-body {
-  margin: 0;
-  font-family: var(--font-body);
-  font-size: var(--step-0);
-  line-height: 1.6;
-  color: var(--c-text);
-  background: var(--c-bg);
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
+    --c-text: var(--color-base-content);
+    --c-text-muted: var(--color-muted);
+    --c-text-on-dark: var(--color-on-dark);
+    --c-border: var(--color-border);
+    --c-border-strong: var(--color-border-strong);
 
-h1,
-h2,
-h3,
-h4 {
-  font-family: var(--font-display);
-  color: var(--c-primary);
-  line-height: 1.15;
-  text-wrap: balance;
-  margin: 0 0 0.5em;
-  font-weight: 600;
-  font-variation-settings: 'SOFT' 0, 'WONK' 0;
-}
+    --focus-ring: 3px solid var(--color-accent);
 
-h1 { font-size: var(--step-4); }
-h2 { font-size: var(--step-3); }
-h3 { font-size: var(--step-2); }
-h4 { font-size: var(--step-1); }
+    --font-body: var(--font-sans);
 
-p {
-  margin: 0 0 1em;
-  text-wrap: pretty;
-}
+    --step--1: var(--text-step--1);
+    --step-0: var(--text-step-0);
+    --step-1: var(--text-step-1);
+    --step-2: var(--text-step-2);
+    --step-3: var(--text-step-3);
+    --step-4: var(--text-step-4);
 
-ul, ol { margin: 0 0 1em; }
+    /* 4px-Raster, entspricht Tailwinds p-1, p-2, p-3, p-4, p-6, p-8, p-11,
+       p-16, p-24 */
+    --sp-1: calc(var(--spacing) * 1);
+    --sp-2: calc(var(--spacing) * 2);
+    --sp-3: calc(var(--spacing) * 3);
+    --sp-4: calc(var(--spacing) * 4);
+    --sp-5: calc(var(--spacing) * 6);
+    --sp-6: calc(var(--spacing) * 8);
+    --sp-7: calc(var(--spacing) * 11);
+    --sp-8: calc(var(--spacing) * 16);
+    --sp-9: calc(var(--spacing) * 24);
+    --section-y: var(--spacing-section);
 
-img,
-svg,
-video {
-  max-width: 100%;
-  display: block;
-}
+    /* --radius-sm, --radius-lg und --shadow-sm/-md/-lg heißen im
+       Tailwind-Thema genauso und kommen direkt aus @theme. */
+    --radius: var(--radius-box);
+    --radius-pill: 999px;
 
-img { height: auto; }
+    --max-width: var(--container-site);
+    --header-height: var(--spacing-header);
 
-a { color: inherit; }
-
-button,
-input,
-select,
-textarea {
-  font: inherit;
-  color: inherit;
-}
-
-/* Sichtbarer, konsistenter Fokus – nur bei Tastaturbedienung. */
-:focus-visible {
-  outline: var(--focus-ring);
-  outline-offset: 3px;
-  border-radius: 4px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+    /* Hintergrund, den daisyUI z. B. bei geöffnetem Modal für <html> nimmt */
+    --root-bg: var(--color-base-200);
   }
 }
 
-/* ---------- Layout-Primitives ---------- */
-.container {
-  width: 100%;
-  max-width: var(--max-width);
-  margin-inline: auto;
-  padding-inline: clamp(1rem, 4vw, 1.5rem);
+/* ---- Basis ---------------------------------------------------------------- */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Sticky Header darf Sprungziele nicht verdecken. */
+    scroll-padding-top: calc(var(--spacing-header) + --spacing(4));
+    -webkit-text-size-adjust: 100%;
+    /* Tailwind-Preflight setzt sonst transparent. */
+    -webkit-tap-highlight-color: initial;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-size: var(--text-step-0);
+    line-height: 1.6;
+    color: var(--color-base-content);
+    background: var(--color-base-200);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    color: var(--color-primary);
+    line-height: 1.15;
+    text-wrap: balance;
+    margin: 0 0 0.5em;
+    font-weight: 600;
+    font-variation-settings: 'SOFT' 0, 'WONK' 0;
+  }
+
+  h1 { font-size: var(--text-step-4); }
+  h2 { font-size: var(--text-step-3); }
+  h3 { font-size: var(--text-step-2); }
+  h4 { font-size: var(--text-step-1); }
+
+  p {
+    margin: 0 0 1em;
+    text-wrap: pretty;
+  }
+
+  /* Preflight entfernt Aufzählungszeichen und Einzug; die Seite nutzt noch
+     die Browser-Vorgaben. Listen mit eigener Klasse setzen list-style
+     selbst. Entfällt, wenn alle Listen auf Utilities umgestellt sind. */
+  ul,
+  ol {
+    margin: 0 0 1em;
+    padding-inline-start: 40px;
+    list-style: revert;
+  }
+
+  /* Preflight: Links erben die Textdekoration – bisher unterstrichen. */
+  a {
+    color: inherit;
+    text-decoration: underline;
+  }
+
+  /* Browser-Vorgaben, die Preflight auf 0 setzt und die die Seite
+     (noch) benutzt. */
+  blockquote,
+  figure {
+    margin: 1em 40px;
+  }
+  dd {
+    margin-inline-start: 40px;
+  }
+  dl {
+    margin-block: 1em;
+  }
+
+  /* Formularelemente: Preflight nimmt ihnen Rand, Innenabstand, Hintergrund
+     und Außenabstand. Die Komponenten verlassen sich (noch) auf die
+     Browser-Vorgaben, z. B. beim Schieberegler im Familienrechner und beim
+     Menüknopf. Entfällt, wenn die Formulare auf daisyUI umgestellt sind. */
+  button,
+  input,
+  select,
+  textarea,
+  option {
+    margin: revert;
+    padding: revert;
+    border: revert;
+    border-radius: revert;
+    background-color: revert;
+  }
+
+  /* Sichtbarer, konsistenter Fokus – nur bei Tastaturbedienung. */
+  :focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 }
 
-.section {
-  padding-block: var(--section-y);
+/* ---- Hilfsklassen (bisheriges CSS) -------------------------------------
+   In @layer components, damit Utilities sie überschreiben können. */
+@layer components {
+  /* Inhaltsbreite. Tailwinds eigenes „container“ ist oben abgeschaltet. */
+  .container {
+    width: 100%;
+    max-width: var(--container-site);
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 4vw, 1.5rem);
+  }
+
+  .section {
+    padding-block: var(--spacing-section);
+  }
+
+  .section--tight {
+    padding-block: 0 var(--spacing-section);
+  }
+
+  .section-head {
+    max-width: 60ch;
+    margin-bottom: --spacing(11);
+  }
+
+  .section-head p {
+    color: var(--color-muted);
+    font-size: var(--text-step-1);
+    max-width: 58ch;
+    margin-bottom: 0;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: var(--text-step--1);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: --spacing(3);
+  }
+
+  .lead {
+    font-size: var(--text-step-1);
+    color: var(--color-muted);
+    max-width: 46ch;
+  }
+
+  /* Alias für Tailwinds sr-only */
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 999;
+    background: var(--color-primary);
+    color: #fff;
+    padding: --spacing(3) --spacing(6);
+    border-radius: 0 0 var(--radius-sm) 0;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .skip-link:focus {
+    left: 0;
+  }
+
+  /* Sanftes Einblenden beim Scrollen – per JS aktiviert, damit Inhalte
+     ohne JavaScript sofort sichtbar bleiben. */
+  .js .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .js .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .js .reveal { opacity: 1; transform: none; }
+  }
+  /* Im Druck bzw. PDF-Export nie etwas ausgeblendet lassen. */
+  @media print {
+    .js .reveal { opacity: 1 !important; transform: none !important; }
+  }
 }
 
-.section--tight {
-  padding-block: 0 var(--section-y);
-}
-
-.section-head {
-  max-width: 60ch;
-  margin-bottom: var(--sp-7);
-}
-
-.section-head p {
-  color: var(--c-text-muted);
-  font-size: var(--step-1);
-  max-width: 58ch;
-  margin-bottom: 0;
-}
-
-.eyebrow {
-  display: inline-block;
-  font-size: var(--step--1);
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--c-accent-ink);
-  margin-bottom: var(--sp-3);
-}
-
-.lead {
-  font-size: var(--step-1);
-  color: var(--c-text-muted);
-  max-width: 46ch;
-}
-
-/* ---------- Buttons ---------- */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--sp-2);
-  /* min. 44px Trefferfläche für Touch */
+/* ---- Buttons ---------------------------------------------------------------
+   daisyUI-.btn im Vereinslook: Pille, min. 48px hoch (Touch-Ziel ≥ 44px),
+   Schriftgröße wie Fließtext, 2px Rand, beim Hovern 2px angehoben.
+   Varianten:
+     btn btn-accent            Hauptaktion (Korall, weiße Schrift)
+     btn btn-outline           Nebenaktion (heller Rand, grüne Schrift,
+                               beim Hovern grün gefüllt)
+     btn btn-on-dark           auf grünem Grund (weiß, Hover Sonne)
+     btn btn-link              Textlink-Button in Korall
+   Als @utility, damit die Regeln nach daisyUIs eigenen Ebenen greifen,
+   aber einzelne Tailwind-Utilities (px-4, mt-auto …) sie weiter
+   überschreiben können. */
+@utility btn {
+  --btn-p: 1.5rem;
+  --fontsize: var(--text-step-0);
+  height: auto;
   min-height: 48px;
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--radius-pill);
-  border: 2px solid transparent;
-  font-weight: 600;
-  font-size: var(--step-0);
+  padding-block: 0.75rem;
+  border-width: 2px;
+  gap: --spacing(2);
+  line-height: inherit;
   text-decoration: none;
-  cursor: pointer;
+  /* daisyUIs Präge-Effekte (bei --depth: 0 ohnehin unsichtbar) abschalten,
+     damit sie nicht an Icons und Text weitervererbt werden. */
+  text-shadow: none;
+  background-image: none;
+  --btn-inset: 0 0 #0000;
   transition: background-color 0.16s ease, border-color 0.16s ease,
     color 0.16s ease, transform 0.16s ease, box-shadow 0.16s ease;
+
+  &:hover { transform: translateY(-2px); }
+  &:active { transform: translateY(0); translate: none; }
+  &:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: 3px;
+  }
+
+  & svg {
+    width: 1.15em;
+    height: 1.15em;
+    flex-shrink: 0;
+  }
 }
 
-.btn:hover { transform: translateY(-2px); }
-.btn:active { transform: translateY(0); }
-
-.btn svg {
-  width: 1.15em;
-  height: 1.15em;
-  flex-shrink: 0;
+@utility btn-accent {
+  --btn-shadow: var(--shadow-sm);
+  --btn-border: transparent;
+  &:hover {
+    --btn-bg: var(--color-accent-hover);
+    --btn-border: transparent;
+    --btn-shadow: var(--shadow-md);
+  }
 }
 
-.btn--primary {
-  background: var(--c-accent-ink);
-  color: #fff;
-  box-shadow: var(--shadow-sm);
-}
-.btn--primary:hover {
-  background: var(--c-accent-ink-hover);
-  box-shadow: var(--shadow-md);
-}
-
-.btn--secondary {
-  background: transparent;
-  border-color: var(--c-border-strong);
-  color: var(--c-primary);
-}
-.btn--secondary:hover {
-  background: var(--c-primary);
-  border-color: var(--c-primary);
-  color: #fff;
+@utility btn-outline {
+  --btn-color: var(--color-primary);
+  --btn-fg: var(--color-primary-content);
+  --btn-border: var(--color-border-strong);
+  &:hover {
+    --btn-bg: var(--color-primary);
+    --btn-border: var(--color-primary);
+  }
+  /* daisyUI füllt den Button bei Tastaturfokus – bei uns bleibt er leer. */
+  &:focus-visible:not(:hover) {
+    --btn-bg: transparent;
+    --btn-border: var(--color-border-strong);
+    color: var(--color-primary);
+  }
 }
 
-.btn--onDark {
-  background: #fff;
-  color: var(--c-primary);
+@utility btn-on-dark {
+  --btn-color: #fff;
+  --btn-fg: var(--color-primary);
+  --btn-border: transparent;
+  &:hover {
+    --btn-bg: var(--color-sun);
+    --btn-border: transparent;
+  }
 }
-.btn--onDark:hover { background: var(--c-sun); }
 
-.btn--ghost {
-  background: transparent;
-  color: var(--c-accent-ink);
+@utility btn-link {
+  --btn-color: var(--color-accent);
+  --btn-fg: var(--color-accent);
   padding-inline: 0;
   min-height: 0;
-}
-.btn--ghost:hover { color: var(--c-accent-ink-hover); text-decoration: underline; }
-
-/* ---------- Hilfsklassen ---------- */
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-  border: 0;
-}
-
-.skip-link {
-  position: absolute;
-  left: -9999px;
-  top: 0;
-  z-index: 999;
-  background: var(--c-primary);
-  color: #fff;
-  padding: var(--sp-3) var(--sp-5);
-  border-radius: 0 0 var(--radius-sm) 0;
-  font-weight: 600;
-  text-decoration: none;
-}
-.skip-link:focus {
-  left: 0;
-}
-
-/* Sanftes Einblenden beim Scrollen – per JS aktiviert, damit Inhalte
-   ohne JavaScript sofort sichtbar bleiben. */
-.js .reveal {
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-.js .reveal.is-visible {
-  opacity: 1;
-  transform: none;
-}
-@media (prefers-reduced-motion: reduce) {
-  .js .reveal { opacity: 1; transform: none; }
-}
-/* Im Druck bzw. PDF-Export nie etwas ausgeblendet lassen. */
-@media print {
-  .js .reveal { opacity: 1 !important; transform: none !important; }
+  text-decoration-line: none;
+  &:hover {
+    --btn-bg: transparent;
+    --btn-border: transparent;
+    color: var(--color-accent-hover);
+    text-decoration-line: underline;
+  }
+  &:focus-visible:not(:hover) {
+    --btn-bg: transparent;
+    --btn-border: transparent;
+    color: var(--color-accent);
+  }
 }

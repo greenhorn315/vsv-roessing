@@ -7,7 +7,7 @@ import { getSportNames } from '../lib/sportarten';
 const sportNames = (await getSportNames()).join(', ');
 ---
 
-<section class="hero">
+<section class="site-hero">
   <div class="container hero-grid">
     <div class="hero-copy">
       <p class="hero-badge">
@@ -24,11 +24,11 @@ const sportNames = (await getSportNames()).join(', ');
         Schon ab <strong>4&nbsp;€ im Monat</strong> dabei.
       </p>
       <div class="hero-ctas">
-        <a class="btn btn--primary" href="/mitglied-werden">
+        <a class="btn btn-accent" href="/mitglied-werden">
           <Icon name="join" />
           Jetzt Mitglied werden
         </a>
-        <a class="btn btn--secondary" href="/kontakt#probetraining">
+        <a class="btn btn-outline" href="/kontakt#probetraining">
           <Icon name="sport" />
           Probetraining vereinbaren
         </a>
@@ -59,7 +59,7 @@ const sportNames = (await getSportNames()).join(', ');
 </section>
 
 <style>
-  .hero {
+  .site-hero {
     padding-block: clamp(2.5rem, 1rem + 5vw, 4.5rem) 0;
     overflow-x: clip;
   }
@@ -102,12 +102,12 @@ const sportNames = (await getSportNames()).join(', ');
     background: var(--c-sun);
   }
 
-  .hero h1 {
+  .site-hero h1 {
     max-width: 15ch;
     margin-bottom: var(--sp-4);
   }
 
-  .hero .lead strong {
+  .site-hero .lead strong {
     color: var(--c-text);
     font-weight: 700;
     white-space: nowrap;
@@ -205,6 +205,6 @@ const sportNames = (await getSportNames()).join(', ');
       width: 72px;
       height: 72px;
     }
-    .hero h1 { max-width: 20ch; }
+    .site-hero h1 { max-width: 20ch; }
   }
 </style>

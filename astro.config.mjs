@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import tailwindcss from '@tailwindcss/vite';
 
 // Bei Go-Live auf die echte Domain umstellen (wird für Sitemap,
 // Canonical-URLs und Open-Graph-Bilder gebraucht).
@@ -20,6 +21,7 @@ export default defineConfig({
     format: 'directory',
   },
   vite: {
+    plugins: [tailwindcss()],
     build: {
       cssMinify: 'lightningcss',
     },
