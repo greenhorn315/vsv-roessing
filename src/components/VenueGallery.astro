@@ -1,7 +1,7 @@
 ---
 import Icon from './Icon.astro';
-import Photo from './Photo.astro';
 import Container from './Container.astro';
+import { Picture } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import { zahlwort } from '../lib/labels';
 import { nachOrder } from '../lib/reihenfolge';
@@ -23,12 +23,8 @@ const {
   lead = `Zwei Anschriften, ${orteWort} Orte: Sporthalle und Dorfbrunnen liegen im Loderwinkel unter einem Dach, Sportplatz, Feuerplatz und Vereinsheim gemeinsam Zum Klay.`,
 } = Astro.props;
 
-const kachelBreiten = [360, 560, 800, 1024];
-const kachelSizes = '(max-width: 700px) calc(100vw - 2rem), (max-width: 1220px) calc(50vw - 3rem), 560px';
-const kleinBreiten = [280, 400, 560, 800, 1024];
-const kleinSizes = (anzahl: number) =>
-  `(max-width: 700px) calc((100vw - 3.2rem) / ${anzahl}), (max-width: 1220px) calc((50vw - 4.2rem) / ${anzahl}), calc(540px / ${anzahl})`;
-
+// Picture gibt das aus layout berechnete sizes nicht an die <source>-Elemente weiter; ohne sizes nimmt der Browser 100vw.
+const sizes = '(min-width: 560px) 560px, 100vw';
 ---
 
 <section class="py-16 md:py-20" id={id}>
@@ -42,30 +38,29 @@ const kleinSizes = (anzahl: number) =>
       {
         venues.map((ort) => (
           <li class="card overflow-hidden rounded-3xl bg-base-100 shadow-sm">
-            <Photo
-              image={ort.photos?.[0]?.src}
-              alt={ort.photos?.[0]?.alt}
-              width={4}
-              height={3}
-              widths={kachelBreiten}
-              sizes={kachelSizes}
-              placeholderIcon="camera"
-              placeholderText="Foto folgt"
-              class="rounded-none"
-            />
+            {ort.photos?.[0] && (
+              <Picture
+                src={ort.photos[0].src}
+                alt={ort.photos[0].alt}
+                formats={['avif', 'webp']}
+                layout="constrained"
+                width={560}
+                sizes={sizes}
+                class="aspect-4/3 w-full object-cover"
+              />
+            )}
             {ort.photos && ort.photos.length > 1 && (
               <ul class="grid grid-cols-[repeat(auto-fit,minmax(0,1fr))] gap-2.5 px-2.5 pt-2.5">
                 {ort.photos.slice(1).map((bild) => (
                   <li class="flex flex-col gap-1">
-                    <Photo
-                      image={bild.src}
+                    <Picture
+                      src={bild.src}
                       alt={bild.alt}
-                      width={4}
-                      height={3}
-                      widths={kleinBreiten}
-                      sizes={kleinSizes(ort.photos!.length - 1)}
-                      placeholderIcon="camera"
-                      class="rounded-xl"
+                      formats={['avif', 'webp']}
+                      layout="constrained"
+                      width={560}
+                      sizes={sizes}
+                      class="aspect-4/3 w-full rounded-xl object-cover"
                     />
                     {bild.caption && <span class="text-center text-xs text-base-content/70">{bild.caption}</span>}
                   </li>

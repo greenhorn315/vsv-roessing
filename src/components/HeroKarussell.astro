@@ -11,9 +11,8 @@ const bilder = (await getCollection('karussell')).sort(nachOrder).map((eintrag) 
 const dauer = 6000;
 const { class: className } = Astro.props;
 
-// Nur das erste Bild eager: die übrigen liegen außerhalb des Containers und laden erst beim Blättern.
-const widths = [400, 560, 800];
-const sizes = '(max-width: 940px) min(calc(100vw - 2rem), 520px), 560px';
+// Picture gibt das aus layout berechnete sizes nicht an die <source>-Elemente weiter; ohne sizes nimmt der Browser 100vw.
+const sizes = '(min-width: 560px) 560px, 100vw';
 ---
 
 <div
@@ -36,12 +35,10 @@ const sizes = '(max-width: 940px) min(calc(100vw - 2rem), 520px), 560px';
             src={bild.src}
             alt={bild.alt}
             formats={['avif', 'webp']}
-            fallbackFormat="jpg"
-            widths={widths}
+            layout="constrained"
+            width={560}
             sizes={sizes}
-            loading={i === 0 ? 'eager' : 'lazy'}
-            decoding="async"
-            fetchpriority={i === 0 ? 'high' : undefined}
+            priority={i === 0}
             class="w-full h-full object-cover"
             pictureAttributes={{ class: 'contents' }}
           />

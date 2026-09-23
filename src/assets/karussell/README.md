@@ -24,8 +24,9 @@ gleiche Motive aufeinander folgen.
 **Format**
 
 Hochformat 4 : 5. Die Dateien hier sind Vorlagen: Astro rechnet daraus beim
-Bauen AVIF, WebP und JPEG in 400, 560 und 800 px Breite, der Browser wählt
-davon. Aufbereitet mit `tools/karussell.py`; dort stehen je Bild die Tonwerte
+Bauen AVIF, WebP und JPEG in mehreren Breiten (`layout="constrained"`, bis zur
+doppelten Anzeigebreite von 560 px, höchstens so breit wie die Vorlage), der
+Browser wählt davon. Aufbereitet mit `tools/karussell.py`; dort stehen je Bild die Tonwerte
 und der Bildausschnitt. Die vorhandenen Dateien sind noch 800 × 1000 px und
 unter 210 KB – so kamen sie aus der Zeit, als sie unverändert ausgeliefert
 wurden (siehe unten). Neue Vorlagen dürfen größer sein, siehe `tools/README.md`.
