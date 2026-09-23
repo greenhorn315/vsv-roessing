@@ -6,7 +6,13 @@ import Facts from '../components/Facts.astro';
 import CallToAction from '../components/CallToAction.astro';
 import { site } from '../data/site';
 import { sportCountWord } from '../data/sports';
-import { vorstand } from '../data/vorstand';
+import { getCollection } from 'astro:content';
+
+// Reihenfolge steht in der YAML-Datei als `order`; auf die Reihenfolge, in der
+// eine Collection ihre Einträge liefert, verlässt sich das bewusst nicht.
+const vorstand = (await getCollection('vorstand')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
 ---
 
 <BaseLayout
@@ -51,7 +57,7 @@ import { vorstand } from '../data/vorstand';
         </div>
         <ul class="board">
           {
-            vorstand.map((person) => (
+            vorstand.map(({ data: person }) => (
               <li>
                 <strong>{person.role}</strong>
                 {person.name ? (
