@@ -4,6 +4,7 @@ import PageHeader from '../components/PageHeader.astro';
 import NewsList from '../components/NewsList.astro';
 import Facts from '../components/Facts.astro';
 import CallToAction from '../components/CallToAction.astro';
+import VenueGallery from '../components/VenueGallery.astro';
 import { site } from '../data/site';
 import { sportCountWord } from '../data/sports';
 import { getCollection } from 'astro:content';
@@ -17,7 +18,7 @@ const vorstand = (await getCollection('vorstand')).sort(
 
 <BaseLayout
   title="Verein"
-  description="Der VSV Rössing von 1897 e.V.: Geschichte, Vorstand und Aktuelles aus dem Vereinsleben."
+  description="Der VSV Rössing von 1897 e.V.: Geschichte, Vorstand, Sportstätten mit Adressen und Fotos, Aktuelles aus dem Vereinsleben."
 >
   <PageHeader
     eyebrow="Über uns"
@@ -72,6 +73,8 @@ const vorstand = (await getCollection('vorstand')).sort(
       </div>
     </div>
   </section>
+
+  <VenueGallery />
 
   <section class="section--tight">
     <div class="container narrow">

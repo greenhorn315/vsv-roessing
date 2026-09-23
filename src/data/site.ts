@@ -84,7 +84,7 @@ export const venues: Venue[] = [
     ],
   },
   {
-    name: 'Der Dorfbrunnen',
+    name: 'Zum Dorfbrunnen',
     street: 'Loderwinkel 2A',
     postalCode: '31171',
     city: 'Nordstemmen-Rössing',
@@ -156,6 +156,16 @@ export const venues: Venue[] = [
     ],
   },
 ];
+
+/**
+ * Karten-Link auf die Anschrift, damit die Navigation direkt startet.
+ * Genutzt von der Sportstätten-Galerie und von der Adressliste auf der
+ * Kontaktseite – beide sollen dieselbe Adresse ansteuern.
+ */
+export const mapsUrl = (ort: Venue): string =>
+  `https://www.openstreetmap.org/search?query=${encodeURIComponent(
+    [ort.street, ort.postalCode, ort.city].filter(Boolean).join(' '),
+  )}`;
 
 export interface NavItem {
   label: string;
