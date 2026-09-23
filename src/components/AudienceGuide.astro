@@ -32,7 +32,7 @@ const spalten = await Promise.all(
         <ul>
           {spalte.gruppen.map((g) => (
             <li style={`--sport-color:${farbe(g.sport)}`}>
-              <a href={g.sport ? `/sportangebote/${g.sport}` : '/sportangebote'}>
+              <a href={g.sport ? `/sportangebote/${g.sport}/` : '/sportangebote/'}>
                 {g.title}
               </a>
               <span class="zg__wann">

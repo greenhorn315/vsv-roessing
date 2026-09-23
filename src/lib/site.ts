@@ -80,10 +80,10 @@ export const slogan = site.sloganTemplate.replace('{age}', String(clubAge));
 /** Hauptnavigation – bewusst auf fünf Punkte begrenzt. */
 export const navigation: NavItem[] = [
   { label: 'Start', href: '/', icon: 'home' },
-  { label: 'Sportangebote', href: '/sportangebote', icon: 'sport' },
-  { label: 'Mitglied werden', href: '/mitglied-werden', icon: 'join', cta: true },
-  { label: 'Verein', href: '/verein', icon: 'info' },
-  { label: 'Kontakt', href: '/kontakt', icon: 'mail' },
+  { label: 'Sportangebote', href: '/sportangebote/', icon: 'sport' },
+  { label: 'Mitglied werden', href: '/mitglied-werden/', icon: 'join', cta: true },
+  { label: 'Verein', href: '/verein/', icon: 'info' },
+  { label: 'Kontakt', href: '/kontakt/', icon: 'mail' },
 ];
 
 /** Kennzahlen für die Faktenleiste unter dem Hero. */

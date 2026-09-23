@@ -28,7 +28,7 @@ const zweige = (await getSports()).map(({ id, data }) => ({
             <Pictogram name={sport.pictogram} size={40} />
             <div>
               <h3>
-                <a href={`/sportangebote/${sport.slug}`}>{sport.name}</a>
+                <a href={`/sportangebote/${sport.slug}/`}>{sport.name}</a>
               </h3>
               <p class="zweig__anzahl">
                 {gruppen.length === 0
