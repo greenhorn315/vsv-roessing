@@ -56,6 +56,12 @@ const brotkrumen: Brotkrume[] = [
 const mitVerein = `${sport.name} beim ${site.shortName}: ${sport.description}`;
 const description = mitVerein.length <= 160 ? mitVerein : sport.description;
 
+// Zeilen der Infokarte „Auf einen Blick“: Icon links, Titel und Text rechts.
+const zeile = 'flex gap-3 py-4 border-t border-border';
+const zeilenIcon = 'text-secondary mt-[0.15rem] shrink-0';
+const zeilenTitel =
+  'font-sans text-[0.82rem] font-bold uppercase tracking-[0.05em] text-muted mt-0 mb-[0.3rem]';
+
 const seite = new URL(Astro.url.pathname, Astro.site);
 const jsonLd = [
   brotkrumenKnoten(brotkrumen, seite),
@@ -78,18 +84,24 @@ const jsonLd = [
     <Breadcrumbs items={brotkrumen} />
   </div>
 
-  <section class="sport-hero" style={`--sport-color:${sportColorVar(sport.color)}`}>
-    <div class="container sport-hero__inner">
-      <span class="sport-hero__icon" aria-hidden="true">
+  {/* Kopfband in der Farbe der Sportart (--sport-color) */}
+  <section
+    class="bg-tint-green py-[clamp(2rem,4vw,3rem)] border-t-4 border-(--sport-color)"
+    style={`--sport-color:${sportColorVar(sport.color)}`}
+  >
+    <div class="container flex items-start gap-6 max-[620px]:flex-col">
+      <span class="block w-[88px] shrink-0" aria-hidden="true">
         <Pictogram name={sport.pictogram} size={88} />
       </span>
       <div>
-        <h1>{sport.name}</h1>
-        <p class="lead">{sport.description}</p>
-        <ul class="tags">
+        <h1 class="mb-2">{sport.name}</h1>
+        <p class="lead max-w-[60ch] mb-4">{sport.description}</p>
+        <ul class="list-none flex flex-wrap gap-[0.4rem] p-0 m-0">
           {
             sport.ageGroups.map((group) => (
-              <li class="tag">{ageGroupLabels[group]}</li>
+              <li class="badge h-auto border-0 rounded-full bg-base-100 text-primary text-[0.8rem] font-semibold leading-[1.6] px-3 py-1">
+                {ageGroupLabels[group]}
+              </li>
             ))
           }
         </ul>
@@ -98,23 +110,25 @@ const jsonLd = [
   </section>
 
   <section class="section">
-    <div class="container detail-grid">
+    <div class="container grid grid-cols-[1.3fr_0.7fr] max-[900px]:grid-cols-1 gap-[clamp(2rem,4vw,3.5rem)] items-start">
       <div>
         {
           sport.status && (
-            <aside class="sport-status">
-              <p class="sport-status__label">
+            <aside class="alert alert-warning block bg-sun-soft border border-[#E8CE8A] border-l-[5px] border-l-sun rounded-box p-6 mb-8 text-step-0 leading-[1.6] text-base-content">
+              <p class="flex items-center gap-[0.45rem] m-0 mb-3 text-[0.78rem] font-bold uppercase tracking-[0.06em] text-[#6B5400]">
                 <Icon name="info" size={17} />
                 {sport.status.label}
               </p>
-              <p class="sport-status__text">{sport.status.text}</p>
+              <p class="m-0 text-[#4A3D14]">{sport.status.text}</p>
               {sport.status.next && (
                 <>
-                  <h2 class="sport-status__heading">Als Nächstes geplant</h2>
-                  <ul class="sport-status__list">
+                  <h2 class="font-sans text-[0.82rem] font-bold uppercase tracking-[0.05em] text-[#6B5400] mt-6 mb-2 mx-0">
+                    Als Nächstes geplant
+                  </h2>
+                  <ul class="list-none flex flex-col gap-2 p-0 m-0">
                     {sport.status.next.map((item) => (
-                      <li>
-                        <Icon name="calendar" size={17} class="sport-status__icon" />
+                      <li class="flex items-start gap-[0.55rem] text-[#4A3D14] leading-[1.45]">
+                        <Icon name="calendar" size={17} class="text-[#8A6D00] mt-[0.2rem] shrink-0" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -125,16 +139,20 @@ const jsonLd = [
           )
         }
 
-        <Content />
+        {/* Fließtext aus der Markdown-Datei: Er trägt keine Klassen, deshalb
+             erbt er die gedämpfte Textfarbe von diesem Rahmen. */}
+        <div class="text-muted">
+          <Content />
+        </div>
 
         {
           sport.highlights && (
             <>
-              <h2>Das erwartet dich</h2>
-              <ul class="highlights">
+              <h2 class="text-step-2 mt-8">Das erwartet dich</h2>
+              <ul class="list-none flex flex-col gap-[0.6rem] p-0 m-0">
                 {sport.highlights.map((item) => (
-                  <li>
-                    <Icon name="check" size={18} class="highlights__check" />
+                  <li class="flex items-start gap-[0.6rem]">
+                    <Icon name="check" size={18} strokeWidth={2.6} class="text-secondary mt-[0.2rem]" />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -146,14 +164,16 @@ const jsonLd = [
         {
           sport.activities && sport.activities.length > 0 && (
             <>
-              <h2>Das gehört dazu</h2>
-              <ul class="activities">
+              <h2 class="text-step-2 mt-8">Das gehört dazu</h2>
+              <ul class="list-none grid grid-cols-[repeat(auto-fill,minmax(110px,1fr))] gap-4 p-0 m-0">
                 {sport.activities.map((activity) => (
-                  <li class="activity">
+                  <li class="flex flex-col items-center gap-2 text-center">
                     <Pictogram name={activity.pictogram} size={64} />
-                    <span class="activity__name">
+                    <span class="text-[0.92rem] font-semibold text-base-content leading-[1.25]">
                       {activity.name}
-                      {activity.note && <small>{activity.note}</small>}
+                      {activity.note && (
+                        <small class="block text-[0.8rem] font-normal text-muted">{activity.note}</small>
+                      )}
                     </span>
                   </li>
                 ))}
@@ -162,7 +182,7 @@ const jsonLd = [
           )
         }
 
-        <div class="cta-inline">
+        <div class="mt-11">
           <a class="btn btn-accent" href="/kontakt/#probetraining">
             <Icon name="sport" />
             Probetraining bei {sport.name} anfragen
@@ -170,19 +190,23 @@ const jsonLd = [
         </div>
       </div>
 
-      <aside class="facts-card">
-        <h2>Auf einen Blick</h2>
+      {/* Infokarte: bleibt auf breiten Bildschirmen beim Scrollen stehen */}
+      <aside class="card bg-base-100 border border-border rounded-lg p-6 sticky top-[calc(var(--spacing-header)+1rem)] max-[900px]:static">
+        <h2 class="text-step-1 mt-0 mb-6">Auf einen Blick</h2>
 
-        <div class="facts-card__row">
-          <Icon name="clock" size={19} class="facts-card__icon" />
+        {/* Erste Zeile ohne Trennlinie */}
+        <div class="flex gap-3 pb-4">
+          <Icon name="clock" size={19} class={zeilenIcon} />
           <div>
-            <h3>Trainingszeiten</h3>
+            <h3 class={zeilenTitel}>
+              Trainingszeiten
+            </h3>
             {
               sessions.length > 0 ? (
-                <ul class="times">
+                <ul class="list-none flex flex-col gap-[0.4rem] p-0 m-0">
                   {sessions.map((session) => (
-                    <li>
-                      <strong>
+                    <li class="flex flex-col text-[0.94rem] [&>span]:text-[0.84rem] [&>span]:text-muted">
+                      <strong class="text-primary">
                         {session.day} {session.time}
                       </strong>
                       <span>{session.title}</span>
@@ -196,7 +220,7 @@ const jsonLd = [
                   ))}
                 </ul>
               ) : (
-                <p>
+                <p class="m-0 text-[0.94rem] text-muted">
                   Termine erfragt ihr am besten kurz per E-Mail – wir melden uns
                   mit der passenden Gruppe.
                 </p>
@@ -207,11 +231,13 @@ const jsonLd = [
 
         {
           sport.venue && (
-            <div class="facts-card__row">
-              <Icon name="pin" size={19} class="facts-card__icon" />
+            <div class={zeile}>
+              <Icon name="pin" size={19} class={zeilenIcon} />
               <div>
-                <h3>Wo</h3>
-                <p>{sport.venue}</p>
+                <h3 class={zeilenTitel}>
+                  Wo
+                </h3>
+                <p class="m-0 text-[0.94rem] text-muted">{sport.venue}</p>
               </div>
             </div>
           )
@@ -219,38 +245,42 @@ const jsonLd = [
 
         {
           sport.bring && (
-            <div class="facts-card__row">
-              <Icon name="join" size={19} class="facts-card__icon" />
+            <div class={zeile}>
+              <Icon name="join" size={19} class={zeilenIcon} />
               <div>
-                <h3>Mitbringen</h3>
-                <p>{sport.bring}</p>
+                <h3 class={zeilenTitel}>
+                  Mitbringen
+                </h3>
+                <p class="m-0 text-[0.94rem] text-muted">{sport.bring}</p>
               </div>
             </div>
           )
         }
 
-        <div class="facts-card__row">
-          <Icon name="mail" size={19} class="facts-card__icon" />
-          <div>
-            <h3>Ansprechpartner</h3>
+        <div class={zeile}>
+          <Icon name="mail" size={19} class={zeilenIcon} />
+          <div class="text-muted">
+            <h3 class={zeilenTitel}>
+              Ansprechpartner
+            </h3>
             {
               sport.contact ? (
                 <>
-                  <p class="kontakt__name">{sport.contact.name}</p>
-                  {sport.contact.role && <p class="kontakt__rolle">{sport.contact.role}</p>}
+                  <p class="m-0 text-[0.94rem] font-semibold text-base-content">{sport.contact.name}</p>
+                  {sport.contact.role && <p class="m-0 mb-[0.35rem] text-[0.86rem]">{sport.contact.role}</p>}
                   {sport.contact.email && (
-                    <p>
+                    <p class="m-0 text-[0.94rem]">
                       <a href={`mailto:${sport.contact.email}`}>{sport.contact.email}</a>
                     </p>
                   )}
                   {sport.contact.phone && (
-                    <p>
+                    <p class="m-0 text-[0.94rem]">
                       <a href={telHref(sport.contact.phone)}>{sport.contact.phone}</a>
                     </p>
                   )}
                 </>
               ) : (
-                <p>
+                <p class="m-0 text-[0.94rem]">
                   <a href={`mailto:${site.email}`}>{site.email}</a>
                 </p>
               )
@@ -264,19 +294,29 @@ const jsonLd = [
   {sport.slug === 'dart' && <DartSpielplan />}
   {sport.slug === 'fussball' && <FussballSpielplan />}
 
-  <nav class="sport-nav" aria-label="Weitere Sportarten">
-    <div class="container sport-nav__inner">
-      <a href={`/sportangebote/${previous.slug}/`} class="sport-nav__link">
-        <Icon name="arrowRight" size={16} class="sport-nav__back" />
+  <nav class="border-t border-border py-6" aria-label="Weitere Sportarten">
+    <div class="container flex flex-wrap items-center justify-between gap-4 max-[620px]:justify-center max-[620px]:text-center">
+      <a
+        href={`/sportangebote/${previous.slug}/`}
+        class="inline-flex items-center gap-[0.6rem] no-underline text-primary font-semibold"
+      >
+        <Icon name="arrowRight" size={16} class="rotate-180" />
         <span>
-          <small>Vorherige Sportart</small>
+          <small class="block text-[0.75rem] font-normal text-muted uppercase tracking-[0.04em]">
+            Vorherige Sportart
+          </small>
           {previous.name}
         </span>
       </a>
       <a href="/sportangebote/" class="btn btn-link">Alle Sportarten</a>
-      <a href={`/sportangebote/${next.slug}/`} class="sport-nav__link sport-nav__link--next">
+      <a
+        href={`/sportangebote/${next.slug}/`}
+        class="inline-flex items-center gap-[0.6rem] no-underline text-primary font-semibold text-right"
+      >
         <span>
-          <small>Nächste Sportart</small>
+          <small class="block text-[0.75rem] font-normal text-muted uppercase tracking-[0.04em]">
+            Nächste Sportart
+          </small>
           {next.name}
         </span>
         <Icon name="arrowRight" size={16} />
@@ -286,293 +326,3 @@ const jsonLd = [
 
   <CallToAction />
 </BaseLayout>
-
-<style>
-  .sport-hero {
-    background: var(--c-tint-green);
-    padding-block: clamp(2rem, 4vw, 3rem);
-    border-top: 4px solid var(--sport-color, var(--c-primary));
-  }
-  .sport-hero__inner {
-    display: flex;
-    align-items: start;
-    gap: var(--sp-5);
-  }
-  .sport-hero__icon {
-    display: block;
-    width: 88px;
-    flex-shrink: 0;
-  }
-  .sport-hero h1 {
-    margin-bottom: var(--sp-2);
-  }
-  .sport-hero .lead {
-    max-width: 60ch;
-    margin-bottom: var(--sp-4);
-  }
-
-  .tags {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    padding: 0;
-    margin: 0;
-  }
-  .tag {
-    font-size: 0.8rem;
-    font-weight: 600;
-    padding: 0.25rem 0.75rem;
-    border-radius: var(--radius-pill);
-    background: var(--c-surface);
-    color: var(--c-primary);
-  }
-
-  .detail-grid {
-    display: grid;
-    grid-template-columns: 1.3fr 0.7fr;
-    gap: clamp(2rem, 4vw, 3.5rem);
-    align-items: start;
-  }
-  /* Zweiter Selektor: Der Fließtext aus der Markdown-Datei trägt keine
-     Scope-Kennung und wird nur über :global() erreicht. */
-  .detail-grid p,
-  .detail-grid :global(p) {
-    color: var(--c-text-muted);
-  }
-  .detail-grid h2 {
-    font-size: var(--step-2);
-    margin-top: var(--sp-6);
-  }
-
-  .highlights {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-  }
-  .highlights li {
-    display: flex;
-    align-items: start;
-    gap: 0.6rem;
-  }
-  .highlights :global(.highlights__check) {
-    color: var(--c-primary-light);
-    stroke-width: 2.6;
-    margin-top: 0.2rem;
-  }
-
-  .cta-inline {
-    margin-top: var(--sp-7);
-  }
-
-  /* ---- Angebote innerhalb der Sportart ---- */
-  .activities {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-    gap: var(--sp-4);
-  }
-  .activity {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    text-align: center;
-  }
-  .activity__name {
-    font-size: 0.92rem;
-    font-weight: 600;
-    color: var(--c-text);
-    line-height: 1.25;
-  }
-  .activity__name small {
-    display: block;
-    font-size: 0.8rem;
-    font-weight: 400;
-    color: var(--c-text-muted);
-  }
-
-  /* ---- Hinweis für Sportarten im Aufbau ---- */
-  .sport-status {
-    background: var(--c-sun-soft);
-    border: 1px solid #E8CE8A;
-    border-left: 5px solid var(--c-sun);
-    border-radius: var(--radius);
-    padding: var(--sp-5);
-    margin-bottom: var(--sp-6);
-  }
-  .sport-status__label {
-    display: flex;
-    align-items: center;
-    gap: 0.45rem;
-    margin: 0 0 var(--sp-3);
-    font-size: 0.78rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: #6B5400 !important;
-  }
-  .sport-status__text {
-    margin: 0;
-    color: #4A3D14 !important;
-  }
-  .sport-status__heading {
-    font-size: 0.82rem !important;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    font-family: var(--font-body);
-    font-weight: 700;
-    color: #6B5400;
-    margin: var(--sp-5) 0 var(--sp-2) !important;
-  }
-  .sport-status__list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  .sport-status__list li {
-    display: flex;
-    align-items: start;
-    gap: 0.55rem;
-    color: #4A3D14;
-    line-height: 1.45;
-  }
-  .sport-status :global(.sport-status__icon) {
-    color: #8A6D00;
-    margin-top: 0.2rem;
-    flex-shrink: 0;
-  }
-
-  /* ---- Infokarte ---- */
-  .facts-card {
-    background: var(--c-surface);
-    border: 1px solid var(--c-border);
-    border-radius: var(--radius-lg);
-    padding: var(--sp-5);
-    position: sticky;
-    top: calc(var(--header-height) + var(--sp-4));
-  }
-  .facts-card > h2 {
-    font-size: var(--step-1);
-    margin: 0 0 var(--sp-5);
-  }
-  .facts-card__row {
-    display: flex;
-    gap: var(--sp-3);
-    padding-block: var(--sp-4);
-    border-top: 1px solid var(--c-border);
-  }
-  .facts-card__row:first-of-type {
-    border-top: none;
-    padding-top: 0;
-  }
-  .facts-card :global(.facts-card__icon) {
-    color: var(--c-primary-light);
-    margin-top: 0.15rem;
-    flex-shrink: 0;
-  }
-  .facts-card h3 {
-    font-size: 0.82rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--c-text-muted);
-    margin: 0 0 0.3rem;
-    font-family: var(--font-body);
-    font-weight: 700;
-  }
-  .facts-card p {
-    margin: 0;
-    font-size: 0.94rem;
-  }
-
-  .kontakt__name {
-    font-weight: 600;
-    color: var(--c-text) !important;
-  }
-  .kontakt__rolle {
-    font-size: 0.86rem !important;
-    margin-bottom: 0.35rem !important;
-  }
-
-  .times {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-  }
-  .times li {
-    display: flex;
-    flex-direction: column;
-    font-size: 0.94rem;
-  }
-  .times strong {
-    color: var(--c-primary);
-  }
-  .times span {
-    font-size: 0.84rem;
-    color: var(--c-text-muted);
-  }
-
-  /* ---- Weiter-Navigation ---- */
-  .sport-nav {
-    border-top: 1px solid var(--c-border);
-    padding-block: var(--sp-5);
-  }
-  .sport-nav__inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--sp-4);
-    flex-wrap: wrap;
-  }
-  .sport-nav__link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    text-decoration: none;
-    color: var(--c-primary);
-    font-weight: 600;
-  }
-  .sport-nav__link small {
-    display: block;
-    font-size: 0.75rem;
-    font-weight: 400;
-    color: var(--c-text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-  }
-  .sport-nav__link :global(.sport-nav__back) {
-    transform: rotate(180deg);
-  }
-  .sport-nav__link--next {
-    text-align: right;
-  }
-
-  @media (max-width: 900px) {
-    .detail-grid {
-      grid-template-columns: 1fr;
-    }
-    .facts-card {
-      position: static;
-    }
-  }
-  @media (max-width: 620px) {
-    .sport-hero__inner {
-      flex-direction: column;
-    }
-    .sport-nav__inner {
-      justify-content: center;
-      text-align: center;
-    }
-  }
-</style>
