@@ -7,23 +7,25 @@ import { getSportNames } from '../lib/sportarten';
 const sportNames = (await getSportNames()).join(', ');
 ---
 
-<section class="site-hero">
-  <div class="container hero-grid">
+<section class="site-hero pt-[clamp(2.5rem,1rem+5vw,4.5rem)] pb-0 overflow-x-clip">
+  <div
+    class="container grid grid-cols-[1.05fr_0.95fr] gap-[clamp(2rem,4vw,3.5rem)] items-center max-[940px]:grid-cols-1"
+  >
     <div class="hero-copy">
-      <p class="hero-badge">
-        <span class="hero-badge__dot" aria-hidden="true"></span>
+      <p class="inline-flex items-center gap-2 bg-primary text-white py-[0.35rem] px-[0.9rem] rounded-full text-[0.85rem] font-semibold m-0 mb-4">
+        <span class="status status-warning" aria-hidden="true"></span>
         {clubAge} Jahre {site.shortName}
       </p>
-      <h1>{slogan}</h1>
+      <h1 class="max-w-[15ch] mb-4 max-[940px]:max-w-[20ch]">{slogan}</h1>
       <p class="lead">
         {/* „in jedem Alter“ statt einer eigenen Nennung der Älteren: Der Verein
             hat viele ältere Mitglieder, aber niemand soll hier in eine
             Schublade gesteckt werden. */}
         {sportNames} – für Kinder, Jugendliche, Familien und Erwachsene in
         jedem Alter.
-        Schon ab <strong>4&nbsp;€ im Monat</strong> dabei.
+        Schon ab <strong class="text-base-content font-bold whitespace-nowrap">4&nbsp;€ im Monat</strong> dabei.
       </p>
-      <div class="hero-ctas">
+      <div class="flex gap-3 flex-wrap mt-8">
         <a class="btn btn-accent" href="/mitglied-werden/">
           <Icon name="join" />
           Jetzt Mitglied werden
@@ -33,44 +35,47 @@ const sportNames = (await getSportNames()).join(', ');
           Probetraining vereinbaren
         </a>
       </div>
-      <p class="hero-note">
-        <Icon name="check" size={16} />
+      <p class="flex items-center gap-[0.45rem] m-0 mt-4 text-[0.9rem] text-muted">
+        <Icon name="check" size={16} class="text-secondary stroke-[2.5]" />
         Probetraining kostenlos &amp; unverbindlich – einfach vorbeikommen.
       </p>
     </div>
 
-    <div class="hero-media">
-      <HeroKarussell />
-      <svg class="hero-swoosh" viewBox="0 0 200 200" aria-hidden="true">
+    <div class="relative max-[940px]:-order-1 max-[940px]:max-w-[520px]">
+      {/* Bogenform als wiedererkennbares Gestaltungselement. Mobil flacher
+          als am Desktop, damit der Aufruf zum Handeln in Sichtweite bleibt –
+          aber nicht so flach, dass von den Hochformaten zu wenig übrig
+          bleibt. */}
+      <HeroKarussell
+        class="aspect-[4/5] rounded-[clamp(80px,18vw,180px)_var(--radius-lg)_var(--radius-lg)_var(--radius-lg)] shadow-lg max-[940px]:aspect-[4/3] max-[940px]:rounded-lg"
+      />
+      <svg
+        class="absolute -left-[38px] -bottom-[28px] size-[190px] -z-1 opacity-90 max-[940px]:hidden"
+        viewBox="0 0 200 200"
+        aria-hidden="true"
+      >
         <path
           d="M10 190 C 10 100, 100 100, 100 10"
           fill="none"
-          stroke="var(--c-accent)"
+          stroke="var(--color-coral)"
           stroke-width="12"
           stroke-linecap="round"
         />
       </svg>
-      <p class="hero-stamp">
-        <strong>seit</strong>
-        <span>{site.founded}</span>
+      <p
+        class="absolute -right-3 bottom-[26px] m-0 size-[84px] rounded-full bg-sun text-[#3F2E00] grid place-content-center text-center leading-[1.1] shadow-md font-display max-[940px]:-right-2 max-[940px]:-bottom-[18px] max-[940px]:size-[72px]"
+      >
+        <strong class="block text-[0.72rem] uppercase tracking-[0.08em] font-semibold">seit</strong>
+        <span class="text-[1.35rem] font-bold">{site.founded}</span>
       </p>
     </div>
   </div>
 </section>
 
 <style>
-  .site-hero {
-    padding-block: clamp(2.5rem, 1rem + 5vw, 4.5rem) 0;
-    overflow-x: clip;
-  }
-
-  .hero-grid {
-    display: grid;
-    grid-template-columns: 1.05fr 0.95fr;
-    gap: clamp(2rem, 4vw, 3.5rem);
-    align-items: center;
-  }
-
+  /* Einzig verbliebenes CSS: das gestaffelte Einblenden der Texte beim
+     Laden. Keyframes lassen sich nicht als Utility schreiben, und global.css
+     ist dafür der falsche Ort. */
   .hero-copy > :global(*) {
     animation: rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) backwards;
   }
@@ -81,130 +86,5 @@ const sportNames = (await getSportNames()).join(', ');
 
   @keyframes rise {
     from { opacity: 0; transform: translateY(14px); }
-  }
-
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: var(--c-primary);
-    color: #fff;
-    padding: 0.35rem 0.9rem;
-    border-radius: var(--radius-pill);
-    font-size: 0.85rem;
-    font-weight: 600;
-    margin: 0 0 var(--sp-4);
-  }
-  .hero-badge__dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--c-sun);
-  }
-
-  .site-hero h1 {
-    max-width: 15ch;
-    margin-bottom: var(--sp-4);
-  }
-
-  .site-hero .lead strong {
-    color: var(--c-text);
-    font-weight: 700;
-    white-space: nowrap;
-  }
-
-  .hero-ctas {
-    display: flex;
-    gap: var(--sp-3);
-    flex-wrap: wrap;
-    margin-top: var(--sp-6);
-  }
-
-  .hero-note {
-    display: flex;
-    align-items: center;
-    gap: 0.45rem;
-    margin: var(--sp-4) 0 0;
-    font-size: 0.9rem;
-    color: var(--c-text-muted);
-  }
-  .hero-note :global(.icon) {
-    color: var(--c-primary-light);
-    stroke-width: 2.5;
-  }
-
-  .hero-media {
-    position: relative;
-  }
-
-  .hero-media :global(.karussell) {
-    /* Bogenform als wiedererkennbares Gestaltungselement. */
-    border-radius: clamp(80px, 18vw, 180px) var(--radius-lg) var(--radius-lg)
-      var(--radius-lg);
-    box-shadow: var(--shadow-lg);
-  }
-
-  .hero-swoosh {
-    position: absolute;
-    left: -38px;
-    bottom: -28px;
-    width: 190px;
-    height: 190px;
-    z-index: -1;
-    opacity: 0.9;
-  }
-
-  .hero-stamp {
-    position: absolute;
-    right: -12px;
-    bottom: 26px;
-    margin: 0;
-    width: 84px;
-    height: 84px;
-    border-radius: 50%;
-    background: var(--c-sun);
-    color: #3F2E00;
-    display: grid;
-    place-content: center;
-    text-align: center;
-    line-height: 1.1;
-    box-shadow: var(--shadow-md);
-    font-family: var(--font-display);
-  }
-  .hero-stamp strong {
-    display: block;
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-weight: 600;
-  }
-  .hero-stamp span {
-    font-size: 1.35rem;
-    font-weight: 700;
-  }
-
-  @media (max-width: 940px) {
-    .hero-grid {
-      grid-template-columns: 1fr;
-    }
-    .hero-media {
-      order: -1;
-      max-width: 520px;
-    }
-    .hero-media :global(.karussell) {
-      /* Flacher als am Desktop, damit der Aufruf zum Handeln in Sichtweite
-         bleibt – aber nicht so flach, dass von den Hochformaten zu wenig
-         übrig bleibt. */
-      aspect-ratio: 4 / 3;
-      border-radius: var(--radius-lg);
-    }
-    .hero-swoosh { display: none; }
-    .hero-stamp {
-      right: -8px;
-      bottom: -18px;
-      width: 72px;
-      height: 72px;
-    }
-    .site-hero h1 { max-width: 20ch; }
   }
 </style>
