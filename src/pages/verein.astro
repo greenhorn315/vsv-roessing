@@ -4,8 +4,8 @@ import PageHeader from '../components/PageHeader.astro';
 import NewsList from '../components/NewsList.astro';
 import Facts from '../components/Facts.astro';
 import CallToAction from '../components/CallToAction.astro';
-import { site } from '../data/site';
-import { sportCountWord } from '../data/sports';
+import { site } from '../lib/site';
+import { getSportCountWord } from '../lib/sportarten';
 import { getCollection } from 'astro:content';
 
 // Reihenfolge steht in der YAML-Datei als `order`; auf die Reihenfolge, in der
@@ -13,6 +13,7 @@ import { getCollection } from 'astro:content';
 const vorstand = (await getCollection('vorstand')).sort(
   (a, b) => a.data.order - b.data.order,
 );
+const sportCountWord = await getSportCountWord();
 ---
 
 <BaseLayout
@@ -22,7 +23,7 @@ const vorstand = (await getCollection('vorstand')).sort(
   <PageHeader
     eyebrow="Über uns"
     title="Seit 1897 in Bewegung"
-    lead={`Was als kleiner Turnverein begann, ist heute ein Verein mit rund 660 Mitgliedern und ${sportCountWord} Sportarten – getragen von Ehrenamt und Nachbarschaft.`}
+    lead={`Was als kleiner Turnverein begann, ist heute ein Verein mit rund ${site.members} Mitgliedern und ${sportCountWord} Sportarten – getragen von Ehrenamt und Nachbarschaft.`}
   />
 
   <Facts />

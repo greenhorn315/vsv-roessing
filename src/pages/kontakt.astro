@@ -3,8 +3,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Icon from '../components/Icon.astro';
 import VenueGallery from '../components/VenueGallery.astro';
-import { site, venues } from '../data/site';
-import { sports } from '../data/sports';
+import { getCollection } from 'astro:content';
+import { site } from '../lib/site';
+import { getSportNames } from '../lib/sportarten';
+import { nachOrder } from '../lib/reihenfolge';
+
+const venues = (await getCollection('sportstaetten')).sort(nachOrder).map((eintrag) => eintrag.data);
+const sportNames = await getSportNames();
 ---
 
 <BaseLayout
@@ -58,7 +63,7 @@ import { sports } from '../data/sports';
             <label for="sportart">Welche Sportart interessiert dich?</label>
             <select id="sportart" name="sportart">
               <option value="">Bitte auswählen</option>
-              {sports.map((sport) => <option value={sport.name}>{sport.name}</option>)}
+              {sportNames.map((name) => <option value={name}>{name}</option>)}
               <option value="Noch unsicher">Noch unsicher</option>
             </select>
           </div>

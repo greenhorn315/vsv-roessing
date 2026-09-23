@@ -1,7 +1,8 @@
 ---
 import Pictogram from './Pictogram.astro';
 import Icon from './Icon.astro';
-import { sports, ageGroupLabels, type AgeGroup } from '../data/sports';
+import { ageGroupLabels, sportColorVar, AGE_GROUPS } from '../lib/labels';
+import { getSports } from '../lib/sportarten';
 
 interface Props {
   /** Filterleiste nach Altersgruppen anzeigen (Sportangebote-Seite). */
@@ -11,7 +12,8 @@ interface Props {
 }
 
 const { withFilter = false, detailed = false } = Astro.props;
-const groups = Object.keys(ageGroupLabels) as AgeGroup[];
+const groups = AGE_GROUPS;
+const sports = await getSports();
 ---
 
 {
@@ -38,11 +40,11 @@ const groups = Object.keys(ageGroupLabels) as AgeGroup[];
 <ul class="sport-grid" data-sport-list>
   {
     sports.map((sport) => (
-      <li data-age-groups={sport.ageGroups.join(' ')}>
-        <a class="sport-card" href={`/sportangebote/${sport.slug}`} style={`--sport-color:${sport.color}`}>
-          <Pictogram name={sport.pictogram} size={64} class="sport-card__icon" />
-          <h3>{sport.name}</h3>
-          <p>{detailed ? sport.description : sport.teaser}</p>
+      <li data-age-groups={sport.data.ageGroups.join(' ')}>
+        <a class="sport-card" href={`/sportangebote/${sport.id}`} style={`--sport-color:${sportColorVar(sport.data.color)}`}>
+          <Pictogram name={sport.data.pictogram} size={64} class="sport-card__icon" />
+          <h3>{sport.data.name}</h3>
+          <p>{detailed ? sport.data.description : sport.data.teaser}</p>
           <span class="sport-card__more">
             Mehr erfahren
             <Icon name="arrowRight" size={16} />

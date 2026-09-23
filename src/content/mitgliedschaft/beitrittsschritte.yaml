@@ -1,0 +1,17 @@
+# Die drei Schritte zur Mitgliedschaft, nummeriert aufsteigend nach `order`.
+# Der Schlüssel links ist nur eine interne Kennung.
+
+formular:
+  order: 1
+  title: Formular holen
+  text: Aufnahmeantrag als PDF herunterladen – SEPA-Mandat ist schon darin enthalten.
+
+senden:
+  order: 2
+  title: Ausfüllen & senden
+  text: Per Post oder als Scan an den Vorstand – beides geht.
+
+loslegen:
+  order: 3
+  title: Loslegen
+  text: Einfach zum nächsten Training dazukommen. Fertig.

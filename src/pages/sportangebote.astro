@@ -5,10 +5,13 @@ import SportGrid from '../components/SportGrid.astro';
 import ClubNumbers from '../components/ClubNumbers.astro';
 import AudienceGuide from '../components/AudienceGuide.astro';
 import Organigramm from '../components/Organigramm.astro';
-import { SportCountWord, sportNames } from '../data/sports';
+import { getSportCountWordCapitalized, getSportNames } from '../lib/sportarten';
 import TrainingList from '../components/TrainingList.astro';
-import { trainingsStand } from '../data/trainings';
+import { trainingsStand } from '../lib/trainings';
 import CallToAction from '../components/CallToAction.astro';
+
+const SportCountWord = await getSportCountWordCapitalized();
+const sportNames = await getSportNames();
 ---
 
 <BaseLayout

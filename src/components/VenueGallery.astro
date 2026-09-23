@@ -1,7 +1,9 @@
 ---
 import Icon from './Icon.astro';
 import Photo from './Photo.astro';
-import { venues } from '../data/site';
+import { getCollection } from 'astro:content';
+import { zahlwort } from '../lib/labels';
+import { nachOrder } from '../lib/reihenfolge';
 
 interface Props {
   id?: string;
@@ -9,9 +11,11 @@ interface Props {
   lead?: string;
 }
 
-/** Kleine Zahlen ausschreiben – im Fließtext lesen sie sich besser. */
-const zahlwoerter = ['null', 'einen', 'zwei', 'drei', 'vier', 'fünf', 'sechs', 'sieben', 'acht'];
-const orteWort = zahlwoerter[venues.length] ?? String(venues.length);
+// Orte und Reihenfolge in src/content/sportstaetten.yaml.
+const venues = (await getCollection('sportstaetten')).sort(nachOrder).map((eintrag) => eintrag.data);
+
+/** Kleine Zahlen ausschreiben – im Fließtext lesen sie sich besser. Akkusativ: „einen Ort“. */
+const orteWort = zahlwort(venues.length, { eins: 'einen' });
 
 const {
   id = 'sportstaetten',

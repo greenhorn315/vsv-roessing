@@ -1,0 +1,38 @@
+# Spielplan der Ü40-Mannschaft.
+#
+# Quelle: der am Sportplatz ausgehängte Plan, abgetippt vom Foto des Blattes
+# „Ü40“. Erfasst sind nur die Partien ab dem 14. September 2026; die Spiele
+# davor sind bereits gelaufen – genauso gehalten wie beim Dart-Spielplan.
+#
+# Auf dem Aushang war der 11.09.2026 durchgestrichen und handschriftlich auf
+# Dienstag, den 08.09.2026 vorverlegt. Beide Termine liegen vor dem Stichtag
+# und stehen deshalb nicht in der Liste.
+#
+# Heim- oder Auswärtsspiel steht im Aushang nicht als Wort, sondern in der
+# Reihenfolge: „Ü40 – Gegner“ ist ein Heimspiel, „Gegner – Ü40“ auswärts.
+# Heimspiele finden auf dem VSV-Sportplatz statt.
+#
+# Je Partie:
+#   date      Datum als JJJJ-MM-TT
+#   time      Anstoß- bzw. Beginnzeit, in Anführungszeichen
+#   opponent  Gegner in der Schreibweise des Spielplans
+#   home      true = Heimspiel an der eigenen Spielstätte, false = auswärts
+#   team      Mannschaft, wenn eine Sportart mit mehreren antritt
+#   note      Zusatz aus dem Aushang, etwa „Pokal“ (darf fehlen)
+#
+# Die Reihenfolge der Partien ist egal, die Seite sortiert nach Datum,
+# Uhrzeit und Mannschaft. Gespielte Partien fallen beim nächsten Bauen von
+# selbst heraus und dürfen stehen bleiben.
+
+# Name der Mannschaft, so wie er auf dem Aushang steht.
+team: Ü40
+# Spielstätte der Heimspiele, siehe sportstaetten.yaml.
+spielstaette: VSV-Sportplatz
+# Stand des abgetippten Aushangs.
+stand: September 2026
+
+spiele:
+  - { date: 2026-09-25, time: '19:00', opponent: "SV Groß Düngen", home: false }
+  - { date: 2026-10-02, time: '19:00', opponent: "SV BW Neuhof", home: true }
+  - { date: 2026-10-09, time: '19:00', opponent: "SG Himmelsthür/Sorsum/Emmerke", home: false }
+  - { date: 2026-10-30, time: '19:00', opponent: "SC Itzum", home: true }

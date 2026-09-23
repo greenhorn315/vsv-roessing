@@ -1,0 +1,21 @@
+# Regeln rund um den Beitrag, wie sie in den Formularen stehen. Quelle wie bei
+# beitraege.yaml: die Vereinsformulare vom September 2026.
+#
+# Die Seite zeigt sie als Liste unter der Beitragstabelle, aufsteigend nach
+# `order`. Der Schlüssel links ist nur eine interne Kennung.
+
+einzug:
+  order: 1
+  text: Der Beitrag wird einmal im Jahr abgebucht, jeweils am 1. Juni für das laufende Kalenderjahr.
+
+guenstigster:
+  order: 2
+  text: Der Verein ermittelt für eine Familie automatisch den günstigsten Beitrag – ihr müsst nicht selbst rechnen.
+
+ermaessigung:
+  order: 3
+  text: Bei Schulausbildung, Studium sowie Grundwehr- oder Ersatzdienst ermäßigt sich der Jahresbeitrag auf 48 €. Eine Berufsausbildung zählt nicht dazu; ein Nachweis ist nötig.
+
+kuendigung:
+  order: 4
+  text: Kündigen könnt ihr jederzeit schriftlich zum Quartalsende, ohne Kündigungsfrist. Zu viel gezahlte Beiträge schreibt der Verein von selbst gut.

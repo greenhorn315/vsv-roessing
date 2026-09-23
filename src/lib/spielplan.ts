@@ -1,21 +1,26 @@
+import { getEntry, type CollectionEntry } from 'astro:content';
+
 /**
  * Gemeinsame Grundlage der Spielpläne. Dart und Fußball unterscheiden sich in
  * Liga, Mannschaften und Spielstätte, nicht aber darin, wie eine Partie
- * aussieht und wie die gespielten aus der Liste fallen.
+ * aussieht und wie die gespielten aus der Liste fallen. Die Partien selbst
+ * stehen in `src/content/spielplaene/`.
  */
 
-export interface Spiel {
-  /** Datum als ISO-Wert, für Sortierung und Vergleich mit dem heutigen Tag. */
-  date: string;
-  time: string;
-  /** Gegner in der Schreibweise des Spielplans. */
-  opponent: string;
-  /** true = Heimspiel an der eigenen Spielstätte. */
-  home: boolean;
-  /** Mannschaft, wenn eine Sportart mit mehreren antritt. */
-  team?: string;
-  /** Zusatz aus dem Aushang, etwa „Pokal“. */
-  note?: string;
+export type Spielplan = CollectionEntry<'spielplaene'>['data'];
+
+/** Eine Partie; `date` ist ein ISO-Datum („2026-09-18“). */
+export type Spiel = Spielplan['spiele'][number];
+
+/**
+ * Spielplan einer Sportart, Partien schon nach Termin sortiert. Fehlt die
+ * Datei, bricht der Build ab – die Seite soll nicht still ohne Spielplan
+ * erscheinen.
+ */
+export async function getSpielplan(sport: string): Promise<Spielplan> {
+  const eintrag = await getEntry('spielplaene', sport);
+  if (!eintrag) throw new Error(`Kein Spielplan unter src/content/spielplaene/${sport}.yaml`);
+  return { ...eintrag.data, spiele: nachTermin(eintrag.data.spiele) };
 }
 
 const alsIsoDatum = (tag: Date): string =>

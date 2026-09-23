@@ -1,5 +1,7 @@
 ---
-import { facts } from '../data/site';
+import { getFacts } from '../lib/site';
+
+const facts = await getFacts();
 ---
 
 <section class="facts" aria-label="Der Verein in Zahlen">

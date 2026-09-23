@@ -1,10 +1,10 @@
 ---
 import Icon from './Icon.astro';
 import HeroKarussell from './HeroKarussell.astro';
-import { site, slogan, clubAge } from '../data/site';
-import { sports } from '../data/sports';
+import { site, slogan, clubAge } from '../lib/site';
+import { getSportNames } from '../lib/sportarten';
 
-const sportNames = sports.map((s) => s.name).join(', ');
+const sportNames = (await getSportNames()).join(', ');
 ---
 
 <section class="hero">

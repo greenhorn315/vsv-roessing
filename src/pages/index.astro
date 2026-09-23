@@ -12,8 +12,10 @@ import SocialStrip from '../components/SocialStrip.astro';
 import CallToAction from '../components/CallToAction.astro';
 import Icon from '../components/Icon.astro';
 import PrototypeNotice from '../components/PrototypeNotice.astro';
-import { site, isPrototype } from '../data/site';
-import { SportCountWord } from '../data/sports';
+import { site, isPrototype } from '../lib/site';
+import { getSportCountWordCapitalized } from '../lib/sportarten';
+
+const SportCountWord = await getSportCountWordCapitalized();
 ---
 
 <BaseLayout title={`${site.shortName} – Dein Verein, dein Sport`} bareTitle>

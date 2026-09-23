@@ -1,6 +1,9 @@
 ---
 import Icon from './Icon.astro';
-import { testimonials } from '../data/testimonials';
+import { getCollection } from 'astro:content';
+import { nachOrder } from '../lib/reihenfolge';
+
+const testimonials = (await getCollection('testimonials')).sort(nachOrder).map((eintrag) => eintrag.data);
 ---
 
 <div class="quotes">
