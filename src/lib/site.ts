@@ -50,7 +50,7 @@ export const site = {
  * weil die Zahl der Sportarten aus der Collection kommt.
  */
 export async function getSiteDescription(): Promise<string> {
-  return `Volkssportvereinigung Rössing von 1897 e.V. – ${await getSportCountWord()} Sportarten für Kinder, Jugendliche, Familien und Erwachsene in jedem Alter. Schon ab 4 € im Monat dabei.`;
+  return `Volkssportvereinigung Rössing von 1897 e.V. – ${await getSportCountWord()} Sportarten für Kinder, Jugendliche, Familien und Erwachsene. Schon ab 4 € im Monat dabei.`;
 }
 
 export interface NavItem {
