@@ -87,38 +87,34 @@ Die generierten Typen liegen unter `.astro/` und gehören nicht ins Repository;
 
 ## Design-System
 
-Gestaltet wird mit **Tailwind CSS 4** und **daisyUI 5**. Alles, was das
-Aussehen bestimmt, steht an einer Stelle: `src/styles/global.css`.
+Gestaltet wird mit **Tailwind CSS 4** und **daisyUI 5**, beide weitgehend
+so, wie sie geliefert werden. `src/styles/global.css` enthält nur das
+daisyUI-Thema, die Schriften und eine Grundregel für Überschriften – keine
+eigenen Klassen, Farben oder Skalen.
 
 * **Thema** `vsv` (daisyUI, nur hell): **Primär** Tannengrün `#14453D`
   (`primary`) · **Sekundär** helleres Grün `#2F7A64` (`secondary`) ·
-  **Akzent** Korall für Text und Buttons `#C9401F` (`accent`) · **Sonne**
-  `#FFC857` (`warning`) · Seitenhintergrund `#F5F8F6` (`base-200`), Flächen
-  weiß (`base-100`), Text `#1C2A24` (`base-content`).
-* **Zusatzfarben** im `@theme`-Block, z. B. `coral` (das helle Korall
-  `#FF6B4A`, nur dekorativ – mit weißer Schrift zu kontrastarm), `muted`
-  für gedämpften Text, `tint-green`, `sun-soft`, `border`, `border-strong`.
+  **Akzent** Korall `#C9401F` (`accent`) · **Sonne** `#FFC857` (`warning`) ·
+  Seitenhintergrund `#F5F8F6` (`base-200`), Flächen weiß (`base-100`), Text
+  `#1C2A24` (`base-content`). Abstufungen über Deckkraft, z. B.
+  `text-base-content/70` für gedämpften Text oder `bg-accent/10`.
 * **Schriften** Fraunces für Überschriften (`font-display`) und Source Sans 3
   für Fließtext (`font-sans`, Standard). Sie werden **lokal** ausgeliefert
   (`@fontsource-variable`) – keine Verbindung zu Google Fonts, damit
   DSGVO-konform.
-* **Schriftgrößen** fluid von `text-step--1` bis `text-step-4`; Überschriften
-  h1–h4 bekommen sie automatisch.
-* **Abstände** nach Tailwinds 4px-Raster (`p-4` = 1rem), dazu `py-section`
-  für den Abstand zwischen Abschnitten und `max-w-site` (1180px) für die
-  Inhaltsbreite.
-* **Bausteine** kommen aus daisyUI statt aus eigenem CSS: `btn` (Varianten
-  `btn-accent`, `btn-outline`, `btn-on-dark`, `btn-link`), außerdem `card`,
-  `badge`, `alert`, `table`, `breadcrumbs`, `steps`, `stats`, Formularfelder
-  (`input`, `select`, `textarea`, `fieldset`) und `menu`/`navbar`.
-* **Neue Gestaltung** möglichst mit vorhandenen Utilities und
-  daisyUI-Klassen direkt im Markup. Fehlt ein Wert, gehört er als Variable
-  in den `@theme`-Block (Farbe `--color-…`, Abstand `--spacing-…`, Radius
-  `--radius-…`) – dann gibt es die passende Klasse automatisch. Eigene
-  Klassen nur über `@utility` in `global.css`.
-* Die alten Variablen (`--c-*`, `--sp-*`, `--step-*` …) und Hilfsklassen
-  (`.container`, `.section`, `.eyebrow` …) gibt es noch, bis alle Komponenten
-  umgestellt sind; siehe `docs/tailwind-migration.md`.
+* **Größen, Abstände, Radien, Schatten** aus Tailwinds Standardskala
+  (`text-lg`, `py-16`, `rounded-3xl`, `shadow-sm` …), dazu `rounded-box` und
+  `rounded-field` aus dem Thema.
+* **Bausteine** aus daisyUI: `btn` (`btn-accent` für die Hauptaktion,
+  `btn-outline btn-primary` daneben, `btn-warning`/`btn-secondary` auf
+  Grün), `link`, `card`, `badge`, `alert`, `table`, `stats`, `list`,
+  `breadcrumbs`, Formularfelder und `menu`/`navbar`. Markdown-Texte laufen
+  durch `prose` (`@tailwindcss/typography`).
+* **Wiederkehrendes** steckt in Komponenten statt in CSS-Klassen:
+  `Container.astro` (Inhaltsbreite), `SectionHead.astro` (Überschrift eines
+  Abschnitts), `PageHeader.astro`.
+* **Neue Gestaltung** mit Utilities und daisyUI-Klassen direkt im Markup.
+  Kein eigenes CSS in `global.css` und keine `<style>`-Blöcke.
 * Zielniveau Barrierefreiheit: WCAG 2.1 AA (Kontraste, Tastaturbedienung,
   sichtbarer Fokus, `prefers-reduced-motion`).
 * Das Vorschaubild `public/og-default.png` (1200 × 630) wird beim Teilen in
