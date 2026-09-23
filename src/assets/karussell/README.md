@@ -2,7 +2,7 @@
 
 Diese Bilder rollieren auf der Startseite an der Stelle, an der später ein
 einzelnes Vereinsfoto stehen soll. Die Reihenfolge, die Bildunterschriften und
-die Alternativtexte stehen in `src/data/karussell.ts`.
+die Alternativtexte stehen in `src/content/karussell.yaml`.
 
 | # | Datei | Motiv | Vorlage |
 |---|---|---|---|
@@ -23,8 +23,16 @@ gleiche Motive aufeinander folgen.
 
 **Format**
 
-Hochformat 4 : 5, 800 × 1000 px, JPG unter 210 KB. Aufbereitet mit
-`tools/karussell.py`; dort stehen je Bild die Tonwerte und der Bildausschnitt.
+Hochformat 4 : 5. Die Dateien hier sind Vorlagen: Astro rechnet daraus beim
+Bauen AVIF, WebP und JPEG in 400, 560 und 800 px Breite, der Browser wählt
+davon. Aufbereitet mit `tools/karussell.py`; dort stehen je Bild die Tonwerte
+und der Bildausschnitt. Die vorhandenen Dateien sind noch 800 × 1000 px und
+unter 210 KB – so kamen sie aus der Zeit, als sie unverändert ausgeliefert
+wurden (siehe unten). Neue Vorlagen dürfen größer sein, siehe `tools/README.md`.
+
+Geladen wird zunächst nur das erste Bild. Die übrigen setzt das Karussell erst
+kurz vor ihrem Auftritt ein, jeweils eines im Voraus – siehe
+`src/components/HeroKarussell.astro`.
 Am Desktop steht das Karussell im Hochformat, auf schmalen Geräten im Format
 4 : 3 – der Ausschnitt wird per `object-fit: cover` gefüllt.
 
@@ -71,7 +79,7 @@ stehen in der Adresszeile und sind damit öffentlich.
 **Kindergesichter kommen hier nicht hinein.** Die Aufnahme vom Saisonabschluss
 vor dem Vereinsheim war kurzzeitig Folie 7 und ist wieder entfernt worden, weil
 darauf Kinder erkennbar sind. Das Vereinsheim hat inzwischen eine eigene
-Aufnahme ohne Personen, siehe `public/images/sportstaetten/README.md`.
+Aufnahme ohne Personen, siehe `src/assets/sportstaetten/README.md`.
 
 Die beiden Bilder vom Sportabzeichen-Tag sind nach derselben Regel gewählt:
 Auf `leichtathletik-weitsprung.jpg` ist ein einzelnes Kind von hinten zu sehen,

@@ -1,8 +1,10 @@
 # Fotos der Sportstätten
 
 Diese Dateien zeigt die Kontaktseite im Abschnitt „Unsere Sportstätten“
-(`/kontakt#sportstaetten`). Solange eine Datei fehlt, erscheint automatisch ein
-gestalteter Platzhalter mit dem Hinweis „Foto folgt“ – kein kaputtes Bild.
+(`/kontakt#sportstaetten`). Eingetragen werden sie in
+`src/content/sportstaetten.yaml`; ein verschriebener Dateiname bricht den Build
+ab. Ein Ort ganz ohne Fotos bekommt einen gestalteten Platzhalter mit dem
+Hinweis „Foto folgt“.
 
 | Datei | Ort | Aufnahme |
 |---|---|---|
@@ -18,11 +20,14 @@ gestalteter Platzhalter mit dem Hinweis „Foto folgt“ – kein kaputtes Bild.
 
 **Format**
 
-* Querformat 4 : 3 als JPG. Hauptbild einer Sportstätte 1024 × 768 px,
-  Nebenansichten 640 × 480 px – die stehen nur als kleine Vorschau darunter.
-  Eine Datei bleibt unter 220 KB; `tools/optimize.py` setzt beides selbst.
+* Querformat 4 : 3 als JPG. Die Dateien hier sind Vorlagen: Astro rechnet
+  daraus beim Bauen AVIF, WebP und JPEG in mehreren Breiten (bis 1024 px), der
+  Browser wählt davon. Die vorhandenen Dateien sind noch 1024 × 768 px (die
+  Gaststube 640 × 480) – so kamen sie aus der Zeit, als sie unverändert
+  ausgeliefert wurden. Neue Vorlagen dürfen größer sein, siehe
+  `tools/README.md`.
 * Der Bildausschnitt wird per `object-fit: cover` gefüllt – Motiv mittig halten.
-* Alternativtexte stehen in `src/data/site.ts` bei der jeweiligen Sportstätte
+* Alternativtexte stehen in `src/content/sportstaetten.yaml` bei der jeweiligen Sportstätte
   und sind mit dem Foto abzugleichen.
 
 **Bearbeitung**

@@ -1,4 +1,5 @@
 ---
+import { Picture } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import { nachOrder } from '../lib/reihenfolge';
 
@@ -9,10 +10,25 @@ import { nachOrder } from '../lib/reihenfolge';
  * bleibt das erste stehen und die Bedienelemente sind ausgeblendet. Bei
  * „Bewegung reduzieren“ wechselt nichts von selbst – dann zählt nur, was
  * jemand selbst anklickt.
+ *
+ * Laden: Alle Bilder liegen übereinander im sichtbaren Bereich, loading="lazy"
+ * hielte sie also nicht zurück. Deshalb steht nur das erste als echtes Bild
+ * im HTML; die übrigen stecken in einem <template> und werden erst kurz vor
+ * ihrem Auftritt eingesetzt – das jeweils nächste gleich mit, damit es beim
+ * Überblenden schon da ist. Ohne JavaScript ist ohnehin nur das erste Bild
+ * zu sehen, die anderen werden dann nie geladen.
  */
 // Bilder und Reihenfolge in src/content/karussell.yaml.
 const bilder = (await getCollection('karussell')).sort(nachOrder).map((eintrag) => eintrag.data);
 const dauer = 6000;
+
+/*
+ * Am Desktop steht das Karussell in der rechten Spalte des Heros (rund
+ * 550 px breit), darunter über die volle Breite, höchstens 520 px. Die
+ * Vorlagen sind 800 × 1000 px; größere Breiten entfallen von selbst.
+ */
+const widths = [400, 560, 800];
+const sizes = '(max-width: 940px) min(calc(100vw - 2rem), 520px), 560px';
 ---
 
 <div
@@ -32,15 +48,31 @@ const dauer = 6000;
           aria-hidden={i === 0 ? undefined : 'true'}
           inert={i === 0 ? undefined : true}
         >
-          <img
-            src={bild.src}
-            alt={bild.alt}
-            width={800}
-            height={1000}
-            loading={i === 0 ? 'eager' : 'lazy'}
-            decoding="async"
-            fetchpriority={i === 0 ? 'high' : undefined}
-          />
+          {i === 0 ? (
+            <Picture
+              src={bild.src}
+              alt={bild.alt}
+              formats={['avif', 'webp']}
+              fallbackFormat="jpg"
+              widths={widths}
+              sizes={sizes}
+              loading="eager"
+              decoding="async"
+              fetchpriority="high"
+            />
+          ) : (
+            <template data-karussell-bild>
+              <Picture
+                src={bild.src}
+                alt={bild.alt}
+                formats={['avif', 'webp']}
+                fallbackFormat="jpg"
+                widths={widths}
+                sizes={sizes}
+                decoding="async"
+              />
+            </template>
+          )}
           <p class="karussell__caption">
             {bild.caption}
             {bild.credit && <small>{bild.credit}</small>}
@@ -181,8 +213,18 @@ const dauer = 6000;
     let aktuell = 0;
     let timer: number | undefined;
 
+    /** Setzt das Bild eines Dias aus seinem <template> ein, falls noch nicht geschehen. */
+    const lade = (index: number) => {
+      const vorlage = bilder[(index + bilder.length) % bilder.length]?.querySelector<HTMLTemplateElement>(
+        'template[data-karussell-bild]',
+      );
+      vorlage?.replaceWith(vorlage.content);
+    };
+
     const zeige = (index: number) => {
       aktuell = (index + bilder.length) % bilder.length;
+      lade(aktuell);
+      lade(aktuell + 1);
       bilder.forEach((bild, i) => {
         const an = i === aktuell;
         bild.toggleAttribute('data-aktiv', an);
@@ -211,6 +253,10 @@ const dauer = 6000;
 
     // Erst ab hier ist das erste Bild nicht mehr nur per CSS sichtbar.
     bilder[0]?.setAttribute('data-aktiv', '');
+    // Das zweite Bild erst, wenn die Seite fertig geladen ist – es wird
+    // frühestens nach der ersten Standzeit gebraucht.
+    if (document.readyState === 'complete') lade(1);
+    else window.addEventListener('load', () => lade(1), { once: true });
     punkteLeiste?.removeAttribute('hidden');
 
     punkte.forEach((punkt) =>

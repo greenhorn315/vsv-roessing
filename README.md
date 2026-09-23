@@ -20,13 +20,13 @@ src/
 ├── lib/           Vereinsdaten, Beschriftungen und alles, was aus den Inhalten
 │                  abgeleitet wird (Anzahl der Sportarten, Kennzahlen …)
 ├── styles/        global.css: Tailwind-Einstieg, daisyUI-Thema „vsv“, Basisstile
+├── assets/        Fotos, Piktogramme, Wappen – Astro rechnet daraus AVIF/WebP in
+│                  passenden Größen (siehe assets/README.md)
 ├── components/    Wiederverwendbare Bausteine (Tailwind-Klassen, teils noch scoped <style>)
 ├── layouts/       BaseLayout: <head>, SEO, Schema.org, Header/Footer
 └── pages/         Eine Datei = eine URL
     └── sportangebote/[slug].astro  erzeugt je Sportart eine Detailseite
-public/
-├── images/        Fotos (siehe images/README.md)
-└── favicon.svg
+public/            Unverändert ausgeliefert: Favicons, og-default.png, downloads/
 ```
 
 ### Inhalte pflegen
@@ -144,8 +144,9 @@ Dieselbe Liste gibt es als PDF zum Ausdrucken und Abhaken:
 Inhalt und Nummerierung stimmen mit diesem Abschnitt überein; das Datum im
 Fußbereich steht als `STAND` oben im Skript.
 
-- [ ] Vier quadratische Bilder für den Social-Bereich und `public/og-default.png`
-      einsetzen (Platzhalter greifen bis dahin automatisch)
+- [ ] Vier quadratische Bilder für den Social-Bereich (nach `src/assets/social/`)
+      und `public/og-default.png` einsetzen (Platzhalter greifen bis dahin
+      automatisch)
 - [ ] Einwilligung der abgebildeten Personen einholen – betrifft mehrere
       Bilder im Karussell und das Foto vom Feuerplatz
 - [ ] Einwilligung auch beim **MTV Elze** einholen: Auf dem Aufwärmbild vom

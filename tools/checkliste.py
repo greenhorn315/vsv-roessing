@@ -303,7 +303,8 @@ for t, d in [
    'Terrasse – ist nicht übernommen: Darauf stehen Stühle gestapelt und ein Grill mitten '
    'im Raum. Aufgeräumt wäre das eine dritte Ansicht des Vereinsheims wert.'),
   ('Vier quadratische Bilder für den Social-Bereich',
-   'Mindestens 400 × 400 px. Bis dahin zeigt die Seite gestaltete Platzhalter.'),
+   'Mindestens 600 × 600 px, abzulegen in src/assets/social/. Bis dahin zeigt die Seite '
+   'gestaltete Platzhalter.'),
   ('Vorschaubild fürs Teilen',
    'public/og-default.png, 1200 × 630 px – erscheint in WhatsApp und Facebook.'),
   ('Ein eigenes Dart-Foto aus dem Dorfbrunnen',

@@ -22,7 +22,9 @@
 # Der Schlüssel ganz links ist die interne Kennung und erscheint nirgends auf
 # der Seite; er muss in der Datei eindeutig sein. Darunter:
 #   order    Reihenfolge im Karussell, aufsteigend
-#   src      Pfad unter public/
+#   src      Bilddatei, relativ zu dieser Datei (../assets/karussell/…).
+#            Fehlt die Datei oder ist der Name verschrieben, bricht der
+#            Build ab.
 #   alt      Bildbeschreibung für Screenreader
 #   caption  kurze Bildunterschrift, sichtbar über dem Bild
 #   credit   Quelle, wenn das Bild nicht vom Verein stammt
@@ -33,7 +35,7 @@
 
 gruppenfoto:
   order: 1
-  src: /images/karussell/gruppenfoto.jpg
+  src: ../assets/karussell/gruppenfoto.jpg
   alt: Gruppe in Trikots mit dem Aufdruck „VSV Rössing“ kniet auf einem Rasenplatz und streckt die Arme in die Luft
   caption: Leichtathletik – gemeinsam am Start
 
@@ -41,64 +43,64 @@ gruppenfoto:
 # der gegnerischen Mannschaft im Profil, mit erkennbarem Gesicht.
 fussball-u7:
   order: 2
-  src: /images/karussell/fussball-u7.jpg
+  src: ../assets/karussell/fussball-u7.jpg
   alt: Kindermannschaft in weißen Trikots steht Arm in Arm im Kreis auf dem Rasen, von hinten gesehen
   caption: Fußball – die U7 beim Turnier
 
 freitagsradler:
   order: 3
-  src: /images/karussell/freitagsradler.jpg
+  src: ../assets/karussell/freitagsradler.jpg
   alt: Sieben Radfahrende mit Helmen stehen mit ihren Rädern auf einer Holzbrücke über einem Bach
   caption: Freitagsradler im Sommerhalbjahr
 
 jazzdance:
   order: 4
-  src: /images/karussell/jazzdance.jpg
+  src: ../assets/karussell/jazzdance.jpg
   alt: Tanzgruppe sitzt im Bühnenlicht auf einem Holzboden vor einer Bühne
   caption: Jazz Dance – Auftritt
 
 leichtathletik-huerden:
   order: 5
-  src: /images/karussell/leichtathletik-huerden.jpg
+  src: ../assets/karussell/leichtathletik-huerden.jpg
   alt: Läuferin im Trikot mit dem Aufdruck „VSV Rössing“ steht am Start einer Hürdenbahn in einer Halle
   caption: Leichtathletik – am Start der Hürdenbahn
 
 freitagsradler-abendlicht:
   order: 6
-  src: /images/karussell/freitagsradler-abendlicht.jpg
+  src: ../assets/karussell/freitagsradler-abendlicht.jpg
   alt: Radfahrende auf einem Feldweg, die tiefstehende Abendsonne blendet von rechts
   caption: Freitagsradler – Heimweg im Abendlicht
 
 leichtathletik-weitsprung:
   order: 7
-  src: /images/karussell/leichtathletik-weitsprung.jpg
+  src: ../assets/karussell/leichtathletik-weitsprung.jpg
   alt: Kind landet von hinten gesehen in der Sandgrube einer Weitsprunganlage, davor die rote Anlaufbahn
   caption: Weitsprung beim Sportabzeichen
 
 freitagsradler-umland:
   order: 8
-  src: /images/karussell/freitagsradler-umland.jpg
+  src: ../assets/karussell/freitagsradler-umland.jpg
   alt: Radfahrergruppe steht mit ihren Rädern am Feldrand, dahinter Felder und eine helle Halde
   caption: Freitagsradler – unterwegs im Umland
 
 # Ausschnitt ganz rechts: Dort steht die Gruppe mit dem Rücken zur Kamera.
 sportabzeichen-aufwaermen:
   order: 9
-  src: /images/karussell/sportabzeichen-aufwaermen.jpg
+  src: ../assets/karussell/sportabzeichen-aufwaermen.jpg
   alt: Gruppe aus Kindern und Erwachsenen wärmt sich mit ausgebreiteten Armen auf einer Rasenfläche auf, von hinten gesehen
   caption: Aufwärmen vor der Abnahme des Sportabzeichens
 
 # Winteraufnahme – deshalb ohne Bezug aufs Sommerhalbjahr beschriftet.
 freitagsradler-schloss:
   order: 10
-  src: /images/karussell/freitagsradler-schloss.jpg
+  src: ../assets/karussell/freitagsradler-schloss.jpg
   alt: Abgestelltes Fahrrad auf einer Wiese, dahinter Schloss Marienburg mit seinen neugotischen Türmen
   caption: Radtour zur Marienburg
 
 # E-Dart-Scheibe – die Dart-Gruppe spielt E-Darts, nicht Steel.
 dart:
   order: 11
-  src: /images/karussell/dart.jpg
+  src: ../assets/karussell/dart.jpg
   alt: Dartpfeil mit rot-weißem Flight steckt in einer E-Dart-Scheibe
   caption: Dart – jede Woche im Dorfbrunnen
   credit: 'Symbolbild: Wikimedia Commons, CC0'

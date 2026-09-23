@@ -20,6 +20,19 @@ export default defineConfig({
     // gleichermaßen aus.
     format: 'directory',
   },
+  image: {
+    // Qualität je Format für alle Bilder aus src/assets/. Die Vorlagen sind
+    // schon sorgfältig komprimierte JPEGs (tools/); mit Sharps Vorgabe 80
+    // würden die Varianten in voller Breite größer als die Vorlage. Bei
+    // diesen Werten ist im Vorher-nachher-Vergleich kein Unterschied zu sehen.
+    service: {
+      config: {
+        jpeg: { quality: 72, mozjpeg: true },
+        webp: { quality: 72 },
+        avif: { quality: 50 },
+      },
+    },
+  },
   vite: {
     plugins: [tailwindcss()],
     build: {
