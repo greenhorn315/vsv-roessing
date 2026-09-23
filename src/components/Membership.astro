@@ -62,7 +62,7 @@ const preis = 'font-display text-lg font-semibold whitespace-nowrap text-primary
         {beitragsregeln.map((regel) => <li class="border-l-2 border-base-300 pl-4">{regel}</li>)}
       </ul>
 
-      <ol class="mt-10 grid grid-cols-[repeat(auto-fit,minmax(170px,1fr))] gap-6">
+      <ol class="mt-10 grid gap-6 sm:grid-cols-3">
         {
           joinSteps.map((step, index) => (
             <li>
