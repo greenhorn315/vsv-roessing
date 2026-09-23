@@ -26,55 +26,19 @@ const zahlen = [
 ];
 ---
 
-<dl class="zahlen">
+{/* daisyUI-stats als Kachelraster: Die 1px-Lücken zwischen den Kacheln
+    zeigen den Hintergrund in Rahmenfarbe und wirken so als Trennlinien. */}
+<dl class="stats grid grid-flow-row grid-cols-3 max-[720px]:grid-cols-2 gap-px bg-border border border-border rounded-box overflow-hidden m-0">
   {
     zahlen.map((z) => (
-      <div class="zahl">
-        <dd>{z.wert}</dd>
-        <dt>{z.text}</dt>
+      /* Zahl optisch zuerst, semantisch bleibt das Label vorn. */
+      <div class="stat flex flex-col bg-base-100 p-6 border-0">
+        <dd class="stat-value m-0 font-display text-[clamp(1.9rem,1.4rem+1.8vw,2.6rem)] font-semibold leading-none text-primary whitespace-normal">
+          {z.wert}
+        </dd>
+        <dt class="stat-title mt-[0.35rem] text-[0.9rem] text-muted whitespace-normal">{z.text}</dt>
       </div>
     ))
   }
 </dl>
 
-<style>
-  .zahlen {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--c-border);
-    border: 1px solid var(--c-border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    margin: 0;
-  }
-
-  .zahl {
-    background: var(--c-surface);
-    padding: var(--sp-5);
-    /* Zahl optisch zuerst, semantisch bleibt das Label vorn. */
-    display: flex;
-    flex-direction: column;
-  }
-
-  .zahl dd {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: clamp(1.9rem, 1.4rem + 1.8vw, 2.6rem);
-    font-weight: 600;
-    line-height: 1;
-    color: var(--c-primary);
-  }
-
-  .zahl dt {
-    margin-top: 0.35rem;
-    font-size: 0.9rem;
-    color: var(--c-text-muted);
-  }
-
-  @media (max-width: 720px) {
-    .zahlen {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-</style>

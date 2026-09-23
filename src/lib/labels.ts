@@ -50,7 +50,17 @@ export type Weekday = (typeof weekdays)[number];
 export const SPORT_COLORS = ['primary', 'primary-light', 'accent', 'sun-dark'] as const;
 export type SportColor = (typeof SPORT_COLORS)[number];
 
-export const sportColorVar = (color: SportColor): string => `var(--c-${color})`;
+/** Farbtoken der Inhaltsdateien → Farbe aus dem Tailwind-/daisyUI-Thema. */
+const SPORT_COLOR_THEME: Record<SportColor, string> = {
+  primary: 'primary',
+  'primary-light': 'secondary',
+  // Das helle, dekorative Korall – nicht die Themenfarbe accent.
+  accent: 'coral',
+  'sun-dark': 'sun-dark',
+};
+
+export const sportColorVar = (color: SportColor): string =>
+  `var(--color-${SPORT_COLOR_THEME[color]})`;
 
 /**
  * Kleine Zahlen als Wort – im Fließtext lesen sie sich besser als Ziffern.

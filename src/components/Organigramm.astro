@@ -13,24 +13,27 @@ const zweige = (await getSports()).map(({ id, data }) => ({
 }));
 ---
 
-<div class="org">
-  <p class="org__wurzel">
-    <strong>{site.shortName}</strong>
-    <span>{site.legalName}</span>
+<div>
+  <p class="w-max max-w-full mx-auto my-0 py-3 px-8 bg-primary text-white rounded-sm text-center">
+    <strong class="block font-display text-step-1">{site.shortName}</strong>
+    <span class="text-[0.82rem] text-white/78">{site.legalName}</span>
   </p>
-  <span class="org__stamm" aria-hidden="true"></span>
+  <span class="block w-0.5 h-[26px] mx-auto bg-border-strong" aria-hidden="true"></span>
 
-  <ul class="org__zweige">
+  <ul class="list-none p-0 m-0 grid grid-cols-3 max-[900px]:grid-cols-2 max-[560px]:grid-cols-1 gap-4">
     {
       zweige.map(({ sport, gruppen }) => (
-        <li class="zweig" style={`--sport-color:${sportColorVar(sport.color)}`}>
-          <div class="zweig__kopf">
-            <Pictogram name={sport.pictogram} size={40} />
+        <li
+          class="card bg-base-100 border border-border border-t-4 border-t-(--sport-color) rounded-t-none rounded-b-sm p-4"
+          style={`--sport-color:${sportColorVar(sport.color)}`}
+        >
+          <div class="flex items-center gap-3">
+            <Pictogram name={sport.pictogram} size={40} class="shrink-0" />
             <div>
-              <h3>
-                <a href={`/sportangebote/${sport.slug}/`}>{sport.name}</a>
+              <h3 class="text-[1.1rem] m-0">
+                <a class="no-underline hover:underline" href={`/sportangebote/${sport.slug}/`}>{sport.name}</a>
               </h3>
-              <p class="zweig__anzahl">
+              <p class="m-0 text-[0.8rem] text-muted">
                 {gruppen.length === 0
                   ? 'noch keine Gruppen'
                   : `${gruppen.length} ${gruppen.length === 1 ? 'Gruppe' : 'Gruppen'}`}
@@ -40,23 +43,27 @@ const zweige = (await getSports()).map(({ id, data }) => ({
 
           {
             gruppen.length > 0 && (
-              <ul class="zweig__gruppen">
+              <ul class="list-none p-0 m-0 mt-4 flex flex-col gap-[0.3rem]">
                 {gruppen.map((g) => (
-                  <li>{g.title}</li>
+                  <li class="relative pl-3 text-[0.86rem] text-muted leading-[1.35] before:absolute before:left-0 before:top-[0.55em] before:size-1 before:bg-(--sport-color)">
+                    {g.title}
+                  </li>
                 ))}
               </ul>
             )
           }
 
-          <p class="zweig__leitung">
+          <p class="mt-4 mb-0 pt-3 border-t border-dashed border-border-strong text-[0.84rem] text-muted">
             {
               sport.contact ? (
                 <>
-                  Spartenleitung <b>{sport.contact.name}</b>
+                  Spartenleitung <b class="text-base-content">{sport.contact.name}</b>
                 </>
               ) : (
                 <>
-                  Spartenleitung <span class="offen">noch nicht benannt</span>
+                  {/* Zurückhaltend: ob die Stelle vakant ist oder nur der Name fehlt,
+                      wissen wir nicht – das soll nicht wie ein Mangel schreien. */}
+                  Spartenleitung <span class="italic">noch nicht benannt</span>
                 </>
               )
             }
@@ -67,128 +74,3 @@ const zweige = (await getSports()).map(({ id, data }) => ({
   </ul>
 </div>
 
-<style>
-  .org__wurzel {
-    width: max-content;
-    max-width: 100%;
-    margin: 0 auto;
-    padding: var(--sp-3) var(--sp-6);
-    background: var(--c-primary);
-    color: #fff;
-    border-radius: var(--radius-sm);
-    text-align: center;
-  }
-  .org__wurzel strong {
-    display: block;
-    font-family: var(--font-display);
-    font-size: var(--step-1);
-  }
-  .org__wurzel span {
-    font-size: 0.82rem;
-    color: rgba(255, 255, 255, 0.78);
-  }
-
-  .org__stamm {
-    display: block;
-    width: 2px;
-    height: 26px;
-    margin: 0 auto;
-    background: var(--c-border-strong);
-  }
-
-  .org__zweige {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--sp-4);
-  }
-
-  .zweig {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    background: var(--c-surface);
-    border: 1px solid var(--c-border);
-    border-top: 4px solid var(--sport-color, var(--c-primary));
-    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
-    padding: var(--sp-4);
-  }
-
-  .zweig__kopf {
-    display: flex;
-    align-items: center;
-    gap: var(--sp-3);
-  }
-  .zweig__kopf :global(.pictogram) {
-    flex-shrink: 0;
-  }
-  .zweig h3 {
-    font-size: 1.1rem;
-    margin: 0;
-  }
-  .zweig h3 a {
-    text-decoration: none;
-  }
-  .zweig h3 a:hover {
-    text-decoration: underline;
-  }
-  .zweig__anzahl {
-    margin: 0;
-    font-size: 0.8rem;
-    color: var(--c-text-muted);
-  }
-
-  .zweig__gruppen {
-    list-style: none;
-    padding: 0;
-    margin: var(--sp-4) 0 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-  }
-  .zweig__gruppen li {
-    font-size: 0.86rem;
-    color: var(--c-text-muted);
-    padding-left: 0.75rem;
-    position: relative;
-    line-height: 1.35;
-  }
-  .zweig__gruppen li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.55em;
-    width: 4px;
-    height: 4px;
-    background: var(--sport-color, var(--c-primary));
-  }
-
-  .zweig__leitung {
-    margin: var(--sp-4) 0 0;
-    padding-top: var(--sp-3);
-    border-top: 1px dashed var(--c-border-strong);
-    font-size: 0.84rem;
-    color: var(--c-text-muted);
-  }
-  .zweig__leitung b {
-    color: var(--c-text);
-  }
-  /* Zurückhaltend: ob die Stelle vakant ist oder nur der Name fehlt,
-     wissen wir nicht – das soll nicht wie ein Mangel schreien. */
-  .offen {
-    font-style: italic;
-  }
-
-  @media (max-width: 900px) {
-    .org__zweige {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-  @media (max-width: 560px) {
-    .org__zweige {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>
