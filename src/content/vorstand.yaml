@@ -1,0 +1,38 @@
+# Der Vereinsvorstand, Angaben vom Verein am 22. September 2026.
+#
+# Zum Bearbeiten genügt diese Datei – kein TypeScript nötig. Das Schema steht
+# in src/content.config.ts und wird beim Bauen geprüft: Eine fehlende Angabe
+# oder ein verschriebener Schlüssel bricht den Build ab, statt still eine leere
+# Stelle auf der Seite zu erzeugen.
+#
+# Der Schlüssel ganz links ist die interne Kennung und erscheint nirgends auf
+# der Seite. Darunter:
+#
+#   order  Reihenfolge auf der Vereinsseite, aufsteigend
+#   role   Amtsbezeichnung, wie der Verein sie führt
+#   name   darf fehlen: Dann steht dort „Name folgt“ statt einer Lücke
+#
+# Der 1. Vorsitzende steht auch im Impressum – § 5 DDG verlangt die
+# Vertretungsberechtigten, und src/data/impressum.ts nennt ihn dort wortgleich
+# wie die Altseite. Beide Stellen müssen zusammenpassen; der Impressumstext ist
+# bewusst eine unveränderte Übernahme und wird nicht aus dieser Datei erzeugt.
+
+erster-vorsitz:
+  order: 1
+  role: 1. Vorsitzender
+  name: Erich Könneke
+
+zweiter-vorsitz:
+  order: 2
+  role: 2. Vorsitzender
+  name: Uwe Speer
+
+kassenwart:
+  order: 3
+  role: Kassenwart
+  name: Thomas Kuse
+
+schriftfuehrung:
+  order: 4
+  role: Schriftführerin
+  name: Monika Koch

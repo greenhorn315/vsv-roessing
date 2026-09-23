@@ -15,6 +15,8 @@ npm run preview  # Build lokal testen
 
 ```
 src/
+├── content/       Content Collections: vom Verein gepflegt, schemageprüft
+├── content.config.ts   Schema je Collection
 ├── data/          Inhalte – hier wird gepflegt (Beiträge, Sportarten, News …)
 ├── styles/        global.css: Design-Tokens, Reset, Buttons, Layout-Primitives
 ├── components/    Wiederverwendbare Bausteine, CSS jeweils scoped im <style>
@@ -38,6 +40,39 @@ Fast alles steckt in `src/data/` und braucht keine HTML-Kenntnisse:
 | `news.ts` | Meldungen (neueste zuerst) |
 | `trainings.ts` | Trainingszeiten |
 | `testimonials.ts` | Zitate von Mitgliedern |
+
+### Content Collections
+
+Was der Verein selbst pflegt und was keine Logik mitbringt, liegt als Astro
+Content Collection unter `src/content/` – in YAML statt TypeScript, also ohne
+Programmierkenntnisse zu bearbeiten.
+
+| Datei | Inhalt |
+|---|---|
+| `vorstand.yaml` | Ämter und Namen des Vorstands, in der Reihenfolge `order` |
+
+Der Unterschied zu `src/data/`: Dort steht, was die Seite selbst ausmacht und
+oft Logik mitträgt – abgeleitete Zahlen, Verweise zwischen Dateien. Das bleibt
+in TypeScript.
+
+Das Schema in `src/content.config.ts` wird **beim Bauen geprüft**. Eine fehlende
+Pflichtangabe, ein leerer Wert oder ein verschriebener Schlüssel bricht den Build
+ab und nennt den betroffenen Eintrag – statt still eine leere Stelle auf der
+Seite zu erzeugen.
+
+Schreibt jemand versehentlich `nmae:` statt `name:`, sieht das so aus:
+
+```
+[InvalidContentEntryDataError] vorstand → kassenwart data does not match collection schema.
+  ****: Unrecognized key: "nmae"
+```
+
+Dass auch dieser Fall auffällt, liegt an `.strict()` im Schema: Ohne das
+ignoriert Zod jeden Schlüssel, den es nicht kennt, und der Name wäre still
+verschwunden.
+
+Die generierten Typen liegen unter `.astro/` und gehören nicht ins Repository;
+`astro check` und `astro build` erzeugen sie selbst.
 
 ## Design-System
 
