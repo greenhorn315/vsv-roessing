@@ -46,18 +46,11 @@ function ladeSchriften() {
   return schriften;
 }
 
-/**
- * Piktogramm als Data-URI. Die Dateien ziehen von `public/piktogramme/` nach
- * `src/assets/piktogramme/` um; gesucht wird an beiden Stellen, damit das
- * Vorschaubild den Umzug übersteht.
- */
+/** Piktogramm aus `src/assets/piktogramme/` als Data-URI. */
 async function piktogramm(name: string | undefined): Promise<string | undefined> {
   if (!name) return undefined;
-  const pfad = [
-    fromRoot('src/assets/piktogramme', `${name}.png`),
-    fromRoot('public/piktogramme', `${name}.png`),
-  ].find((p) => existsSync(p));
-  if (!pfad) throw new Error(`Piktogramm „${name}.png“ weder in src/assets/piktogramme/ noch in public/piktogramme/`);
+  const pfad = fromRoot('src/assets/piktogramme', `${name}.png`);
+  if (!existsSync(pfad)) throw new Error(`Piktogramm „${name}.png“ fehlt in src/assets/piktogramme/`);
   return `data:image/png;base64,${(await readFile(pfad)).toString('base64')}`;
 }
 
