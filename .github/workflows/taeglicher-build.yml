@@ -1,0 +1,30 @@
+# Täglicher Neubau der Seite.
+#
+# Einiges wird beim Bauen berechnet und veraltet danach: das Vereinsalter im
+# Slogan, die kommenden Spiele (gespielte Partien fallen erst beim nächsten
+# Build heraus) und welche Meldungen oben stehen. Ohne neuen Commit würde die
+# Seite also stehen bleiben.
+#
+# Ausgelöst wird der Neubau über einen Deploy Hook von Cloudflare Pages
+# (Einstellungen → Builds → Deploy Hooks). Dessen URL gehört als Secret
+# CLOUDFLARE_DEPLOY_HOOK ins Repository. Fehlt das Secret, tut der Job nichts.
+name: Täglicher Build
+
+on:
+  schedule:
+    - cron: '15 3 * * *'
+  workflow_dispatch:
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy Hook auslösen
+        env:
+          HOOK: ${{ secrets.CLOUDFLARE_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "::notice::Secret CLOUDFLARE_DEPLOY_HOOK fehlt – kein Neubau ausgelöst."
+            exit 0
+          fi
+          curl -fsS -X POST "$HOOK"
