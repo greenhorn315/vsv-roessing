@@ -1,33 +1,29 @@
-"""Fotos der Sportstaetten fuer die Website aufbereiten.
+"""Vorlagen fuer die Fotos der Sportstaetten aufbereiten.
 
 Pro Bild eigene Werte statt einer Pauschaleinstellung: Gegenlicht- und
 Truebwetteraufnahmen brauchen vor allem aufgehellte Tiefen und mehr Kontrast,
 gute Aufnahmen nur einen leichten Feinschliff.
+
+Das Skript bereitet nur noch die Vorlage vor: Farbkorrektur, Ausschnitt auf
+4:3, grosszuegige Groesse, hohe JPEG-Qualitaet. Die Groessen und Formate, die
+tatsaechlich ausgeliefert werden (AVIF, WebP, JPEG in mehreren Breiten),
+rechnet Astro beim Bauen daraus – siehe src/components/VenueGallery.astro.
+Geschrieben wird direkt nach src/assets/sportstaetten/.
 """
 from PIL import Image, ImageEnhance, ImageOps, ImageFilter
 import pathlib, sys
 
 SRC = pathlib.Path('sportstaetten')
-OUT = pathlib.Path('optimiert')
-OUT.mkdir(exist_ok=True)
+OUT = pathlib.Path(__file__).resolve().parent.parent / 'src' / 'assets' / 'sportstaetten'
+OUT.mkdir(parents=True, exist_ok=True)
 
-# Zielgroessen je Bild. Die Kacheln stehen zweispaltig und sind rund 550 px
-# breit; 1024 px reichen damit auch auf hochaufloesenden Displays. Das gilt
-# auch fuer die zweite Ansicht einer Sportstaette: Steht dort nur ein Bild,
-# nimmt es die volle Kachelbreite ein, keine halbe.
-GROESSEN = {
-    'sporthalle.jpg': (1024, 768),
-    'sporthalle-eingang.jpg': (1024, 768),
-    'dorfbrunnen.jpg': (1024, 768),
-    'dorfbrunnen-hinten.jpg': (1024, 768),
-    'sportplatz.jpg': (1024, 768),
-    'sportplatz-weitsprunganlage.jpg': (1024, 768),
-    'feuerplatz.jpg': (1024, 768),
-    'vereinsheim.jpg': (1024, 768),
-    # Steht als zweite Ansicht neben einer weiteren, also nur halbe
-    # Kachelbreite – 640 px reichen dafuer auch auf feinen Displays.
-    'vereinsheim-gaststaette.jpg': (640, 480),
-}
+# Groesse der Vorlage, 4:3. Grosszuegig bemessen: Astro rechnet daraus nur
+# kleiner, nie groesser. Die Kacheln sind hoechstens rund 560 px breit, die
+# groesste ausgelieferte Variante 1024 px – 2000 px lassen Luft fuer einen
+# spaeteren Einsatz in voller Seitenbreite. Ist die Vorlage kleiner, bleibt es
+# bei ihrer Groesse; hochgerechnet wird nicht.
+GROESSE = (2000, 1500)
+QUALITAET = 90
 
 # Vorab-Ausschnitt in Pixeln der Vorlage, bevor auf die Zielgroesse skaliert
 # wird. Noetig, wo nicht die Bildmitte das Motiv ist.
@@ -37,8 +33,6 @@ ZUSCHNITT = {
     # Sandgrube; der lange Vordergrund faellt weg.
     'sportplatz-weitsprunganlage.jpg': (0, 441, 3024, 2709),
 }
-STANDARD = (1024, 768)
-MAX_BYTES = 220 * 1024
 
 
 def tonwertkurve(img, schwarz=0.0, weiss=1.0, gamma=1.0, tiefen=0.0):
@@ -58,7 +52,6 @@ def tonwertkurve(img, schwarz=0.0, weiss=1.0, gamma=1.0, tiefen=0.0):
 
 
 def verarbeite(quelle, ziel, schwarz, weiss, gamma, tiefen, kontrast, saettigung, schaerfe):
-    groesse = GROESSEN.get(ziel.name, STANDARD)
     im = Image.open(quelle)
     im = ImageOps.exif_transpose(im).convert('RGB')
     im = tonwertkurve(im, schwarz, weiss, gamma, tiefen)
@@ -67,13 +60,15 @@ def verarbeite(quelle, ziel, schwarz, weiss, gamma, tiefen, kontrast, saettigung
     box = ZUSCHNITT.get(ziel.name)
     if box:
         im = im.crop(box)
+    # 4:3 in hoechstens GROESSE, aber nicht groesser als die Vorlage hergibt.
+    breite = min(GROESSE[0], im.width, round(im.height * 4 / 3))
+    groesse = (breite, round(breite * 3 / 4))
     im = ImageOps.fit(im, groesse, Image.LANCZOS, centering=(0.5, 0.5))
     if schaerfe:
         im = im.filter(ImageFilter.UnsharpMask(radius=1.6, percent=int(schaerfe * 100), threshold=3))
-    for q in (82, 78, 74, 70, 66):
-        im.save(ziel, 'JPEG', quality=q, optimize=True, progressive=True)
-        if ziel.stat().st_size <= MAX_BYTES:
-            break
+    # Hohe Qualitaet ohne Groessendeckel: Das ist die Vorlage, nicht die
+    # ausgelieferte Datei. Komprimiert wird beim Bauen (astro.config.mjs).
+    im.save(ziel, 'JPEG', quality=QUALITAET, optimize=True, progressive=True)
     return im, ziel.stat().st_size
 
 

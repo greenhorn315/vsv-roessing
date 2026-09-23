@@ -9,6 +9,12 @@ Wie tools/optimize.py, aber mit Hochformat 4:5 als Zielformat und einem
 Bildausschnitt je Foto: Bei querformatigen Aufnahmen entscheidet der
 Ausschnitt, ob das Motiv im Bild bleibt.
 
+Das Skript bereitet nur noch die Vorlage vor: Farbkorrektur, Ausschnitt,
+grosszuegige Groesse, hohe JPEG-Qualitaet. Die ausgelieferten Groessen und
+Formate (AVIF, WebP, JPEG in 400, 560 und 800 px Breite) rechnet Astro beim
+Bauen daraus – siehe src/components/HeroKarussell.astro. Geschrieben wird
+direkt nach src/assets/karussell/.
+
 Die beiden 300 px breiten Vorschaubilder von der alten Website sind seit dem
 22. September draussen: An ihre Stelle sind zwei Aufnahmen vom Sportabzeichen-
 Tag getreten, in voller Aufloesung und mit demselben Motiv. hochskalieren()
@@ -23,20 +29,25 @@ from PIL import Image, ImageEnhance, ImageOps, ImageFilter
 import pathlib
 
 SRC = pathlib.Path('karussell')
-OUT = pathlib.Path('karussell-optimiert')
-OUT.mkdir(exist_ok=True)
+OUT = pathlib.Path(__file__).resolve().parent.parent / 'src' / 'assets' / 'karussell'
+OUT.mkdir(parents=True, exist_ok=True)
 
+# Mindestgroesse der Vorlage, 4:5: Die groesste ausgelieferte Variante ist
+# 800 px breit. Kleinere Vorlagen werden mit hochskalieren() auf dieses Mass
+# gebracht.
 BREITE, HOEHE = 800, 1000
-# Die aelteren Vorlagen kamen schon webfertig von der alten Website und liegen
-# deshalb bei 120 bis 180 KB. Aufnahmen direkt aus dem Telefon tragen ueber das
-# ganze Bild feine Struktur – belaubte Baeume vor allem –, und die kostet im
-# JPEG richtig Platz. 210 KB statt 180 KB ist der Preis dafuer, dass diese
-# Bilder scharf bleiben, statt sie in der Qualitaetsleiter kaputtzudruecken.
-MAX_BYTES = 210 * 1024
+# Hoechstgroesse der Vorlage: 1600 x 2000 px, also 2000 px an der langen
+# Kante. Groessere Aufnahmen werden darauf verkleinert.
+MAX_BREITE = 1600
+QUALITAET = 90
 
 # Leichter Weichzeichner vor dem Nachschaerfen, in Pixeln. Nimmt genau die
 # Blattstruktur heraus, die im JPEG teuer und fuers Motiv ohne Belang ist;
-# was danach nachgeschaerft wird, sind wieder die tragenden Kanten.
+# was danach nachgeschaerft wird, sind wieder die tragenden Kanten. Eingefuehrt,
+# als die Vorlage selbst ausgeliefert wurde und unter 210 KB bleiben musste;
+# die Varianten, die Astro daraus rechnet, profitieren genauso. Die Werte sind
+# fuer 800 px Breite ausgemessen – bei groesseren Vorlagen beim naechsten Lauf
+# pruefen.
 WEICHZEICHNEN = {
     'leichtathletik-weitsprung.jpg': 0.5,
     # Dichtes Laub ueber die ganze obere Bildhaelfte, deshalb etwas mehr.
@@ -107,7 +118,11 @@ def verarbeite(quelle, ziel, ausschnitt, schwarz, weiss, gamma, tiefen,
         im = ImageOps.fit(im, (b, h), Image.LANCZOS, centering=ausschnitt)
         im = hochskalieren(im, BREITE, HOEHE)
     else:
-        im = ImageOps.fit(im, (BREITE, HOEHE), Image.LANCZOS, centering=ausschnitt)
+        # 4:5 in hoechstens MAX_BREITE, sonst so gross, wie der Ausschnitt
+        # hergibt – aber mindestens BREITE (dann wie bisher per LANCZOS
+        # vergroessert, etwa beim Dart-Bild mit 852 px Hoehe).
+        b = max(BREITE, min(MAX_BREITE, im.width, round(im.height * BREITE / HOEHE)))
+        im = ImageOps.fit(im, (b, round(b * HOEHE / BREITE)), Image.LANCZOS, centering=ausschnitt)
         weich = WEICHZEICHNEN.get(ziel.name)
         if weich:
             im = im.filter(ImageFilter.GaussianBlur(weich))
@@ -115,15 +130,9 @@ def verarbeite(quelle, ziel, ausschnitt, schwarz, weiss, gamma, tiefen,
             im = im.filter(
                 ImageFilter.UnsharpMask(radius=1.4, percent=int(schaerfe * 100), threshold=3)
             )
-    # Leiter bis 58 hinunter: Bei detailreichen Motiven wie Laub reichen die
-    # oberen Stufen nicht, um unter den Deckel zu kommen.
-    for q in (84, 80, 76, 72, 68, 64, 60, 56):
-        im.save(ziel, 'JPEG', quality=q, optimize=True, progressive=True)
-        if ziel.stat().st_size <= MAX_BYTES:
-            break
-    else:
-        print(f'  Hinweis: {ziel.name} bleibt mit {ziel.stat().st_size // 1024} KB'
-              f' über dem Deckel von {MAX_BYTES // 1024} KB.')
+    # Hohe Qualitaet ohne Groessendeckel: Das ist die Vorlage, nicht die
+    # ausgelieferte Datei. Komprimiert wird beim Bauen (astro.config.mjs).
+    im.save(ziel, 'JPEG', quality=QUALITAET, optimize=True, progressive=True)
     return im, ziel.stat().st_size
 
 
