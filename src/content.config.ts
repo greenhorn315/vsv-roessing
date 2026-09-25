@@ -144,6 +144,16 @@ const spielplaene = defineCollection({
   }).strict(),
 });
 
+const eintrittspreise = defineCollection({
+  loader: file('src/content/eintrittspreise.yaml'),
+  schema: z.object({
+    order: order(),
+    label: text(),
+    // 0 steht für „frei“.
+    preis: z.number().nonnegative(),
+  }).strict(),
+});
+
 const beitraege = defineCollection({
   loader: file('src/content/mitgliedschaft/beitraege.yaml'),
   schema: z.object({
@@ -201,6 +211,7 @@ export const collections = {
   testimonials,
   karussell,
   spielplaene,
+  eintrittspreise,
   beitraege,
   beitragsregeln,
   formulare,
