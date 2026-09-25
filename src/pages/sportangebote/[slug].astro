@@ -6,6 +6,7 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import CallToAction from '../../components/CallToAction.astro';
 import DartSpielplan from '../../components/DartSpielplan.astro';
 import FussballSpielplan from '../../components/FussballSpielplan.astro';
+import Eintrittspreise from '../../components/Eintrittspreise.astro';
 import Container from '../../components/Container.astro';
 import { render } from 'astro:content';
 import { getSports, type Sport } from '../../lib/sportarten';
@@ -288,6 +289,10 @@ const jsonLd = [brotkrumenKnoten(brotkrumen, seite)];
       </FussballSpielplan>
     )
   }
+  {
+    /* Statisch, nicht Teil der Island: Die Preise gelten auch, wenn gerade kein Spiel ansteht. */
+  }
+  {sport.slug === 'fussball' && <Eintrittspreise />}
 
   <nav class="border-t border-base-300 py-6" aria-label="Weitere Sportarten">
     <Container class="flex flex-wrap items-center justify-between gap-4 max-[620px]:justify-center max-[620px]:text-center">

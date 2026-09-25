@@ -1,0 +1,39 @@
+---
+import Container from './Container.astro';
+import SectionHead from './SectionHead.astro';
+import { getCollection } from 'astro:content';
+import { nachOrder } from '../lib/reihenfolge';
+
+const preise = (await getCollection('eintrittspreise')).sort(nachOrder).map((eintrag) => eintrag.data);
+const euro = new Intl.NumberFormat('de-DE', {
+  style: 'currency',
+  currency: 'EUR',
+  minimumFractionDigits: 2,
+});
+---
+
+<section class="pb-16 md:pb-20">
+  <Container>
+    <SectionHead title="Eintritt">
+      <p>Für Zuschauer bei Spielen auf dem VSV-Sportplatz, so steht es auf der Tafel am Eingang.</p>
+    </SectionHead>
+
+    <div class="max-w-md overflow-hidden rounded-box border border-base-300 bg-base-100">
+      <table class="table text-sm sm:text-base">
+        <caption class="sr-only">Eintrittspreise auf dem VSV-Sportplatz</caption>
+        <tbody>
+          {
+            preise.map((eintrag) => (
+              <tr>
+                <th scope="row" class="font-medium">{eintrag.label}</th>
+                <td class="text-right font-display font-semibold whitespace-nowrap text-primary tabular-nums sm:text-lg">
+                  {eintrag.preis === 0 ? 'frei' : euro.format(eintrag.preis)}
+                </td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </Container>
+</section>
