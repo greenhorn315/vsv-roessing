@@ -31,6 +31,8 @@ leichtathletik-huerden:
   src: ../assets/karussell/leichtathletik-huerden.jpg
   alt: Läuferin im Trikot mit dem Aufdruck „VSV Rössing“ steht am Start einer Hürdenbahn in einer Halle
   caption: Leichtathletik – am Start der Hürdenbahn
+  # Auf dem Handy quadratisch: fast ganz oben, sonst ist der Kopf angeschnitten.
+  fokus: 5
 
 freitagsradler-abendlicht:
   order: 6
@@ -62,6 +64,8 @@ freitagsradler-schloss:
   src: ../assets/karussell/freitagsradler-schloss.jpg
   alt: Abgestelltes Fahrrad auf einer Wiese, dahinter Schloss Marienburg mit seinen neugotischen Türmen
   caption: Radtour zur Marienburg
+  # Auf dem Handy quadratisch: etwas nach oben, damit über dem Turm Himmel bleibt.
+  fokus: 35
 
 dart:
   order: 11
