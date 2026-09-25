@@ -6,6 +6,10 @@ ZIEL = pathlib.Path('retuschiert')
 
 STELLEN = {
     'ZumDorfbrunnen-Hinten.JPG': ((1122, 1258, 1432, 1810), (1262, 1310)),
+    # Spiegelung des Fotografen im Fenster mit dem Ü40-Aushang. Spender ist das
+    # dunkle Holz links vom Aushang, in denselben Zeilen – schmal genug, dass
+    # der Türgriff darunter nicht mit übernommen wird.
+    'Sportplatz-Eingang.jpg': ((465, 555, 674, 906), (237, 252)),
 }
 
 RAND = 16

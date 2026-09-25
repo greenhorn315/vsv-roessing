@@ -13,20 +13,22 @@ Hinweis „Foto folgt“.
 | `sporthalle-eingang.jpg` | Turnhalleneingang | 15.09.2026 |
 | `dorfbrunnen.jpg` | Dorfbrunnen, Eingang | 15.09.2026 |
 | `dorfbrunnen-hinten.jpg` | Dorfbrunnen, Rückseite | 15.09.2026, retuschiert |
-| `sportplatz.jpg` | VSV-Sportplatz, Zum Klay 6 | 14.09.2026 |
+| `sportplatz.jpg` | VSV-Sportplatz, Zum Klay 6 | 25.09.2026 |
+| `sportplatz-eingang.jpg` | Eingang zum Sportplatz | 25.09.2026, retuschiert |
 | `sportplatz-weitsprunganlage.jpg` | Weitsprunganlage am Sportplatz | 22.09.2026 |
 | `feuerplatz.jpg` | Feuerplatz am Sportplatz | siehe unten |
-| `vereinsheim.jpg` | Vereinsheim, Eingang | 22.09.2026 |
+| `vereinsheim.jpg` | Vereinsheim, Gesamtansicht | 25.09.2026 |
+| `vereinsheim-terrasse.jpg` | Vereinsheim, Terrasse | 25.09.2026 |
 | `vereinsheim-gaststaette.jpg` | Vereinsheim, Gaststube | 22.09.2026 |
 
 **Format**
 
 * Querformat 4 : 3 als JPG. Die Dateien hier sind Vorlagen: Astro rechnet
   daraus beim Bauen AVIF, WebP und JPEG in mehreren Breiten (bis 1024 px), der
-  Browser wählt davon. Die vorhandenen Dateien sind noch 1024 × 768 px (die
-  Gaststube 640 × 480) – so kamen sie aus der Zeit, als sie unverändert
-  ausgeliefert wurden. Neue Vorlagen dürfen größer sein, siehe
-  `tools/README.md`.
+  Browser wählt davon. Die Aufnahmen vom 25. September liegen als
+  2000 × 1500 px vor, die älteren noch als 1024 × 768 px (die Gaststube
+  640 × 480) – so kamen sie aus der Zeit, als sie unverändert ausgeliefert
+  wurden. Neue Vorlagen dürfen größer sein, siehe `tools/README.md`.
 * Der Bildausschnitt wird per `object-fit: cover` gefüllt – Motiv mittig halten.
 * Alternativtexte stehen in `src/content/sportstaetten.yaml` bei der jeweiligen Sportstätte
   und sind mit dem Foto abzugleichen.
@@ -73,6 +75,26 @@ Eine dritte Aufnahme vom Vereinsheim – der Aufenthaltsraum mit Dartscheibe und
 Durchgang zur Terrasse – liegt vor, ist aber nicht übernommen: Darauf stehen
 Stühle gestapelt und ein Grill mitten im Raum. Sobald der Raum hergerichtet
 ist, wäre das eine dritte Ansicht wert.
+
+**Aufnahmen vom 25. September 2026**
+
+Sportplatz und Vereinsheim sind neu fotografiert, bei klarem Himmel und ohne
+Betrieb. Die Vorlagen kamen über den Chat und sind deshalb auf 2576 × 1932 px
+verkleinert und ohne EXIF-Daten; für 2000 × 1500 px reicht das.
+
+* **Sportplatz:** Die neue Übersicht löst die vom 14. September ab. Sie zeigt
+  zusätzlich die Laufbahn am Rand des Platzes und passt so zur Leichtathletik,
+  die hier im Sommerhalbjahr trainiert. Oben ist knapp ein Drittel des Himmels
+  weggeschnitten.
+* **Eingang zum Sportplatz** ist neu: das Geländer mit den Buchstaben VSV, das
+  Kassenhäuschen, dahinter das Vereinsheim. So sieht man, wo man hineingeht.
+  Im Fenster mit dem Ü40-Aushang spiegelte sich der Fotograf; die Stelle ist
+  wie beim Dorfbrunnen retuschiert (`tools/retusche.py`), mit dem dunklen Holz
+  links vom Aushang als Spender.
+* **Vereinsheim:** Die Gesamtansicht von der Rasenfläche löst die Nahaufnahme
+  der Eingangstür als Hauptbild ab. Dieselbe Wand mit Tür und Banner zeigt jetzt
+  die Terrasse, mit mehr Umgebung. Rechts ist dort die Glastür abgeschnitten,
+  in der sich der Fotograf als Umriss spiegelte.
 
 **Personen auf Fotos**
 

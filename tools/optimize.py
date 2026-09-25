@@ -10,6 +10,13 @@ QUALITAET = 90
 
 ZUSCHNITT = {
     'sportplatz-weitsprunganlage.jpg': (0, 441, 3024, 2709),
+    # Aufnahmen vom 25. September 2026, Vorlagen 2576 × 1932 px.
+    # Viel Himmel über dem Platz: oben knapp ein Drittel davon weg.
+    'sportplatz.jpg': (138, 207, 2438, 1932),
+    # Das Gebäude sitzt hoch im Bild, darunter viel Rasen: Ausschnitt nach oben.
+    'vereinsheim.jpg': (168, 0, 2358, 1643),
+    # Rechts die Glastür, in der sich der Fotograf spiegelt: abgeschnitten.
+    'vereinsheim-terrasse.jpg': (0, 150, 2242, 1832),
 }
 
 def tonwertkurve(img, schwarz=0.0, weiss=1.0, gamma=1.0, tiefen=0.0):
@@ -51,12 +58,21 @@ REZEPTE = {
         'dorfbrunnen.jpg', 0.02, 0.99, 1.06, 0.08, 1.06, 1.04, 0.45),
     'retuschiert/ZumDorfbrunnen-Hinten.JPG': (
         'dorfbrunnen-hinten.jpg', 0.02, 0.99, 1.12, 0.12, 1.06, 1.04, 0.45),
-    'Sportplatz.JPG':                   ('sportplatz.jpg',   0.03, 0.98, 1.00, 0.02, 1.12, 1.10, 0.45),
+    # Löst die Aufnahme vom 14.09. ab: Die neue zeigt auch die Laufbahn.
+    'Sportplatz-Panorama.jpg': (
+        'sportplatz.jpg', 0.02, 0.99, 1.00, 0.03, 1.06, 1.06, 0.40),
+    # Retuschierte Fassung, siehe retusche.py: Spiegelung im Fenster entfernt.
+    'retuschiert/Sportplatz-Eingang.jpg': (
+        'sportplatz-eingang.jpg', 0.02, 0.99, 1.04, 0.06, 1.05, 1.03, 0.40),
     'Feuerstelle.JPG':                  ('feuerplatz.jpg',   0.01, 1.00, 1.14, 0.10, 1.08, 1.02, 0.40),
     'Weitsprunganlage mit Tartanbahn.JPG': (
         'sportplatz-weitsprunganlage.jpg', 0.02, 0.99, 1.04, 0.06, 1.08, 1.00, 0.45),
-    'Vereinsheim-Eingang.JPG': (
-        'vereinsheim.jpg', 0.02, 0.99, 1.04, 0.05, 1.10, 1.08, 0.45),
+    # Löst die Nahaufnahme der Eingangstür vom 22.09. ab: Die Gesamtansicht
+    # zeigt das ganze Haus, die Terrasse dieselbe Wand mit mehr Umgebung.
+    'Vereinsheim-Gesamt.jpg': (
+        'vereinsheim.jpg', 0.02, 0.99, 1.04, 0.06, 1.05, 1.04, 0.40),
+    'Vereinsheim-Terrasse.jpg': (
+        'vereinsheim-terrasse.jpg', 0.02, 0.99, 1.02, 0.04, 1.05, 1.03, 0.40),
     'Vereinsheim-Gaststaette.JPG': (
         'vereinsheim-gaststaette.jpg', 0.02, 0.99, 1.08, 0.08, 1.06, 1.02, 0.40),
 }
