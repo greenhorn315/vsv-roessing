@@ -31,8 +31,8 @@ leichtathletik-huerden:
   src: ../assets/karussell/leichtathletik-huerden.jpg
   alt: Läuferin im Trikot mit dem Aufdruck „VSV Rössing“ steht am Start einer Hürdenbahn in einer Halle
   caption: Leichtathletik – am Start der Hürdenbahn
-  # Auf dem Handy quadratisch: fast ganz oben, sonst ist der Kopf angeschnitten.
-  fokus: 5
+  # Auf dem Handy quadratisch: weit nach oben, sonst ist der Kopf angeschnitten.
+  fokus: 15
 
 freitagsradler-abendlicht:
   order: 6
