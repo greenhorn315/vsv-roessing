@@ -121,6 +121,9 @@ const karussell = defineCollection({
     alt: text(),
     caption: text(),
     credit: text().optional(),
+    // Senkrechter Schwerpunkt in Prozent (0 = oben, 100 = unten), wo der Rahmen
+    // flacher ist als das Bild – auf dem Handy quadratisch statt 4:5. Ohne Angabe mittig.
+    fokus: z.number().int().min(0).max(100).optional(),
   }).strict(),
 });
 

@@ -43,6 +43,7 @@ const sizes = '(max-width: 940px) min(calc(100vw - 2rem), 520px), 560px';
             decoding="async"
             fetchpriority={i === 0 ? 'high' : undefined}
             class="w-full h-full object-cover"
+            style={bild.fokus === undefined ? undefined : `object-position: 50% ${bild.fokus}%`}
             pictureAttributes={{ class: 'contents' }}
           />
           <p class="absolute inset-x-0 bottom-0 bg-linear-to-t from-neutral/85 to-neutral/0 px-4 pt-10 pb-8 text-sm font-semibold text-neutral-content text-shadow-sm">
@@ -100,19 +101,17 @@ const sizes = '(max-width: 940px) min(calc(100vw - 2rem), 520px), 560px';
 
     let aktuell = 0;
     let timer: number | undefined;
+    let stillstand: number | undefined;
     let pausiert = false;
-
-    const gehe = (index: number) => {
-      const ziel = bilder[(index + bilder.length) % bilder.length];
-      if (!ziel) return;
-      leiste.scrollTo({ left: ziel.offsetLeft, behavior: ruhig.matches ? 'instant' : 'smooth' });
-    };
 
     const stoppen = () => {
       if (timer !== undefined) window.clearTimeout(timer);
       timer = undefined;
     };
 
+    // Der Timer stellt sich nach jedem Weiterschalten selbst neu. Früher hing das
+    // daran, dass der Browser das Ankommen beim nächsten Bild meldet – blieb so
+    // eine Meldung aus, stand das Karussell für immer.
     const planen = () => {
       stoppen();
       if (pausiert || document.hidden || ruhig.matches) return;
@@ -120,7 +119,6 @@ const sizes = '(max-width: 940px) min(calc(100vw - 2rem), 520px), 560px';
     };
 
     const markiere = (index: number) => {
-      if (index === aktuell) return;
       aktuell = index;
       bilder.forEach((bild, i) => {
         if (i === aktuell) bild.removeAttribute('aria-hidden');
@@ -134,29 +132,56 @@ const sizes = '(max-width: 940px) min(calc(100vw - 2rem), 520px), 560px';
       planen();
     };
 
-    const beobachter = new IntersectionObserver(
-      (eintraege) => {
-        for (const eintrag of eintraege) {
-          if (eintrag.intersectionRatio >= 0.6) markiere(bilder.indexOf(eintrag.target as HTMLElement));
-        }
-      },
-      { root: leiste, threshold: 0.6 },
-    );
-    bilder.forEach((bild) => beobachter.observe(bild));
+    // Wenn das Scrollen zur Ruhe kommt – egal ob per Wischen oder per Skript –,
+    // gilt das Bild, bei dem die Leiste steht. Ohne das „scrollend“-Ereignis,
+    // das Safari nicht in allen Versionen kennt: 150 ms ohne Scrollen genügen.
+    const beiStillstand = () => {
+      window.clearTimeout(stillstand);
+      stillstand = window.setTimeout(() => {
+        leiste.style.scrollSnapType = '';
+        const index = Math.round(leiste.scrollLeft / leiste.clientWidth);
+        if (index !== aktuell && bilder[index]) markiere(index);
+      }, 150);
+    };
+    leiste.addEventListener('scroll', beiStillstand, { passive: true });
+
+    const gehe = (index: number) => {
+      const ziel = (index + bilder.length) % bilder.length;
+      const bild = bilder[ziel];
+      if (!bild) return;
+      // Safari auf iOS bricht weiches Scrollen per Skript in einem Container mit
+      // Einrasten (scroll-snap) teils ab. Für die Dauer des Scrollens ist das
+      // Einrasten deshalb aus; beiStillstand() schaltet es wieder ein.
+      leiste.style.scrollSnapType = 'none';
+      leiste.scrollTo({ left: bild.offsetLeft, behavior: ruhig.matches ? 'instant' : 'smooth' });
+      beiStillstand();
+      markiere(ziel);
+    };
 
     punkteLeiste?.removeAttribute('hidden');
     punkte.forEach((punkt) =>
       punkt.addEventListener('click', () => gehe(Number(punkt.dataset.zu))),
     );
 
-    const pause = (an: boolean) => () => {
+    const pause = (an: boolean) => {
       pausiert = an;
       planen();
     };
-    karussell.addEventListener('mouseenter', pause(true));
-    karussell.addEventListener('mouseleave', pause(false));
-    karussell.addEventListener('focusin', pause(true));
-    karussell.addEventListener('focusout', pause(false));
+    // Nur ein echter Mauszeiger hält an. iOS meldet nach dem Antippen ein
+    // „Maus drüber“, aber nie ein „Maus weg“ – das Karussell bliebe sonst stehen.
+    karussell.addEventListener('pointerenter', (e) => {
+      if (e.pointerType === 'mouse') pause(true);
+    });
+    karussell.addEventListener('pointerleave', (e) => {
+      if (e.pointerType === 'mouse') pause(false);
+    });
+    // Anhalten nur bei Tastaturfokus. Ein angetippter oder angeklickter Punkt
+    // bekommt in Chrome ebenfalls den Fokus – das Karussell bliebe dann stehen,
+    // bis man woanders hintippt.
+    karussell.addEventListener('focusin', (e) => {
+      if (e.target instanceof Element && e.target.matches(':focus-visible')) pause(true);
+    });
+    karussell.addEventListener('focusout', () => pause(false));
     document.addEventListener('visibilitychange', planen);
     ruhig.addEventListener('change', planen);
 
