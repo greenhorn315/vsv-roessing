@@ -69,3 +69,11 @@ dart:
   alt: Dartpfeil mit rot-weißem Flight steckt in einer E-Dart-Scheibe
   caption: Dart – jede Woche im Dorfbrunnen
   credit: 'Symbolbild: Wikimedia Commons, CC0'
+
+# Sportfest am 25.09.2026. Alle Personen klein und weit weg, das Mädchen im
+# Vordergrund steht mit dem Rücken zur Kamera.
+sportfest-flutlicht:
+  order: 12
+  src: ../assets/karussell/sportfest-flutlicht.jpg
+  alt: 'Sportfest am Abend auf dem VSV-Sportplatz: Zelte und Gruppen von Teilnehmenden am Rand des Rasens, darüber ein leuchtender Flutlichtmast vor dunkelblauem Himmel'
+  caption: Sportfest unter Flutlicht

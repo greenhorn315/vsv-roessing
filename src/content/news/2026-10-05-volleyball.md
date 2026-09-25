@@ -1,5 +1,5 @@
 ---
-order: 4
+order: 5
 date: 2026-10-05
 title: Volleyball-Freundschaftsspiel
 ---

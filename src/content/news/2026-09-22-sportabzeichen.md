@@ -1,5 +1,5 @@
 ---
-order: 1
+order: 2
 date: 2026-09-22
 title: Sportabzeichen 2026 auf dem Sportplatz abgenommen
 ---
