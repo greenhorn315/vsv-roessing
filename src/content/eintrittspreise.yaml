@@ -1,8 +1,6 @@
-# Eintritt auf dem VSV-Sportplatz, abgeschrieben von der Tafel am Eingang
-# (Foto vom 25. September 2026). Veröffentlichung vom Verein freigegeben.
-#
-# Die kleinen Altersangaben neben „Schüler, Studenten“ und „Jugendliche,
-# Kinder“ sind auf dem Foto nicht lesbar – deshalb weggelassen, nicht geraten.
+# Eintritt bei Heimspielen auf dem VSV-Sportplatz, abgeschrieben von der Tafel
+# am Eingang (Nahaufnahme vom 25. September 2026). Veröffentlichung vom Verein
+# freigegeben.
 #
 #   order  Reihenfolge wie auf der Tafel
 #   preis  in Euro; 0 erscheint als „frei“
@@ -24,10 +22,10 @@ frauen:
 
 schueler:
   order: 4
-  label: Schülerinnen, Schüler und Studierende
+  label: Schülerinnen, Schüler und Studierende ab 18 Jahren
   preis: 1
 
 kinder:
   order: 5
-  label: Kinder und Jugendliche
+  label: Kinder und Jugendliche bis 18 Jahre
   preis: 0

@@ -9,6 +9,14 @@ BREITE, HOEHE = 800, 1000
 MAX_BREITE = 1600
 QUALITAET = 90
 
+# Fester Ausschnitt in Pixeln der Vorlage, vor dem Einpassen ins Hochformat.
+# Für Querformate, bei denen ein Mittelpunkt allein zu viel Rasen oder Himmel
+# übrig lässt.
+ZUSCHNITT = {
+    # Sportfest vom 25.09.2026: Zelte und Flutlicht, ohne den halben Platz davor.
+    'sportfest-flutlicht.jpg': (490, 296, 1521, 1585),
+}
+
 WEICHZEICHNEN = {
     'leichtathletik-weitsprung.jpg': 0.5,
     'sportabzeichen-aufwaermen.jpg': 0.7,
@@ -50,6 +58,9 @@ def hochskalieren(bild, breite, hoehe):
 def verarbeite(quelle, ziel, ausschnitt, schwarz, weiss, gamma, tiefen,
                kontrast, saettigung, schaerfe):
     im = ImageOps.exif_transpose(Image.open(quelle)).convert('RGB')
+    box = ZUSCHNITT.get(ziel.name)
+    if box:
+        im = im.crop(box)
     klein = im.width < BREITE
     im = tonwertkurve(im, schwarz, weiss, gamma, tiefen)
     im = ImageEnhance.Contrast(im).enhance(kontrast)
@@ -96,6 +107,9 @@ REZEPTE = {
     # Zieldatei bewusst neutral benannt: die Vorlage nennt einen Vornamen.
     '23-02-12-Elise-LM-Huerdenstart-2048x1536.jpg': (
         'leichtathletik-huerden.jpg', (0.33, 0.55), 0.02, 0.99, 1.04, 0.06, 1.08, 1.06, 0.45),
+    # Abendlicht mit Flutlicht, der Rasen ist schon sehr gelb: Sättigung leicht zurück.
+    '20260925-Sportfest.jpg': (
+        'sportfest-flutlicht.jpg', (0.50, 0.50), 0.02, 0.99, 1.02, 0.06, 1.04, 0.97, 0.35),
     'Pexels-pixabay-262438.jpg': (
         'dart.jpg', (0.45, 0.50), 0.01, 1.00, 1.08, 0.05, 1.05, 1.02, 0.40),
 }
