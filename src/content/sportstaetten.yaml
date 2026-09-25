@@ -36,10 +36,13 @@ sportplatz:
   postalCode: '31171'
   city: Nordstemmen
   note: Fußball und Leichtathletik im Sommerhalbjahr
-  facilities: Rasenplatz mit drei Toren, dazu eine Weitsprunganlage mit Tartan-Anlaufbahn
+  facilities: Rasenplatz mit Laufbahn, dazu eine Weitsprunganlage mit Tartan-Anlaufbahn
   photos:
     - src: ../assets/sportstaetten/sportplatz.jpg
-      alt: Rasenplatz des VSV Rössing mit drei Toren, Flutlichtmast und überdachtem Unterstand unter blauem Himmel
+      alt: Rasenplatz des VSV Rössing mit mehreren Toren und Flutlichtmasten unter blauem Himmel, im Vordergrund die rote Laufbahn am Rand des Platzes
+    - src: ../assets/sportstaetten/sportplatz-eingang.jpg
+      alt: 'Eingang zum Sportplatz: Geländer mit den Buchstaben VSV, links das Kassenhäuschen mit Aushängen, dahinter das Vereinsheim, rechts eine Tafel mit den Eintrittspreisen'
+      caption: Eingang
     - src: ../assets/sportstaetten/sportplatz-weitsprunganlage.jpg
       alt: Rote Tartanbahn mit weißer Markierungslinie, die auf eine Sandgrube zuläuft; am Ende harken zwei Personen den Sand
       caption: Weitsprunganlage
@@ -66,7 +69,10 @@ vereinsheim:
   facilities: Gaststube mit Tresen und Küche
   photos:
     - src: ../assets/sportstaetten/vereinsheim.jpg
-      alt: 'Eingang des Vereinsheims: Klinkerfassade mit Glastür, darüber ein Banner mit Vereinswappen und der Aufschrift „Herzlich Willkommen auf unserer Sportanlage“, links der Aushangkasten'
+      alt: Vereinsheim des VSV Rössing von der Rasenfläche aus, ein eingeschossiger Klinkerbau mit rotem Ziegeldach, an der Wand das Banner „Herzlich Willkommen auf unserer Sportanlage“, davor eine Hecke
+    - src: ../assets/sportstaetten/vereinsheim-terrasse.jpg
+      alt: Terrasse vor dem Vereinsheim mit zwei Holzbänken, dazwischen die Eingangstür, darüber das Willkommensbanner mit dem Vereinswappen
+      caption: Terrasse
     - src: ../assets/sportstaetten/vereinsheim-gaststaette.jpg
       alt: Gaststube im Vereinsheim mit Tresen, Barhockern, Holztischen und einer Vitrine voller Pokale
       caption: Gaststube
